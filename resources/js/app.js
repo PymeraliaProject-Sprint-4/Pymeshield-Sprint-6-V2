@@ -64,6 +64,20 @@ app.component('chart-admin', chartAdmin);
 const httpComp = defineAsyncComponent(() => import('./components/HttpComponent.vue'));
 app.component('http', httpComp);
 
+//registramos los componentes
+
+const formComponent = defineAsyncComponent(() => import('./components/Form.vue'));
+app.component('form-component', formComponent);
+
+const questionnaireFormComponent = defineAsyncComponent(() => import('./components/QuestionnaireForm.vue'));
+app.component('questionnaire-component', questionnaireFormComponent);
+
+const survey = defineAsyncComponent(() => import('./components/Survey.vue'));
+app.component('survey', survey);
+
+const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
+app.component('create-report', createReport);
+
 //laravel-permission-to-vuejs
 app.use(laravelPermissionToVuejs)
 
