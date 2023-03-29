@@ -20,6 +20,9 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\TaskController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -219,3 +222,46 @@ Route::get('/CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryContr
 Route::post('/activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify'); //Acció per qualificar i posar comentari a un alumne
 //FIN EQUIP 3
 
+
+
+/** ------ EQUIP 4 ------ */
+
+Route::get('/acceptacio-tasques', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
+
+Route::get('/my-tasks', function () {
+    return view('Presupuestos/modificar_presupuesto/index');
+})->name('my-tasks');
+
+Route::get('/modificar_presupuesto', function () {
+    return view('Presupuestos/modificar_presupuesto/index');
+})->name('modificar_presupuesto');
+
+Route::get('/gantt', function () {
+    return view('Tareas/gantt/index');
+})->name('gantt');
+
+Route::get('select', function() {
+    return view('select');
+});
+Route::get('radio', function() {
+    return view('radio');
+});
+
+// Asignar Precios
+Route::get('/Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar-Precios'); //Vista para la pagina Aceptar-Presupuestos
+Route::get('/mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->name('mostrarTareas'); //Datos que le paso a la vista de la pagina Aceptar-Presupuestos
+
+// Kanban
+Route::get('/kanban', [TaskController::class, 'kanban'])->name('vista-kanban');
+Route::get('/tasks', [TaskController::class, 'tasksKanban'])->name('tasks-kanban');
+Route::put('/tasks-update/{id}', [TaskController::class, 'updateState'])->name('update-state');
+
+// Gantt
+Route::get('/tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-gantt');
+
+// Listar Presuspuestos
+Route::get('/listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos']);
+Route::get('/llista_pressupostos',[BudgetController::class, 'index']);
+Route::get('/listado_presupuestos',[BudgetController::class, 'list']);
+
+/** ----- FINAL EQUIP 4 ------  */

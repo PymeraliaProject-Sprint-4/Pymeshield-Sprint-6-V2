@@ -3,6 +3,8 @@ import 'jquery/dist/jquery.min.js'
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";
 import laravelPermissionToVuejs from 'laravel-permission-to-vuejs';
 import { i18nVue } from 'laravel-vue-i18n'; //Importacion de vue-i18n con Laravel integrado
+import ganttastic from '@infectoone/vue-ganttastic'
+
 //Grafico
 
 const app = createApp({})
@@ -91,6 +93,28 @@ const client_course = defineAsyncComponent(() => import('./components/course/cli
 app.component('client_course', client_course);
 
 
+// EQUIP 4
+
+const accept_tasks_table = defineAsyncComponent(() => import('./components/TablaAceptarTareas.vue'));
+app.component('tabla_aceptar_tareas', accept_tasks_table);
+
+const modify_budget = defineAsyncComponent(() => import('./components/ModifyBudget.vue'));
+app.component('modificar_presupuesto', modify_budget);
+
+const modify_task = defineAsyncComponent(() => import('./components/TareasEdit.vue'));
+app.component('modificar_tareas', modify_task);
+
+const assign_prices = defineAsyncComponent(() => import('./components/AsignarPrecios.vue'));
+app.component('asignar_precios', assign_prices);
+
+const gantt = defineAsyncComponent(() => import('./components/Gantt.vue'));
+app.component('gantt', gantt);
+
+const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
+app.component('kanban', kanban);
+
+
+
 
 //laravel-permission-to-vuejs
 app.use(laravelPermissionToVuejs)
@@ -109,6 +133,8 @@ app.use(i18nVue, {
     return await langs[`../lang/${lang}.json`]();
   }
 });
+
+app.use(ganttastic)
 
 // se monta la app
 app.mount("#app");

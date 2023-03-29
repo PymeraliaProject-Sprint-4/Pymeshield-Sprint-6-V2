@@ -1,0 +1,287 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Budget;
+use App\Models\Task;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Validator;
+
+
+class BudgetController extends Controller
+{
+    //Retornar la vista dels pressupostos
+    public function AceptarPresupuestos()
+    {
+
+        $budgets = Budget::paginate();
+        return view('Presupuestos.Asignacion_Precios.asignacionPrecios', compact('budgets'));
+    }
+
+    public function aceptarPresupuesto()
+    {
+
+        return view('Presupuestos.Asignacion_Precios.AcceptarPresupostos');
+    }
+
+    //Retornar la vista de crear un nou pressupost
+    public function CrearPresupuestos()
+    {
+
+        return view('Presupuestos.Asignacion_Precios.crearPrecio');
+    }
+    //Accio per a crear un nou pressupost
+    public function Guardar(Request $request)
+    { //Le paso $request para que me recoja los datos del formulario
+        $budgets = new Budget();
+
+        $budgets->created_at = $request->created_at; //Paso los datos introducidos en el formulario en cada campo de la BBD
+        $budgets->hidden = $request->hidden;
+        $budgets->price = $request->price;
+        $budgets->status = $request->status;
+        $budgets->accepted = $request->accepted;
+
+        $budgets->save(); //Guardo los valores en la base de datos con la funcion save()
+
+        return redirect()->route('Aceptar-Presupuestos');
+    }
+
+    //Retornar la vista de editar el preu
+    public function Editar(Budget $id)
+    {
+
+        return view('Presupuestos.Asignacion_Precios.editarPrecio', compact('id'));
+    }
+
+    //Acció per a Actualitzar els valors a la base de dades
+    public function Update(Request $request, Budget $id)
+    { //Le paso $request para que me recoja los datos del formulario
+
+        $id->created_at = $request->created_at;
+        $id->hidden = $request->hidden;
+        $id->price = $request->price;
+        $id->status = $request->status;
+        $id->accepted = $request->accepted;
+
+        $id->save(); //Guardo los valores en la base de datos con la funcion save()
+        return redirect()->route('Aceptar-Presupuestos'); //Redirigo al usuario a la pagina 
+    }
+
+    public function destroy($id) //Acción con el metodo destroy pasandole la id de la fila que quiero eliminar 
+    {
+        $budget = Budget::findOrFail($id);
+        $budget->delete(); //Asigno a la variable budget el metoo delete
+
+        return redirect()->route('Aceptar-Presupuestos')
+            ->with('success', 'Presupuesto eliminado exitosamente.');
+    }
+
+
+
+    /** CONTROLADORES DE VISTAS */
+    public function LlistatPresupuestos()
+    {
+
+        $budgets = Budget::paginate();
+
+        return view('Presupuestos.listado_presupuestos.index', compact('budgets'));
+    }
+
+    //Vista pagina crear presupuesto
+    public function crearPresupuesto()
+    {
+        return view('Presupuestos.ejemplos_crud.crear');
+    }
+
+
+    //READ - Leer - Listar
+    public function index()
+    {
+
+        $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('companies', 'companies.id', '=', 'users.company_id')
+            ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
+            ->orderBy('budgets.id', 'asc')->get();
+        return view('Presupuestos.llista_pressupostos.index', compact('data'));
+    }
+    /**
+    public function list()
+    {
+        
+        $list = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('companies', 'companies.id', '=', 'users.company_id')
+            ->select("users.name", "users.last_name", "companies.name", "tasks.start_date", "tasks.final_date", "budgets.status")->where('users.id', '=', '2')->get();
+            return view('Presupuestos.listado_presupuestos.index', compact('list'));
+            
+            //$pressupostos = Budget::paginate(10); //paginación
+        //return view('Presupuestos.llista_pressupostos.index', compact('pressupostos'));
+    }
+     */
+    //GUARDAR - Crear - Store
+    public function store(Request $request)
+    {
+
+        $pressupost = Budget::create([
+            'price' => $request->price, //el parametro del objeto $request tiene que tener el mismo nompre que el atributo name del input que queremos que recoja
+        ]);
+
+        return redirect()->route('mostrar-pressupostos'); //redirigimos hacia la página
+
+        //return $request; //recupera todo lo que enviamos
+    }
+
+    public function showAcceptModify(Request $request)
+    {
+        $pagination = $request->id;
+
+        if(!$pagination) $pagination = 999;
+
+        $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
+            ->where('tasks.budget_id', '=', '1')
+            ->orderBy('tasks.id')
+            ->paginate($pagination);
+
+        return response()->json($data);
+    }
+
+    public function search(Request $request)
+    {
+        $buscado = $request->buscado;
+        $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select('tasks.id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price')
+            ->where('tasks.budget_id', '=', '1')
+            ->where('answers.name', 'like', '%' . $buscado . '%')
+            ->orWhere('answers.recommendation', 'like', '%' . $buscado . '%')
+            ->where('tasks.budget_id', '=', '1')
+            ->get();
+        if ($data == null) {
+            return null;
+        } else {
+            return $data;
+        }
+        // return Task::all();
+    }
+    public function getTotal()
+    {
+        $dataPyme = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select(DB::raw('ROUND(SUM(tasks.price), 2) as total'))
+            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
+            ->groupBy('tasks.budget_id')
+            ->where('tasks.budget_id', '=', '1')
+            ->get();
+
+        $dataYo = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select(DB::raw('ROUND(SUM(tasks.price_customer), 2) as total'))
+            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.manages', '=', 'Me lo gestiono yo')
+            ->groupBy('tasks.budget_id')
+            ->where('tasks.budget_id', '=', '1')
+            ->get();
+
+        // $total = json_decode($data);
+        
+        if ($dataPyme == '[]') {
+            $dataPyme = 0;
+            $totalPyme = $dataPyme;
+        } else {
+            $totalPyme = $dataPyme[0]->total;
+        }
+
+        if ($dataYo == '[]') {
+            $dataYo = 0;
+            $totalYo = $dataYo;
+        } else {
+            $totalYo = $dataYo[0]->total;
+        }
+
+        $total = $totalPyme + $totalYo;
+
+        Budget::where('budgets.id', '=', '1')->update(['price' => $total,]);
+        return $total;
+        // return Task::all();
+    }
+    public function updateAccepted(Request $request, Task $idTask)
+    {
+        # Valida los datos entrantes
+        $request->validate([
+            'manages' => ['required'],
+        ]);
+        # Actualiza la tarea
+        $idTask->update([
+            'manages' => $request->manages,
+        ]);
+    }
+    public function updatePrice(Request $request)
+    {
+        $idTask = $request->id;
+        $price = $request->price;
+
+        if ($price == '') {
+            $price = 0;
+        }
+        # Actualiza la tarea
+        Task::where('tasks.id', '=', $idTask)->update(['price_customer' => $price]);
+    }
+    public function updateTasks(Request $request, Response $response)
+    {
+        $data = $request->input('data'); // asumiendo que el array bidimensional viene en la entrada 'data' de la solicitud
+
+        foreach ($data as $registro) {
+
+            $id = $registro[0];
+            $price = $registro[1];
+            $start_date = $registro[2];
+            $final_date = $registro[3];
+
+            $task = Task::find($id);
+            $task->price = $price;
+            $task->start_date = $start_date;
+            $task->final_date = $final_date;
+            $task->save();
+        }
+
+        return response();
+    }
+    public function updateSingleTask(Request $request, $id)
+    {
+        $price = $request->input('price'); // obtener el precio de la tarea de la solicitud
+        $start_date = $request->input('start_date'); // obtener la fecha de inicio de la tarea de la solicitud
+        $final_date = $request->input('final_date'); // obtener la fecha de finalización de la tarea de la solicitud
+
+        $task = Task::find($id); // buscar la tarea en la base de datos utilizando el ID  
+        $task->price = $price; // actualizar el precio de la tarea
+        $task->start_date = $start_date; // actualizar la fecha de inicio de la tarea
+        $task->final_date = $final_date; // actualizar la fecha de finalización de la tarea
+        $task->save(); // guardar los cambios en la base de datos
+
+        return response();
+    }
+}
