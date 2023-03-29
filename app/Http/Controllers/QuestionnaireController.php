@@ -130,4 +130,9 @@ class QuestionnaireController extends Controller
     function indexmobilID ($id){
         return Questionnaire::find($id);
     }
+
+    public function allQuestionnaires() 
+    {
+        return Questionnaire::all();
+    }
 }

@@ -422,4 +422,9 @@ class UserController extends Controller
 
         return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countTasks' => $countTasks]);
     }
+
+    public function allUsers() 
+    {
+        return User::all();
+    }
 }
