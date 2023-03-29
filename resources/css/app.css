@@ -67,3 +67,424 @@ footer svg {
      */
     @apply m-6 py-2 px-4 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75 ;
   }
+
+/*EQUIP 3*/
+/* Començament Estils pàgina Cursos  */
+.flip-card {
+    background-color: transparent;
+    width: 350px;
+    height: 350px;
+    margin: 5px 10px;
+    perspective: 1000px;
+    font-family: sans-serif;
+    position: relative;
+    flex: 0 0 calc(33.33% - 20px); /* establece el ancho de la carta */
+    z-index: 0;
+}
+
+
+.card1 {
+    min-height: calc(95vh - 300px);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: calc(33.33% - 20px);
+    margin: 10px; /* añade un margen */
+    z-index: 0;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap; /* evitar que los elementos se salten a la siguiente línea */
+}
+
+
+.item {
+    display: inline-block; /* mostrar elementos en línea */
+    width: 200px;
+    height: 200px;
+    background-color: #ccc;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+    z-index: 0;
+
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transform-style: preserve-3d;
+    z-index: 0;
+}
+
+.flip-card:hover .flip-card-inner {
+    z-index: 0;
+}
+
+.flip-card-front:hover{
+    border: 2.5px solid coral;
+}
+
+.flip-card-front, .flip-card-back {
+    box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 1px solid coral;
+    margin: 10px; /* añade un margen */
+    border-radius: 1rem;
+    z-index: 0;
+
+}
+
+.flip-card-front {
+    background-size: cover;
+    color: coral;
+    z-index: 0;
+}
+
+.flip-card-back {
+    background: linear-gradient(120deg, rgb(255, 174, 145) 30%, coral 88%,
+    bisque 40%, rgb(255, 185, 160) 78%);
+    color: white;
+    transform: rotateY(180deg);
+    z-index: 0;
+
+}
+
+.card-container {
+    margin: 0px; /* añade un margen */
+    display: flex;
+    width:150%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: -100px;
+    max-width: 1200px; /* opcional, para limitar el ancho del contenedor */
+}
+
+/*Final */
+
+body {
+    @apply font-montserrat;
+}
+
+.login-background {
+    background-image: url(/resources/img/fondo.svg);
+    background-repeat: no-repeat;
+    background-color: #dcdcdc;
+    position: relative;
+    z-index: 0;
+}
+
+header {
+    height: 70px;
+    @apply bg-orange-500;
+    position: relative;
+    z-index: 2;
+}
+
+
+footer {
+    @apply text-white;
+}
+
+footer a {
+    @apply hover:text-orange-500;
+}
+
+footer h6 {
+    @apply font-bold;
+}
+
+footer svg {
+    @apply inline-block w-8 h-8;
+}
+
+/* Començament estil del modal de Cursos */
+
+
+
+
+.button2 {
+    border: none;
+    color: #FFF;
+    background: #42b983;
+    appearance: none;
+    font: inherit;
+    font-size: 1.8rem;
+    padding: .5em 1em;
+    border-radius: .3em;
+    cursor: pointer;
+}
+
+.modal2 {
+    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    max-width: 22em;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background: #FFF;
+    z-index: 999;
+    transform: none;
+}
+.modal h1 {
+    margin: 0 0 1rem;
+}
+
+.modal-overlay {
+    content: '';
+    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    background: #2c3e50;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+/* ---------------------------------- */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .4s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.pop-enter-active,
+.pop-leave-active {
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+}
+
+.pop-enter,
+.pop-leave-to {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50%);
+}
+
+/* Final del modal de cursos */
+
+/* Començament decoració botó AFEGIR*/
+
+
+
+
+/*Final decoració botó AFEGIR*/
+
+/* Començament decoració botó ELIMINAR*/
+
+
+/*Final decoració botó ELIMINAR*/
+
+
+
+/* Començament decoració carta*/
+
+.card2 {
+    float: left;
+    width: 60%;
+    height: auto;
+    top: 100px;
+    height: auto;
+    margin-bottom: 20px;
+
+}
+.box .content h2 {
+    position: absolute;
+    float: left;
+    top: 0;
+    left: 0;
+    right: 10;
+    text-align: center;
+}
+
+
+.box {
+    position: relative;
+    width: 410px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.box::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 70%;
+    height: 100%;
+    text-decoration: none;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+}
+
+.box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+    filter: blur(30px);
+}
+
+.box:hover:before,
+.box:hover:after {
+    transform: skewX(0deg) scaleX(1.3);
+}
+
+.box:before,
+.box:after {
+    background: linear-gradient(315deg, #ffbc00, #ff0058)
+}
+
+.box span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.box span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: 0.1s;
+    animation: animate 2s ease-in-out infinite;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08)
+}
+
+.box span::before {
+    top: -40px;
+    left: 40px;
+    width: 90px;
+    height: 50px;
+    opacity: 1;
+}
+
+.box span::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 400%;
+    height: 100%;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: 0.5s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    animation-delay: -1s;
+}
+
+.box span:after {
+    bottom: -40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+}
+
+.box .content {
+    position: relative;
+    width: 390px;
+    height: 454px;
+    padding: 20px 40px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    transform: 0.5s;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .content h2 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+
+/* Final decoració carta*/
+
+/* -------------- */
+/*   Activities   */
+/* -------------- */
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+
+.modalEditDelivery {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    width: 50%;
+
+}
+/*FINAL EQUIP 3--------------------------------*/
