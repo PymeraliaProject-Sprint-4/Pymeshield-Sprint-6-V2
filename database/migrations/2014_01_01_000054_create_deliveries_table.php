@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('locate')->notNull();
-            $table->decimal('grade', 2, 0);
-            $table->string('feedback')->Null();
+            $table->string('locate')->nullable();
+            $table->decimal('grade', 2, 0)->nullable();
+            $table->string('feedback')->nullable();
             $table->foreignId('activity_id')->references('id')->on('activities');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();

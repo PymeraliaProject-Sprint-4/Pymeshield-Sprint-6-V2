@@ -13,8 +13,12 @@ class Device extends Model
         return $this->belongsTo(TypeDevice::class, 'type_device_id');
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function deviceUsers() {
+       return $this->hasMany(DeviceUser::class);
+    }
+
+    public function company() {
+        return $this->belongsTo(Company::class);
     }
 
     protected $fillable = [
@@ -27,7 +31,7 @@ class Device extends Model
         'tag',
         'serial_number',
         'type_device_id',
-        'user_id',
+        'company_id',
         'hidden'
     ];
 }

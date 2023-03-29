@@ -44,5 +44,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AnswerReportSeeder::class);
         $this->call(TaskSeeder::class);
         $this->call(OptionSeeder::class);
+        $this->call(DeviceUserSeeder::class);
     }
 }

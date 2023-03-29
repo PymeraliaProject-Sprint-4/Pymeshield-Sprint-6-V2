@@ -19,7 +19,8 @@ class TypeDeviceSeeder extends Seeder
             'Laptop',
             'Desktop',
             'Tablet',
-            'Smartphone'
+            'Smartphone',
+            'Otro'
         ];
 
         foreach ($types as $type) {
