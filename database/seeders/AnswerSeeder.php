@@ -15,6 +15,20 @@ class AnswerSeeder extends Seeder
      */
     public function run()
     {
-        Answer::factory(300)->create();
+
+        $answerCount = 300; // número total de respuestas que se crearán
+        $yesCount = $answerCount / 2; // número de respuestas "Sí"
+        $noCount = $answerCount / 2; // número de respuestas "No"
+
+        // creación de respuestas "Sí"
+        Answer::factory()->count($yesCount)->create([
+            'name' => 'Sí'
+        ]);
+
+        // creación de respuestas "No"
+        Answer::factory()->count($noCount)->create([
+            'name' => 'No'
+        ]);
     }
+
 }

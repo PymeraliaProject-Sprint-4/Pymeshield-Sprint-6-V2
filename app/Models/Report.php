@@ -17,6 +17,7 @@ class Report extends Model
         'user_id',
         'questionnaire_id',
         'date',
+        'status',
         'hidden'
     ];
 

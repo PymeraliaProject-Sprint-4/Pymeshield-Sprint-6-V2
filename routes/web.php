@@ -22,6 +22,13 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\DevicesController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\RestoreController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ImageDeviceController;
+use App\Models\Device;
 
 
 /*
@@ -265,3 +272,43 @@ Route::get('/llista_pressupostos',[BudgetController::class, 'index']);
 Route::get('/listado_presupuestos',[BudgetController::class, 'list']);
 
 /** ----- FINAL EQUIP 4 ------  */
+
+
+/** ------ EQUIP 5 ------ */
+
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+});
+
+Route::get('/index', HomeController::class);
+
+// Restaurar
+Route::get('/restore', function(){return view('restaurar');});
+Route::get('/restaurar',[RestoreController::class, 'devices'])->name('restaurar');
+Route::post('/restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar');
+Route::get('/restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar');
+
+//Mapa
+Route::get('/map', function(){return view('mapa');});
+
+
+//Mostrar Dispositivos
+Route::get('/devices', function(){ return view('listdevices');});
+Route::get('/devices/list', [DevicesController::class, 'devices']);
+Route::get('/devices/type_devices', [DevicesController::class, 'type_devices']);
+Route::post('/devices/create', [DevicesController::class, 'create']);
+Route::post('/devices/edit', [DevicesController::class, 'edit']);
+//Route::post('/devices/delete', [DevicesController::class, 'delete']);
+
+//Mostrar inventari
+Route::get('/inventario', function(){ return view('inventario');});
+Route::get('/mapa', function(){ return view('mapa');});
+
+Route::get('/listInventory', [InventoryController::class, 'listInventary']);
+
+// Imatges
+Route::get('/imagenes', [ImageDeviceController::class, 'index'])->name('image.index');
+Route::post('/imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar');
+Route::get('/imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar');

@@ -34,8 +34,7 @@ class User extends Authenticatable
         'type',
         'hidden',
         'removed_reason',
-        'remember_token',
-        'company_id'
+        'remember_token'
     ];
 
     /**
@@ -69,7 +68,7 @@ class User extends Authenticatable
 
     public function devices(): HasMany
     {
-        return $this->hasMany(Device::class);
+        return $this->hasMany(DeviceUser::class);
     }
 
     public function reports(): HasMany

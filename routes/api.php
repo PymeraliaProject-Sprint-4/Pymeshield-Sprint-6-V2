@@ -23,13 +23,13 @@ use App\Http\Controllers\QuestionnaireController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-    
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
     Route::get('/taskLimit', [UserController::class, 'oneMonthTaskLimit']);
     Route::get('/activitiesLimit', [UserController::class, 'assignedCoursesUser']);
     Route::get('/graphicUserData', [UserController::class, 'graphicUserData']);
-    
+
 });
 
 Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
@@ -76,3 +76,9 @@ Route::put('/actualizar-tareas', [BudgetController::class, 'updateTasks'])->name
 Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->name('updateSingleTask');
 
 /** ----- FINAL EQUIP 4 ------  */
+
+
+/** ----- EQUIP 5 ------ */
+
+Route::get('/devicelist',[InventoryController::class, 'index']);
+Route::post('/devices/delete', [DevicesController::class, 'delete']);

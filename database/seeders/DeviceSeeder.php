@@ -18,3 +18,4 @@ class DeviceSeeder extends Seeder
         Device::factory(50)->create();
     }
 }
+

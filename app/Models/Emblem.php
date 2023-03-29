@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Course;
 
 class Emblem extends Model
 {
@@ -19,7 +21,7 @@ class Emblem extends Model
     'course_id',
     'hidden'
     ];
-
+    
     public function course()
     {
         return $this->belongsTo(Course::class);

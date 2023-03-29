@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Emblem;
 
 class Course extends Model
 {
@@ -15,11 +16,11 @@ class Course extends Model
 
     // Camps de la taula a replenar (El id i el timespace no es fiquen)
     protected $fillable = [
-        'name',
-        'description',
-        'image',
-        'created_at',
-        'hidden'
+    'name',
+    'description',
+    'image',
+    'created_at',
+    'hidden'
     ];
 
     public function emblems()
@@ -41,4 +42,5 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
 }
