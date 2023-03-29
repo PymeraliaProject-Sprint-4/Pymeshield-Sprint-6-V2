@@ -1,0 +1,79 @@
+
+  .left-table {
+    float: left;
+    margin-left: 100px;
+  }
+
+  .right-table {
+    float: right;
+    margin-right: 100px;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main-body {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .gutters-sm {
+    padding: 20px;
+  }
+
+ 
+.boton1{
+  background-color: rgb(247, 192, 115);
+  color: rgb(0, 0, 0);
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: all 0.2s ease-in-out;
+  margin-left: 10px;
+  }
+  
+.boton1:hover {
+  background-color: white;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+  .img-fluid {
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  td {
+    padding: 7px;
+  }
+  table {
+    border: 1px solid black;
+  }
+
+  td:first-child {
+    padding-right: 20px;
+  }
+
+  td:last-child {
+    padding-left: 20px;
+  }
+
+  tr:nth-child(odd) {
+    background-color: lightgray;
+  }
+
+  tr:nth-child(even) {
+    background-color: white;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+
