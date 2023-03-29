@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\EmblemController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RulesController;
 use App\Models\Company;
 use Illuminate\Support\Facades\Route;
@@ -173,4 +177,45 @@ Route::get('language/{locale}', function ($locale) {
 
 // final grup 2---------------------------------------- ///
 
+//EQUIP3 ----------------------------------/////////////////
+//Part Admin Crear visualitzar
+Route::resource('course', CourseController::class)->except('show');
+Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
+Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data');
+Route::get('course/users', [CourseController::class, 'users'])->name('course.users');
+Route::get('course/hidden', [CourseController::class, 'hidden'])->name('course.hidden');
+Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
+
+Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
+Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+
+//Part Client Crear Cursos + visualitzar
+Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client');
+Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data');
+
+
+
+Route::get('/emblems', [EmblemController::class, 'index'])->name('emblems.index');
+Route::get('/emblems/create', [EmblemController::class, 'create'])->name('emblems.create');
+Route::post('/emblems/store', [EmblemController::class, 'store'])->name('emblems.store');
+Route::get('/emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit');
+Route::post('/emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update');
+Route::get('/emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar');
+Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide');
+Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar');
+
+Route::get('/updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate');
+
+
+Route::get('/recursos', [ResourceController::class, 'index'])->name('recourse.index');
+
+
+//Part de Evaluacións
+Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss'); //Vista pagina tots els cursos
+Route::get('/CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities'); //Vista categories i activitats del curs triat
+Route::get('/activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos'); //Dades JSON categories i activitats del curs triat
+Route::get('/CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries'); //Vista alumnes amb la nota i feedback sobre la activitat triada
+Route::get('/CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
+Route::post('/activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify'); //Acció per qualificar i posar comentari a un alumne
+//FIN EQUIP 3
 

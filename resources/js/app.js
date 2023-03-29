@@ -78,8 +78,23 @@ app.component('survey', survey);
 const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
 app.component('create-report', createReport);
 
+
+
+//EQUIP3
+const index_course = defineAsyncComponent(() => import('./components/course/index_course.vue'));
+app.component('index_course', index_course);
+
+const hidden_course = defineAsyncComponent(() => import('./components/course/hidden_course.vue'));
+app.component('hidden_course', hidden_course);
+
+const client_course = defineAsyncComponent(() => import('./components/course/client_course.vue'));
+app.component('client_course', client_course);
+
+
+
 //laravel-permission-to-vuejs
 app.use(laravelPermissionToVuejs)
+
 
 /**
  * Middleware que permite cargar automáticamente los archivos de idioma de la aplicación según el idioma seleccionado por el usuario.
