@@ -1,4 +1,4 @@
-@extends('layouts.parts.admin')
+@extends('layouts.admin')
 
 @section('content')
     <restore-devices/>

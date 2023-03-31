@@ -260,7 +260,7 @@
 </template>
 
 <script>
-import { Modal } from 'flowbite';
+//import { Modal } from 'flowbite';
 import axios from 'axios';
 import swal from 'sweetalert';
 import $ from 'jquery';
@@ -349,11 +349,11 @@ export default {
                 this.questionnaires = res.data;
             });
         },
-        // Inicia la función para abrir una nueva tarea  
-        // Establece el título de la tarea como 'Nueva Tarea'  
-        // Habilita el botón 'Crear' y muestra la selección  
-        // Deshabilita el botón 'Editar'  
-        // Inicializa el objeto 'dataTask' con valores vacíos  
+        // Inicia la función para abrir una nueva tarea
+        // Establece el título de la tarea como 'Nueva Tarea'
+        // Habilita el botón 'Crear' y muestra la selección
+        // Deshabilita el botón 'Editar'
+        // Inicializa el objeto 'dataTask' con valores vacíos
         // Muestra el modal.
         openNewTask() {
             this.title = 'Nueva Tarea'
@@ -364,10 +364,10 @@ export default {
             this.modal.show();
         },
         // Asigna datos de la tarea a dataTask
-        // Cambia el título del modal a "Editar Tarea"  
-        // Desactiva el botón de creación y activa el botón de edición  
-        // Guarda el id de la tarea  
-        // Muestra el modal  
+        // Cambia el título del modal a "Editar Tarea"
+        // Desactiva el botón de creación y activa el botón de edición
+        // Guarda el id de la tarea
+        // Muestra el modal
         openEditTask(task_data) {
             this.dataTask = { recommendation: task_data.recommendation, accepted: task_data.accepted, state: task_data.state, user_id: task_data.user_id, price: task_data.price, start_date: task_data.start_date, final_date: task_data.final_date }
             this.title = 'Editar Tarea'
@@ -391,7 +391,7 @@ export default {
                 swal("Oh no!", "Algo no funciona!", "danger");
             });
         },
-        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos 
+        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos
         //datos de la tarea `this.dataTask`. Si la petición es exitosa, se ejecutan las siguientes acciones:
 
         //1.  Se asigna un valor vacío a `this.idTask`
@@ -412,14 +412,14 @@ export default {
                 swal("Oh no!", "Algo no funciona!", "danger");
             });
         },
-        // Se muestra un cuadro de dialogo para confirmar la eliminacion de la tarea  
-        // La propiedad title muestra un mensaje de confirmacion  
-        // La propiedad text muestra un mensaje adicional con el nombre de la tarea  
-        // La propiedad icon muestra un icono de advertencia  
-        // La propiedad buttons especifica si existen opciones para confirmar o cancelar la operacion  
-        // La propiedad dangerMode activa el modo peligroso  
-        // El metodo then recibe la respuesta de la Confirmacion y se realiza la accion correspondiente, sea la eliminacion o un mensaje de que la tarea no se eliminó  
-        // Si se confirma la eliminación, se hace una petición HTTP DELETE a través de axios y se muestra un mensaje de éxito  
+        // Se muestra un cuadro de dialogo para confirmar la eliminacion de la tarea
+        // La propiedad title muestra un mensaje de confirmacion
+        // La propiedad text muestra un mensaje adicional con el nombre de la tarea
+        // La propiedad icon muestra un icono de advertencia
+        // La propiedad buttons especifica si existen opciones para confirmar o cancelar la operacion
+        // La propiedad dangerMode activa el modo peligroso
+        // El metodo then recibe la respuesta de la Confirmacion y se realiza la accion correspondiente, sea la eliminacion o un mensaje de que la tarea no se eliminó
+        // Si se confirma la eliminación, se hace una petición HTTP DELETE a través de axios y se muestra un mensaje de éxito
         // Si hay algún error en la operación, se muestra un mensaje de error
         openDeleteTask(task_data) {
             swal({

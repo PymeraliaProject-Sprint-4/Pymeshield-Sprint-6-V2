@@ -178,13 +178,6 @@ Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
 Route::get('/audit/{id}', [AuditController::class, 'show'])->name('audit.survey');
 Route::post('/audit/save/{id}', [AuditController::class, 'store'])->name('audit.store');
 
-// Languague ROUTES
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-});
-
 // final grup 2---------------------------------------- ///
 
 //EQUIP3 ----------------------------------/////////////////
@@ -275,12 +268,6 @@ Route::get('/listado_presupuestos',[BudgetController::class, 'list']);
 
 
 /** ------ EQUIP 5 ------ */
-
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-});
 
 Route::get('/index', HomeController::class);
 
