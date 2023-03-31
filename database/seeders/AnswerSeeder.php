@@ -21,14 +21,14 @@ class AnswerSeeder extends Seeder
         $noCount = $answerCount / 2; // número de respuestas "No"
 
         // creación de respuestas "Sí"
-        Answer::factory()->count($yesCount)->create([
+        /*Answer::factory()->count($yesCount)->create([
             'name' => 'Sí'
-        ]);
+        ]);*/
 
         // creación de respuestas "No"
-        Answer::factory()->count($noCount)->create([
+        /*Answer::factory()->count($noCount)->create([
             'name' => 'No'
-        ]);
+        ]);*/
     }
 
 }

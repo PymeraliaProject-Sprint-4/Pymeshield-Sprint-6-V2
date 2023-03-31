@@ -15,7 +15,7 @@ class QuestionFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public static $counter = 0;
+    public static $counter = 1;
 
     public function definition()
     {

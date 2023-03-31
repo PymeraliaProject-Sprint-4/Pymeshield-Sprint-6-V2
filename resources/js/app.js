@@ -9,7 +9,7 @@ import ganttastic from '@infectoone/vue-ganttastic'
 
 const app = createApp({})
 
-import axiosPlugin from '../js/plugins/axiosPlugin'
+import axiosPlugin from '../js/plugin-axios/plugins/axios-plugin';
 app.use(axiosPlugin)
 
 //registramos los componentes
