@@ -8,14 +8,8 @@ use App\Http\Controllers\EmblemController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RulesController;
-use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LanguageController;
-use App\Http\Middleware\LocaleMiddleware;
-use Illuminate\Support\Facades\App;
-use App\Http\Controllers\AnswerControler;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ReportController;
@@ -24,11 +18,9 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MainController;
 use App\Http\Controllers\RestoreController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ImageDeviceController;
-use App\Models\Device;
 
 
 /*
@@ -89,8 +81,8 @@ Route::get('userList/userListing', [UserController::class, 'userListing'])->midd
 Route::get('userList/userListingHidden', [UserController::class, 'userListing'])->middleware('auth');
 
 Route::post('/addUser', [UserController::class, 'addUser'])->name('addUser');
-Route::post('/userDown', [UserController:: class, 'userDown']);
-Route::post('/editUser', [UserController:: class, 'editUser']);
+Route::post('/userDown', [UserController::class, 'userDown']);
+Route::post('/editUser', [UserController::class, 'editUser']);
 
 
 Route::get('/reset-password/{token}', [AuthController::class, 'activateUser'])->middleware('guest')->name('password.reset');
@@ -102,9 +94,9 @@ Route::post('/', [AuthController::class, 'login'])->middleware('guest')->name('l
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
-Route::post('listadoEmpresas/createCompany', [CompanyController:: class, 'storeCompany'])->middleware('auth');
-Route::post('listadoEmpresas/editCompany', [CompanyController:: class, 'editCompany'])->middleware('auth');
-Route::post('listadoEmpresas/unsuscribeCompany', [CompanyController:: class, 'unsuscribeCompany'])->middleware('auth');
+Route::post('listadoEmpresas/createCompany', [CompanyController::class, 'storeCompany'])->middleware('auth');
+Route::post('listadoEmpresas/editCompany', [CompanyController::class, 'editCompany'])->middleware('auth');
+Route::post('listadoEmpresas/unsuscribeCompany', [CompanyController::class, 'unsuscribeCompany'])->middleware('auth');
 
 //Rutes per al perfil Personal i editarPerfil
 Route::get('/Personal_Profile', [UserController::class, 'show_user'])->name('Personal-Profile')->middleware('auth');
@@ -113,8 +105,8 @@ Route::get('/user-info', [UserController::class, 'userInfo'])->name('userInfo')-
 Route::get('/Perfil_Personal/Editar_Perfil', [UserController::class, 'editarUsuario'])->name('Editar-Perfil')->middleware('auth');
 Route::post('/Perfil_Personal/Editar_Perfil', [UserController::class, 'updateProfile'])->name('profile.update');
 Route::post('/update-profile-image', [UserController::class, 'updateProfileImage'])->name('updateProfileImage');
-Route::post('/delete-profile-image', [UserController::class,'delete'])->name('deleteProfileImage');
-Route::post('/change-password', [UserController::class,'changePassword'])->name('changePassword');
+Route::post('/delete-profile-image', [UserController::class, 'delete'])->name('deleteProfileImage');
+Route::post('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
 Route::get('/contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');
 //Admin
 Route::get('/PerfilPersonal_Admin/EditarPerfilAdmin', [UserController::class, 'EditarPerfilAdmin'])->name('EditarPerfilAdmin')->middleware('auth');
@@ -240,10 +232,10 @@ Route::get('/gantt', function () {
     return view('Tareas/gantt/index');
 })->name('gantt');
 
-Route::get('select', function() {
+Route::get('select', function () {
     return view('select');
 });
-Route::get('radio', function() {
+Route::get('radio', function () {
     return view('radio');
 });
 
@@ -261,8 +253,8 @@ Route::get('/tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-g
 
 // Listar Presuspuestos
 Route::get('/listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos']);
-Route::get('/llista_pressupostos',[BudgetController::class, 'index']);
-Route::get('/listado_presupuestos',[BudgetController::class, 'list']);
+Route::get('/llista_pressupostos', [BudgetController::class, 'index']);
+Route::get('/listado_presupuestos', [BudgetController::class, 'list']);
 
 /** ----- FINAL EQUIP 4 ------  */
 
@@ -272,17 +264,23 @@ Route::get('/listado_presupuestos',[BudgetController::class, 'list']);
 Route::get('/index', HomeController::class);
 
 // Restaurar
-Route::get('/restore', function(){return view('restaurar');});
-Route::get('/restaurar',[RestoreController::class, 'devices'])->name('restaurar');
+Route::get('/restore', function () {
+    return view('restaurar');
+});
+Route::get('/restaurar', [RestoreController::class, 'devices'])->name('restaurar');
 Route::post('/restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar');
 Route::get('/restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar');
 
 //Mapa
-Route::get('/map', function(){return view('mapa');});
+Route::get('/map', function () {
+    return view('mapa');
+});
 
 
 //Mostrar Dispositivos
-Route::get('/devices', function(){ return view('listdevices');});
+Route::get('/devices', function () {
+    return view('listdevices');
+});
 Route::get('/devices/list', [DevicesController::class, 'devices']);
 Route::get('/devices/type_devices', [DevicesController::class, 'type_devices']);
 Route::post('/devices/create', [DevicesController::class, 'create']);
@@ -290,8 +288,12 @@ Route::post('/devices/edit', [DevicesController::class, 'edit']);
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
-Route::get('/inventario', function(){ return view('inventario');});
-Route::get('/mapa', function(){ return view('mapa');});
+Route::get('/inventario', function () {
+    return view('inventario');
+});
+Route::get('/mapa', function () {
+    return view('mapa');
+});
 
 Route::get('/listInventory', [InventoryController::class, 'listInventary']);
 

@@ -6,8 +6,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\DevicesController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------

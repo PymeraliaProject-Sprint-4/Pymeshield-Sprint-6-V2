@@ -51,20 +51,6 @@ footer svg {
   }
 
   .botonPersonalizado {
-    /**     m-6: Agrega un margen exterior de 6 unidades de espacio alrededor del
-    py-2: Agrega un relleno vertical de 2 unidades de espacio al botón.
-    px-4: Agrega un relleno horizontal de
-    bg-gray-500: Establece el color de fondo del botón en gris con un
-    text-white: Establece el color del texto del botón en blanco.
-    font-semibold: Establece la fuente del texto en neg
-    rounded-lg: Agrega bordes redondeados al botón
-    shadow-md: Agrega una sombra al botó
-    hover:bg-gray-600: Establece el color de fondo del botón en gris con
-    focus:outline-none: Elimina el contorno de enfoque predeterminado del botón cuando se selecciona.
-    focus:ring-2: Agrega un anillo de enfoque de 2 píxeles de ancho alrededor del botón cuando se selecciona.
-    focus:ring-gray-500: Establece el color del anillo de enfoque en gris con un nivel de intensidad del 500.
-    focus:ring-opacity-75: Establece la opacidad del anillo de enfoque al 75% para permitir que el fondo del botón sea visible a través del anillo de enfoque.
-     */
     @apply m-6 py-2 px-4 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75 ;
   }
 
@@ -94,13 +80,6 @@ footer svg {
     z-index: 0;
     justify-content: center;
 }
-
-.container {
-    width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap; /* evitar que los elementos se salten a la siguiente línea */
-}
-
 
 .item {
     display: inline-block; /* mostrar elementos en línea */
@@ -179,42 +158,6 @@ footer svg {
 }
 
 /*Final */
-
-body {
-    @apply font-montserrat;
-}
-
-.login-background {
-    background-image: url(/resources/img/fondo.svg);
-    background-repeat: no-repeat;
-    background-color: #dcdcdc;
-    position: relative;
-    z-index: 0;
-}
-
-header {
-    height: 70px;
-    @apply bg-orange-500;
-    position: relative;
-    z-index: 2;
-}
-
-
-footer {
-    @apply text-white;
-}
-
-footer a {
-    @apply hover:text-orange-500;
-}
-
-footer h6 {
-    @apply font-bold;
-}
-
-footer svg {
-    @apply inline-block w-8 h-8;
-}
 
 /* Començament estil del modal de Cursos */
 
