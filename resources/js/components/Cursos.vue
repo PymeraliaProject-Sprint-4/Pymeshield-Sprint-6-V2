@@ -12,16 +12,13 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <router-link v-for="course in filteredCourses" :key="course.id"
-        :to="'/CursosCalificar/' + course.id + '/activities'">
-        <div
-          class="p-4 bg-gradient-to-r to-orange-500 from-orange-300 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105">
-          <div class="flex flex-col justify-center items-center h-full">
-            <p class="text-gray-700 dark:text-gray-400 font-bold">{{ course.name }}</p>
-            <div class="h-1 w-full rounded-full mt-4" :class="course.color"></div>
-          </div>
+      <div
+        class="p-4 bg-gradient-to-r to-orange-500 from-orange-300 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105">
+        <div class="flex flex-col justify-center items-center h-full">
+          <p class="text-gray-700 dark:text-gray-400 font-bold">{{ course.name }}</p>
+          <div class="h-1 w-full rounded-full mt-4" :class="course.color"></div>
         </div>
-      </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -35,13 +32,11 @@ export default {
     };
   },
   mounted() {
-    // Usar la instancia de axios creada en el plugin
-    this.$api.get()
-      .then(response => {
-        this.courses = response.data;
-      })
-      .catch(error => {
-        console.log(error);
+    fetch(`/activitiesProva/${this.$route.params.id}/activities-Datos`)
+      .then(response => response.json())
+      .then(data => {
+        this.courseName = data.courseName;
+        this.categories = data.categories;
       });
   },
   computed: {
