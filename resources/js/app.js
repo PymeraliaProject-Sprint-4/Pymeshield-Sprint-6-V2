@@ -46,7 +46,6 @@ app.component('EditarPerfilAdmin', EditarPerfilAdmin);
 const EditarPerfilWorker = defineAsyncComponent(() => import('./components/EditarPerfilWorker.vue'));
 app.component('EditarPerfilWorker', EditarPerfilWorker);
 
-
 const contacte = defineAsyncComponent(() => import('./components/contacte.vue'));
 app.component('contacte',contacte);
 
@@ -81,8 +80,8 @@ const createReport = defineAsyncComponent(() => import('./components/CreateRepor
 app.component('create-report', createReport);
 
 
-
 //EQUIP3
+
 const index_course = defineAsyncComponent(() => import('./components/course/index_course.vue'));
 app.component('index_course', index_course);
 
@@ -91,6 +90,9 @@ app.component('hidden_course', hidden_course);
 
 const client_course = defineAsyncComponent(() => import('./components/course/client_course.vue'));
 app.component('client_course', client_course);
+
+const CursosCalificar = defineAsyncComponent(() => import('./components/Cursos.vue'));
+app.component('cursos_calificar', CursosCalificar);
 
 
 // EQUIP 4

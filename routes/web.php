@@ -206,7 +206,7 @@ Route::get('/recursos', [ResourceController::class, 'index'])->name('recourse.in
 
 
 //Part de Evaluacións
-Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss'); //Vista pagina tots els cursos
+Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('CursosCalificar'); //Vista pagina tots els cursos
 Route::get('/CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities'); //Vista categories i activitats del curs triat
 Route::get('/activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos'); //Dades JSON categories i activitats del curs triat
 Route::get('/CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries'); //Vista alumnes amb la nota i feedback sobre la activitat triada
