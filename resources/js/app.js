@@ -1,3 +1,4 @@
+
 import 'jquery/dist/jquery.min.js'
 //defineAsync para cargar los componentes de forma asíncrona
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";

@@ -59,9 +59,12 @@ class UserController extends Controller
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        $user->company_id = $request['company_id'];
+        $user->company_name = $request['company_name'];
         $user->password = $request['password'];
         $user->save();
+            // Obtener la lista actualizada de usuarios
+            $users = User::where('hidden', false)->get();
+
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }

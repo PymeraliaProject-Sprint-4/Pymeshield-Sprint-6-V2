@@ -25,10 +25,7 @@
                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div class="xl:items-start">
                                     <div class="flex space-x-2 items-center">
-                                        <div
-                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                            <PlusCircleIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
-                                        </div>
+                                        
                                         <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                             {{ $t('create-user') }}</DialogTitle>
                                     </div>
@@ -85,10 +82,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-full">
-                                                    <label for="company_id"
+                                                    <label for="company_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('company') }}</label>
-                                                    <span v-if="!company_id" class="text-red-500">*</span>
-                                                    <input type="text" v-model="company_id" id="company_id"
+                                                    <span v-if="!company_name" class="text-red-500">*</span>
+                                                    <input type="text" v-model="company_name" id="company_name"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
                                                 </div>
@@ -103,13 +100,14 @@
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="submit"
-                                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="submitForm()">{{ $t('add') }}</button>
                                 <button type="button"
-                                    class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="open = false" ref="cancelButtonRef">{{ $t('cancel') }}</button>
-                            </div>
+                                class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                    @click="open = false" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
+                           
+                                <button type="submit"
+                                class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                    @click="submitForm()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
+                                </div>
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -129,20 +127,11 @@ const last_name = ref('')
 const nick_name = ref('')
 const email = ref('')
 const phone = ref('')
-const company_id = ref('')
+const company_name = ref('')
 const password = ref('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
 const submitForm = () => {
-    if (phone.value.length > 9 || phone.value.length < 9) {
-        alert('Pon un numero valido 9 digitos')
-    }
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(email.value)) {
-        alert('Pon un correo valido')
-    }
-    if (name.value.length > 30 || last_name.value.length > 30 || nick_name.value.length > 30 || email.value.length > 30) {
-        alert('Max caracteres 30')
-    } else if (!name.value || !last_name.value || !nick_name.value || !email.value || !company_id.value) {
-        alert('Rellena todos los campos')
-    } else {
+    
+
         try {
             axios.post('addUser', {
                 name: name.value,
@@ -150,34 +139,27 @@ const submitForm = () => {
                 nick_name: nick_name.value,
                 email: email.value,
                 phone: phone.value,
-                company_id: company_id.value,
+                company_name: company_name.value,
                 password: password.value,
             })
                 .then(response => {
-                    // Lógica para manejar la respuesta del controlador
-                    alert('Usuario creado con exito')
-                    //open = false
+                    console.log(response.data); // imprimir la respuesta en la consola
+                    this.$emit('usuario-restaurado');
+                    this.props.actualizarUsuarios();
                 })
                 .catch(error => {
-                    // Lógica para manejar el error
-                    //alert('error crear user')
+                    console.log(response.data); // imprimir la respuesta en la consola
+                    this.$emit('usuario-restaurado');
+                    this.props.actualizarUsuarios();
+
                 });
 
         } catch {
             alert('fallo aixos')
+            this.props.actualizarUsuarios();
+
         }
 
     }
-
-
-}
-
-
-
-
-
-
-
-
 
 </script>
