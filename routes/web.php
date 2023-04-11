@@ -143,161 +143,142 @@ Route::get('/admin', function () {
 
 // grup2
 /* Grup de rutes per a CRUD Informe */
-Route::resource('report', ReportController::class)->middleware('auth');
-Route::get('/report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth');
+Route::resource('report', ReportController::class)->middleware('auth', 'check_access_client');
+Route::get('/report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
 
 
 /* Grup de rutes per a CRUD Respostes */
-Route::resource('answer', QuestionController::class)->middleware('auth');
+Route::resource('answer', QuestionController::class)->middleware('auth', 'check_access_admin');
 
 //Question ROUTES
-Route::resource('question', QuestionController::class)->except(['show'])->middleware('auth');
-Route::get('/question/{id}/activate', [QuestionController::class, 'activate'])->name('question.activate')->middleware('auth');
-Route::get('/question/{id}/unActivate', [QuestionController::class, 'unActivate'])->name('question.unActivate')->middleware('auth');
-Route::get('question/hidden', [QuestionController::class, 'hidden'])->name('question.hidden')->middleware('auth');
+Route::resource('question', QuestionController::class)->except(['show'])->middleware('auth', 'check_access_admin');
+Route::get('/question/{id}/activate', [QuestionController::class, 'activate'])->name('question.activate')->middleware('auth', 'check_access_admin');
+Route::get('/question/{id}/unActivate', [QuestionController::class, 'unActivate'])->name('question.unActivate')->middleware('auth', 'check_access_admin');
+Route::get('question/hidden', [QuestionController::class, 'hidden'])->name('question.hidden')->middleware('auth', 'check_access_admin');
 
 //Questionnaire ROUTES
-Route::resource('questionnaire', QuestionnaireController::class)->except(['show'])->middleware('auth');
-Route::get('questionnaire/hidden', [QuestionnaireController::class, 'hidden'])->name('questionnaire.hidden')->middleware('auth');
-Route::get('questionnaire/{id}/activate', [QuestionnaireController::class, 'activate'])->name('questionnaire.activate')->middleware('auth');
-Route::get('questionnaire/{id}/unActivate', [QuestionnaireController::class, 'unActivate'])->name('questionnaire.unActivate')->middleware('auth');
-Route::post('questionnaire/{questionnaire}/updateQuestion', [QuestionnaireController::class, 'updateQuestion'])->name('questionnaire.updateQuestion')->middleware('auth');
-Route::post('questionnaire/{questionnaire}/assignQuestion', [QuestionnaireController::class, 'assignQuestion'])->name('questionnaire.assignQuestion')->middleware('auth');
-Route::post('questionnaire/{questionnaire}/unassignQuestion', [QuestionnaireController::class, 'unassignQuestion'])->name('questionnaire.unassignQuestion')->middleware('auth');
+Route::resource('questionnaire', QuestionnaireController::class)->except(['show'])->middleware('auth', 'check_access_admin');
+Route::get('questionnaire/hidden', [QuestionnaireController::class, 'hidden'])->name('questionnaire.hidden')->middleware('auth', 'check_access_admin');
+Route::get('questionnaire/{id}/activate', [QuestionnaireController::class, 'activate'])->name('questionnaire.activate')->middleware('auth', 'check_access_admin');
+Route::get('questionnaire/{id}/unActivate', [QuestionnaireController::class, 'unActivate'])->name('questionnaire.unActivate')->middleware('auth', 'check_access_admin');
+Route::post('questionnaire/{questionnaire}/updateQuestion', [QuestionnaireController::class, 'updateQuestion'])->name('questionnaire.updateQuestion')->middleware('auth', 'check_access_admin');
+Route::post('questionnaire/{questionnaire}/assignQuestion', [QuestionnaireController::class, 'assignQuestion'])->name('questionnaire.assignQuestion')->middleware('auth', 'check_access_admin');
+Route::post('questionnaire/{questionnaire}/unassignQuestion', [QuestionnaireController::class, 'unassignQuestion'])->name('questionnaire.unassignQuestion')->middleware('auth', 'check_access_admin');
 
 //Audits ROUTES
-Route::get('/audit', [AuditController::class, 'index'])->name('audit.index')->middleware('auth');
-Route::get('/audit/{id}', [AuditController::class, 'show'])->name('audit.survey')->middleware('auth');
-Route::post('/audit/save/{id}', [AuditController::class, 'store'])->name('audit.store')->middleware('auth');
+Route::get('/audit', [AuditController::class, 'index'])->name('audit.index')->middleware('auth', 'check_access_client');
+Route::get('/audit/{id}', [AuditController::class, 'show'])->name('audit.survey')->middleware('auth', 'check_access_client');
+Route::post('/audit/save/{id}', [AuditController::class, 'store'])->name('audit.store')->middleware('auth', 'check_access_client');
 
 // final grup 2---------------------------------------- ///
 
 //EQUIP3 ----------------------------------/////////////////
 //Part Admin Crear visualitzar
-Route::resource('course', CourseController::class)->except('show')->middleware('auth');
-Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden')->middleware('auth');
-Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data')->middleware('auth');
-Route::get('course/users', [CourseController::class, 'users'])->name('course.users')->middleware('auth');
-Route::get('course/hidden', [CourseController::class, 'hidden'])->name('course.hidden')->middleware('auth');
-Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data')->middleware('auth');
+Route::resource('course', CourseController::class)->except('show')->middleware('auth', 'check_access_admin');
+Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden')->middleware('auth', 'check_access_admin');
+Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data')->middleware('auth', 'check_access_admin');
+Route::get('course/users', [CourseController::class, 'users'])->name('course.users')->middleware('auth', 'check_access_admin');
+Route::get('course/hidden', [CourseController::class, 'hidden'])->name('course.hidden')->middleware('auth', 'check_access_admin');
+Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data')->middleware('auth', 'check_access_admin');
 
-Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide')->middleware('auth');
-Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide')->middleware('auth');
+Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide')->middleware('auth', 'check_access_admin');
+Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide')->middleware('auth', 'check_access_admin');
 
 //Part Client Crear Cursos + visualitzar
-Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth');
-Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth');
+Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
+Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 
 
 
-Route::get('/emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth');
-Route::get('/emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth');
-Route::post('/emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth');
-Route::get('/emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit')->middleware('auth');
-Route::post('/emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth');
-Route::get('/emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar')->middleware('auth');
-Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth');
-Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth');
+Route::get('/emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
+Route::get('/emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
+Route::post('/emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
+Route::get('/emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit')->middleware('auth', 'check_access_admin');
+Route::post('/emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
+Route::get('/emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar')->middleware('auth', 'check_access_admin');
+Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth', 'check_access_admin');
+Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
 
-Route::get('/updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth');
+Route::get('/updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
-Route::get('/recursos', [ResourceController::class, 'index'])->name('recourse.index')->middleware('auth');
+Route::get('/recursos', [ResourceController::class, 'index'])->name('recourse.index')->middleware('auth', 'check_access_admin');
 
 
 //Part de Evaluacións
-Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss')->middleware('auth'); //Vista pagina tots els cursos
-Route::get('/CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities')->middleware('auth'); //Vista categories i activitats del curs triat
-Route::get('/activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth'); //Dades JSON categories i activitats del curs triat
-Route::get('/CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries')->middleware('auth'); //Vista alumnes amb la nota i feedback sobre la activitat triada
-Route::get('/CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
-Route::post('/activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth'); //Acció per qualificar i posar comentari a un alumne
+Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
+Route::get('/CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities')->middleware('auth', 'check_access_admin'); //Vista categories i activitats del curs triat
+Route::get('/activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth', 'check_access_admin'); //Dades JSON categories i activitats del curs triat
+Route::get('/CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries')->middleware('auth', 'check_access_admin'); //Vista alumnes amb la nota i feedback sobre la activitat triada
+Route::get('/CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
+Route::post('/activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne
 //FIN EQUIP 3
 
 
 
 /** ------ EQUIP 4 ------ */
 
-Route::get('/acceptacio-tasques', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
-
-Route::get('/my-tasks', function () {
-    return view('Presupuestos/modificar_presupuesto/index');
-})->name('my-tasks')->middleware('auth');
+Route::get('/acceptacio-tasques', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth', 'check_access_client'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
 
 Route::get('/modificar_presupuesto', function () {
     return view('Presupuestos/modificar_presupuesto/index');
-})->name('modificar_presupuesto')->middleware('auth');
+})->name('modificar_presupuesto')->middleware('auth', 'check_access_client');
 
 Route::get('/gantt', function () {
     return view('Tareas/gantt/index');
-})->name('gantt')->middleware('auth');
-
-Route::get('select', function () {
-    return view('select');
-})->middleware('auth');
-Route::get('radio', function () {
-    return view('radio');
-})->middleware('auth');
+})->name('gantt')->middleware('auth', 'check_access_client');
 
 // Asignar Precios
-Route::get('/Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar-Precios')->middleware('auth'); //Vista para la pagina Aceptar-Presupuestos
-Route::get('/mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->name('mostrarTareas')->middleware('auth'); //Datos que le paso a la vista de la pagina Aceptar-Presupuestos
+Route::get('/Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar-Precios')->middleware('auth', 'check_access_admin'); //Vista para la pagina Aceptar-Presupuestos
+Route::get('/mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->name('mostrarTareas')->middleware('auth', 'check_access_admin'); //Datos que le paso a la vista de la pagina Aceptar-Presupuestos
 
 // Kanban
-Route::get('/kanban', [TaskController::class, 'kanban'])->name('vista-kanban')->middleware('auth');
-Route::get('/tasks', [TaskController::class, 'tasksKanban'])->name('tasks-kanban')->middleware('auth');
-Route::put('/tasks-update/{id}', [TaskController::class, 'updateState'])->name('update-state')->middleware('auth');
+Route::get('/kanban', [TaskController::class, 'kanban'])->name('vista-kanban')->middleware('auth', 'check_access_client');
+Route::get('/tasks', [TaskController::class, 'tasksKanban'])->name('tasks-kanban')->middleware('auth', 'check_access_client');
+Route::put('/tasks-update/{id}', [TaskController::class, 'updateState'])->name('update-state')->middleware('auth', 'check_access_client');
 
 // Gantt
-Route::get('/tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-gantt')->middleware('auth');
+Route::get('/tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-gantt')->middleware('auth', 'check_access_client');
 
 // Listar Presuspuestos
-Route::get('/listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth');
-Route::get('/llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth');
-Route::get('/listado_presupuestos', [BudgetController::class, 'list'])->middleware('auth');
+Route::get('/listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
+Route::get('/llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+Route::get('/listado_presupuestos', [BudgetController::class, 'list'])->middleware('auth', 'check_access_client');
 
 /** ----- FINAL EQUIP 4 ------  */
 
 
 /** ------ EQUIP 5 ------ */
 
-Route::get('/index', HomeController::class)->middleware('auth');
-
 // Restaurar
 Route::get('/restore', function () {
     return view('restaurar');
-})->middleware('auth');
-Route::get('/restaurar', [RestoreController::class, 'devices'])->name('restaurar')->middleware('auth');
-Route::post('/restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar')->middleware('auth');
-Route::get('/restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar')->middleware('auth');
+})->middleware('auth', 'check_access_admin');
 
-//Mapa
-Route::get('/map', function () {
-    return view('mapa');
-})->middleware('auth');
+Route::get('/restaurar', [RestoreController::class, 'devices'])->name('restaurar')->middleware('auth', 'check_access_admin');
+Route::post('/restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
+Route::get('/restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
 
 
 //Mostrar Dispositivos
 Route::get('/devices', function () {
     return view('listdevices');
-})->middleware('auth');
-Route::get('/devices/list', [DevicesController::class, 'devices'])->middleware('auth');
-Route::get('/devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth');
-Route::post('/devices/create', [DevicesController::class, 'create'])->middleware('auth');
-Route::post('/devices/edit', [DevicesController::class, 'edit'])->middleware('auth');
+})->middleware('auth', 'check_access_admin');
+
+Route::get('/devices/list', [DevicesController::class, 'devices'])->middleware('auth', 'check_access_admin');
+Route::get('/devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/edit', [DevicesController::class, 'edit'])->middleware('auth', 'check_access_admin');
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
 Route::get('/inventario', function () {
     return view('inventario');
-})->middleware('auth');
-Route::get('/mapa', function () {
-    return view('mapa');
-})->middleware('auth');
+})->middleware('auth', 'check_access_client');
 
-Route::get('/listInventory', [InventoryController::class, 'listInventary'])->middleware('auth');
+Route::get('/listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
 
 // Imatges
-Route::get('/imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth');
-Route::post('/imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth');
-Route::get('/imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth');
+Route::get('/imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth', 'check_access_admin');
+Route::post('/imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
+Route::get('/imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
