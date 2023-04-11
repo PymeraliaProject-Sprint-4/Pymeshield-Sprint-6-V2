@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseUser;
 use App\Models\Device;
+use App\Models\DeviceUser;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -86,7 +87,7 @@ class UserController extends Controller
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }
-    // Baja usuario ADMIN 
+    // Baja usuario ADMIN
     public function userDown(Request $request)
     {
         $request->validate([
@@ -222,7 +223,7 @@ class UserController extends Controller
         $updatedUser->phone = $request->input('phone');
 
         $updatedUser->save();
-        
+
         return redirect()->route('Editar-Perfil');
 
     }
@@ -353,7 +354,7 @@ class UserController extends Controller
 
     /**
      * assignedCoursesUser muestra los cursos que esta cursando el cliente.
-     * 
+     *
      * @return response Json
      */
     public function assignedCoursesUser()
@@ -383,8 +384,8 @@ class UserController extends Controller
 
     /**
      * graphicUserData
-     * 
-     * Acción que retorna un array JSON con los datos de total de dispositivos, cursos y tareas 
+     *
+     * Acción que retorna un array JSON con los datos de total de dispositivos, cursos y tareas
      * que tiene el usuario
      *
      * @return void
@@ -400,9 +401,9 @@ class UserController extends Controller
 
         $user_id = Auth::id();
 
-        $countDevices = Device::where('user_id', $user_id)
+        $countDevices = DeviceUser::where('user_id', $user_id)
             ->select(DB::raw("COUNT(*) as num_devices"))
-            ->whereNull('devices.hidden')
+            //->whereNull('devices.hidden')
             ->get();
 
         $countCourses = CourseUser::where('user_id', $user_id)
@@ -423,7 +424,7 @@ class UserController extends Controller
         return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countTasks' => $countTasks]);
     }
 
-    public function allUsers() 
+    public function allUsers()
     {
         return User::all();
     }
