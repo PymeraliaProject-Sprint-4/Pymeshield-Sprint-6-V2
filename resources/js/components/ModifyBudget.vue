@@ -31,9 +31,6 @@
                         <th class="px-6 py-3 uppercase">
                             {{ $t("managed") }}
                         </th>
-                        <th v-if="pricecol" class="px-6 py-3 uppercase">
-                            {{ $t("add_price") }}
-                        </th>
                         <th class="px-6 py-3 uppercase">
                             {{ $t("price") }}
                         </th>
@@ -55,20 +52,18 @@
                             <RadioGroupComponent :default="task.manages"
                                 @selectedValue="(value) => editTask(value, task.id)" />
                         </td>
-                        <td class="px-6 py-4" v-if="pricecol">
-                            <div class="flex justify-center">
-                                <div class="relative mb-3">
-                                    <input type="text" step="0.01" v-if="task.manages == 'Me lo gestiono yo'"
-                                        v-bind:value="task.price_customer == '0' ? '' : task.price_customer /* ruteado a la variable buscado de data() */"
-                                        @keyup="addPrice($event, task.id) /* llama al método cuando acabas de pulsar la tecla */"
-                                        class="peer block min-h-[auto] w-20 text-center rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear text-gray-900 dark:text-black"
-                                        placeholder="Añade el precio" @keydown="keydown" v-on:keypress="isNUMBER($event)"
-                                        @copy.prevent @paste.prevent :disabled="final_budget" />
-                                </div>
-                            </div>
-                        </td>
                         <td class="px-6 py-4">
-                            {{ task.manages == 'No aceptada' || task.manages == 'Me lo gestiono yo' ? '0' : task.price }}
+                            <div>
+                                {{ task.manages == 'No aceptada' || task.manages == 'Me lo gestiono yo' ? '' : task.price }}
+                            </div>
+                            <div>
+                                <input type="text" step="0.01" v-if="task.manages == 'Me lo gestiono yo'"
+                                    v-bind:value="task.price_customer == '0' ? '' : task.price_customer /* ruteado a la variable buscado de data() */"
+                                    @keyup="addPrice($event, task.id) /* llama al método cuando acabas de pulsar la tecla */"
+                                    class="peer block min-h-[auto] w-20 text-center rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear text-gray-900 dark:text-black"
+                                    placeholder="Añade el precio" @keydown="keydown" v-on:keypress="isNUMBER($event)"
+                                    @copy.prevent @paste.prevent :disabled="final_budget" />
+                            </div>
                         </td>
                         <td class="px-6 py-4">
                             €
@@ -77,8 +72,6 @@
                     <tr v-show="swtotalcol" class="bg-orange-200 text-center font-bold">
                         <td class="px-6 py-4">{{ $t("total") }}</td>
                         <td class="px-6 py-4"></td>
-                        <td v-if="pricecol" class="px-6 py-4">
-                        </td>
                         <td class="px-6 py-4"></td>
                         <td class="px-6 py-4"></td>
                         <td class="px-6 py-4">{{ totals }}
@@ -193,7 +186,7 @@ export default {
             this.swtotalcol = true
             this.errsearchcol = false
             this.buscado = null;
-            this.url = 'all-data/' + 5;
+            this.url = 'all-data';
             this.getTasks()
         },
 
