@@ -9,18 +9,13 @@ use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {   
-        $user = Auth::user();
-        if($user->type != 'worker'){
-            $questionnaires = Questionnaire::where('hidden', false)
-            ->orWhereNull('hidden')
-            ->Paginate(10);
+        $questionnaires = Questionnaire::where('hidden', false)
+        ->orWhereNull('hidden')
+        ->Paginate(10);
 
-            return view('questionnaire.index', compact('questionnaires'));
-        }else{
-            return redirect('/home');
-        }
+        return view('questionnaire.index', compact('questionnaires'));
         
     }
 
