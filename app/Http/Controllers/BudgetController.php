@@ -156,6 +156,19 @@ class BudgetController extends Controller
         return response()->json($data);
     }
 
+    public function showBudgets()
+    {
+        $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->select('budgets.id', 'budgets.price', 'budgets.accepted')
+            ->where('tasks.user_id', '=', '1')
+            ->groupBy('budgets.id')
+            ->get();
+
+        return response()->json($data);
+    }
+
     public function search(Request $request)
     {
         $buscado = $request->buscado;
