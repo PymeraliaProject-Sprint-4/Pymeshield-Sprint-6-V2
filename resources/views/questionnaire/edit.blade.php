@@ -73,7 +73,7 @@
 
     <div class="sm:rounded-lg m-5">
         <div class="flex items-center justify-end">
-            <x-button-link href="{{ route('answer.create') }}">
+            <x-button-link href="{{ route('question.create') }}">
                 {{ __('add.answer') }}
             </x-button-link>
         </div>

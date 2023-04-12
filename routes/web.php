@@ -146,10 +146,6 @@ Route::get('/admin', function () {
 Route::resource('report', ReportController::class)->middleware('auth', 'check_access_client');
 Route::get('/report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
 
-
-/* Grup de rutes per a CRUD Respostes */
-Route::resource('answer', QuestionController::class)->middleware('auth', 'check_access_admin');
-
 //Question ROUTES
 Route::resource('question', QuestionController::class)->except(['show'])->middleware('auth', 'check_access_admin');
 Route::get('/question/{id}/activate', [QuestionController::class, 'activate'])->name('question.activate')->middleware('auth', 'check_access_admin');
