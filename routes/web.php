@@ -153,7 +153,12 @@ Route::get('/question/{id}/unActivate', [QuestionController::class, 'unActivate'
 Route::get('question/hidden', [QuestionController::class, 'hidden'])->name('question.hidden')->middleware('auth', 'check_access_admin');
 
 //Questionnaire ROUTES
-Route::resource('questionnaire', QuestionnaireController::class)->except(['show'])->middleware('auth', 'check_access_admin');
+// Route::resource('questionnaire', QuestionnaireController::class)->except(['show'])->middleware('auth', 'check_access_admin');
+//
+// REVISAR
+Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.show')->middleware('auth', 'check_access_admin');
+Route::get('questionnaire/create', [QuestionnaireController::class, 'create'])->name('questionnaire.create')->middleware('auth', 'check_access_admin');
+
 Route::get('questionnaire/hidden', [QuestionnaireController::class, 'hidden'])->name('questionnaire.hidden')->middleware('auth', 'check_access_admin');
 Route::get('questionnaire/{id}/activate', [QuestionnaireController::class, 'activate'])->name('questionnaire.activate')->middleware('auth', 'check_access_admin');
 Route::get('questionnaire/{id}/unActivate', [QuestionnaireController::class, 'unActivate'])->name('questionnaire.unActivate')->middleware('auth', 'check_access_admin');
