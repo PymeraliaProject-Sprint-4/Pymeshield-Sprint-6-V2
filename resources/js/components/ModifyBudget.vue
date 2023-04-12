@@ -20,7 +20,7 @@
                 <thead>
                     <tr class="bg-orange-400 text-white">
                         <th class="px-6 py-3 uppercase">
-                            {{ $t("name") }}
+                            {{ $t("survey.answer") }}
                         </th>
                         <th class="px-6 py-3 uppercase">
                             {{ $t("recommendation") }}
@@ -160,13 +160,13 @@ export default {
 
         isLetter(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
-            if (/^[A-Za-z0-9?¿ ]+$/.test(char)) return true; // Match with regex 
+            if (/^[A-Za-z0-9?¿ ]+$/.test(char)) return true; // Match with regex
             else e.preventDefault(); // If not match, don't add to input text
         },
 
         isNUMBER(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
-            if (/^[0-9,.]+$/.test(char)) return true; // Match with regex 
+            if (/^[0-9,.]+$/.test(char)) return true; // Match with regex
             else e.preventDefault(); // If not match, don't add to input text
         },
         getTotal() {
@@ -266,7 +266,7 @@ export default {
         onPageChanged(page) {
             this.getTasks(page);
         },
-        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos 
+        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos
         //datos de la tarea `this.dataTask`. Si la petición es exitosa, se ejecutan las siguientes acciones:
 
         //1.  Se asigna un valor vacío a `this.idTask`
