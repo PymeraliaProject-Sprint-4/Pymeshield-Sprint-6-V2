@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
     <div class="py-3 rounded-lg sm:px-6 lg:px-8">

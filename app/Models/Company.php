@@ -25,7 +25,8 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
 
-    public function devices() {
-        return $this->hasMany(Devices::class);
+    public function devices(): HasMany
+    {
+        return $this->hasMany(Device::class);
     }
 }
