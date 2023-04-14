@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
