@@ -12,8 +12,8 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <router-link v-for="course in filteredCourses" :key="course.id"
-        :to="'/CursosCalificar/' + course.id + '/activities'">
+        <a v-for="course in filteredCourses" :key="course.id"
+        :href="'/CursosCalificar/' + course.id + '/activities'">
         <div
           class="p-4 bg-gradient-to-r to-orange-500 from-orange-300 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105">
           <div class="flex flex-col justify-center items-center h-full">
@@ -21,7 +21,7 @@
             <div class="h-1 w-full rounded-full mt-4" :class="course.color"></div>
           </div>
         </div>
-      </router-link>
+    </a>
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     // Usar la instancia de axios creada en el plugin
-    this.$api.get()
+    this.$axios.get('/CursosCalificar')
       .then(response => {
         this.courses = response.data;
       })

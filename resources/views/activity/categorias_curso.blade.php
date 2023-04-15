@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    <router-view />
+    <categorias-curso :id="{{ $id }}">
 
 @stop

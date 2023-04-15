@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QuestionnaireController;
@@ -103,3 +104,6 @@ Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
 Route::get('kivy/question', [QuestionController::class, 'indexmobil']);
 
 Route::get('kivy/question/{id}/', [QuestionController::class, 'indexmobilID']);
+
+// EQUIP 2
+Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificarDatos']);

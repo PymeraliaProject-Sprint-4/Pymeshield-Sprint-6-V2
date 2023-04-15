@@ -173,8 +173,7 @@
                     <tbody>
                         @foreach ($assigned_questions as $question)
                             @php($condition1 = $questionnaire->questions->where('id', $question->id)->isNotEmpty())
-                            <tr
-                                class="bg-orange-50 hover:bg-orange-100 text-center">
+                            <tr class="bg-orange-50 hover:bg-orange-100 text-center">
                                 <td class="p-4 w-4">
                                     <div class="flex items-center">
 
@@ -184,8 +183,7 @@
                                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                     </div>
                                 </td>
-                                <th scope="row"
-                                    class="px-6 py-3 uppercase">
+                                <th scope="row" class="px-6 py-3 uppercase">
                                     {{ $question->name }}
                                 </th>
                                 <td class="px-6 py-4">
@@ -198,9 +196,8 @@
             </form>
         </div>
     </div>
-    <script>
+    <component :is="'script'">
         function checkUncheckAssign(main) {
-            console.log("main", main.checked);
             var all = document.querySelectorAll('[id^="question-assign-"]');
             for (var a = 0; a < all.length; a++) {
                 all[a].checked = main.checked;
@@ -208,11 +205,10 @@
         }
 
         function checkUncheckUnAssign(main) {
-            console.log("main", main.checked);
             var all = document.querySelectorAll('[id^="question-unAssign-"]');
             for (var a = 0; a < all.length; a++) {
                 all[a].checked = main.checked;
             }
         }
-    </script>
+    </component>
 @endsection

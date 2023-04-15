@@ -95,7 +95,6 @@ Route::post('update-profile-image', [UserController::class, 'updateProfileImage'
 Route::post('delete-profile-image', [UserController::class, 'delete'])->name('deleteProfileImage')->middleware('auth');
 Route::post('change-password', [UserController::class, 'changePassword'])->name('changePassword');
 Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');
-Route::get('Perfil_Personal/Editar_Perfil', [UserController::class, 'editarUsuario'])->name('Editar-Perfil')->middleware('auth');
 Route::patch('Perfil_Personal/Editar_Perfil', [UserController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 //Admin
 Route::get('PerfilPersonal_Admin/EditarPerfilAdmin', [UserController::class, 'EditarPerfilAdmin'])->name('EditarPerfilAdmin')->middleware('auth');
@@ -197,6 +196,7 @@ Route::get('emblems/restaurar', [EmblemController::class, 'restaurar'])->name('e
 Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth', 'check_access_admin');
 Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
 
+// por revisar
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
@@ -240,8 +240,10 @@ Route::put('tasks-update/{id}', [TaskController::class, 'updateState'])->name('u
 Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-gantt')->middleware('auth', 'check_access_client');
 
 // Listar Presuspuestos
+//por revisar
 Route::get('listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
 Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+//por revisar
 Route::get('listado_presupuestos', [BudgetController::class, 'list'])->middleware('auth', 'check_access_client');
 
 /** ----- FINAL EQUIP 4 ------  */
@@ -271,13 +273,15 @@ Route::post('devices/edit', [DevicesController::class, 'edit'])->middleware('aut
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
+//por revisar
 Route::get('inventario', function () {
     return view('inventario');
 })->middleware('auth', 'check_access_client');
-
+//por revisar
 Route::get('listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
 
 // Imatges
+//por revisar
 Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth', 'check_access_admin');
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');

@@ -122,6 +122,17 @@ import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
 export default {
 
+    props: {
+    course: {
+      type: Number,
+      required: true
+    },
+    activity: {
+      type: Number,
+      required: true
+    }
+  },
+
     components: {
         VPagination
     },
@@ -144,8 +155,8 @@ export default {
 
     methods: {
         loadDeliveries(page = 1) {
-            const courseId = this.$route.params.id;
-            const activityId = this.$route.params.activityId;
+            const courseId = this.course;
+            const activityId = this.activity;
 
             axios
                 .get(`/CursosCalificar/${courseId}/activities-Datos/${activityId}?page=${page}`)
@@ -179,7 +190,7 @@ export default {
         submitGrade(event) {
             event.preventDefault()
             const userId = this.currentUser.id;
-            const activityId = this.$route.params.activityId;
+            const activityId = this.activity;
             const grade = this.currentUser.grade;
 
             if (grade > 10) {
@@ -205,8 +216,6 @@ export default {
 }
 </script>
 <script setup>
-import { ref } from 'vue'
 import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
-const open_edit = ref(false)
 </script>

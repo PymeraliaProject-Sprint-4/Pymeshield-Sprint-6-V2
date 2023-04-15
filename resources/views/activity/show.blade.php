@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    <router-view />
+    <deliveries :course="{{ $course->id }}" :activity="{{ $activity->id }}" />
 
 @stop
