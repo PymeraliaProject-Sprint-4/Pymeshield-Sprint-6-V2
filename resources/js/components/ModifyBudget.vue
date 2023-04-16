@@ -115,7 +115,7 @@ import {
     ListboxOption,
 } from '@headlessui/vue'
 import axios from 'axios';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
@@ -208,7 +208,13 @@ export default {
                 }
                 this.getTasks();
             }).catch(function (error) {
-                // swal("Oh no!", "Algo no funciona!", "danger");
+                /*
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
+                */
             });
         },
 
@@ -222,7 +228,13 @@ export default {
                     this.getTotal()
                     this.getTasks();
                 }).catch(function (error) {
-                    // swal("Oh no!", "Algo no funciona!", "danger");
+                    /*
+                    Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
+                    */
                 })
             }
                 , 900
@@ -282,14 +294,24 @@ export default {
                 this.idTask = ''
                 this.getTotal()
                 this.getTasks()
-                // swal("Editada!", "La tarea ha sido editada!", "success");
+                /*
+                Swal.fire({
+                    title: 'Editada!',
+                    text: 'La tarea ha sido editada!',
+                    icon: 'success',
+                });
+                */
                 if (value == 'Me lo gestiono yo') {
                     this.pricecol = true
                 } else {
                     this.pricecol = false
                 }
             }).catch(function (error) {
-                swal("Oh no!", "Algo no funciona!", "danger");
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
             });
         },
     }

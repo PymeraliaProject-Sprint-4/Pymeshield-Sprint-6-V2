@@ -262,7 +262,7 @@
 <script>
 //import { Modal } from 'flowbite';
 import axios from 'axios';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 export default {
     mounted() {
@@ -318,12 +318,20 @@ export default {
                     this.getTasks();
                     this.buscado = null
                 }).catch(function (error) {
-                    swal("Oh no!", "Algo no funciona!", "danger");
+                    Swal.fire({
+                        title: 'Oh no!',
+                        text: 'Algo no funciona!',
+                        icon: 'danger',
+                    });
                 });
-            }else{
+            } else {
                 this.url = 'tasks-data/';
                 this.getTasks()
-                swal("Vacío!", "No has introducido los datos!", "danger");
+                Swal.fire({
+                    title: 'Vacío!',
+                    text: 'No has introducido los datos!',
+                    icon: 'danger',
+                });
             }
         },
 
@@ -385,9 +393,17 @@ export default {
                 this.dataTask = { recommendation: '', accepted: '', state: '', user_id: '', price: '', questionnaire_id: '', start_date: '', final_date: '' }
                 this.getTasks()
                 this.modal.hide();
-                swal("Creada!", "La tarea ha sido creada!", "success");
+                Swal.fire({
+                    title: 'Creada!',
+                    text: 'La tarea ha sido creada!',
+                    icon: 'success',
+                });
             }).catch(function (error) {
-                swal("Oh no!", "Algo no funciona!", "danger");
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
             });
         },
         //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos
@@ -404,11 +420,19 @@ export default {
                 this.idTask = ''
                 this.getTasks()
                 this.modal.hide();
-                swal("Editada!", "La tarea " + this.dataTask.recommendation + " ha sido editada!", "success");
+                Swal.fire({
+                    title: 'Editada!',
+                    text: 'La tarea ' + this.dataTask.recommendation + ' ha sido editada!',
+                    icon: 'success',
+                });
                 // setTimeout(function () {
                 // }, 2000);
             }).catch(function (error) {
-                swal("Oh no!", "Algo no funciona!", "danger");
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
             });
         },
         // Se muestra un cuadro de dialogo para confirmar la eliminacion de la tarea
@@ -420,28 +444,40 @@ export default {
         // El metodo then recibe la respuesta de la Confirmacion y se realiza la accion correspondiente, sea la eliminacion o un mensaje de que la tarea no se eliminó
         // Si se confirma la eliminación, se hace una petición HTTP DELETE a través de axios y se muestra un mensaje de éxito
         // Si hay algún error en la operación, se muestra un mensaje de error
+
         openDeleteTask(task_data) {
-            swal({
+            Swal.fire({
                 title: "Are you sure?",
                 text: "Once deleted, you will not be able to recover the task " + task_data.recommendation + " !",
                 icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        axios.delete('delete-task/' + task_data.id).then(res => {
-                            this.getTasks()
-                            swal("Poof! Esta tarea ha sido eliminada!", {
-                                icon: "success",
-                            });
-                        }).catch(function (error) {
-                            swal("Oh no!", "Algo no funciona!", "danger");
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('delete-task/' + task_data.id).then(res => {
+                        this.getTasks()
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Poof!',
+                            text: 'Esta tarea ha sido eliminada!'
                         });
-                    } else {
-                        swal("La tarea " + task_data.recommendation + " no se eliminó!");
-                    }
-                });
+                    }).catch(function (error) {
+                        Swal.fire({
+                            title: 'Oh no!',
+                            text: 'Algo no funciona!',
+                            icon: 'danger',
+                        });
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'La tarea ' + task_data.recommendation + ' no se eliminó!',
+                        icon: 'info'
+                    });
+                }
+            });
         },
     }
 }
