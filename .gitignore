@@ -21,3 +21,4 @@ _ide_helper_models.php
 .phpstorm.meta.php
 /public/files/*.txt
 /public/img/profile_images/*
+/public/img/imatgesemblemes/*

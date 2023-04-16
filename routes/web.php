@@ -55,11 +55,6 @@ Route::get('language/{locale}', function ($locale) {
 //Ruta vista dashboard cliente
 Route::get('home', [UserController::class, 'dashboardUser'])->middleware(['auth', 'check_access_client']);
 
-// revisar esta ruta y componente
-Route::get('/request', function () {
-    return view('http.show');
-})->middleware(['auth', 'check_access_client']);
-
 // login / logout
 Route::get('/', [AuthController::class, 'index'])->name('index')->middleware('guest');
 Route::post('/', [AuthController::class, 'login'])->middleware('guest')->name('login');

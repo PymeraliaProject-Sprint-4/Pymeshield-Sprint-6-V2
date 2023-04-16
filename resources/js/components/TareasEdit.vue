@@ -263,7 +263,6 @@
 //import { Modal } from 'flowbite';
 import axios from 'axios';
 import swal from 'sweetalert';
-import $ from 'jquery';
 
 export default {
     mounted() {

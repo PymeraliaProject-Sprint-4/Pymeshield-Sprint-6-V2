@@ -1,4 +1,3 @@
-import 'jquery/dist/jquery.min.js'
 //defineAsync para cargar los componentes de forma asíncrona
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";
 import laravelPermissionToVuejs from 'laravel-permission-to-vuejs';
@@ -21,9 +20,6 @@ app.component('admin-layout', admin);
 
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
 app.component('list-company', listcompany);
-
-const home2 = defineAsyncComponent(() => import('./components/LanguageSwitcher.vue'));
-app.component('language-switcher', home2);
 
 const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
 app.component('editor', quillEditor);
@@ -61,10 +57,6 @@ app.component('chart-user', chartUser);
 
 const chartAdmin = defineAsyncComponent(() => import('./components/chartAdmin.vue'));
 app.component('chart-admin', chartAdmin);
-
-
-const httpComp = defineAsyncComponent(() => import('./components/HttpComponent.vue'));
-app.component('http', httpComp);
 
 //EQUIPO2
 
