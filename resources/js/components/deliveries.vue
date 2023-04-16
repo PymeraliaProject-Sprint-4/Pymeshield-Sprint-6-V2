@@ -32,8 +32,7 @@
                     <td class="px-6 py-4">
                         <a href="#"
                             class="text-base font-medium bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded-full transition-colors duration-300"
-                            @click="openModal(users)"
-                            data-testid="modal-button">
+                            @click="openModal(users)" data-testid="modal-button">
                             {{ $t('Qualify') }}
                         </a>
                     </td>
@@ -42,9 +41,7 @@
         </table>
     </div>
     <div class="pagination flex justify-between mt-4">
-        <v-pagination class="text-gray-600 border rounded-md border-gray-300 shadow-sm" v-model="page" :pages="5"
-            :range-size="1" active-class="bg-blue-500 text-white" active-color="#DCEDFF"
-            @update:modelValue="loadDeliveries" />
+        <TailwindPagination :data="user" @pagination-change-page="loadDeliveries" />
         <div>
             <button
                 class="ml-1 px-3 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-400 focus:outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
@@ -78,7 +75,8 @@
                                 </div>
 
                                 <div class="mb-6">
-                                    <label for="grade" class="block text-gray-700 font-bold mb-2">{{ $t('Qualification') }}</label>
+                                    <label for="grade" class="block text-gray-700 font-bold mb-2">{{ $t('Qualification')
+                                    }}</label>
                                     <input type="number" id="grade" name="grade"
                                         class="border-gray-300 rounded-md w-full py-2 px-3" v-model="currentUser.grade"
                                         :class="{ 'border-red-500': error !== '' }" @input="error = ''">
@@ -86,7 +84,8 @@
                                 </div>
 
                                 <div class="mb-6">
-                                    <label for="feedback" class="block text-gray-700 font-bold mb-2">{{ $t('Comment') }}</label>
+                                    <label for="feedback" class="block text-gray-700 font-bold mb-2">{{ $t('Comment')
+                                    }}</label>
                                     <textarea id="feedback" name="feedback" rows="3"
                                         class="border-gray-300 rounded-md w-full py-2 px-3"
                                         v-model="currentUser.feedback"></textarea>
@@ -116,25 +115,19 @@
 
 <script>
 import axios from "axios";
-import VPagination from "@hennge/vue3-pagination";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
-
+import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
 
     props: {
-    course: {
-      type: Number,
-      required: true
-    },
-    activity: {
-      type: Number,
-      required: true
-    }
-  },
-
-    components: {
-        VPagination
+        course: {
+            type: Number,
+            required: true
+        },
+        activity: {
+            type: Number,
+            required: true
+        }
     },
 
     data() {
@@ -216,6 +209,6 @@ export default {
 }
 </script>
 <script setup>
-import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 </script>

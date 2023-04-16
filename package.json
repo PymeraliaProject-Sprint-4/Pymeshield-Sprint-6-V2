@@ -18,7 +18,6 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.4.0",
         "@headlessui/vue": "^1.7.13",
-        "@hennge/vue3-pagination": "^1.0.17",
         "@heroicons/vue": "^2.0.17",
         "@infectoone/vue-ganttastic": "^2.1.4",
         "@vueup/vue-quill": "^1.1.1",
@@ -30,7 +29,6 @@
         "laravel-vue-i18n": "^2.4.2",
         "laravel-vue-pagination": "^4.1.0",
         "sweetalert2": "^11.4.8",
-        "vue": "^3.2.47",
-        "vue-paginate": "^3.6.0"
+        "vue": "^3.2.47"
     }
 }
