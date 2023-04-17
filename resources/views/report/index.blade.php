@@ -6,10 +6,6 @@
         <table class="table-auto w-full shadow-lg rounded-lg">
             <thead>
                 <tr class="bg-orange-400 text-white">
-
-                    <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('table.id') }}
-                    </th>
                     <th scope="col" class="px-6 py-3 uppercase">
                         {{ __('table.name') }}
                     </th>
@@ -30,9 +26,6 @@
                 @foreach ($reports as $report)
                     <tr class="bg-orange-50 hover:bg-orange-100 text-center">
 
-                        <th scope="row" class="px-6 py-3 uppercase">
-                            {{ $report->id }}
-                        </th>
                         <td class="px-6 py-4">
                             {{ $report->name }}
                         </td>
