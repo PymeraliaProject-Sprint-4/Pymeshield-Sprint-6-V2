@@ -112,6 +112,9 @@ app.component('gantt', gantt);
 const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
 app.component('kanban', kanban);
 
+const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
+app.component('show_budgets', budgets);
+
 //EQUIP 5
 const listdevices = defineAsyncComponent(() => import('./components/ListDevices.vue'));
 app.component('list-devices', listdevices);
