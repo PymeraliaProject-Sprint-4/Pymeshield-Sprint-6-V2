@@ -236,8 +236,18 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 
 // Listar Presuspuestos
 //por revisar
-Route::get('listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
-Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+//Route::get('listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
+
+//per borrar
+//Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+
+Route::get('show_budgets', function () {
+    return view('Presupuestos/show_budgets_view/index');
+})->name('show_budgets')->middleware('auth', 'check_access_admin');
+
+Route::get('/show_budgets/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
+
+
 //por revisar
 Route::get('listado_presupuestos', [BudgetController::class, 'list'])->middleware('auth', 'check_access_client');
 
