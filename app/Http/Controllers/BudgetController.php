@@ -81,6 +81,8 @@ class BudgetController extends Controller
 
 
     /** CONTROLADORES DE VISTAS */
+
+    /* Aixo no se que collons fa i no u astic utilitzant aixi que yolo
     public function LlistatPresupuestos()
     {
 
@@ -88,6 +90,7 @@ class BudgetController extends Controller
 
         return view('Presupuestos.listado_presupuestos.index', compact('budgets'));
     }
+    */
 
     //Vista pagina crear presupuesto
     public function crearPresupuesto()
@@ -106,7 +109,8 @@ class BudgetController extends Controller
             ->join('companies', 'companies.id', '=', 'users.company_id')
             ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
             ->orderBy('budgets.id', 'asc')->get();
-        return view('Presupuestos.llista_pressupostos.index', compact('data'));
+        return response()->json($data); //Retornar json vara vue
+        //return view('Presupuestos.show_budgets_view.index', compact('data')); //Retornar para blade 
     }
     /**
     public function list()
