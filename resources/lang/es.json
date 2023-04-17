@@ -263,5 +263,6 @@
     "Update" : "Actualizar",
     "ErrorMsg.1" : "La nota no puede ser mallor que 10",
     "ErrorMsg.2" : "La nota no puede ser menor que 0",
-    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos."
+    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos.",
+    "validation.email" : "Formato del correo electrónico no es válido."
 }

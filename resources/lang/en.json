@@ -251,5 +251,6 @@
     "emblem" : "emblem",
     "Emblem" : "Emblem",
     "Restore" : "Restore",
-    "assignable.users" : "Asignable Users"
+    "assignable.users" : "Asignable Users",
+    "validation.email" : "Email format is invalid."
 }
