@@ -82,7 +82,8 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        return Report::all();
+        $data = Report::all();
+        return response()->json($data);
     }
     function indexmobilID($id)
     {
