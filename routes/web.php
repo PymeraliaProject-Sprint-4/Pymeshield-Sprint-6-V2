@@ -220,7 +220,7 @@ Route::get('modificar_presupuesto', function () {
 
 Route::get('gantt', function () {
     return view('Tareas/gantt/index');
-})->name('gantte')->middleware('auth', 'check_access_client');
+})->name('gantt')->middleware('auth', 'check_access_client');
 
 // Asignar Precios
 Route::get('Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar-Precios')->middleware('auth', 'check_access_admin'); //Vista para la pagina Aceptar-Presupuestos
