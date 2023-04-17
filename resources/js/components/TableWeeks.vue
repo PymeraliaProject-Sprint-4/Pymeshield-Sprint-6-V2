@@ -8,7 +8,7 @@
                     <th class="px-6 py-3 uppercase">{{ $t('impact') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('state') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('date') }}</th>
-                    <th class="px-6 py-3 uppercase"></th>
+                    <th class="px-6 py-3 uppercase"></th>   
                 </tr>
             </thead>
             <tbody v-if="weekTasks != 0">
