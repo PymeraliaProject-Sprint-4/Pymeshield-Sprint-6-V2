@@ -1,7 +1,8 @@
 <template>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">{{ $t('CategoriesActivities') }} <span
-                class="text-transparent bg-clip-text bg-gradient-to-r to-orange-500 from-orange-300">"{{ courseName }}"</span>
+                class="text-transparent bg-clip-text bg-gradient-to-r to-orange-500 from-orange-300">"{{ courseName
+                }}"</span>
         </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div v-for="(category, index) in categories" :key="index"
@@ -13,11 +14,8 @@
                     <ul>
                         <li v-for="(activity, index) in category.activities" :key="index"
                             class="text-gray-700 dark:text-gray-400">
-                            <router-link
-                                :to="{ name: 'ActivityDeliveries', params: { id: $route.params.id, activityId: activity.id } }">
-                                {{ activity.name }}
-                            </router-link>
-
+                            <a :href="`/CursosCalificar/${this.id}/activities/${activity.id}`">{{ activity.name
+                            }}</a>
                         </li>
                     </ul>
                 </div>
@@ -37,6 +35,12 @@
 
 <script>
 export default {
+    props: {
+        id: {
+            type: Number,
+            required: true
+        }
+    },
     data() {
         return {
             courseName: "",
@@ -44,7 +48,7 @@ export default {
         }
     },
     mounted() {
-        fetch(`/activitiesProva/${this.$route.params.id}/activities-Datos`)
+        fetch(`/activitiesProva/${this.id}/activities-Datos`)
             .then(response => response.json())
             .then(data => {
                 this.courseName = data.courseName;

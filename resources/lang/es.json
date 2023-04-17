@@ -25,6 +25,7 @@
     "users" : "Usuarios",
     "edit-terms": "Editar términos y condiciones",
     "edit-privacy": "Editar política de privacidad",
+    "edit-cookies": "Editar Cookies",
     "close-sidebar": "Cerrar barra lateral de navegación",
     "open-sidebar": "Abrir barra lateral de navegación",
     "search": "Buscar",
@@ -262,5 +263,6 @@
     "Update" : "Actualizar",
     "ErrorMsg.1" : "La nota no puede ser mallor que 10",
     "ErrorMsg.2" : "La nota no puede ser menor que 0",
-    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos."
+    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos.",
+    "validation.email" : "Formato del correo electrónico no es válido."
 }

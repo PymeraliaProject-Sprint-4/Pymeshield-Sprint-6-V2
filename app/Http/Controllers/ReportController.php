@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
@@ -83,7 +82,8 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        return Report::all();
+        $data = Report::all();
+        return response()->json($data);
     }
     function indexmobilID($id)
     {

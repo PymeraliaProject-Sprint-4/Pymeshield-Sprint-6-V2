@@ -18,6 +18,11 @@ class DeliveryController extends Controller
         return view('activity.indexProva');
     }
 
+    public function courseActivities($id)
+    {
+        return view('activity.categorias_curso', compact('id'));
+    }
+
     public function CursosCalificarDatos() //Acció per agarrar les dades de la BD
     {
         $courses = Course::get()->map(function ($course) {

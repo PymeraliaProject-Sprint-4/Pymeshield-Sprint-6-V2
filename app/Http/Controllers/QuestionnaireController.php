@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\Questionnaire;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
 {
     public function index()
-    {
+    {   
         $questionnaires = Questionnaire::where('hidden', false)
-            ->orWhereNull('hidden')
-            ->Paginate(10);
+        ->orWhereNull('hidden')
+        ->Paginate(10);
 
         return view('questionnaire.index', compact('questionnaires'));
+        
     }
 
     public function hidden()

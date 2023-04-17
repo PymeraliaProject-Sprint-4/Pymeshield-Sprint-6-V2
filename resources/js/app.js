@@ -1,4 +1,3 @@
-import 'jquery/dist/jquery.min.js'
 //defineAsync para cargar los componentes de forma asíncrona
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";
 import laravelPermissionToVuejs from 'laravel-permission-to-vuejs';
@@ -21,9 +20,6 @@ app.component('admin-layout', admin);
 
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
 app.component('list-company', listcompany);
-
-const home2 = defineAsyncComponent(() => import('./components/LanguageSwitcher.vue'));
-app.component('language-switcher', home2);
 
 const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
 app.component('editor', quillEditor);
@@ -62,11 +58,7 @@ app.component('chart-user', chartUser);
 const chartAdmin = defineAsyncComponent(() => import('./components/chartAdmin.vue'));
 app.component('chart-admin', chartAdmin);
 
-
-const httpComp = defineAsyncComponent(() => import('./components/HttpComponent.vue'));
-app.component('http', httpComp);
-
-//registramos los componentes
+//EQUIPO2
 
 const formComponent = defineAsyncComponent(() => import('./components/Form.vue'));
 app.component('form-component', formComponent);
@@ -81,7 +73,6 @@ const createReport = defineAsyncComponent(() => import('./components/CreateRepor
 app.component('create-report', createReport);
 
 
-
 //EQUIP3
 const index_course = defineAsyncComponent(() => import('./components/course/index_course.vue'));
 app.component('index_course', index_course);
@@ -92,6 +83,14 @@ app.component('hidden_course', hidden_course);
 const client_course = defineAsyncComponent(() => import('./components/course/client_course.vue'));
 app.component('client_course', client_course);
 
+const cursos = defineAsyncComponent(() => import('./components/Cursos.vue'));
+app.component('cursos', cursos);
+
+const categoriasCurso = defineAsyncComponent(() => import('./components/Categorias_curso.vue'));
+app.component('categorias-curso', categoriasCurso);
+
+const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
+app.component('deliveries', deliveries);
 
 // EQUIP 4
 
