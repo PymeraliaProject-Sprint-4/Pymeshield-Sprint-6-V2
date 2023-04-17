@@ -262,5 +262,6 @@
     "Comment" : "Comentari",
     "Update" : "Actualitzar",
     "ErrorMsg.1" : "La nota no pot ser major que 10",
-    "ErrorMsg.2" : "La nota no pot ser menor que 0"
+    "ErrorMsg.2" : "La nota no pot ser menor que 0",
+    "edituser" : "Editar Usuari"
 }

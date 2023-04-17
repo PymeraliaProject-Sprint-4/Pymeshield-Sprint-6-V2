@@ -82,7 +82,7 @@ Route::get('userList/userListingHidden', [UserController::class, 'userListing'])
 
 Route::post('/addUser', [UserController::class, 'addUser'])->name('addUser');
 Route::post('/userDown', [UserController::class, 'userDown']);
-Route::post('/editUser', [UserController::class, 'editUser']);
+Route::post('/editUser', [UserController::class, 'editUser'])->name('editUser');
 
 
 Route::get('/reset-password/{token}', [AuthController::class, 'activateUser'])->middleware('guest')->name('password.reset');
