@@ -251,5 +251,13 @@
     "emblem" : "emblem",
     "Emblem" : "Emblem",
     "Restore" : "Restore",
-    "assignable.users" : "Asignable Users"
+    "assignable.users" : "Asignable Users",
+    "budget.budget-list-title" : "Budget list",
+    "budget.client-name" : "Client name",
+    "budget.client-surname" : "Client surname",
+    "budget.company-name" : "Company",
+    "budget.creation-date" : "Date created",
+    "budget.updated-date" : "Last updated",
+    "budget.status" : "Status",
+    "budget.price" : "Price"
 }

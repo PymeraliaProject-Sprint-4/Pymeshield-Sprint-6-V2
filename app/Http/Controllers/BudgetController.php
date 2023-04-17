@@ -100,7 +100,7 @@ class BudgetController extends Controller
 
 
     //READ - Leer - Listar
-    public function index()
+    public function listAllBudgets()
     {
 
         $data = DB::table('tasks')
@@ -112,6 +112,7 @@ class BudgetController extends Controller
         return response()->json($data); //Retornar json vara vue
         //return view('Presupuestos.show_budgets_view.index', compact('data')); //Retornar para blade 
     }
+
     /**
     public function list()
     {
