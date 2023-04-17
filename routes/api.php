@@ -12,6 +12,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ Route::post('/enviar-pressupost', [BudgetController::class, 'store'])->name('env
 
 // ModifyBudget
 Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
+Route::get('/couser-user-data', [CourseController::class, 'course_User'])->name('couser-user-data');
 Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
 Route::get('/all-data-manages', [BudgetController::class, 'showAllManages'])->name('all-data-manages');
 Route::get('/buscador-budgetTaks/{buscado}', [BudgetController::class, 'search'])->name('buscador-budgetTaks');

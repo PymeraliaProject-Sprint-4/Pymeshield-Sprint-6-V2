@@ -160,11 +160,11 @@ class CourseController extends Controller
 
         // Obtener todos los cursos para actualizar la tabla
         $courses =  Course::whereNull('hidden')
-        ->orderBy('updated_at', 'desc')
-        ->with(['users' => function ($query) {
-            $query->select('user_id');
-        }])
-        ->get();
+            ->orderBy('updated_at', 'desc')
+            ->with(['users' => function ($query) {
+                $query->select('user_id');
+            }])
+            ->get();
 
         // Devolver los cursos actualizados en formato JSON
         return response()->json([
@@ -207,9 +207,15 @@ class CourseController extends Controller
         ]);
     }
 
+    public function course_User()
+    {
+        $data = DB::table('course_user')
+            ->join('courses', 'courses.id', '=', 'course_user.course_id')
+            ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
+            ->where('user_id', '=', 2)
+            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+            ->get();
 
+        return response()->json($data);
+    }
 }
-
-
-
-
