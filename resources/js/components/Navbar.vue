@@ -86,7 +86,7 @@
                             <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
                             <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
                         </DisclosureButton>
-                        <div class="font-semibold text-xl ml-2"><a href="#">pymeshield</a></div>
+                        <div class="font-semibold text-xl ml-2"><a href="/home">PymeShield</a></div>
                     </div>
                 </div>
             </div>
@@ -102,39 +102,43 @@
                     </DisclosureButton>
                 </div>
                 <div class="border-t border-gray-700 pt-4 pb-3">
-                    <div class="flex items-center px-5">
-                        <div class="flex-shrink-0">
-                            <vue-avatar v-if="!user.profile_image" :size="40" :username="user.name + user.last_name" />
-                            <vue-avatar v-else :size="40" :img-src="'/img/profile_images/'+user.profile_image" />
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-base font-medium leading-none text-gray-900">{{ user.name + ' ' + user.last_name }}</div>
-                            <div class="text-sm font-medium leading-none text-gray-700">{{ user.email }}</div>
-                        </div>
-                        <Menu as="div" class="relative ml-auto">
-                            <div>
-                                <MenuButton
-                                    class="rounded-full bg-white p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                    <span class="sr-only">Abrir menú de usuario</span>
-                                    <LanguageIcon class="h-8 w-8 text-blue-500" aria-hidden="true" />
-                                </MenuButton>
+                    <div class="relative flex flex-col ml-auto px-5">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <vue-avatar v-if="!user.profile_image" :size="40" :username="user.name + user.last_name" />
+                                <vue-avatar v-else :size="40" :img-src="'/img/profile_images/'+user.profile_image" />
                             </div>
-                            <transition enter-active-class="transition ease-out duration-100"
-                                        enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                        leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                                        leave-to-class="transform opacity-0 scale-95">
-                                <MenuItems
-                                    class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
-                                        <a :href="item.href"
-                                        :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
-                                        <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
-                                            item.name
-                                        }}</a>
-                                    </MenuItem>
-                                </MenuItems>
-                            </transition>
-                        </Menu>
+                            <div class="ml-3">
+                                <div class="text-base font-medium leading-none text-gray-900">{{ user.name + ' ' + user.last_name }}</div>
+                                <div class="text-sm font-medium leading-none text-gray-700">{{ user.email }}</div>
+                            </div>
+                        </div>
+                        <div class="flex mt-2">
+                            <Menu as="div">
+                                <div>
+                                    <MenuButton
+                                        class="rounded-full bg-white p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                        <span class="sr-only">Abrir menú de usuario</span>
+                                        <LanguageIcon class="h-8 w-8 text-blue-500" aria-hidden="true" />
+                                    </MenuButton>
+                                </div>
+                                <transition enter-active-class="transition ease-out duration-100"
+                                            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                                            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+                                            leave-to-class="transform opacity-0 scale-95">
+                                    <MenuItems
+                                        class="absolute z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
+                                            <a :href="item.href"
+                                            :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                                            <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
+                                                item.name
+                                            }}</a>
+                                        </MenuItem>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
+                        </div>
                     </div>
                     <div class="mt-3 space-y-1 px-2">
                         <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href"
