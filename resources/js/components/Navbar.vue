@@ -1,15 +1,35 @@
 <template>
     <header class="hidden md:block">
         <div class="flex justify-between items-center p-3">
-            <div class="font-semibold text-xl ml-2"><a href="#"><img class="inline-block mr-2 w-16"
-                        src="/img/logo_pymeshield.png" alt="Logo">pymeshield</a>
+            <div class="font-semibold text-xl ml-2"><a href="/home"><img class="inline-block mr-2 w-16"
+                        src="/img/logo_pymeshield.png" alt="Logo">PymeShield</a>
             </div>
             <div class="ml-4 flex justify-end items-center md:ml-6">
-                <button type="button"
-                    class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                    <span class="sr-only">{{ $t('notifications') }}</span>
-                    <BellIcon class="h-8 w-8" aria-hidden="true" />
-                </button>
+
+                <Menu as="div" class="relative ml-3">
+                    <div>
+                        <MenuButton
+                            class="rounded-full bg-gray-200 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <span class="sr-only">Abrir menú de usuario</span>
+                            <LanguageIcon class="h-8 w-8 text-blue-500" aria-hidden="true" />
+                        </MenuButton>
+                    </div>
+                    <transition enter-active-class="transition ease-out duration-100"
+                                enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                                leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+                                leave-to-class="transform opacity-0 scale-95">
+                        <MenuItems
+                            class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
+                                <a :href="item.href"
+                                :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                                <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
+                                    item.name
+                                }}</a>
+                            </MenuItem>
+                        </MenuItems>
+                    </transition>
+                </Menu>
 
                 <!-- Profile dropdown -->
                 <Menu as="div" class="relative ml-3">
@@ -27,7 +47,7 @@
                         leave-from-class="transform opacity-100 scale-100"
                         leave-to-class="transform opacity-0 scale-95">
                         <MenuItems
-                            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                             <a :href="item.href"
                                 :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
@@ -91,11 +111,30 @@
                             <div class="text-base font-medium leading-none text-gray-900">{{ user.name + ' ' + user.last_name }}</div>
                             <div class="text-sm font-medium leading-none text-gray-700">{{ user.email }}</div>
                         </div>
-                        <button type="button"
-                            class="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span class="sr-only">Ver notificaciones</span>
-                            <BellIcon class="h-6 w-6" aria-hidden="true" />
-                        </button>
+                        <Menu as="div" class="relative ml-auto">
+                            <div>
+                                <MenuButton
+                                    class="rounded-full bg-white p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                    <span class="sr-only">Abrir menú de usuario</span>
+                                    <LanguageIcon class="h-8 w-8 text-blue-500" aria-hidden="true" />
+                                </MenuButton>
+                            </div>
+                            <transition enter-active-class="transition ease-out duration-100"
+                                        enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                                        leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+                                        leave-to-class="transform opacity-0 scale-95">
+                                <MenuItems
+                                    class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
+                                        <a :href="item.href"
+                                        :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                                        <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
+                                            item.name
+                                        }}</a>
+                                    </MenuItem>
+                                </MenuItems>
+                            </transition>
+                        </Menu>
                     </div>
                     <div class="mt-3 space-y-1 px-2">
                         <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href"
@@ -112,7 +151,7 @@
 
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { AcademicCapIcon, Bars3Icon, BellIcon, CalendarDaysIcon, CurrencyEuroIcon, HomeIcon, QuestionMarkCircleIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, CogIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/outline'
+import { AcademicCapIcon, Bars3Icon, BellIcon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QuestionMarkCircleIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, CogIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, ViewIcon, DocumentIcon, QueueListIcon,} from '@heroicons/vue/24/outline'
 import VueAvatar from "@webzlodimir/vue-avatar";
 import "@webzlodimir/vue-avatar/dist/style.css";
 
@@ -123,12 +162,14 @@ export default {
         return {
             user: window.authUser,
             navigation: [
-                { name: this.$t('home'), href: '/home', current: true, icon: HomeIcon },
-                { name: this.$t('surveys'), href: '#', current: false, icon: QuestionMarkCircleIcon },
-                { name: this.$t('formation'), href: '#', current: false, icon: AcademicCapIcon },
-                { name: this.$t('budgets'), href: '#', current: false, icon: CurrencyEuroIcon },
-                { name: this.$t('calendar'), href: '#', current: false, icon: CalendarDaysIcon },
-                { name: this.$t('inventory'), href: '#', current: false, icon: QrCodeIcon },
+                { name: this.$t('navbar.home'), href: '/home', current: false, icon: HomeIcon },
+                { name: this.$t('navbar.questionnaires'), href: '/audit', current: false, icon: QueueListIcon },
+                { name: this.$t('navbar.reports'), href: '/report', current: false, icon: DocumentDuplicateIcon },
+                { name: this.$t('formation'), href: '/course/client', current: false, icon: AcademicCapIcon },
+                { name: this.$t('budgets'), href: '/listado_presupuestos', current: false, icon: CurrencyEuroIcon },
+                { name: this.$t('kanban'), href: '/kanban', current: false, icon: ViewColumnsIcon },
+                { name: this.$t('navbar.gantt'), href: '/gantt', current: false, icon: CalendarDaysIcon },
+                { name: this.$t('inventory'), href: '/inventario', current: false, icon: QrCodeIcon },
             ],
         };
     },
@@ -139,22 +180,32 @@ export default {
                     { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
                     { name: this.$t('settings'), href: '#', icon: CogIcon },
                     { name: this.$t('admin-mode'), href: '/admin', icon: WrenchScrewdriverIcon },
-                    { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon },
-                    { name: this.$t('english'), href: '/language/en', icon: LanguageIcon },
-                    { name: this.$t('spanish'), href: '/language/es', icon: LanguageIcon },
-                    { name: this.$t('catalan'), href: '/language/ca', icon: LanguageIcon },
+                    { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style:"background-color: #EF4444;"  },
                 ];
             } else {
                 return [
                     { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
                     { name: this.$t('settings'), href: '#', icon: CogIcon },
-                    { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon },
-                    { name: this.$t('english'), href: '/language/en', icon: LanguageIcon },
-                    { name: this.$t('spanish'), href: '/language/es', icon: LanguageIcon },
-                    { name: this.$t('catalan'), href: '/language/ca', icon: LanguageIcon },
+                    { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style:"background-color: #EF4444;"  },
                 ];
             }
+        },
+        languaje() {
+            return[
+                { name: this.$t('english'), href: '/language/en', flag: '/img/english.svg' },
+                { name: this.$t('spanish'), href: '/language/es', flag: '/img/spanish.svg' },
+                { name: this.$t('catalan'), href: '/language/ca', flag: '/img/catalan.svg' },
+            ];
+
         }
     },
+    mounted() {
+    const currentUrl = window.location.pathname;
+    this.navigation.forEach((item) => {
+      if (currentUrl.startsWith(item.href)) {
+        item.current = true;
+      }
+    });
+  },
 }
 </script>
