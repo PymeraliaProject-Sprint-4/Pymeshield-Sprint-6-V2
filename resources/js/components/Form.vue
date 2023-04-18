@@ -263,8 +263,6 @@
 
 </template>
 <script>
-    import axios from 'axios';
-    // en export default en la funcion data tenemos que crear un objeto con las variables que recogeremos del componente
     export default {
         props: {
             errors: {
@@ -314,9 +312,6 @@
                 impact_false: '',
                 sending: false
             }
-        },
-        mounted() {
-            console.log('Component form mounted.')
         },
         methods: {
             saveTask() {

@@ -18,7 +18,7 @@
                                 name="questionnaire_name"
                                 id="questionnaire_name"
                                 v-model="questionnaire_name"
-                                required autofocus>
+                                autofocus>
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,9 @@
                                     :key="questionnaire.id">{{ questionnaire.autor }}
                             </option>
                         </select>
+                        <div v-for="(error, field) in errors" :key="field" class="text-red-500">
+                            {{ error[0] }}
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -57,6 +60,10 @@ import axios from 'axios';
 
 export default {
     props: {
+        errors: {
+            type: Array,
+            default: () => []
+        },
         questionnaires: {
             type: Array,
             default: () => []
@@ -64,6 +71,7 @@ export default {
     },
     data() {
         return {
+            errors: '',
             questionnaire_name: '',
             questionnaire_autor: '',
             questionnaire_date: '',
@@ -87,7 +95,7 @@ export default {
                     window.location.href = '/questionnaire/' + response.data.id + '/edit';
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    this.errors = error.response.data.errors;
                 })
 
         }
