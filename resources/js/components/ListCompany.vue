@@ -1,11 +1,17 @@
 <template>
-    <div class="grid justify-items-end mr-10">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 flex items-center"
-            @click="ModalCrear = true">
-            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-            <span class="ml-2">{{ $t('create-company') }}</span>
-        </button>
-    </div>
+<div class="flex justify-center mt-5">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center" @click="ModalCrear = true">
+        <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+        <span class="ml-2">{{ $t('create-company') }}</span>
+    </button>
+    <div class="w-4"></div> <!-- Espacio entre los botones -->
+    <button @click="redirectToDeletedCompany()" id="" class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+        <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+        {{ $t('Deleted.Course') }}
+    </button>
+</div>
+
+
     <div class="m-5">
         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
             <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
@@ -566,6 +572,10 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
+        },
+
+        redirectToDeletedCompany(){
+            window.location.href = "/company/hidden";
         }
     },
 };
@@ -574,7 +584,7 @@ export default {
 <script setup>
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 </script>
 
 
