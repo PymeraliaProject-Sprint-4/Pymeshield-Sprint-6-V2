@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    <categorias-curso :id="{{ $id }}">
 
+<categorias_curso/>
 @stop
