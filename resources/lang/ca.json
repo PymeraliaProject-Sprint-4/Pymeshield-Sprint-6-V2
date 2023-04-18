@@ -266,5 +266,10 @@
     "Comment" : "Comentari",
     "Update" : "Actualitzar",
     "ErrorMsg.1" : "La nota no pot ser major que 10",
-    "ErrorMsg.2" : "La nota no pot ser menor que 0"
+    "ErrorMsg.2" : "La nota no pot ser menor que 0",
+    "validation.email" : "Format del correu electrònic no vàlid.",
+    "validation.required.name" : "El camp de questionari és obligatori",
+    "validation.required.description" : "El camp de descripció és obligatori",
+    "validation.required.recommendation_true" : "Els camps de recomanació afirmativa son obligatoris",
+    "validation.required.recommendation_false" : "Els camps de recomanació negativa son obligatoris"
 }

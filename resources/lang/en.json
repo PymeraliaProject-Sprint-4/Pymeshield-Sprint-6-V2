@@ -256,7 +256,6 @@
     "QualifyCourse" : "Qualify courses",
     "Restore" : "Restore",
     "assignable.users" : "Asignable Users",
-    "validation.email" : "Email format is invalid.",
     "budget.budget-list-title" : "Budget list",
     "budget.client-name" : "Client name",
     "budget.client-surname" : "Client surname",
@@ -264,5 +263,10 @@
     "budget.creation-date" : "Date created",
     "budget.updated-date" : "Last updated",
     "budget.status" : "Status",
-    "budget.price" : "Price"
+    "budget.price" : "Price",
+    "validation.email" : "Email format is invalid.",
+    "validation.required.name" : "The question field is required",
+    "validation.required.description" : "The description field is required",
+    "validation.required.recommendation_true" : "The afirmative answers is required",
+    "validation.required.recommendation_false" : "The negative answers is required"
 }
