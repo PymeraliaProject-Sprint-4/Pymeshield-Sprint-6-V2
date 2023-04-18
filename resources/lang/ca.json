@@ -271,5 +271,6 @@
     "validation.required.name" : "El camp de pregunta és obligatori",
     "validation.required.description" : "El camp de descripció és obligatori",
     "validation.required.recommendation_true" : "Els camps de recomanació afirmativa son obligatoris",
-    "validation.required.recommendation_false" : "Els camps de recomanació negativa son obligatoris"
+    "validation.required.recommendation_false" : "Els camps de recomanació negativa son obligatoris",
+    "edituser" : "Editar Usuari"
 }

@@ -71,7 +71,7 @@ Route::get('userList/userListingHidden', [UserController::class, 'userListing'])
 
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
 Route::post('userDown', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth');
+Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User; // Agrega esta línea
+use App\Models\Company;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -31,12 +32,16 @@ class UserController extends Controller
     }
     public function userListing()
     {
-        $varusers = User::select(['id', 'name', 'last_name', 'nick_name', 'email', 'phone', 'company_id', 'password'])->whereNull('hidden')->get();
-
-        return $varusers;
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNull('users.hidden')
+            ->get();
+        return $userInfo;
     }
     public function userListingHidden()
     {
+
         $varusers = User::select(['id', 'name', 'last_name', 'nick_name', 'email', 'phone', 'company_id', 'password'])->whereNotNull('hidden')->get();
 
         return $varusers;
@@ -60,34 +65,35 @@ class UserController extends Controller
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        $user->company_id = $request['company_id'];
+        $user->company_name = $request['company_name'];
         $user->password = $request['password'];
         $user->save();
+        // Obtener la lista actualizada de usuarios
+        $users = User::where('hidden', false)->get();
+
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }
     //Editar usuario ADMIN
     public function editUser(Request $request)
     {
-        $user = User::where('id', $request['user_id'])->first(); // Busca el usuario por su ID
-
-        //Password
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
+        $user = Auth::user();
+        $company = Company::find($user->company_id); // Obtén el modelo de la compañía
+    
         $user->name = $request['name'];
         $user->last_name = $request['last_name'];
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        $user->company_id = $request['company_id'];
+        $company->name = $request['company_name'];
+        $company->update();
+        $user->update();
+    
+        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
+    }    
+    
 
-        $user->update(); // Actualiza los datos en la base de datos
-
-        return response()->json(['success' => true, 'message' => 'User created successfully.']);
-    }
-    // Baja usuario ADMIN
+    // Baja usuario ADMIN 
     public function userDown(Request $request)
     {
         $request->validate([
@@ -225,7 +231,6 @@ class UserController extends Controller
         $updatedUser->save();
 
         return redirect()->route('Editar-Perfil');
-
     }
 
     public function updateProfileImage(Request $request)

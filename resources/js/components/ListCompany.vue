@@ -178,39 +178,39 @@
                                         <div class="mt-3 text-center md:text-left">
 
                                             <div class="mt-2">
-                                                <div>
-                                                    <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('name') }}</label>
-                                                    <input v-model="editar.nameEditar" type="text" id="name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div>
-                                                    <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('email') }}</label>
-                                                    <input v-model="editar.emailEditar" type="text" id="email"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div class="flex w-full space-x-8">
-                                                    <div class="w-full">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('phone') }}</label>
-                                                        <input v-model="editar.phoneEditar" type="text" id="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                            required>
-                                                    </div>
-                                                    <div class="w-full">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('cif') }}</label>
-                                                        <input v-model="editar.cifEditar" type="text" id="cif"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                            required>
-                                                    </div>
+    <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('name') }}</label>
+        <input v-model="editar.nameEditar" type="text" id="name" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400" required>
+        <span v-if="!editar.nameEditar" class="absolute right-8 top-30 text-red-500">*</span>
+    </div>
+</div>
+<div class="mt-2">
+    <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('email') }}</label>
+        <input v-model="editar.emailEditar" type="text" id="email" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400" required>
+        <span v-if="!editar.emailEditar" class="absolute right-8 top-50 text-red-500">*</span>
+    </div>
+</div>
+<div class="mt-2">
+    <div class="flex w-full space-x-8">
+        <div class="w-full">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('phone') }}</label>
+            <div class="relative">
+                <input v-model="editar.phoneEditar" type="text" id="phone" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400" required>
+                <span v-if="!editar.phoneEditar" class="absolute right-1 top-0 text-red-500">*</span>
+            </div>
+        </div>
+ 
+        <div class="w-full">
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('cif') }}</label>
+    <div class="relative">
+        <input v-model="editar.cifEditar" type="text" id="cif" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400" required>
+        <span v-if="!editar.cifEditar" class="absolute right-1 top-0 text-red-500">*</span>
+    </div>
+</div>
+
+ 
+
                                                 </div>
                                             </div>
                                             <input type="hidden" v-model="editar.id">
@@ -218,12 +218,16 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                   
                                     <button type="button"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="submitFormEditar()">Editar</button>
-                                    <button type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="ModalEditar = false" ref="cancelButtonRef">Cancelar</button>
+                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="ModalEditar = false" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                        $t('cancel') }}
+                                        </button>
+                                        <button type="button"
+                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
+                                    </button>   
                                 </div>
                             </form>
                         </DialogPanel>
