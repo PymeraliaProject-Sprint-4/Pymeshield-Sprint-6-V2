@@ -1,6 +1,27 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
 
 @tailwind base;
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c92c00 #c92c00;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 5px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #c92c00;
+    border-radius: 14px;
+    border: 3px solid var(--primary);
+  }
 @tailwind components;
 @tailwind utilities;
 
@@ -53,6 +74,10 @@ footer svg {
   .botonPersonalizado {
     @apply m-6 py-2 px-4 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75 ;
   }
+
+/* Personalització scrollbar */
+
+
 
 /*EQUIP 3*/
 /* Començament Estils pàgina Cursos  */
