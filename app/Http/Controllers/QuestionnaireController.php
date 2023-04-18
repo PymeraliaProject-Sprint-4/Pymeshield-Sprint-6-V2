@@ -46,8 +46,6 @@ class QuestionnaireController extends Controller
 
         $questionnaire->save();
 
-        Log::channel('custom')->info('El usuario ' . $request->user()->email . ' ha creado un nuevo curso el día ' . now()->format('Y-m-d H:i:s'));
-
 
         return response()->json(['id' => $questionnaire->id]);
     }
