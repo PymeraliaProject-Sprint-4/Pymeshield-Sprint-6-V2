@@ -84,16 +84,12 @@ class UserController extends Controller
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-    
-        // Actualiza los datos en la tabla users
-        $user->update();
-    
-        // Actualiza el campo company_name en la tabla companies
         $company->name = $request['company_name'];
         $company->update();
+        $user->update();
     
-        return response()->json(['success' => true, 'message' => 'User updated successfully.']);
-    }
+        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
+    }    
     
 
     // Baja usuario ADMIN 

@@ -92,7 +92,7 @@
                                     </div>
 
                                     <div class="mt-3 text-center md:text-left">
-                                        <form @submit.prevent="submitForm">
+                                        <form>
                                             <div class="mt-2">
                                                 <div class="relative">
                                                     <label for="name"
@@ -189,10 +189,11 @@
                                         $t('cancel') }}
                                 </button>
 
-                                <button type="submit"
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
-                                    @click="submitFormEditar"><i class="far fa-save mr-2"></i>{{ $t('save') }}
-                                </button>
+                                  <button type="button"
+                                  class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
+                                    </button>
+                                   
 
                             </div>
 
@@ -268,13 +269,11 @@
 </template>
 
 <script>
-
 import axios from 'axios';
 
-//Importem el botó d'afegir usuaris
+// Importem el botó d'afegir usuaris
 import AddUser from './AddUser.vue';
-//import UpUser from './upUser.vue';
-
+// import UpUser from './upUser.vue';
 
 export default {
     data() {
@@ -284,11 +283,10 @@ export default {
             currentUser: {},
             ModalEditar: false,
             ModalBaja: false
-
         };
     },
     mounted() {
-        this.getUsers()
+        this.getUsers();
     },
     methods: {
         getUsers() {
@@ -307,9 +305,7 @@ export default {
 
         closeModalBaja() {
             this.ModalBaja = false;
-
         },
-
 
         submitFormBaja() {
             this.ModalBaja = true;
@@ -327,12 +323,11 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
-
         },
+
         openModalEditar(user) {
             this.ModalEditar = true;
             this.currentUser = {
-                id: user.id,
                 name: user.name,
                 last_name: user.last_name,
                 nick_name: user.nick_name,
@@ -348,22 +343,35 @@ export default {
         },
 
         submitFormEditar() {
-            //Aqui fem una perticio post a la ruta
-            //post es per enviar dades
-            axios.post('/editUser', this.currentUser) //dades d'usuari this.user
+            axios.post("/editUser", {
+                name: this.currentUser.name,
+                last_name: this.currentUser.last_name,
+                nick_name: this.currentUser.nick_name,
+                email: this.currentUser.email,
+                phone: this.currentUser.phone,
+                company_name: this.currentUser.company_name
+            })
                 .then(response => {
-                    window.location.reload();
+                    this.getUsers();
+                    console.log(response);
+                    this.ModalEditar = false;
+                    this.currentUser.name = "";
+                    this.currentUser.last_name = "";
+                    this.currentUser.nick_name = "";
+                    this.currentUser.email = "";
+                    this.currentUser.phone = "";
+                    this.currentUser.company_name = "";
+                    setTimeout(() => { this.NotificacionEditar = false; }, 2000);
                 })
                 .catch(error => {
                     console.error(error);
-                    alert('Error al actualizar la información del usuario. Por favor, inténtelo de nuevo más tarde.');
                 });
         },
-    },
-
-    components: { AddUser }
-};
+        components: { AddUser }
+    }
+}
 </script>
+
 <script setup>
 import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
