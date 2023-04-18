@@ -37,12 +37,6 @@
 import axios from 'axios';
 
 export default {
-    props: {
-        id: {
-            type: Number,
-            required: true
-        }
-    },
     data() {
         return {
             courseName: "",

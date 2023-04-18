@@ -200,9 +200,10 @@ Route::get('recursos', [ResourceController::class, 'index'])->name('recourse.ind
 
 
 //Part de Evaluacións
-Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
+Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursos')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
+Route::get('CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos'])->name('Evaluar.CursosDatos')->middleware('auth', 'check_access_admin');
 Route::get('CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities')->middleware('auth', 'check_access_admin'); //Vista categories i activitats del curs triat
-Route::get('activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth', 'check_access_admin'); //Dades JSON categories i activitats del curs triat
+Route::get('CursosCalificar/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth', 'check_access_admin'); //Dades JSON categories i activitats del curs triat
 Route::get('CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries')->middleware('auth', 'check_access_admin'); //Vista alumnes amb la nota i feedback sobre la activitat triada
 Route::get('CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne

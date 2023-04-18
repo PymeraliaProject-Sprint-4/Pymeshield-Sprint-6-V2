@@ -110,4 +110,4 @@ Route::get('kivy/question', [QuestionController::class, 'indexmobil']);
 Route::get('kivy/question/{id}/', [QuestionController::class, 'indexmobilID']);
 
 // EQUIP 2
-Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificarDatos']);
+Route::get('CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos']);

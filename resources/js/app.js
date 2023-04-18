@@ -83,16 +83,6 @@ app.component('hidden_course', hidden_course);
 const client_course = defineAsyncComponent(() => import('./components/course/client_course.vue'));
 app.component('client_course', client_course);
 
-<<<<<<< HEAD
-const cursos = defineAsyncComponent(() => import('./components/Cursos.vue'));
-app.component('cursos', cursos);
-
-const categoriasCurso = defineAsyncComponent(() => import('./components/Categorias_curso.vue'));
-app.component('categorias-curso', categoriasCurso);
-
-const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
-app.component('deliveries', deliveries);
-=======
 const client_rescources = defineAsyncComponent(() => import('./components/rescource/Rescources_Client.vue'));
 app.component('client_rescources', client_rescources);
 
@@ -108,7 +98,6 @@ app.component('categorias_curso', CategoriasCurso);
 const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
 app.component('deliveries', deliveries);
 
->>>>>>> CursosCalificar
 
 // EQUIP 4
 

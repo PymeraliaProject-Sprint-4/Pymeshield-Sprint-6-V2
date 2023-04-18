@@ -1,57 +1,5 @@
 <template>
     <br>
-<<<<<<< HEAD
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="table-auto w-full shadow-lg rounded-lg">
-            <thead>
-                <tr class="bg-orange-400 text-white">
-                    <th class="px-6 py-3 uppercase">{{ $t('User') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('Grade') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('Task') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('Feedback') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('Option') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="users in user" :key="users.id" class="bg-orange-50 hover:bg-orange-100 text-center">
-                    <td class="px-6 py-4">
-                        <p class="font-medium text-gray-900">{{ users.name }}</p>
-                    </td>
-                    <td class="px-6 py-4">{{ users.grade ?? '-' }} </td>
-                    <td class="px-6 py-4">
-                        <p class="font-medium text-gray-900">
-                            <a v-if="users.locate"
-                                :href="'http://localhost/' + users.locate.substring(users.locate.lastIndexOf('/files') + 1)"
-                                class="text-blue-500 underline" download>{{
-                                    users.locate.substring(users.locate.lastIndexOf('/') + 1) }}</a>
-                            <span class="text-red-600" v-else>X</span>
-                        </p>
-                    </td>
-                    <td class="px-6 py-4">
-                        <p class="font-medium text-gray-900">{{ users.feedback ?? '-' }}</p>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#"
-                            class="text-base font-medium bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded-full transition-colors duration-300"
-                            @click="openModal(users)" data-testid="modal-button">
-                            {{ $t('Qualify') }}
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="pagination flex justify-between mt-4">
-        <TailwindPagination :data="user" @pagination-change-page="loadDeliveries" />
-        <div>
-            <button
-                class="ml-1 px-3 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-400 focus:outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                @click="goBack()">
-                {{ $t('Back') }}
-            </button>
-        </div>
-    </div>
-=======
     <table id="tableQualify">
         <thead>
             <tr class="bg-orange-400 text-white">
@@ -97,7 +45,6 @@
         {{ $t('Back') }}
     </button>
 
->>>>>>> CursosCalificar
     <TransitionRoot as="template" :show="modal_calificar">
         <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_calificar = false">
             <div class="flex items-center justify-center min-h-screen px-4">
@@ -169,29 +116,12 @@
 
 <script>
 import axios from "axios";
-<<<<<<< HEAD
-import { TailwindPagination } from 'laravel-vue-pagination';
-
-export default {
-
-    props: {
-        course: {
-            type: Number,
-            required: true
-        },
-        activity: {
-            type: Number,
-            required: true
-        }
-    },
-=======
 
 
 
 export default {
 
 
->>>>>>> CursosCalificar
 
     data() {
         return {
@@ -211,15 +141,10 @@ export default {
 
     methods: {
         loadDeliveries(page = 1) {
-<<<<<<< HEAD
-            const courseId = this.course;
-            const activityId = this.activity;
-=======
             const url = new URL(window.location.href);
             const cursoId = url.pathname.split('/')[2];
             const activityId = url.pathname.split('/')[4];
 
->>>>>>> CursosCalificar
 
             axios
                 .get(`/CursosCalificar/${cursoId}/activities-Datos/${activityId}?page=${page}`)
@@ -253,10 +178,6 @@ export default {
         submitGrade(event) {
             event.preventDefault()
             const userId = this.currentUser.id;
-<<<<<<< HEAD
-            const activityId = this.activity;
-=======
->>>>>>> CursosCalificar
             const grade = this.currentUser.grade;
 
             if (grade > 10) {
@@ -293,11 +214,6 @@ export default {
 }
 </script>
 <script setup>
-<<<<<<< HEAD
-import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
-
-</script>
-=======
 import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
 </script>
 
@@ -309,4 +225,3 @@ import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 }
 </style>
->>>>>>> CursosCalificar
