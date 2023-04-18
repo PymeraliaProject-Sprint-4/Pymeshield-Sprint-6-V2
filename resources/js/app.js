@@ -42,7 +42,6 @@ app.component('EditarPerfilAdmin', EditarPerfilAdmin);
 const EditarPerfilWorker = defineAsyncComponent(() => import('./components/EditarPerfilWorker.vue'));
 app.component('EditarPerfilWorker', EditarPerfilWorker);
 
-
 const contacte = defineAsyncComponent(() => import('./components/contacte.vue'));
 app.component('contacte',contacte);
 
@@ -74,6 +73,7 @@ app.component('create-report', createReport);
 
 
 //EQUIP3
+
 const index_course = defineAsyncComponent(() => import('./components/course/index_course.vue'));
 app.component('index_course', index_course);
 
@@ -83,6 +83,7 @@ app.component('hidden_course', hidden_course);
 const client_course = defineAsyncComponent(() => import('./components/course/client_course.vue'));
 app.component('client_course', client_course);
 
+<<<<<<< HEAD
 const cursos = defineAsyncComponent(() => import('./components/Cursos.vue'));
 app.component('cursos', cursos);
 
@@ -91,6 +92,23 @@ app.component('categorias-curso', categoriasCurso);
 
 const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
 app.component('deliveries', deliveries);
+=======
+const client_rescources = defineAsyncComponent(() => import('./components/rescource/Rescources_Client.vue'));
+app.component('client_rescources', client_rescources);
+
+const admin_rescources = defineAsyncComponent(() => import('./components/rescource/Rescources_Client.vue'));
+app.component('admin_rescources', admin_rescources);
+
+const CursosCalificar = defineAsyncComponent(() => import('./components/Cursos.vue'));
+app.component('cursos_calificar', CursosCalificar);
+
+const CategoriasCurso = defineAsyncComponent(() => import('./components/Categorias_curso.vue'));
+app.component('categorias_curso', CategoriasCurso);
+
+const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
+app.component('deliveries', deliveries);
+
+>>>>>>> CursosCalificar
 
 // EQUIP 4
 
