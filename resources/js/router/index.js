@@ -8,9 +8,7 @@ const perfilPersonal_Admin = () => import ('../components/PerfilPersonal_Admin.v
 const perfilPersonal_Worker = () => import ('../components/PerfilPersonal_Worker.vue')
 const ComponentOne = () => import ('../components/compOne.vue')
 const ComponentTwo = () => import ('../components/compTwo.vue')
-const DeliveriesTable = () => import("../components/deliveries.vue");
-const Cursos = () => import("../components/Cursos.vue");
-const Categorias_Curso = () => import("../components/Categorias_curso.vue");
+
 
 
 
@@ -65,21 +63,7 @@ const routes=[
         name:'component 2',
         component:ComponentTwo
     },
-    {
-        path: "/CursosCalificar/:id/activities/:activityId",
-        name: "ActivityDeliveries",
-        component: DeliveriesTable,
-    },
-    {
-        path: "/CursosCalificar",
-        name: "Calificar.cursos",
-        component: Cursos,
-    },
-    {
-        path: "/CursosCalificar/:id/activities",
-        name: "courseActivities",
-        component: Categorias_Curso,
-    },
+
 ];
 
 const router = createRouter({

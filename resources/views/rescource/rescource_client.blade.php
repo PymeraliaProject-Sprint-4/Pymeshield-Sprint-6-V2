@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    <deliveries />
 
+<client_rescources/>
 @stop

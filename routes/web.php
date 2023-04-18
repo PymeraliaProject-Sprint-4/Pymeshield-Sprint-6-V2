@@ -187,6 +187,11 @@ Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('cou
 //Part Client Crear Cursos + visualitzar
 Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client');
 Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data');
+Route::get('/course/rescources', [ResourceController::class, 'rescourceClient'])->name('courseClient.rescoures');
+Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.rescources'); //Vista recursos Client
+Route::get('/course/{id}/client/rescources-Datos', [ResourceController::class, 'RescourceDatos'])->name('course.RescourceDatos'); //Dades recursos de un curs
+
+
 
 
 
@@ -202,13 +207,13 @@ Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->
 Route::get('/updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate');
 
 
-Route::get('/recursos', [ResourceController::class, 'index'])->name('recourse.index');
 
 
 //Part de Evaluacións
 Route::get('/CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('CursosCalificar'); //Vista pagina tots els cursos
+Route::get('/CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos'])->name('Calificar.cursos');
 Route::get('/CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities'); //Vista categories i activitats del curs triat
-Route::get('/activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos'); //Dades JSON categories i activitats del curs triat
+Route::get('/CursosCalificar/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos'); //Dades JSON categories i activitats del curs triat
 Route::get('/CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries'); //Vista alumnes amb la nota i feedback sobre la activitat triada
 Route::get('/CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('/activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify'); //Acció per qualificar i posar comentari a un alumne
