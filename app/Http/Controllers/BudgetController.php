@@ -100,6 +100,12 @@ class BudgetController extends Controller
 
 
     //READ - Leer - Listar
+
+    public function index()
+    {
+        return view('Presupuestos/show_budgets_view/index');
+    }
+
     public function listAllBudgets()
     {
 
