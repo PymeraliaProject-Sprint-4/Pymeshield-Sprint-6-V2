@@ -61,6 +61,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/custom-logs.log'),
             'level' => 'debug',
+            'days' => 30
         ],
 
         'single' => [

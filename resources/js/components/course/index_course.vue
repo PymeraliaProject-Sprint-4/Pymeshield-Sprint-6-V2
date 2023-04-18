@@ -316,6 +316,7 @@
 import axios from 'axios';
 import {ref} from 'vue';
 import {forEach} from "lodash";
+import * as response from "autoprefixer";
 
 
 export default {
@@ -403,6 +404,7 @@ export default {
                         this.selectedUsers = [];
                     })
                     .catch(error => {
+                        console.log(response.data)
                         console.log(error.response)
                         this.sending = false;
                     })
