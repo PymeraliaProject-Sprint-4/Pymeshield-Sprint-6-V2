@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
@@ -49,7 +50,8 @@ class ReportController extends Controller
         $report = Report::with(['answers', 'answers.impact', 'answers.intervention', 'answers.probability', 'answers.question', 'answers.risk', 'answers.typeMeasure'])
             ->findOrFail($id);
 
-        $pdf = PDF::loadView('report.pdf', compact('report'))->setPaper('legal', 'landscape');
+        $today = Carbon::now()->format('d/m/Y');
+        $pdf = PDF::loadView('report.pdf', compact('report', 'today'))->setPaper('legal', 'landscape');
         return $pdf->stream();
     }
 
