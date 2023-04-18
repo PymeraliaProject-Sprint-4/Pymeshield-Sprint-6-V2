@@ -71,7 +71,7 @@ Route::get('userList/userListingHidden', [UserController::class, 'userListing'])
 
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
 Route::post('userDown', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth');
+Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
@@ -164,21 +164,23 @@ Route::post('audit/save/{id}', [AuditController::class, 'store'])->name('audit.s
 
 //EQUIP3 ----------------------------------/////////////////
 //Part Admin Crear visualitzar
-Route::get('course', [CourseController::class, 'index'])->name('course.index')->middleware('auth', 'check_access_admin');
-Route::post('course', [CourseController::class, 'store'])->name('course.store')->middleware('auth', 'check_access_admin');
-Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update')->middleware('auth', 'check_access_admin');
-Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden')->middleware('auth', 'check_access_admin');
-Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data')->middleware('auth', 'check_access_admin');
-Route::get('course/users', [CourseController::class, 'users'])->name('course.users')->middleware('auth', 'check_access_admin');
-Route::get('course/hidden', [CourseController::class, 'hidden'])->name('course.hidden')->middleware('auth', 'check_access_admin');
-Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data')->middleware('auth', 'check_access_admin');
+Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function () {
+    Route::get('course', [CourseController::class, 'index'])->name('course.index');
+    Route::post('course', [CourseController::class, 'store'])->name('course.store');
+    Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
+    Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
+    Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data');
+    Route::get('course/users', [CourseController::class, 'users'])->name('course.users');
+    Route::get('course/hidden', [CourseController::class, 'hidden'])->name('course.hidden');
+    Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
+    Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
+    Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+    //Part Client Crear Cursos + visualitzar
+    Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
+    Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 
-Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide')->middleware('auth', 'check_access_admin');
-Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide')->middleware('auth', 'check_access_admin');
+});
 
-//Part Client Crear Cursos + visualitzar
-Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
-Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 
 
 
@@ -236,8 +238,18 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 
 // Listar Presuspuestos
 //por revisar
-Route::get('listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
-Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+//Route::get('listaPresupuestos', [BudgetController::class, 'LlistatPresupuestos'])->middleware('auth', 'check_access_admin');
+
+//per borrar
+//Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
+
+Route::get('show_budgets', function () {
+    return view('Presupuestos/show_budgets_view/index');
+})->name('show_budgets')->middleware('auth', 'check_access_admin');
+
+Route::get('/show_budgets/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
+
+
 //por revisar
 Route::get('listado_presupuestos', [BudgetController::class, 'list'])->middleware('auth', 'check_access_client');
 

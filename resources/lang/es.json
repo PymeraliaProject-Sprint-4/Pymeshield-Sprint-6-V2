@@ -214,6 +214,10 @@
     "Course" : "Curso",
     "courses" : "cursos",
     "Courses" : "Cursos",
+    "QualifyCourse" : "Calificar cursos",
+    "Emblems" : "Emblemas",
+    "navbar.gantt": "Gantt",
+    "navbar.restore": "Restaurar Dispositivos",
     "Add" : "Añadir",
     "deleted" : "borrado",
     "Deleted" : "Borrado",
@@ -263,5 +267,11 @@
     "Update" : "Actualizar",
     "ErrorMsg.1" : "La nota no puede ser mallor que 10",
     "ErrorMsg.2" : "La nota no puede ser menor que 0",
-    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos."
+    "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos.",
+    "validation.email" : "Formato del correo electrónico no es válido.",
+    "validation.required.name" : "El campo pregunta es obligatorio",
+    "validation.required.description" : "El campo descripción es obligatorio",
+    "validation.required.recommendation_true" : "Los campos de recomendacion positiva són obligatorios",
+    "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios",
+    "edituser" : "Editar Usuario"
 }

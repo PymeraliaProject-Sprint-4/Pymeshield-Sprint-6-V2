@@ -1,3 +1,4 @@
+
 //defineAsync para cargar los componentes de forma asíncrona
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";
 import laravelPermissionToVuejs from 'laravel-permission-to-vuejs';
@@ -111,6 +112,9 @@ app.component('gantt', gantt);
 
 const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
 app.component('kanban', kanban);
+
+const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
+app.component('show_budgets', budgets);
 
 //EQUIP 5
 const listdevices = defineAsyncComponent(() => import('./components/ListDevices.vue'));

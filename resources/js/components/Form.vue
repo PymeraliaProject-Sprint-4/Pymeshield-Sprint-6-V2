@@ -18,7 +18,7 @@
                                 name="question"
                                 id="question"
                                 v-model="pregunta"
-                                required autofocus>
+                                autofocus>
                         </div>
 
                     </div>
@@ -35,9 +35,12 @@
                                 name="description"
                                 id="description"
                                 v-model="description"
-                                required autofocus>
+                                autofocus>
                         </div>
-                    </div>
+                        <div v-for="(error, field) in errors" :key="field" class="text-red-500">
+                            {{ error[0] }}
+                        </div>
+                    </div>       
                 </div>
 
             <details class="pl-4">
@@ -54,7 +57,7 @@
                                 name="recommendation_true"
                                 id="recommendation_true"
                                 v-model="recommendation_true"
-                                required autofocus>
+                                autofocus>
                         </div>
                     </div>
                 </div>
@@ -155,7 +158,7 @@
                                 name="recommendation_false"
                                 id="recommendation_false"
                                 v-model="recommendation_false"
-                                required autofocus>
+                                autofocus>
                         </div>
                     </div>
                 </div>
@@ -264,6 +267,10 @@
     // en export default en la funcion data tenemos que crear un objeto con las variables que recogeremos del componente
     export default {
         props: {
+            errors: {
+                type: Array,
+                default: () => []
+            },
             risks: {
                 type: Array,
                 default: () => []
@@ -288,6 +295,7 @@
         },
         data() {
             return {
+                errors: '',
                 pregunta: '',
                 description: '',
 
@@ -319,7 +327,7 @@
                     window.location.href = '/question';
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    this.errors = error.response.data.errors;
                 })
 
             }

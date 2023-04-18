@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -66,7 +67,7 @@ class CourseController extends Controller
         $course->description = strip_tags($request->description);
         $course->created_at = now();
         $course->save();
-
+        $courseId = $course->id;
         // Obtener los ids de los usuarios del array $request->users
         $userIds = $request->selectedUsers;
 
@@ -86,8 +87,11 @@ class CourseController extends Controller
             }])
             ->get();
 
+
+
         // Devolver los cursos actualizados en formato JSON
         return response()->json([
+            'id' => $courseId,
             'courses' => $courses,
         ]);
     }
@@ -107,6 +111,7 @@ class CourseController extends Controller
         $course = Course::find($id);
         $course->hidden = Carbon::now()->format('Y-m-d');
         $course->save();
+        $courseId = $course->id;
 
         $courses =  Course::whereNull('hidden')
             ->orderBy('updated_at', 'desc')
@@ -116,6 +121,7 @@ class CourseController extends Controller
             ->get();
 
         return response()->json([
+            'id' => $courseId,
             'courses' => $courses,
         ]);
     }
@@ -125,6 +131,7 @@ class CourseController extends Controller
         $course = Course::find($id);
         $course->hidden = null;
         $course->save();
+        $courseId = $course->id;
 
         $courses =  Course::whereNotNull('hidden')
             ->orderBy('updated_at', 'desc')
@@ -133,6 +140,7 @@ class CourseController extends Controller
             }])
             ->get();
         return response()->json([
+            'id' => $courseId,
             'courses' => $courses,
         ]);
     }
@@ -143,6 +151,7 @@ class CourseController extends Controller
         $course->name = strip_tags($request->name_edit);
         $course->description = strip_tags($request->description_edit);
         $course->save();
+        $courseId = $course->id;
 
         $userIds = $request->selectedUsers;
 
@@ -160,14 +169,15 @@ class CourseController extends Controller
 
         // Obtener todos los cursos para actualizar la tabla
         $courses =  Course::whereNull('hidden')
-        ->orderBy('updated_at', 'desc')
-        ->with(['users' => function ($query) {
-            $query->select('user_id');
-        }])
-        ->get();
+            ->orderBy('updated_at', 'desc')
+            ->with(['users' => function ($query) {
+                $query->select('user_id');
+            }])
+            ->get();
 
         // Devolver los cursos actualizados en formato JSON
         return response()->json([
+            'id' => $courseId,
             'courses' => $courses,
         ]);
     }
@@ -178,6 +188,7 @@ class CourseController extends Controller
         $course->name = strip_tags($request->name_edit);
         $course->description = strip_tags($request->description_edit);
         $course->save();
+        $courseId = $course->id;
 
         $userIds = $request->selectedUsers;
 
@@ -203,13 +214,20 @@ class CourseController extends Controller
 
         // Devolver los cursos actualizados en formato JSON
         return response()->json([
+            'id' => $courseId,
             'courses' => $courses,
         ]);
     }
 
+    public function course_User()
+    {
+        $data = DB::table('course_user')
+            ->join('courses', 'courses.id', '=', 'course_user.course_id')
+            ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
+            ->where('user_id', '=', 2)
+            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+            ->get();
 
+        return response()->json($data);
+    }
 }
-
-
-
-

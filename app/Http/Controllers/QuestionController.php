@@ -12,6 +12,7 @@ use App\Models\Risk;
 use App\Models\TypeMeasure;
 use Illuminate\Http\Request;
 use Mockery\Matcher\Type;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
@@ -56,8 +57,23 @@ class QuestionController extends Controller
 
         $question = new Question();
 
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'recommendation_true' => ['required', 'string'],
+            'recommendation_false' => ['required', 'string'],
+        ], [
+            'name.required' => __('validation.required.name'),
+            'description.required' => trans('validation.required.description', ['attribute' => trans('validation.attributes.description')]),
+            'recommendation_true.required' => __('validation.required.recommendation_true'),
+            'recommendation_false.required' => __('validation.required.recommendation_false'),
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }        
+        
         $question->name = $request->name;
-
         $question->description = $request->description;
 
         $question->save();
@@ -69,7 +85,6 @@ class QuestionController extends Controller
         $answer = new Answer();
 
         $answer->name = 'Si';
-
 
         $answer->recommendation = $request->recommendation_true;
 

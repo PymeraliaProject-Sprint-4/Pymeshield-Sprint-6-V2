@@ -12,6 +12,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +53,15 @@ Route::post('/crear-tareas', [TaskController::class, 'createTasks'])->name('crea
 Route::get('/gantt', [TaskController::class, 'gantt'])->name('vista-gantt');
 
 //Presupuestos
+//show all budgets
+
 Route::get('/mostrar-pressupostos', [BudgetController::class, 'show'])->name('mostrar-pressupostos'); //muestra presupuestos
 Route::get('/crear-pressupost', [BudgetController::class, 'crearPresupuesto'])->name('crear-pressupost'); //formulario para crear presupuestos
 Route::post('/enviar-pressupost', [BudgetController::class, 'store'])->name('enviar-pressupost'); //llamar al metodo de crear nuevo prespuesto
 
 // ModifyBudget
 Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
+Route::get('/couser-user-data', [CourseController::class, 'course_User'])->name('couser-user-data');
 Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
 Route::get('/all-data-manages', [BudgetController::class, 'showAllManages'])->name('all-data-manages');
 Route::get('/buscador-budgetTaks/{buscado}', [BudgetController::class, 'search'])->name('buscador-budgetTaks');
