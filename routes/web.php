@@ -294,5 +294,5 @@ Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.ind
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
 
-Route::get('phpinfo', fn () => phpinfo());
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
 
