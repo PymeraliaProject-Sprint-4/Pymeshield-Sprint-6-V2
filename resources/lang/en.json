@@ -269,6 +269,6 @@
     "validation.required.description" : "The description field is required",
     "validation.required.recommendation_true" : "The afirmative answers is required",
     "validation.required.recommendation_false" : "The negative answers is required",
-    "validation.required": "The author field is required",
+    "validation.required.autor": "The author field is required",
     "edituser" : "Edit User"
 }

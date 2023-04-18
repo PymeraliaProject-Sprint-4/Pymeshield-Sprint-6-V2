@@ -43,11 +43,11 @@ class QuestionnaireController extends Controller
         $questionnaire = new Questionnaire();
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string'],
-            'autor' => ['required', 'string']
+            'questionnaire_name' => ['required', 'string'],
+            'questionnaire_autor' => ['required', 'string']
         ], [
-            'name.required' => __('validation.required.name'),
-            'description.autor' => __('validation.required.autor')
+            'questionnaire_name.required' => __('validation.required.name'),
+            'questionnaire_autor.required' => __('validation.required.autor')
         ]);
         
         if ($validator->fails()) {
