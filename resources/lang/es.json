@@ -269,7 +269,7 @@
     "ErrorMsg.2" : "La nota no puede ser menor que 0",
     "ErrorMsg.3" : "No se pueden introducir mas de 255 caràcteres ni etiquetas <script> en los campos.",
     "validation.email" : "Formato del correo electrónico no es válido.",
-    "validation.required.name" : "El campo questionario es obligatorio",
+    "validation.required.name" : "El campo pregunta es obligatorio",
     "validation.required.description" : "El campo descripción es obligatorio",
     "validation.required.recommendation_true" : "Los campos de recomendacion positiva són obligatorios",
     "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios"
