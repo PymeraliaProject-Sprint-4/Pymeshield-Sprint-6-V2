@@ -278,6 +278,7 @@ Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('a
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
 Route::post('devices/edit', [DevicesController::class, 'edit'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->middleware('auth', 'check_access_admin');
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
@@ -293,3 +294,6 @@ Route::get('listInventory', [InventoryController::class, 'listInventary'])->midd
 Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth', 'check_access_admin');
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
+
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
+

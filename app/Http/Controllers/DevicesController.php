@@ -7,9 +7,19 @@ use App\Models\Device;
 use App\Models\ImageDevice;
 use App\Models\TypeDevice;
 use Carbon\Carbon;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class DevicesController extends Controller
 {
+    public function generateqr(Request $request)
+    {
+        $id = $request->id;
+        $size = 300;
+        $filename = 'device_'.$id.'.png';
+        $storagePath = public_path('qr/' . $filename);
+        QrCode::format('png')->size($size)->generate($id, $storagePath);
+    }
     //Funcio per a llistar
     public function devices(){
         return Device::where('hidden', '=', null)
