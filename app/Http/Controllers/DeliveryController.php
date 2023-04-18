@@ -18,11 +18,6 @@ class DeliveryController extends Controller
         return view('activity.indexProva');
     }
 
-    public function courseActivities($id)
-    {
-        return view('activity.categorias_curso', compact('id'));
-    }
-
     public function CursosCalificarDatos() //Acció per agarrar les dades de la BD
     {
         $courses = Course::get()->map(function ($course) {
@@ -34,12 +29,22 @@ class DeliveryController extends Controller
         return response()->json($courses);
     }
 
+    public function courseActivities($id)
+    {
+        $course = Course::find($id);
+        $courseName = $course->name;
+        $activities = $course->activities;
+        return view('activity.categorias_curso', compact('courseName', 'activities'));
+    }
+    
+
+
     public function courseActivitiesDatos($id) //Acció per agarrar les dades de la BD
     {
         // Obtener el nombre del curso y las categorías y actividades correspondientes del curso con el ID especificado
         $course = Course::findOrFail($id);
         $courseName = $course->name;
-        $categories = $course->categories()->with('activities')->get();
+        $categories = $course->categories()->with('activities')->get()->toArray();
 
         // Retornar los datos en formato JSON
         return response()->json([
