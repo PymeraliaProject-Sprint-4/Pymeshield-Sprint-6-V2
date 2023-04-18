@@ -12,74 +12,76 @@
           <div>
             <h3 class="mt-5 font-bold" style="text-align: center;">{{ $t('personal-info') }}</h3>
             <div class="overflow-x-auto">
-    <div class="text-center">
-      <div style="display: flex; justify-content: center; align-items: center;">
-        <img v-if="user.profile_image" :src="`/img/profile_images/${user.profile_image}`" alt="imagen_del_usuario"
-          class="mb-3 rounded-full w-48 h-48" id="block" />
+              <div class="text-center">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <img v-if="user.profile_image" :src="`/img/profile_images/${user.profile_image}`" alt="imagen_del_usuario"
+                    class="mb-3 rounded-full w-48 h-48" id="block" />
   
-        <img v-else src="/img/default_profile.png" alt="imagen_del_usuario" class="mb-3 rounded-full w-48 h-48" id="block" />
-      </div>
-      <button @click="openModal()"
-        class="ml-10 bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"><i class="fas fa-images mr-2"></i>
-        {{ $t('image-changes') }}
-      </button>
-    </div>
-  
-                <h4 id="block1" class="text-2xl font-bold"></h4>
+                  <img v-else src="/img/default_profile.png" alt="imagen_del_usuario" class="mb-3 rounded-full w-48 h-48"
+                    id="block" />
+                </div>
+                <button @click="openModal()"
+                  class="ml-10 bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"><i
+                    class="fas fa-images mr-2"></i>
+                  {{ $t('image-changes') }}
+                </button>
               </div>
   
-              <table class="table mt-10">
-                <thead>
-                  <tr class="bg-orange-400 text-white">
-                    <th class="px-6 py-3 uppercase">{{ $t('name') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('lastname') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('username') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('email') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('phone') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('company') }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.name" class="form-input" type="text" />
-                    </td>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.last_name" class="form-input" type="text" />
-                    </td>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.nick_name" class="form-input" type="text" />
-                    </td>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.email" class="form-input" type="text" />
-                    </td>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.phone" class="form-input" type="text" />
-                    </td>
-                    <td class="bg-orange-50 text-center">
-                      <input v-model="user.company_name" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <h4 id="block1" class="text-2xl font-bold"></h4>
             </div>
-            <div class="flex justify-left mt-5">
-              <button @click="updateUserInfo"
-                class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center"><i
-                  class="far fa-save mr-2"></i>{{
-                    $t('save-changes') }}</button>
-              <button @click="openModalPassword()"
-                class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center"><i
-                  class="fas fa-edit mr-2"></i>{{
-                    $t('change-password') }}</button>
-              <button @click="goBack"
-                class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center">
-                <i class="fas fa-times mr-2"></i> {{
-                  $t('cancel') }}</button>
-            </div>
+  
+            <table class="table mt-10">
+              <thead>
+                <tr class="bg-orange-400 text-white">
+                  <th class="px-6 py-3 uppercase">{{ $t('name') }}</th>
+                  <th class="px-6 py-3 uppercase">{{ $t('lastname') }}</th>
+                  <th class="px-6 py-3 uppercase">{{ $t('username') }}</th>
+                  <th class="px-6 py-3 uppercase">{{ $t('email') }}</th>
+                  <th class="px-6 py-3 uppercase">{{ $t('phone') }}</th>
+                  <th class="px-6 py-3 uppercase">{{ $t('company') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.name" class="form-input" type="text" />
+                  </td>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.last_name" class="form-input" type="text" />
+                  </td>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.nick_name" class="form-input" type="text" />
+                  </td>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.email" class="form-input" type="text" />
+                  </td>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.phone" class="form-input" type="text" />
+                  </td>
+                  <td class="bg-orange-50 text-center">
+                    <input v-model="user.company_name" class="form-input border-none shadow-none" type="text" disabled />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-left mt-5">
+            <button @click="updateUserInfo"
+              class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center"><i
+                class="far fa-save mr-2"></i>{{
+                  $t('save-changes') }}</button>
+            <button @click="openModalPassword()"
+              class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center"><i
+                class="fas fa-edit mr-2"></i>{{
+                  $t('change-password') }}</button>
+            <button @click="goBack"
+              class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex items-center">
+              <i class="fas fa-times mr-2"></i> {{
+                $t('cancel') }}</button>
           </div>
         </div>
       </div>
+    </div>
   
     <!--Modal para cambiar la imagen-->
     <TransitionRoot as="template" :show="modal_image">
@@ -99,27 +101,29 @@
               <form>
                 <div class="p-4">
                   <div class="mb-4">
-                    <label for="image" class="block text-gray-700 font-bold mb-2 center fas fa-images mr-2">{{$t('select-image') }}</label>
+                    <label for="image" class="block text-gray-700 mb-2 center"><i class="fas fa-images mr-2"></i> {{
+                      $t('select-image')
+                    }}</label>
                     <input type="file" id="image" name="image" class="border-gray-300 rounded-md w-full py-2 px-3">
                   </div>
                   <div class="flex justify-end">
                     <button
-                      class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                      class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                       @click="changeImage()">
-                      <i class="far fa-save mr-2"></i>{{$t('save') }}
+                      <i class="far fa-save mr-2"></i>{{ $t('save') }}
                     </button>
                     <button type="button"
                       class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
                       @click="closeModal()">
-                      <i class="fas fa-times mr-2"></i>{{$t('cancel') }}
+                      <i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
                     </button>
-                   
+  
                     <button type="button"
                       class="bg-red-500 hover:bg-red-700 text-white font-medium py-1 px-3 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
                       @click="deleteImage()">
-                      <i class="fas fa-trash-alt mr-2"></i>{{$t('delete')}}
+                      <i class="fas fa-trash-alt mr-2"></i>{{ $t('delete') }}
                     </button>
-                   
+  
   
                   </div>
   
@@ -149,23 +153,40 @@
               <form>
                 <div class="p-4">
                   <div class="mb-4">
-                    <label for="image" class="block text-gray-700 font-bold mb-2 fas fa-edit mr-2">{{$t('change-password') }}</label> 
-                    {{$t('password') }}
+                    <label for="image" class="block text-gray-700 font-bold mb-2"><i class="fas fa-edit mr-2"></i> {{
+                      $t('change-password')
+                    }}</label>
+                    
+                    {{ $t('password') }}
+                    <i :class="actualPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
+                      @click="togglePasswordVisibility('actualPassword')"></i>
+  
                     <input type="password" id="actualPassword" name="actualPassword"
                       class="border-gray-300 rounded-md w-full px-3 mb-5">
-                      {{$t('new-password') }}
+                    {{ $t('new-password') }}
+                    <i :class="newPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
+                      @click="togglePasswordVisibility('newPassword')"></i>
+  
                     <input type="password" id="newPassword" name="newPassword"
                       class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
-                      {{$t('confirm-new-password') }}
+                    {{ $t('confirm-new-password') }}
+                    <i :class="confirmNewPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
+                      @click="togglePasswordVisibility('confirmNewPassword')"></i>
+  
                     <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                      class="border-gray-300 rounded-md w-full py-2 px-3">
+                      class="border-gray-300 rounded-md w-full py-2 px-3" :class="{ 'border-red-500': error !== '' }">
+                    <div v-if="error" class="text-red-500 mt-2">
+                      {{ error }}
+                    </div>
+  
+  
                   </div>
                   <div class="flex justify-end">
-                  
+  
                     <button
-                      class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                      class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                       @click="changePassword()">
-                      <i class="far fa-save mr-2"></i>{{$t('save') }}
+                      <i class="far fa-save mr-2"></i>{{ $t('save') }}
                     </button>
                     <button type="button"
                       class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 ml-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
@@ -191,7 +212,11 @@
         user: [],
         showModal: false,
         modal_image: false,
-        modal_password: false
+        modal_password: false,
+        actualPasswordVisible: false,
+        newPasswordVisible: false,
+        confirmNewPasswordVisible: false,
+        error: ''
       };
     },
     mounted() {
@@ -231,7 +256,7 @@
           });
       },
       deleteImage() {
-        if (confirm("¿Estás seguro de que quieres eliminar la imagen de perfil?")) {
+        if (confirm(this.$t('confirmDeleteImage'))) {
           axios.post('/delete-profile-image')
             .then(response => {
               window.location.reload();
@@ -248,8 +273,14 @@
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
   
+        // Validaciones
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
         if (newPassword !== confirmNewPassword) {
-          alert('Las contraseñas no coinciden. Por favor, inténtelo de nuevo.');
+          this.error = this.$t('passwordsDiferents');
+          return;
+        } else if (!passwordRegex.test(newPassword)) {
+          this.error = this.$t('rejexPassword');
           return;
         }
   
@@ -260,14 +291,36 @@
         })
           .then(response => {
             // Redirigir al usuario a la página de perfil con un mensaje de éxito
-            alert('La contraseña ha sido cambiada correctamente.');
+            alert(this.$t('updatePasswordMsg'));
+            this.closeModalPassword(); // Cerrar el modal
           })
           .catch(error => {
             console.log(error);
             alert('No se ha podido cambiar la contraseña. Inténtelo de nuevo más tarde.');
           });
       },
-  
+      togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+          input.type = "text";
+          if (inputId === 'actualPassword') {
+            this.actualPasswordVisible = true;
+          } else if (inputId === 'newPassword') {
+            this.newPasswordVisible = true;
+          } else {
+            this.confirmNewPasswordVisible = true;
+          }
+        } else {
+          input.type = "password";
+          if (inputId === 'actualPassword') {
+            this.actualPasswordVisible = false;
+          } else if (inputId === 'newPassword') {
+            this.newPasswordVisible = false;
+          } else {
+            this.confirmNewPasswordVisible = false;
+          }
+        }
+      },
   
       openModal() {
         this.modal_image = true;
@@ -289,6 +342,7 @@
         window.history.back();
       },
     }
+  
   };
   </script>
   <script setup>
@@ -297,10 +351,10 @@
   
   const open_edit = ref(false)
   </script>
-  
-  
-  
-  
+    
+    
+    
+    
   <style scoped>
   .container {
     display: flex;

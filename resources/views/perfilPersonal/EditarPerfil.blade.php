@@ -38,14 +38,14 @@
                                                 <form action="{{ route('updateProfileImage') }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    <label for="profile_image"
-                                                        class="block font-medium mb-2 fas fa-images mr-2">{{ __('select-image') }}</label>
+                                                    <label for="profile_image" class="block font-medium mb-2 "><i
+                                                            class="fas fa-images mr-2"></i>{{ __('select-image') }}</label>
                                                     <input type="file" name="profile_image" id="profile_image"
                                                         class="mb-4">
                                                     <div class="flex justify-end">
 
                                                         <button type="submit"
-                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-7 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center">
+                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center">
                                                             <i class="far fa-save mr-2"></i>{{ __('save') }}
                                                         </button>
                                                         <button type="button"
@@ -132,7 +132,7 @@
                     </table>
 
                     <!-- py-2 es per a donarli el grosor del boton
-                                              px-4 es per a donarli la llargada del boton-->
+                                                                              px-4 es per a donarli la llargada del boton-->
                     <div>
                         <button type="submit"
                             class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-10"
@@ -148,28 +148,31 @@
                     {{ __('change-password') }}
                 </button>
 
-                <button type="button" class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110  mx-2 mt-3" onclick="window.history.back()">
+                <button type="button"
+                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110  mx-2 mt-3"
+                    onclick="window.history.back()">
                     <i class="fas fa-times mr-2"></i>{{ __('cancel') }}
-                  </button>
+                </button>
             </div>
 
             <!-- Contenedor del modal de cambiar contraseña -->
             <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden">
                 <div class="flex items-center justify-center h-full">
                     <div class="bg-white rounded-lg w-full max-w-md p-6">
-                        <h2 class="text-lg font-bold mb-3 fas fa-edit mr-2 ">{{ __('change-password') }}</h2>
-                        <form action="{{ route('changePassword') }}" method="POST">
+                        <h2 class="text-lg font-bold mb-3"><i class="fas fa-edit mr-2 "></i>{{ __('change-password') }}
+                        </h2>
+                        <form action="{{ route('changePassword') }}" method="POST" id="change-password-form">
                             @csrf
                             <div class="mb-4">
                                 <div class="mb-4 relative">
                                     <label for="current_password"
                                         class="block text-gray-700 font-bold mb-2">{{ __('password') }}</label>
                                     <div class="relative">
-                                        <input type="password" id="current_password" name="current_password"
+                                        <input type="password" id="actualPassword" name="current_password"
                                             class="w-full border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                                             required autocomplete="off">
                                         <button type="button" class="absolute right-0 top-0 mt-2 mr-2"
-                                            onclick="togglePasswordVisibility('current_password')">
+                                            onclick="togglePasswordVisibility('actualPassword')">
                                             <i id="current_password_toggle" class="far fa-eye-slash"></i>
                                         </button>
                                     </div>
@@ -180,11 +183,11 @@
                                 <label for="new_password"
                                     class="block text-gray-700 font-bold mb-2">{{ __('new-password') }}</label>
                                 <div class="relative">
-                                    <input type="password" id="new_password" name="new_password"
+                                    <input type="password" id="newPassword" name="new_password"
                                         class="w-full border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                                         required autocomplete="off">
                                     <button type="button" class="absolute right-0 top-0 mt-2 mr-2"
-                                        onclick="togglePasswordVisibility('new_password')">
+                                        onclick="togglePasswordVisibility('newPassword')">
                                         <i id="new_password_toggle" class="far fa-eye-slash"></i>
                                     </button>
                                 </div>
@@ -194,21 +197,23 @@
                                 <label for="confirm_password"
                                     class="block text-gray-700 font-bold mb-2">{{ __('confirm-new-password') }}</label>
                                 <div class="relative">
-                                    <input type="password" id="confirm_password" name="confirm_password"
+                                    <input type="password" id="confirmPassword" name="confirm_password"
                                         class="w-full border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                                         required autocomplete="off">
                                     <button type="button" class="absolute right-0 top-0 mt-2 mr-2"
-                                        onclick="togglePasswordVisibility('confirm_password')">
+                                        onclick="togglePasswordVisibility('confirmPassword')">
                                         <i id="confirm_password_toggle" class="far fa-eye-slash"></i>
                                     </button>
                                 </div>
 
                             </div>
                             <div class="flex items-center justify-between">
-                                <button type="submit"
-                                    class="bg-orange-500 hover:bg-white text-black font-medium py-1 px-2 mr-1 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block">
+                                <button type="button"
+                                    class="bg-orange-500 hover:bg-white text-black font-medium py-1 px-2 mr-1 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block"
+                                    onclick="submitFormIfValid()">
                                     <i class="far fa-save mr-2"></i>{{ __('save') }}
                                 </button>
+
                                 <button type="button"
                                     class="bg-gray-400 hover:bg-gray-500 text-black font-medium py-1 px-2 ml-1 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4"
                                     onclick="closeModal1()">
@@ -282,7 +287,7 @@
 
                 function togglePasswordVisibility(inputId) {
                     const input = document.getElementById(inputId);
-                    const toggle = document.getElementById(inputId + "_toggle");
+                    const toggle = input.nextSibling.querySelector("i");
                     if (input.type === "password") {
                         input.type = "text";
                         toggle.classList.remove("fa-eye-slash");
@@ -291,6 +296,31 @@
                         input.type = "password";
                         toggle.classList.remove("fa-eye");
                         toggle.classList.add("fa-eye-slash");
+                    }
+                }
+
+                function validatePassword(password) {
+                    const currentPassword = document.getElementById('actualPassword').value;
+                    const newPassword = document.getElementById('newPassword').value;
+                    const confirmNewPassword = document.getElementById('confirmPassword').value;
+
+                    // Validaciones
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                    if (newPassword !== confirmNewPassword) {
+                        alert('Las contraseñas no coinciden');
+                        return false;
+                    } else if (!passwordRegex.test(newPassword)) {
+                        alert(
+                            'La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un numero y un caracter especial'
+                        );
+                        return false;
+                    }
+                    return true;
+                }
+
+                function submitFormIfValid() {
+                    if (validatePassword()) {
+                        document.getElementById('change-password-form').submit();
                     }
                 }
             </script>

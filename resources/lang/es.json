@@ -272,5 +272,6 @@
     "validation.required.name" : "El campo pregunta es obligatorio",
     "validation.required.description" : "El campo descripción es obligatorio",
     "validation.required.recommendation_true" : "Los campos de recomendacion positiva són obligatorios",
-    "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios"
+    "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios",
+    "edituser" : "Editar Usuario"
 }
