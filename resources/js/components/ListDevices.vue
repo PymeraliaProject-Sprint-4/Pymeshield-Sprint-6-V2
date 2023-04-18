@@ -6,6 +6,8 @@
                 <p class="text-2xl font-semibold">Listado dispositivos</p>
             </div>
             <div class="flex items-center">
+                <button class="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                @click="generateqr()">Generar QR Prova</button>
                 <button class="bg-orange-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 @click="openModalCrear()">Crear dispositivo</button>
             </div>
@@ -548,6 +550,17 @@ export default {
         },
     },
     methods: {
+        generateqr(id = 1){
+            axios.post("/devices/generateqr", {
+                id: id
+            })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
         getDevices(page = 1) {
             this.devicesData.value = [];
             this.devicesData.data = [];
