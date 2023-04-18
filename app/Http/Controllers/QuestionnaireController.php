@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 class QuestionnaireController extends Controller
 {
     public function index()
-    {   
+    {
         $questionnaires = Questionnaire::where('hidden', false)
         ->orWhereNull('hidden')
         ->Paginate(10);
 
         return view('questionnaire.index', compact('questionnaires'));
-        
+
     }
 
     public function hidden()
@@ -45,6 +45,8 @@ class QuestionnaireController extends Controller
         $questionnaire->date = date('Y-m-d');
 
         $questionnaire->save();
+
+        Log::channel('custom')->info('El usuario ' . $request->user()->email . ' ha creado un nuevo curso el día ' . now()->format('Y-m-d H:i:s'));
 
 
         return response()->json(['id' => $questionnaire->id]);
@@ -133,7 +135,7 @@ class QuestionnaireController extends Controller
         return Questionnaire::find($id);
     }
 
-    public function allQuestionnaires() 
+    public function allQuestionnaires()
     {
         return Questionnaire::all();
     }
