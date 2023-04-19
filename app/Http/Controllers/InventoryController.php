@@ -11,6 +11,18 @@ class InventoryController extends Controller
     public function index(){
         return Device::all();
     }
+    
+    /**
+     * devicelistID
+     *
+     * Rescata los datos de los dispositivos filtrando por el company_id
+     * 
+     * @param  mixed $company_id
+     * @return void
+     */
+    public function devicelistID($company_id){
+        return Device::where('company_id', $company_id)->get();
+    }
 
     // public function listInventaryAPI($id){
     //     // $idUser = 1;//Aquí es possara la variable de sessió que contingui el id de la sessió
