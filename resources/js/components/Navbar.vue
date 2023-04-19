@@ -146,7 +146,7 @@
             </DisclosurePanel>
         </Disclosure>
     </div>
-    
+
 </template>
 
 <script setup>
