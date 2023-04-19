@@ -179,6 +179,9 @@ Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('cou
 //Part Client Crear Cursos + visualitzar
 Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
 Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
+Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
+Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
+
 
 
 
@@ -195,7 +198,6 @@ Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
-Route::get('recursos', [ResourceController::class, 'index'])->name('recourse.index')->middleware('auth', 'check_access_admin');
 
 
 
