@@ -86,7 +86,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('tokenBearer')->plainTextToken;
 
-            return response()->json(['token' => $token, 'company_id' => $user->company_id, 'user_type' => $user->user_type, 'name' => $user->name, 'email'=>$user->email, 'phone'=>$user->phone, 'nick_name' => $user->nick_name]); //->cookie('tokenBearer', $token, 60)
+            return response()->json(['token' => $token, 'company_id' => $user->company_id, 'user_type' => $user->type, 'name' => $user->name, 'email'=>$user->email, 'phone'=>$user->phone, 'nick_name' => $user->nick_name]); //->cookie('tokenBearer', $token, 60)
         } else {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }

@@ -84,7 +84,7 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        $data = Report::all();
+        $data = Report::where('user_id', '=', auth()->user()->id)->get();
         return response()->json($data);
     }
     function indexmobilID($id)

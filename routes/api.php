@@ -32,14 +32,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum', 'auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
     Route::get('/course-user-data', [CourseController::class, 'course_User'])->name('course-user-data');
     Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
     Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
     Route::get('/devicelist', [InventoryController::class, 'index']);
     Route::get('kivy/report', [ReportController::class, 'indexmobil']); 
-    Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
+    // Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
 });
 
 
