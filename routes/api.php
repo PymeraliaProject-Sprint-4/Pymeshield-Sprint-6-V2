@@ -95,8 +95,6 @@ Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 /** -- kivy equip 2 */
 
-Route::resource('question',QuestionController::class)->except(['show']);
-
 Route::get('kivy/json', [QuestionnaireController::class, 'indexmobil']);
 
 Route::get('kivy/json/{id}/', [QuestionnaireController::class, 'indexmobilID']);
