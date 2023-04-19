@@ -79,16 +79,14 @@ class AuthController extends Controller
 
     public function loginPhone(Request $request)
     {
-        $credentials = $request->only('email', 'password', 'company_id', 'type');
+        $credentials = $request->only('email', 'password');
 
         if (Auth::guard('web')->attempt($credentials)) {
 
             $user = Auth::user();
             $token = $user->createToken('tokenBearer')->plainTextToken;
-            $company_id = $user->company_id;
-            $user_type = $user->type;
 
-            return response()->json(['token' => $token, 'company_id' => $company_id, 'user_type' => $user_type]); //->cookie('tokenBearer', $token, 60)
+            return response()->json(['token' => $token, 'company_id' => $user->company_id, 'user_type' => $user->user_type, 'name' => $user->name, 'email'=>$user->email, 'phone'=>$user->phone, 'nick_name' => $user->nick_name]); //->cookie('tokenBearer', $token, 60)
         } else {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }

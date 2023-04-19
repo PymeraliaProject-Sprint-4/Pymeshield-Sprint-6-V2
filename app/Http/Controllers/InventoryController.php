@@ -7,22 +7,22 @@ use App\Models\Device;
 
 
 class InventoryController extends Controller
-{
-    public function index(){
-        return Device::all();
-    }
-    
+{    
     /**
-     * devicelistID
+     * método que recoje todos los dispositivos y 
+     * los datos de los dispositivos filtrando por el company_id
      *
-     * Rescata los datos de los dispositivos filtrando por el company_id
-     * 
-     * @param  mixed $company_id
      * @return void
      */
-    public function devicelistID($company_id){
-        return Device::where('company_id', $company_id)->get();
+    public function index(){
+        if(auth()->user()->type == 'client'){
+            return Device::where('company_id', '=', auth()->user()->company_id)->get();
+        }
+        else{
+            return Device::all();
+        }
     }
+    
 
     // public function listInventaryAPI($id){
     //     // $idUser = 1;//Aquí es possara la variable de sessió que contingui el id de la sessió
