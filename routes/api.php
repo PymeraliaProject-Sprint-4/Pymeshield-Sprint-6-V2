@@ -91,6 +91,7 @@ Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->
 /** ----- EQUIP 5 ------ */
 
 Route::get('/devicelist',[InventoryController::class, 'index']);
+Route::get('/devicelist/{company_id}/',[InventoryController::class, 'devicelistID']);
 Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 /** -- kivy equip 2 */
