@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\EmblemController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RulesController;
@@ -299,5 +300,9 @@ Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.ind
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
 
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
+
 
