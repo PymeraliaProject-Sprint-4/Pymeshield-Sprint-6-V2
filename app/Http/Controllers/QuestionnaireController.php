@@ -80,7 +80,14 @@ class QuestionnaireController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'autor' => 'required',
+            'date' => ['required', 'date_format:Y-m-d']
+        ]);
+
         $questionnaire = Questionnaire::find($id);
+
         $questionnaire->name = $request->name;
         $questionnaire->autor = $request->autor;
         $questionnaire->date = $request->date;
