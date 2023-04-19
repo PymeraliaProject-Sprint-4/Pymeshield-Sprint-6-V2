@@ -14,25 +14,21 @@
             <ul>
                 <li class="bg-orange-400 rounded-lg p-5 m-2" v-for="resource in category.resources"
                     :key="resource.resource_text_name">
-                    {{ resource.resource_text_name ?? 'No te recursos de tipus text' }} {{
+                    <p class="font-bold ">Recursos de tipus text: </p>{{ resource.resource_text_name ?? 'No existeixen recursos de aquest tipus' }} {{
                         resource.description_rescource_text ?? '-' }}
                 </li>
 
                 <li class="bg-orange-400 rounded-lg p-5 m-2" v-for="resource in category.resources"
                     :key="resource.resource_url_name">
-                    {{ resource.resource_url_name ?? 'No te recursos de tipus url' }} {{ resource.rescource_url_location ??
-                        '-' }}
+                    <p class="font-bold ">Recursos de tipus url: </p>{{ resource.resource_url_name ?? 'No te recursos de tipus url' }} {{ resource.rescource_url_location }}
                 </li>
 
                 <li class="bg-orange-400 rounded-lg p-5 m-2" v-for="resource in category.resources"
                     :key="resource.resource_file_name">
-                    {{ resource.resource_file_name }} {{ resource.rescource_file_location }}
+                    <p class="font-bold ">Recursos de tipus fitxer: </p> {{ resource.resource_file_name ?? 'No te recursos de tipus fitxer' }} {{ resource.rescource_file_location }}
                 </li>
 
             </ul>
-        </div>
-        <div v-if="noResources" class="bg-orange-200 rounded-lg p-5 m-2">
-            <p>No hay recursos</p>
         </div>
     </div>
 </template>
