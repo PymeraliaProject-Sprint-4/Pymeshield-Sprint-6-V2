@@ -30,26 +30,26 @@
                     <x-input-label for="name" :value="__('questionnaire.name')" />
 
                     <x-text-input id="name" class="block mt-1" type="text" name="name"
-                        value="{{ $questionnaire->name }}" required autofocus />
+                        value="{{ $questionnaire->name }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="cost_per_hour" :value="__('questionnaire.autor')" />
 
                     <x-text-input id="autor" class="block mt-1" type="text" name="autor"
-                        value="{{ $questionnaire->autor }}" required autofocus />
+                        value="{{ $questionnaire->autor }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('autor')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="cost_per_hour" :value="__('questionnaire.date')" />
 
-                    <x-text-input id="date" class="block mt-1" type="text" name="date"
-                        value="{{ $questionnaire->date }}" required autofocus />
+                    <x-text-input id="date" class="block mt-1" type="date" name="date"
+                        value="{{ $questionnaire->date }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
                 @if ($questionnaire->hidden != null)
                     <div>

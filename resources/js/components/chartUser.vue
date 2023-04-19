@@ -6,8 +6,9 @@
     <!-- <h1 v-else class="p-3 text-center font-medium">{{ $t('no-results') }}</h1> -->
   </div>
 </template>
-  
+
 <script>
+import axios from 'axios';
 import Chart from 'chart.js/auto'; //modulo para hacer graficos
 
 export default {
@@ -28,7 +29,7 @@ export default {
      */
     async getChartUserData() {
       try {
-        const response = await this.$axios.get('/graphicUserData')
+        const response = await axios.get('/graphicUserData')
         this.dataGraphic = response.data
         this.createChart(); //llama al método que crea el gráfico
       } catch (error) {
@@ -69,7 +70,7 @@ export default {
         };
       }
 
-      const options = { //hace referencia a las coordenadas X e Y 
+      const options = { //hace referencia a las coordenadas X e Y
         plugins: {
           tooltip: {
             enabled: this.dataGraphic != 0 ? true : false //esta opción deshabilita el hover con la info si dataGraphic es menor que 0
@@ -78,7 +79,7 @@ export default {
       };
 
       /**
-       * se instancia un nuevo Gráfico con Chart(), 
+       * se instancia un nuevo Gráfico con Chart(),
        * canvas hace referencia a la etiqueta y tipos de etiqueta donde se va a renderizar el gráfico
        */
       const chart = new Chart(canvas, {
@@ -90,4 +91,3 @@ export default {
   }
 }
 </script>
-  

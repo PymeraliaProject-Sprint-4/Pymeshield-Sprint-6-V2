@@ -32,21 +32,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
-    Route::get('/taskLimit', [UserController::class, 'oneMonthTaskLimit']);
-    Route::get('/activitiesLimit', [UserController::class, 'assignedCoursesUser']);
-    Route::get('/graphicUserData', [UserController::class, 'graphicUserData']);
-
 });
 
 Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
 
-
-
-
 /** ----- EQUIP 4 ------ */
 //Controlador de la vista página Aceptación Tareas
 Route::get('/llistat-tasques', [TaskController::class, 'showTasks'])->name('llistat-tasques');
-Route::get('/datos-tasques', [TaskController::class, 'datosTasques'])->name('datos-tasques');//endpoint donde llegan les tasques del usuario
+Route::get('/datos-tasques', [TaskController::class, 'datosTasques'])->name('datos-tasques'); //endpoint donde llegan les tasques del usuario
 Route::post('/crear-tareas', [TaskController::class, 'createTasks'])->name('crear-tareas');
 
 //Controladores de las vistas Kanban y Gantt
@@ -90,12 +83,11 @@ Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->
 
 /** ----- EQUIP 5 ------ */
 
-Route::get('/devicelist',[InventoryController::class, 'index']);
+Route::get('/devicelist', [InventoryController::class, 'index']);
+Route::get('/devicelist/{company_id}/', [InventoryController::class, 'devicelistID']);
 Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 /** -- kivy equip 2 */
-
-Route::resource('question',QuestionController::class)->except(['show']);
 
 Route::get('kivy/json', [QuestionnaireController::class, 'indexmobil']);
 

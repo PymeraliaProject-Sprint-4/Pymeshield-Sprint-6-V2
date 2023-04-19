@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\EmblemController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RulesController;
@@ -101,6 +102,10 @@ Route::get('PerfilPersonal_Worker/EditarPerfilWorker', [UserController::class, '
 Route::post('PerfilPersonal_Worker/Editar_Perfil/update', [UserController::class, 'updateUserWorker'])->name('updateUserWorker')->middleware('auth');
 Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])->name('PerfilPersonal_Worker')->middleware('auth');
 
+//Dashboard
+Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
+Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
+Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
 
 
 ///////
@@ -283,6 +288,7 @@ Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('a
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
 Route::post('devices/edit', [DevicesController::class, 'edit'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->middleware('auth', 'check_access_admin');
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
@@ -298,3 +304,10 @@ Route::get('listInventory', [InventoryController::class, 'listInventary'])->midd
 Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth', 'check_access_admin');
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
+
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
+
+
