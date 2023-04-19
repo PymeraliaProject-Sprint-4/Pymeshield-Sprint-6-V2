@@ -273,5 +273,11 @@
     "validation.required.description" : "El campo descripción es obligatorio",
     "validation.required.recommendation_true" : "Los campos de recomendacion positiva són obligatorios",
     "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios",
-    "edituser" : "Editar Usuario"
+    "edituser" : "Editar Usuario",
+    "Deleted.Company" : "Eliminar Empresas",
+    "Visible.Company" : "Empresas visibles",
+    "edit-company" : "Editar Empresa"
+
+
 }
+    

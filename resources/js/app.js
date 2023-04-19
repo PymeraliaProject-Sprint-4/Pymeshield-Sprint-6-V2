@@ -1,5 +1,4 @@
 
-import 'jquery/dist/jquery.min.js'
 //defineAsync para cargar los componentes de forma asíncrona
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler";
 import laravelPermissionToVuejs from 'laravel-permission-to-vuejs';
@@ -22,6 +21,9 @@ app.component('admin-layout', admin);
 
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
 app.component('list-company', listcompany);
+
+const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
+app.component('list-company-hidden', ListCompanyHidden);
 
 const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
 app.component('editor', quillEditor);
