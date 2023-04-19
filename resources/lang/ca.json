@@ -267,11 +267,17 @@
     "Update" : "Actualitzar",
     "ErrorMsg.1" : "La nota no pot ser major que 10",
     "ErrorMsg.2" : "La nota no pot ser menor que 0",
+    "validation.required" : "*El camp es requerit",
+    "validation.date" : "*El camp data es requerit",
+    "validation.date_format" : "*El format de la data no es correcte",
     "validation.email" : "Format del correu electrònic no vàlid.",
     "validation.required.name" : "El camp de pregunta és obligatori",
     "validation.required.description" : "El camp de descripció és obligatori",
     "validation.required.recommendation_true" : "Els camps de recomanació afirmativa son obligatoris",
     "validation.required.recommendation_false" : "Els camps de recomanació negativa son obligatoris",
     "validation.required.autor": "El camp autor és obligatiori",
-    "edituser" : "Editar Usuari"
+    "edituser" : "Editar Usuari",
+    "Deleted.Company" : "Eliminar Empreses",
+    "Visible.Company" : "Empreses visibles",
+    "edit-company" : "Editar Empresa"
 }

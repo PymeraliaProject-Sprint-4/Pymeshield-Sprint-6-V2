@@ -66,10 +66,10 @@ class BudgetController extends Controller
         $id->accepted = $request->accepted;
 
         $id->save(); //Guardo los valores en la base de datos con la funcion save()
-        return redirect()->route('Aceptar-Presupuestos'); //Redirigo al usuario a la pagina 
+        return redirect()->route('Aceptar-Presupuestos'); //Redirigo al usuario a la pagina
     }
 
-    public function destroy($id) //Acción con el metodo destroy pasandole la id de la fila que quiero eliminar 
+    public function destroy($id) //Acción con el metodo destroy pasandole la id de la fila que quiero eliminar
     {
         $budget = Budget::findOrFail($id);
         $budget->delete(); //Asigno a la variable budget el metoo delete
@@ -110,24 +110,22 @@ class BudgetController extends Controller
             ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
             ->orderBy('budgets.id', 'asc')->get();
         return response()->json($data); //Retornar json vara vue
-        //return view('Presupuestos.show_budgets_view.index', compact('data')); //Retornar para blade 
+        //return view('Presupuestos.show_budgets_view.index', compact('data')); //Retornar para blade
     }
 
-    /**
     public function list()
     {
-        
+
         $list = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('companies', 'companies.id', '=', 'users.company_id')
             ->select("users.name", "users.last_name", "companies.name", "tasks.start_date", "tasks.final_date", "budgets.status")->where('users.id', '=', '2')->get();
             return view('Presupuestos.listado_presupuestos.index', compact('list'));
-            
+
             //$pressupostos = Budget::paginate(10); //paginación
         //return view('Presupuestos.llista_pressupostos.index', compact('pressupostos'));
     }
-     */
     //GUARDAR - Crear - Store
     public function store(Request $request)
     {
@@ -225,7 +223,7 @@ class BudgetController extends Controller
             ->get();
 
         // $total = json_decode($data);
-        
+
         if ($dataPyme == '[]') {
             $dataPyme = 0;
             $totalPyme = $dataPyme;
@@ -294,7 +292,7 @@ class BudgetController extends Controller
         $start_date = $request->input('start_date'); // obtener la fecha de inicio de la tarea de la solicitud
         $final_date = $request->input('final_date'); // obtener la fecha de finalización de la tarea de la solicitud
 
-        $task = Task::find($id); // buscar la tarea en la base de datos utilizando el ID  
+        $task = Task::find($id); // buscar la tarea en la base de datos utilizando el ID
         $task->price = $price; // actualizar el precio de la tarea
         $task->start_date = $start_date; // actualizar la fecha de inicio de la tarea
         $task->final_date = $final_date; // actualizar la fecha de finalización de la tarea

@@ -8,21 +8,21 @@ use App\Models\Device;
 
 class InventoryController extends Controller
 {
-    public function index(){
-        return Device::all();
-    }
-    
     /**
-     * devicelistID
+     * método que recoje todos los dispositivos y
+     * los datos de los dispositivos filtrando por el company_id
      *
-     * Rescata los datos de los dispositivos filtrando por el company_id
-     * 
-     * @param  mixed $company_id
      * @return void
      */
-    public function devicelistID($company_id){
-        return Device::where('company_id', $company_id)->get();
+    public function index(){
+        if(auth()->user()->type == 'client'){
+            return Device::where('company_id', '=', auth()->user()->company_id)->get();
+        }
+        else{
+            return Device::all();
+        }
     }
+
 
     // public function listInventaryAPI($id){
     //     // $idUser = 1;//Aquí es possara la variable de sessió que contingui el id de la sessió
@@ -34,7 +34,7 @@ class InventoryController extends Controller
 
         $filtro = $request->buscar;
 
-        $dispositivosInventario = Device::where('user_id', $idUser)
+        $dispositivosInventario = Device::where('company_id', $idUser)
                                     ->where(function ($query) use ($filtro) {
                                         $query->where('brand', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('model', 'LIKE', '%'.$filtro.'%')
@@ -43,7 +43,7 @@ class InventoryController extends Controller
                                             ->orWhere('type_device_id', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('description', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('state', 'LIKE', '%'.$filtro.'%')
-                                            ->orWhere('serial_number', 'LIKE', '%'.$filtro.'%');                                    
+                                            ->orWhere('serial_number', 'LIKE', '%'.$filtro.'%');
                                         })
                                         ->paginate(3);
 

@@ -108,8 +108,6 @@ footer svg {
 
 .item {
     display: inline-block; /* mostrar elementos en línea */
-    width: 200px;
-    height: 200px;
     background-color: #ccc;
     margin-right: 10px;
 }

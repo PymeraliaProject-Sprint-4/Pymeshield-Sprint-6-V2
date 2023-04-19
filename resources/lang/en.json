@@ -264,11 +264,19 @@
     "budget.updated-date" : "Last updated",
     "budget.status" : "Status",
     "budget.price" : "Price",
+    "validation.required" : "*This field is required",
+    "validation.date" : "*The field date is required",
+    "validation.date_format" : "*The format of the data is not correct",
     "validation.email" : "Email format is invalid.",
     "validation.required.name" : "The question field is required",
     "validation.required.description" : "The description field is required",
     "validation.required.recommendation_true" : "The afirmative answers is required",
     "validation.required.recommendation_false" : "The negative answers is required",
     "validation.required.autor": "The author field is required",
-    "edituser" : "Edit User"
+    "edituser" : "Edit User",
+    "Deleted.Company" : "Deleted Companies",
+    "Visible.Company" : "Visible Companies",
+    "edit-company" : "Edit Company"
+
+
 }

@@ -22,6 +22,9 @@ app.component('admin-layout', admin);
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
 app.component('list-company', listcompany);
 
+const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
+app.component('list-company-hidden', ListCompanyHidden);
+
 const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
 app.component('editor', quillEditor);
 
@@ -122,6 +125,12 @@ app.component('kanban', kanban);
 
 const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
 app.component('show_budgets', budgets);
+
+const buscador = defineAsyncComponent(() => import('./components/Buscador.vue'));
+app.component('buscador', buscador);
+
+const inventory = defineAsyncComponent(() => import('./components/inventory.vue'));
+app.component('inventory', inventory);
 
 //EQUIP 5
 const listdevices = defineAsyncComponent(() => import('./components/ListDevices.vue'));
