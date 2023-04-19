@@ -101,6 +101,10 @@ Route::get('PerfilPersonal_Worker/EditarPerfilWorker', [UserController::class, '
 Route::post('PerfilPersonal_Worker/Editar_Perfil/update', [UserController::class, 'updateUserWorker'])->name('updateUserWorker')->middleware('auth');
 Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])->name('PerfilPersonal_Worker')->middleware('auth');
 
+//Dashboard
+Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
+Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
+Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
 
 
 ///////

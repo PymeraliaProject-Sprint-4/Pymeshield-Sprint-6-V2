@@ -39,9 +39,10 @@
             </tbody>
         </table>
     </div>
-    
+
 </template>
 <script>
+import axios from 'axios';
 import { format } from 'date-fns'; //modulo para dar formato a fechas
 
 export default {
@@ -58,7 +59,7 @@ export default {
     methods: {
         async getTasksWeeks() {
             try {
-                const response = await this.$axios.get('/activitiesLimit')
+                const response = await axios.get('/activitiesLimit')
                 this.weekActivities = response.data
             } catch (error) {
                 console.error(error)
