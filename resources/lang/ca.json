@@ -276,5 +276,8 @@
     "validation.required.recommendation_true" : "Els camps de recomanació afirmativa son obligatoris",
     "validation.required.recommendation_false" : "Els camps de recomanació negativa son obligatoris",
     "validation.required.autor": "El camp autor és obligatiori",
-    "edituser" : "Editar Usuari"
+    "edituser" : "Editar Usuari",
+    "Deleted.Company" : "Eliminar Empreses",
+    "Visible.Company" : "Empreses visibles",
+    "edit-company" : "Editar Empresa"
 }
