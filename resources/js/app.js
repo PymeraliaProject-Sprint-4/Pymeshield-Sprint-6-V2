@@ -126,6 +126,12 @@ app.component('kanban', kanban);
 const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
 app.component('show_budgets', budgets);
 
+const buscador = defineAsyncComponent(() => import('./components/Buscador.vue'));
+app.component('buscador', buscador);
+
+const inventory = defineAsyncComponent(() => import('./components/inventory.vue'));
+app.component('inventory', inventory);
+
 //EQUIP 5
 const listdevices = defineAsyncComponent(() => import('./components/ListDevices.vue'));
 app.component('list-devices', listdevices);
