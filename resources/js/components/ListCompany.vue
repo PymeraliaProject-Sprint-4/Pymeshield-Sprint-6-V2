@@ -1,11 +1,17 @@
 <template>
-    <div class="grid justify-items-end mr-10">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 flex items-center"
-            @click="open = true">
-            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-            <span class="ml-2">{{ $t('create-company') }}</span>
-        </button>
-    </div>
+<div class="flex justify-center mt-5">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center" @click="ModalCrear = true">
+        <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+        <span class="ml-2">{{ $t('create-company') }}</span>
+    </button>
+    <div class="w-4"></div> <!-- Espacio entre los botones -->
+    <button @click="redirectToDeletedCompany()" id="" class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+        <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+        {{ $t('Deleted.Course') }}
+    </button>
+</div>
+
+
     <div class="m-5">
         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
             <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
@@ -62,7 +68,7 @@
         <Dialog as="div" class="relative z-10" @close="ModalCrear = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
                 leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -79,8 +85,8 @@
                                     <div class="xl:items-start">
                                         <div class="flex space-x-2 items-center">
                                             <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <PlusCircleIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                <PlusCircleIcon class="h-6 w-6 text-black-400" aria-hidden="true" />
                                             </div>
                                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                                 {{ $t('create-company') }}</DialogTitle>
@@ -91,36 +97,52 @@
                                             <div class="mt-2">
                                                 <div>
                                                     <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('name') }}</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                            $t('name') }}</label>
                                                     <input v-model="crear.nameCrear" type="text" id="name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
+                                                        <span v-if="!crear.nameCrear"
+                                                        class="absolute right-10 top-50 text-red-500">*</span>
                                                 </div>
                                             </div>
+
+
+                                           
+
                                             <div class="mt-2">
                                                 <div>
                                                     <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('email') }}</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                            $t('email') }}</label>
                                                     <input v-model="crear.emailCrear" type="text" id="email"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
+                                                        <span v-if="!crear.emailCrear"
+                                                        class="absolute right-10 top-50 text-red-500">*</span>
                                                 </div>
                                             </div>
                                             <div class="mt-2">
                                                 <div class="flex w-full space-x-8">
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('phone') }}</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                                $t('phone') }}</label>
                                                         <input v-model="crear.phoneCrear" type="text" id="phone"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
+                                                            <span v-if="!crear.phoneCrear"
+                                                        class="absolute left-50 top-50 text-red-500">*</span>
                                                     </div>
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('cif') }}</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                                $t('cif') }}</label>
                                                         <input v-model="crear.cifCrear" type="text" id="cif"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
+                                                            <span v-if="!crear.cifCrear"
+                                                        class="absolute right-10 top-50 text-red-500">*</span>
                                                     </div>
 
                                                 </div>
@@ -130,12 +152,16 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                            
                                     <button type="button"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="submitFormCrear()">{{ $t('create') }}</button>
+                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="ModalCrear = false" ref="cancelButtonRef"><i
+                                            class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="ModalCrear = false" ref="cancelButtonRef">{{ $t('cancel') }}</button>
+                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        @click="submitFormCrear()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
+                              
+                                       
                                 </div>
                             </form>
                         </DialogPanel>
@@ -151,7 +177,7 @@
         <Dialog as="div" class="relative z-10" @close="ModalEditar = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
                 leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -168,8 +194,8 @@
                                     <div class="xl:items-start">
                                         <div class="flex space-x-2 items-center">
                                             <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <PencilSquareIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                <i class="fas fa-plus mr-2"></i>
                                             </div>
                                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                                 {{ $t('create-company') }}</DialogTitle>
@@ -177,39 +203,60 @@
 
                                         <div class="mt-3 text-center md:text-left">
 
-                                            <div class="mt-2">
-                                                <div>
-                                                    <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('name') }}</label>
+                                            <div>
+                                                <label
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                        $t('name') }}</label>
+                                                <div class="relative">
                                                     <input v-model="editar.nameEditar" type="text" id="name"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
+                                                    <span v-if="!editar.nameEditar"
+                                                        class="absolute right-0 top-0 text-red-500">*</span>
                                                 </div>
                                             </div>
+
                                             <div class="mt-2">
                                                 <div>
                                                     <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('email') }}</label>
-                                                    <input v-model="editar.emailEditar" type="text" id="email"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                        required>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                            $t('email') }}</label>
+                                                    <div class="relative">
+                                                        <input v-model="editar.emailEditar" type="text" id="email"
+                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                            required>
+                                                        <span v-if="!editar.emailEditar"
+                                                            class="absolute right-0 top-0 text-red-500">*</span>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                             <div class="mt-2">
+
                                                 <div class="flex w-full space-x-8">
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('phone') }}</label>
-                                                        <input v-model="editar.phoneEditar" type="text" id="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                            required>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                                $t('phone') }}</label>
+                                                        <div class="relative">
+                                                            <input v-model="editar.phoneEditar" type="text" id="phone"
+                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                                required>
+                                                            <span v-if="!editar.phoneEditar"
+                                                                class="absolute right-0 top-0 text-red-500">*</span>
+                                                        </div>
                                                     </div>
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('cif') }}</label>
-                                                        <input v-model="editar.cifEditar" type="text" id="cif"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                            required>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                                $t('cif') }}</label>
+                                                        <div class="relative">
+                                                            <input v-model="editar.cifEditar" type="text" id="cif"
+                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                                required>
+                                                            <span v-if="!editar.cifEditar"
+                                                                class="absolute right-0 top-0 text-red-500">*</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,12 +265,15 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+
                                     <button type="button"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="submitFormEditar()">Editar</button>
+                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="ModalEditar = false" ref="cancelButtonRef"><i
+                                            class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="ModalEditar = false" ref="cancelButtonRef">Cancelar</button>
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
+                                    </button>
                                 </div>
                             </form>
                         </DialogPanel>
@@ -256,8 +306,8 @@
                                     <div class="xl:items-start">
                                         <div class="flex space-x-2 items-center">
                                             <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <PencilSquareIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                <PencilSquareIcon class="h-6 w-6 text-black-400" aria-hidden="true" />
                                             </div>
                                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                                 {{ $t('deregister-company') }}</DialogTitle>
@@ -280,13 +330,16 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                  
                                     <button type="button"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="submitFormBaja()">{{ $t('Deregister') }}</button>
+                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="ModalBaja = false" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
+                                      
+                                    </button>
                                     <button type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="ModalBaja = false" ref="cancelButtonRef">  <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />{{ $t('cancel') }}</button>
-                                </div>  
+                                    class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
+                                        @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister') }}</button>
+                                </div>
                             </form>
                         </DialogPanel>
                     </TransitionChild>
@@ -410,7 +463,7 @@
 <script>
 
 import axios from 'axios';
-import { PlusIcon,TrashIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 
 export default {
@@ -519,6 +572,10 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
+        },
+
+        redirectToDeletedCompany(){
+            window.location.href = "/company/hidden";
         }
     },
 };
@@ -527,7 +584,7 @@ export default {
 <script setup>
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 </script>
 
 

@@ -21,33 +21,40 @@
                         {{ $t('phone') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        {{ $t('company') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         {{ $t('functions') }}
                     </th>
                 </tr>
             </thead>
-            <tbody v-if="varusers.length > 0">
-                <tr v-for="(user, key) in varusers" :key="key"
-                    class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
+            <tbody v-if="user.length > 0">
+                <tr v-for="users in user" :key="id" class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ user.name }}
+                        {{ users.name }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ user.last_name }}
+                        {{ users.last_name }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ user.email }}
+                        {{ users.email }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ user.phone }}
+                        {{ users.phone }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ users.company_name }}
                     </td>
                     <td class="px-4 py-4 text-center align-middle">
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded "
-                            @click="this.openModalBaja(company.id)">
+                        <button class="bg-red-500 hoverxbg-red-700 text-white font-bold py-2 px-2 ml-2 rounded"
+                            @click="openModalBaja()">
                             <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                        </button> <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 ml-2 rounded"
-                            @click="this.openModalEditar(company.id, company.name, company.email, company.phone, company.cif)">
+                        </button>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 ml-2 rounded"
+                            @click="openModalEditar(users)">
                             <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
+
                     </td>
 
                 </tr>
@@ -77,75 +84,95 @@
                                 <div class="xl:items-start">
                                     <div class="flex space-x-2 items-center">
                                         <div
-                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                            <PlusCircleIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                            <i class="fas fa-edit mr-2"></i>
                                         </div>
-                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Editar
-                                            Usuario</DialogTitle>
+                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> {{
+                                            $t('edituser') }}</DialogTitle>
                                     </div>
 
                                     <div class="mt-3 text-center md:text-left">
-                                        <form @submit.prevent="submitForm">
+                                        <form>
                                             <div class="mt-2">
-                                                <div>
+                                                <div class="relative">
                                                     <label for="name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('name') }}</label>
-                                                    <span v-if="!name" class="text-red-500">*</span>
-                                                    <input type="text" v-model="editar.nameEditar" id="name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('name') }}</label>
+                                                    <input type="text" v-model="currentUser.name" id="name" name="name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                         required>
+                                                    <span v-if="!currentUser.name"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
+
                                             <div class="mt-2">
-                                                <div>
+                                                <div class="relative">
                                                     <label for="last_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('lastname') }}</label>
-                                                    <span v-if="!last_name" class="text-red-500">*</span>
-                                                    <input type="text" v-model="editar.last_nameEditar" id="last_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('lastname') }}</label>
+                                                    <input type="text" v-model="currentUser.last_name" id="last_name"
+                                                        name="last_name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                         required>
+                                                    <span v-if="!currentUser.last_name"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
+
+
                                             <div class="mt-2">
-                                                <div>
+                                                <div class="relative">
                                                     <label for="nick_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('username') }}</label>
-                                                    <span v-if="!nick_name" class="text-red-500">*</span>
-                                                    <input type="text" v-model="editar.nick_nameEditar" id="nick_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('username') }}</label>
+                                                    <input type="text" v-model="currentUser.nick_name" id="nick_name"
+                                                        name="nick_name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                         required>
+                                                    <span v-if="!currentUser.nick_name"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
+
                                             <div class="mt-2">
                                                 <div class="flex w-full space-x-8">
-                                                    <div class="w-full">
+                                                    <div class="w-full relative">
                                                         <label for="email"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('email') }}</label>
-                                                        <span v-if="!email" class="text-red-500">*</span>
-                                                        <input type="email" v-model="editar.emailEditar" id="email"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                $t('email') }}</label>
+                                                        <input type="email" v-model="currentUser.email" id="email"
+                                                            name="email"
+                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                             required>
+                                                        <span v-if="!currentUser.email"
+                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                     </div>
-                                                    <div class="w-full">
+                                                    <div class="w-full relative">
                                                         <label for="phone"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('phone') }}</label>
-                                                        <span v-if="!phone" class="text-red-500">*</span>
-                                                        <input type="text" v-model="editar.phoneEditar" id="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                $t('phone') }}</label>
+                                                        <input type="text" v-model="currentUser.phone" id="phone"
+                                                            name="phone"
+                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                             required>
+                                                        <span v-if="!currentUser.phone"
+                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-full">
+                                                <div class="w-full relative">
                                                     <label for="company_id"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{ $t('company') }}</label>
-                                                    <span v-if="!company_id" class="text-red-500">*</span>
-                                                    <input type="text" v-model="editar.company_idEditar" id="company_id"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('company') }}</label>
+                                                    <input type="text" v-model="currentUser.company_name" id="company_name"
+                                                        name="company_name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                         required>
+                                                    <span v-if="!currentUser.company_name"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
-                                                <input type="hidden" v-model="editar.password">
-
                                             </div>
+
                                             <div class="mt-2">
                                                 <div>
 
@@ -156,13 +183,20 @@
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="submit"
-                                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="submitFormEditar()">Guardar</button>
                                 <button type="button"
-                                    class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="open = false" ref="cancelButtonRef">Cancel</button>
+                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                    @click="closeModal()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                        $t('cancel') }}
+                                </button>
+
+                                  <button type="button"
+                                  class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
+                                    </button>
+                                   
+
                             </div>
+
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -191,8 +225,8 @@
                                     <div class="xl:items-start">
                                         <div class="flex space-x-2 items-center">
                                             <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <PencilSquareIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                <i class="fas fa-edit mr-2"></i>
                                             </div>
                                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                                 {{ $t('deregister user') }}</DialogTitle>
@@ -216,11 +250,14 @@
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button type="button"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="submitFormBaja()">{{ $t('Deregister') }}</button>
+                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="closeModalBaja()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                            $t('cancel') }}</button>
+
                                     <button type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="ModalBaja = false" ref="cancelButtonRef">{{ $t('cancel') }}</button>
+                                        class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
+                                        @click="submitFormBaja()"> <i class="far fa-trash-alt mr-2"></i>{{ $t('Deregister')
+                                        }}</button>
                                 </div>
                             </form>
                         </DialogPanel>
@@ -232,45 +269,44 @@
 </template>
 
 <script>
-
 import axios from 'axios';
 
-//Importem el botó d'afegir usuaris
+// Importem el botó d'afegir usuaris
 import AddUser from './AddUser.vue';
-//import UpUser from './upUser.vue';
+// import UpUser from './upUser.vue';
 
 export default {
     data() {
         return {
-            varusers: [],
-            ModalBaja: false,
             baja: { id: "", removed_reason: "" },
-            editar: { id: "", nameEditar: "", last_nameEditar: "", nick_nameEditar: "", emailEditar: "", phoneEditar: "", company_idEditar: "", password: "" },
             user: [],
+            currentUser: {},
             ModalEditar: false,
-
+            ModalBaja: false
         };
     },
     mounted() {
-        this.getUsers()
+        this.getUsers();
     },
     methods: {
         getUsers() {
             axios.get("userList/userListing")
                 .then(response => {
-                    this.varusers = [];
-                    this.varusers = response.data;
-                    //dd(response.data);
+                    this.user = response.data;
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
 
-        openModalBaja(id) {
-            this.baja.id = id;
+        openModalBaja() {
             this.ModalBaja = true;
         },
+
+        closeModalBaja() {
+            this.ModalBaja = false;
+        },
+
         submitFormBaja() {
             this.ModalBaja = true;
             axios.post('/userDown', {
@@ -287,53 +323,55 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
-
         },
-        openModalEditar(id, name, last_name, nick_name, email, phone, company_id, password,) {
+
+        openModalEditar(user) {
             this.ModalEditar = true;
-            this.editar.id = id
-            this.editar.nameEditar = name;
-            this.editar.last_nameEditar = last_name;
-            this.editar.nick_nameEditar = nick_name;
-            this.editar.emailEditar = email;
-            this.editar.phoneEditar = phone;
-            this.editar.company_idEditar = company_id;
-            this.editar.password = password;
-            console.log(this.editar.password);
+            this.currentUser = {
+                name: user.name,
+                last_name: user.last_name,
+                nick_name: user.nick_name,
+                email: user.email,
+                phone: user.phone,
+                company_name: user.company_name
+            };
         },
+
+        closeModal() {
+            this.ModalEditar = false;
+            this.currentUser = {};
+        },
+
         submitFormEditar() {
-            try {
-                axios.post('/editUser', {
-                    user_id: this.editar.id,
-                    name: this.editar.nameEditar,
-                    last_name: this.editar.last_nameEditar,
-                    nick_name: this.editar.nick_nameEditar,
-                    email: this.editar.emailEditar,
-                    phone: this.editar.phoneEditar,
-                    company_id: this.editar.company_idEditar,
-                    password: this.editar.password,
-
+            axios.post("/editUser", {
+                name: this.currentUser.name,
+                last_name: this.currentUser.last_name,
+                nick_name: this.currentUser.nick_name,
+                email: this.currentUser.email,
+                phone: this.currentUser.phone,
+                company_name: this.currentUser.company_name
+            })
+                .then(response => {
+                    this.getUsers();
+                    console.log(response);
+                    this.ModalEditar = false;
+                    this.currentUser.name = "";
+                    this.currentUser.last_name = "";
+                    this.currentUser.nick_name = "";
+                    this.currentUser.email = "";
+                    this.currentUser.phone = "";
+                    this.currentUser.company_name = "";
+                    setTimeout(() => { this.NotificacionEditar = false; }, 2000);
                 })
-                    .then(response => {
-                        // Lógica para manejar la respuesta del controlador
-                        alert('Usuario editado con exito')
-                        this.ModalEditar = false
-                        //open = false
-                    })
-                    .catch(error => {
-                        // Lógica para manejar el error
-                        //alert('error crear user')
-                    });
-
-            } catch {
-                alert('fallo aixos')
-            }
-        }
-    },
-
-    components: { AddUser }
-};
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+        components: { AddUser }
+    }
+}
 </script>
+
 <script setup>
 import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'

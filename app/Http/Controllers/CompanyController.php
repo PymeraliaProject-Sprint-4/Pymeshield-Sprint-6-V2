@@ -20,11 +20,14 @@ class CompanyController extends Controller
     }
 
     public function listCompanies(){
-        $companies = Company::select(['id','name','email','phone','cif'])->whereNull('hidden')->get();
-
+        $companies = Company::select(['id','name','email','phone','cif'])
+                            ->whereNull('hidden')
+                            ->orderBy('updated_at', 'desc')
+                            ->get();
+    
         return $companies;
     }
-
+    
     public function storeCompany(Request $request){
         $company = new Company();
         $company->name = $request->name;

@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\Questionnaire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionnaireController extends Controller
 {
@@ -40,13 +41,24 @@ class QuestionnaireController extends Controller
     {
 
         $questionnaire = new Questionnaire();
+
+        $validator = Validator::make($request->all(), [
+            'questionnaire_name' => ['required', 'string'],
+            'questionnaire_autor' => ['required', 'string']
+        ], [
+            'questionnaire_name.required' => __('validation.required.name'),
+            'questionnaire_autor.required' => __('validation.required.autor')
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        } 
+
         $questionnaire->name = $request->questionnaire_name;
         $questionnaire->autor = $request->questionnaire_autor;
         $questionnaire->date = date('Y-m-d');
 
         $questionnaire->save();
-
-        Log::channel('custom')->info('El usuario ' . $request->user()->email . ' ha creado un nuevo curso el día ' . now()->format('Y-m-d H:i:s'));
 
 
         return response()->json(['id' => $questionnaire->id]);

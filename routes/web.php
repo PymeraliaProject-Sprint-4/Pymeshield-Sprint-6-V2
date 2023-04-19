@@ -72,7 +72,7 @@ Route::get('userList/userListingHidden', [UserController::class, 'userListing'])
 
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
 Route::post('userDown', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth');
+Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
@@ -102,6 +102,10 @@ Route::get('PerfilPersonal_Worker/EditarPerfilWorker', [UserController::class, '
 Route::post('PerfilPersonal_Worker/Editar_Perfil/update', [UserController::class, 'updateUserWorker'])->name('updateUserWorker')->middleware('auth');
 Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])->name('PerfilPersonal_Worker')->middleware('auth');
 
+//Dashboard
+Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
+Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
+Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
 
 
 ///////
@@ -203,9 +207,10 @@ Route::get('recursos', [ResourceController::class, 'index'])->name('recourse.ind
 
 
 //Part de Evaluacións
-Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursoss')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
+Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursos')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
+Route::get('CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos'])->name('Evaluar.CursosDatos')->middleware('auth', 'check_access_admin');
 Route::get('CursosCalificar/{id}/activities', [DeliveryController::class, 'courseActivities'])->name('courseActivities')->middleware('auth', 'check_access_admin'); //Vista categories i activitats del curs triat
-Route::get('activitiesProva/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth', 'check_access_admin'); //Dades JSON categories i activitats del curs triat
+Route::get('CursosCalificar/{id}/activities-Datos', [DeliveryController::class, 'courseActivitiesDatos'])->name('courseActivitiesDatos')->middleware('auth', 'check_access_admin'); //Dades JSON categories i activitats del curs triat
 Route::get('CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries')->middleware('auth', 'check_access_admin'); //Vista alumnes amb la nota i feedback sobre la activitat triada
 Route::get('CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne
@@ -278,6 +283,7 @@ Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('a
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
 Route::post('devices/edit', [DevicesController::class, 'edit'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->middleware('auth', 'check_access_admin');
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
@@ -295,5 +301,8 @@ Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
 
 
-
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
+
+

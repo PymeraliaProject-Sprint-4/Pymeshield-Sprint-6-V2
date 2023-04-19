@@ -8,7 +8,7 @@
                     <th class="px-6 py-3 uppercase">{{ $t('impact') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('state') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('date') }}</th>
-                    <th class="px-6 py-3 uppercase"></th>   
+                    <th class="px-6 py-3 uppercase"></th>
                 </tr>
             </thead>
             <tbody v-if="weekTasks != 0">
@@ -35,9 +35,10 @@
             </tbody>
         </table>
     </div>
-    
+
 </template>
 <script>
+import axios from 'axios';
 import { format } from 'date-fns';
 
 export default {
@@ -54,7 +55,7 @@ export default {
     methods: {
         async getTasksWeeks() {
             try {
-                const response = await this.$axios.get('/taskLimit')
+                const response = await axios.get('/taskLimit')
                 this.weekTasks = response.data
             } catch (error) {
                 console.error(error)

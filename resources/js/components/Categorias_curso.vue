@@ -13,10 +13,11 @@
                 <div class="px-4 py-2">
                     <ul>
                         <li v-for="(activity, index) in category.activities" :key="index"
-                            class="text-gray-700 dark:text-gray-400">
-                            <a :href="`/CursosCalificar/${this.id}/activities/${activity.id}`">{{ activity.name
-                            }}</a>
+                            @click="viewActivityDeliveries(activity.id)"
+                            class="text-gray-700 dark:text-gray-400 hover:bg-gray-200 cursor-pointer">
+                            {{ activity.name }}
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -31,16 +32,11 @@
     </div>
 </template>
 
-
-
 <script>
+
+import axios from 'axios';
+
 export default {
-    props: {
-        id: {
-            type: Number,
-            required: true
-        }
-    },
     data() {
         return {
             courseName: "",
@@ -48,17 +44,28 @@ export default {
         }
     },
     mounted() {
-        fetch(`/activitiesProva/${this.id}/activities-Datos`)
-            .then(response => response.json())
-            .then(data => {
-                this.courseName = data.courseName;
-                this.categories = data.categories;
+        const url = new URL(window.location.href);
+        const id = url.pathname.split('/')[2];
+        axios.get(`/CursosCalificar/${id}/activities-Datos`)
+            .then(response => {
+                this.courseName = response.data.courseName;
+                this.categories = response.data.categories;
             });
+
     },
     methods: {
         goBack() {
             window.history.back();
+
+        },
+
+        viewActivityDeliveries(activityId) {
+            const url = new URL(window.location.href);
+            const id = url.pathname.split('/')[2];
+            window.location.href = `/CursosCalificar/${id}/activities/${activityId}`;
+
         }
     }
+
 }
 </script>
