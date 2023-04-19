@@ -7,12 +7,13 @@
     <div class="w-4"></div> <!-- Espacio entre los botones -->
     <button @click="redirectToDeletedCompany()" id="" class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
         <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
-        {{ $t('Deleted.Course') }}
+        {{ $t('Deleted.Company') }}
     </button>
 </div>
 
 
     <div class="m-5">
+        
         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
             <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -195,10 +196,10 @@
                                         <div class="flex space-x-2 items-center">
                                             <div
                                                 class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
-                                                <i class="fas fa-plus mr-2"></i>
+                                                <i class="fas fa-edit mr-2"></i>
                                             </div>
                                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                                                {{ $t('create-company') }}</DialogTitle>
+                                                {{ $t('edit-company') }}</DialogTitle>
                                         </div>
 
                                         <div class="mt-3 text-center md:text-left">
@@ -575,7 +576,7 @@ export default {
         },
 
         redirectToDeletedCompany(){
-            window.location.href = "/company/hidden";
+            window.location.href = "/listcompanyhidden";
         }
     },
 };

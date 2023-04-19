@@ -278,5 +278,11 @@
     "validation.required.recommendation_true" : "Los campos de recomendacion positiva són obligatorios",
     "validation.required.recommendation_false" : "Los campos de recomendacion negativa són obligatorios",
     "validation.required.autor": "El campo autor es obligatorio",
-    "edituser" : "Editar Usuario"
+    "edituser" : "Editar Usuario",
+    "Deleted.Company" : "Eliminar Empresas",
+    "Visible.Company" : "Empresas visibles",
+    "edit-company" : "Editar Empresa"
+
+
 }
+    
