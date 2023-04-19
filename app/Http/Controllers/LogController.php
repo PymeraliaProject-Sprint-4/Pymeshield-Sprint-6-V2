@@ -6,33 +6,34 @@ use App\Models\User;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class LogController extends Controller
 {
     /**
      * @throws FileNotFoundException
      */
-public function index()
-{
+    public function index()
+    {
+        $users = User::all();
+        $name = request('search');
 
-    $users = User::all();
+        // Obtener todos los elementos de la lista 'logs' en Redis
+        $logs = Redis::lrange('logs', 0, -1);
 
-    // Obtener el valor del parámetro de búsqueda
-    $name = request('search');
+        // Filtrar los registros en base al nombre recibido si se proporciona uno
+        if (!empty($name)) {
+            $logs = array_filter($logs, function($log) use ($name) {
+                return strpos($log, $name) !== false;
+            });
+        }
 
-    // Ruta del archivo de logs
-    $logFile = storage_path('logs/custom-logs.log');
+        // Convertir los registros filtrados en un string, o asignar todos los registros si no hay filtro
+        $filteredLogs = !empty($logs) ? implode("\n", $logs) : implode("\n", Redis::lrange('logs', 0, -1));
 
-    // Leer registros de logs y pasarlos a la vista
-    $logs = File::get($logFile);
-
-    // Filtrar los logs por nombre si se proporciona un valor
-    if ($name) {
-        $logs = $this->filterLogsByName($logs, $name);
+        return view('logs.index', ['logs' => $filteredLogs, 'users' => $users]);
     }
 
-    return view('logs.index', ['logs' => $logs, 'users' => $users]);
-}
 
 
 

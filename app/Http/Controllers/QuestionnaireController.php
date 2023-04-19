@@ -7,11 +7,14 @@ use App\Models\Questionnaire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redis;
+
 
 class QuestionnaireController extends Controller
 {
     public function index()
     {
+
         $questionnaires = Questionnaire::where('hidden', false)
         ->orWhereNull('hidden')
         ->Paginate(10);
@@ -49,10 +52,10 @@ class QuestionnaireController extends Controller
             'questionnaire_name.required' => __('validation.required.name'),
             'questionnaire_autor.required' => __('validation.required.autor')
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
-        } 
+        }
 
         $questionnaire->name = $request->questionnaire_name;
         $questionnaire->autor = $request->questionnaire_autor;

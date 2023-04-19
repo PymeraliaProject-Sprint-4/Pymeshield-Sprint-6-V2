@@ -9,7 +9,7 @@
             <div class="mr-4">
                 <label for="searchSelect" class="block mb-2">Filtrar por Usuario</label>
                 <select name="search" id="searchSelect"
-                        class="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        class="w-96px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Seleccionar usuario</option>
                     @foreach ($users as $user)
                         <option value="{{ $user->email }}">{{ $user->id }} - {{ $user->name }}
@@ -22,7 +22,7 @@
             </div>
         </form>
 
-        <pre class="mt-4">{{ trim($logs) }}</pre>
+        <pre class="mt-4">{{ $logs }}</pre>
     </div>
 @endsection
 
