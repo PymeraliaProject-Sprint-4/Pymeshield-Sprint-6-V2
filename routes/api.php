@@ -25,16 +25,24 @@ use App\Http\Controllers\CourseController;
 |
 */
 
+//No está protegida para poder crear el token y poder iniciar sesión
+Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum', 'auth')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
+    Route::get('/course-user-data', [CourseController::class, 'course_User'])->name('course-user-data');
+    Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
+    Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
+    Route::get('/devicelist', [InventoryController::class, 'index']);
+    Route::get('kivy/report', [ReportController::class, 'indexmobil']); 
+    Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
 });
 
-Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
+
 
 /** ----- EQUIP 4 ------ */
 //Controlador de la vista página Aceptación Tareas
@@ -48,14 +56,12 @@ Route::get('/gantt', [TaskController::class, 'gantt'])->name('vista-gantt');
 //Presupuestos
 //show all budgets
 
+
 Route::get('/mostrar-pressupostos', [BudgetController::class, 'show'])->name('mostrar-pressupostos'); //muestra presupuestos
 Route::get('/crear-pressupost', [BudgetController::class, 'crearPresupuesto'])->name('crear-pressupost'); //formulario para crear presupuestos
 Route::post('/enviar-pressupost', [BudgetController::class, 'store'])->name('enviar-pressupost'); //llamar al metodo de crear nuevo prespuesto
 
 // ModifyBudget
-Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
-Route::get('/couser-user-data', [CourseController::class, 'course_User'])->name('couser-user-data');
-Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
 Route::get('/all-data-manages', [BudgetController::class, 'showAllManages'])->name('all-data-manages');
 Route::get('/buscador-budgetTaks/{buscado}', [BudgetController::class, 'search'])->name('buscador-budgetTaks');
 Route::put('/edit-accepted/{idTask}', [BudgetController::class, 'updateAccepted'])->name('edit-accepted');
@@ -82,23 +88,12 @@ Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->
 
 
 /** ----- EQUIP 5 ------ */
-
-Route::get('/devicelist', [InventoryController::class, 'index']);
-Route::get('/devicelist/{company_id}/', [InventoryController::class, 'devicelistID']);
 Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 /** -- kivy equip 2 */
-
 Route::get('kivy/json', [QuestionnaireController::class, 'indexmobil']);
-
 Route::get('kivy/json/{id}/', [QuestionnaireController::class, 'indexmobilID']);
-
-Route::get('kivy/report', [ReportController::class, 'indexmobil']);
-
-Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
-
 Route::get('kivy/question', [QuestionController::class, 'indexmobil']);
-
 Route::get('kivy/question/{id}/', [QuestionController::class, 'indexmobilID']);
 
 // EQUIP 2
