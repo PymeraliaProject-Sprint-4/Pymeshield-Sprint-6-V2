@@ -280,8 +280,11 @@
     "edituser" : "Editar Usuario",
     "Deleted.Company" : "Eliminar Empresas",
     "Visible.Company" : "Empresas visibles",
-    "edit-company" : "Editar Empresa"
+    "edit-company" : "Editar Empresa",
+    "kanban.task" : "Tarea",
+    "kanban.tasks" : "Tareas",
+    "kanban.alert" : "No puedes mover esta tarea porque es administrada por PymeShield.",
+    "kanban.alert.back" : "Volver"
 
 
 }
-    

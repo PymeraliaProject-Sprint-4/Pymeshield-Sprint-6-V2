@@ -279,5 +279,9 @@
     "edituser" : "Editar Usuari",
     "Deleted.Company" : "Eliminar Empreses",
     "Visible.Company" : "Empreses visibles",
-    "edit-company" : "Editar Empresa"
+    "edit-company" : "Editar Empresa",
+    "kanban.task" : "Tasca",
+    "kanban.tasks" : "Tasques",
+    "kanban.alert" : "No podeu moure aquesta tasca perquè és administrada per PymeShield.",
+    "kanban.alert.back" : "Tornar"
 }

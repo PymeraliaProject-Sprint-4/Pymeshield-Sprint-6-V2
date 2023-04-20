@@ -276,7 +276,10 @@
     "edituser" : "Edit User",
     "Deleted.Company" : "Deleted Companies",
     "Visible.Company" : "Visible Companies",
-    "edit-company" : "Edit Company"
-
+    "edit-company" : "Edit Company",
+    "kanban.task" : "Task",
+    "kanban.tasks" : "Tasks",
+    "kanban.alert" : "You cannot move this task because it is managed by PymeShield.",
+    "kanban.alert.back" : "Go back"
 
 }

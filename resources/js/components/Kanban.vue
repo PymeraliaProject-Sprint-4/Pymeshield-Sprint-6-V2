@@ -1,17 +1,17 @@
 <template>
     <div class="container-boards w-full">
-        <div class="boards flex gap-2.5 m-5 grid md:grid-cols-3">
+        <div class="boards gap-2.5 m-5 grid md:grid-cols-3">
             <div class="board border-solid border-2 border-black bg-orange-50 rounded-lg h-screen overflow-y-scroll"
-                v-for="(board, index) in boards" :key="index" 
-                @dragover.prevent 
+                v-for="(board, index) in boards" :key="index"
+                @dragover.prevent
                 @drop="onDrop(board)">
                 <div class="flex font-bold border-b-4 border-black p-6 text-lg justify-between sticky top-0 bg-orange-400">
-                    {{ board.name }} :<div class=""> {{ taskCount(board.id) }} Tasks</div>
+                    {{ board.name }} :<div class=""> {{ taskCount(board.id) }} {{ taskCount(board.id) == 1 ? $t('kanban.task') : $t('kanban.tasks') }}</div>
                 </div>
                 <div class="items flex p-2 gap-2.5 flex-col mt-4">
                     <div class="item hover:border-solid hover:border-2 border-black p-2 rounded-lg select-none"
-                        v-for="task in board.items" :key="task.id" 
-                        @click="showAlert(task)" 
+                        v-for="task in board.items" :key="task.id"
+                        @click="showAlert(task)"
                         @dragstart="onDragStart(task)"
                         :class="{ 'bg-orange-300': task.manages === 'Me aconseja Pymeralia', 'bg-gray-300': task.manages === 'Me lo gestiono yo' }"
                         :draggable="task.manages === 'Me aconseja Pymeralia' ? false : true">
@@ -22,10 +22,11 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 
 import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import axios from "axios";
 import { reactive } from "@vue/reactivity";
 
@@ -63,7 +64,6 @@ export default {
     mounted() {
         axios.get("/tasks").then((response) => {
             this.loadTasks(response.data);
-            console.log(response);
         });
     },
     methods: {
@@ -75,7 +75,6 @@ export default {
                     state: task.state,
                     manages: task.manages,
                 };
-                console.log(taskData);
                 let boardId = this.stateMap[task.state];
                 let board = this.boards.find((b) => b.id === boardId);
                 board.items.push(taskData);
@@ -88,9 +87,9 @@ export default {
         showAlert(task) {
             if (task.manages === 'Me aconseja Pymeralia') {
                 Swal.fire({
-                    text: 'No puedes mover esta tarea porque es administrada por PymeShield.',
+                    text: this.$t('kanban.alert'),
                     icon: 'warning',
-                    confirmButtonText: 'Volver'
+                    confirmButtonText: this.$t('kanban.alert.back')
                 })
             }
         },
