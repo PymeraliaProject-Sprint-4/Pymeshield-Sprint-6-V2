@@ -118,7 +118,7 @@ class BudgetController extends Controller
     public function listClientBudgets()
     {
 
-        $idclient = Auth::id();
+        $idclient = Auth::user()->id;
         $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
