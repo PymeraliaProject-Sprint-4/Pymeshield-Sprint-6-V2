@@ -185,14 +185,13 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
     Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
     Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+});
+
+Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function () {
     //Part Client Crear Cursos + visualitzar
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
-
 });
-
-
-
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
@@ -309,5 +308,3 @@ Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('im
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
-
-
