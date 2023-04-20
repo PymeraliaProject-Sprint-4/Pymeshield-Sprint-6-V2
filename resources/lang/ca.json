@@ -283,5 +283,6 @@
     "kanban.task" : "Tasca",
     "kanban.tasks" : "Tasques",
     "kanban.alert" : "No podeu moure aquesta tasca perquè és administrada per PymeShield.",
-    "kanban.alert.back" : "Tornar"
+    "kanban.alert.back" : "Tornar",
+    "inventory.search.device" : "Buscar dispositiu"
 }

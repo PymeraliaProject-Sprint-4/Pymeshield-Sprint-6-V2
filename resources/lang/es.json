@@ -284,7 +284,8 @@
     "kanban.task" : "Tarea",
     "kanban.tasks" : "Tareas",
     "kanban.alert" : "No puedes mover esta tarea porque es administrada por PymeShield.",
-    "kanban.alert.back" : "Volver"
+    "kanban.alert.back" : "Volver",
+    "inventory.search.device" : "Buscar dispositivo"
 
 
 }

@@ -280,6 +280,7 @@
     "kanban.task" : "Task",
     "kanban.tasks" : "Tasks",
     "kanban.alert" : "You cannot move this task because it is managed by PymeShield.",
-    "kanban.alert.back" : "Go back"
+    "kanban.alert.back" : "Go back",
+    "inventory.search.device" : "Search device"
 
 }
