@@ -1,7 +1,7 @@
 <template>
     <div class="container-boards w-full">
         <div class="boards gap-2.5 m-5 grid md:grid-cols-3">
-            <div class="board border-solid border-2 border-black bg-orange-50 rounded-lg h-screen overflow-y-scroll"
+            <div class="board border-solid border-2 border-black bg-orange-50 rounded-lg h-screen overflow-y-auto"
                 v-for="(board, index) in boards" :key="index"
                 @dragover.prevent
                 @drop="onDrop(board)">
