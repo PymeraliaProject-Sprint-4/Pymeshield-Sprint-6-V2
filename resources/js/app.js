@@ -123,8 +123,11 @@ app.component('gantt', gantt);
 const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
 app.component('kanban', kanban);
 
-const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
-app.component('show_budgets', budgets);
+const budgetsAdmin = defineAsyncComponent(() => import('./components/BudgetsAdmin.vue'));
+app.component('show_budgets_admin', budgetsAdmin);
+
+const budgetsClient = defineAsyncComponent(() => import('./components/BudgetsClient.vue'));
+app.component('show_budgets_client', budgetsClient);
 
 const buscador = defineAsyncComponent(() => import('./components/Buscador.vue'));
 app.component('buscador', buscador);

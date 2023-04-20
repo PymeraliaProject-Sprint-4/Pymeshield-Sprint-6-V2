@@ -166,7 +166,7 @@ export default {
                 { name: this.$t('navbar.questionnaires'), href: '/audit', current: false, icon: QueueListIcon },
                 { name: this.$t('navbar.reports'), href: '/report', current: false, icon: DocumentDuplicateIcon },
                 { name: this.$t('formation'), href: '/course/client', current: false, icon: AcademicCapIcon },
-                { name: this.$t('budgets'), href: '/listado_presupuestos', current: false, icon: CurrencyEuroIcon },
+                { name: this.$t('budgets'), href: '/show_budgets_client', current: false, icon: CurrencyEuroIcon },
                 { name: this.$t('kanban'), href: '/kanban', current: false, icon: ViewColumnsIcon },
                 { name: this.$t('navbar.gantt'), href: '/gantt', current: false, icon: CalendarDaysIcon },
                 { name: this.$t('inventory'), href: '/inventario', current: false, icon: QrCodeIcon },

@@ -7,6 +7,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
 
 
@@ -79,19 +80,6 @@ class BudgetController extends Controller
     }
 
 
-
-    /** CONTROLADORES DE VISTAS */
-
-    /* Aixo no se que collons fa i no u astic utilitzant aixi que yolo
-    public function LlistatPresupuestos()
-    {
-
-        $budgets = Budget::paginate();
-
-        return view('Presupuestos.listado_presupuestos.index', compact('budgets'));
-    }
-    */
-
     //Vista pagina crear presupuesto
     public function crearPresupuesto()
     {
@@ -100,32 +88,49 @@ class BudgetController extends Controller
 
 
     //READ - Leer - Listar
+
+    public function index()
+    {
+        return view('Presupuestos/show_budgets_admin_view/index');
+    }
+
+    public function indexClient()
+    {
+        return view('Presupuestos/show_budgets_client_view/index');
+    }
+
     public function listAllBudgets()
     {
+        if(auth()->user()->type == "client") //si un client intenta accedir aquesta petició no rep res
+        {
+        
+        }else{
+            $data = DB::table('tasks')
+                ->join('users', 'users.id', '=', 'tasks.user_id')
+                ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+                ->join('companies', 'companies.id', '=', 'users.company_id')
+                ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
+                ->orderBy('budgets.updated_at', 'desc')->get();
+                return response()->json($data); //Retornar json vara vue
+        }
+    }
 
+    public function listClientBudgets()
+    {
+
+        $idclient = Auth::user()->id;
         $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('companies', 'companies.id', '=', 'users.company_id')
-            ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
-            ->orderBy('budgets.id', 'asc')->get();
-        return response()->json($data); //Retornar json vara vue
-        //return view('Presupuestos.show_budgets_view.index', compact('data')); //Retornar para blade
+            ->select("budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
+            ->where('users.id', '=', $idclient)
+            ->orderBy('budgets.updated_at', 'desc')->get();
+            return response()->json($data); //Retornar json vara vue
+
     }
 
-    public function list()
-    {
 
-        $list = DB::table('tasks')
-            ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
-            ->join('companies', 'companies.id', '=', 'users.company_id')
-            ->select("users.name", "users.last_name", "companies.name", "tasks.start_date", "tasks.final_date", "budgets.status")->where('users.id', '=', '2')->get();
-            return view('Presupuestos.listado_presupuestos.index', compact('list'));
-
-            //$pressupostos = Budget::paginate(10); //paginación
-        //return view('Presupuestos.llista_pressupostos.index', compact('pressupostos'));
-    }
     //GUARDAR - Crear - Store
     public function store(Request $request)
     {

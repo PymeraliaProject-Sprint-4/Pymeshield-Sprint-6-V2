@@ -54,10 +54,8 @@ Route::post('/crear-tareas', [TaskController::class, 'createTasks'])->name('crea
 Route::get('/gantt', [TaskController::class, 'gantt'])->name('vista-gantt');
 
 //Presupuestos
-//show all budgets
-
-
-Route::get('/mostrar-pressupostos', [BudgetController::class, 'show'])->name('mostrar-pressupostos'); //muestra presupuestos
+Route::get('/show_budgets_admin/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth:sanctum');
+Route::get('/show_budgets_client/list_client_budgets', [BudgetController::class, 'listClientBudgets'])->middleware('auth:sanctum');
 Route::get('/crear-pressupost', [BudgetController::class, 'crearPresupuesto'])->name('crear-pressupost'); //formulario para crear presupuestos
 Route::post('/enviar-pressupost', [BudgetController::class, 'store'])->name('enviar-pressupost'); //llamar al metodo de crear nuevo prespuesto
 
