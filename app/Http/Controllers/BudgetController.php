@@ -80,19 +80,6 @@ class BudgetController extends Controller
     }
 
 
-
-    /** CONTROLADORES DE VISTAS */
-
-    /* Aixo no se que collons fa i no u astic utilitzant aixi que yolo
-    public function LlistatPresupuestos()
-    {
-
-        $budgets = Budget::paginate();
-
-        return view('Presupuestos.listado_presupuestos.index', compact('budgets'));
-    }
-    */
-
     //Vista pagina crear presupuesto
     public function crearPresupuesto()
     {
@@ -127,7 +114,6 @@ class BudgetController extends Controller
                 return response()->json($data); //Retornar json vara vue
         }
     }
-
 
     public function listClientBudgets()
     {
