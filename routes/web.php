@@ -243,10 +243,7 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 
 
 Route::get('show_budgets_admin', [BudgetController::class, 'index'])->name('show_budgets_admin')->middleware('auth', 'check_access_admin');
-Route::get('/show_budgets_admin/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
-
 Route::get('show_budgets_client', [BudgetController::class, 'indexClient'])->name('show_budgets_client')->middleware('auth', 'check_access_client');
-Route::get('/show_budgets_client/list_client_budgets', [BudgetController::class, 'listClientBudgets'])->middleware('auth', 'check_access_client');
 
 //Route::get('/show_budgets_client') INPROGRESS
 
