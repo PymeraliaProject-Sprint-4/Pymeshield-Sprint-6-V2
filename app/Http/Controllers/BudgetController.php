@@ -152,7 +152,7 @@ class BudgetController extends Controller
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
             ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.user_id', '=', auth()->user()->id)
             ->orderBy('tasks.id')
             ->paginate($pagination);
 
@@ -165,7 +165,7 @@ class BudgetController extends Controller
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->select('budgets.id', 'budgets.price', 'budgets.accepted')
-            ->where('tasks.user_id', '=', '1')
+            ->where('tasks.user_id', '=', auth()->user()->id)
             ->groupBy('budgets.id')
             ->get();
 
