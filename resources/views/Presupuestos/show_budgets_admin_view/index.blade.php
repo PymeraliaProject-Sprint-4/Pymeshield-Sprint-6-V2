@@ -5,5 +5,5 @@
 <!--con section le decimos que quremos acceder a la seccion creada con el yeld y le especificamos a que seccion hacemos referencia-->
 
 @section('content')
-<show_budgets />
+<show_budgets_admin />
 @endsection
