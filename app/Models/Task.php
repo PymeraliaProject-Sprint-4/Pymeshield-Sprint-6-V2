@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -21,6 +22,7 @@ class Task extends Model
         'start_date',
         'final_date',
         'price',
+        'price_customer',
         'manages',
         'user_id',
         'questionnaire_id',
@@ -31,23 +33,28 @@ class Task extends Model
         'hidden'
     ];
 
-    public function users(){
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function questionnaires(){
+    public function questionnaire(): BelongsTo
+    {
         return $this->belongsTo(Questionnaire::class);
     }
 
-    public function answers(){
+    public function answer(): BelongsTo
+    {
         return $this->belongsTo(Answer::class);
     }
 
-    public function budgets(){
+    public function budget(): BelongsTo
+    {
         return $this->belongsTo(Budget::class);
     }
 
-    public function impacts(){
+    public function impact(): BelongsTo
+    {
         return $this->belongsTo(Impact::class);
     }
 }
