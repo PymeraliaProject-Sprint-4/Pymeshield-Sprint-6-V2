@@ -35,12 +35,13 @@ class InventoryController extends Controller
         $filtro = $request->buscar;
 
         $dispositivosInventario = Device::where('company_id', $idUser)
+                                    ->join('type_devices', 'devices.type_device_id', '=', 'type_devices.id')
                                     ->where(function ($query) use ($filtro) {
                                         $query->where('brand', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('model', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('mac_ethernet', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('mac_wifi', 'LIKE', '%'.$filtro.'%')
-                                            ->orWhere('type_device_id', 'LIKE', '%'.$filtro.'%')
+                                            ->orWhere('type_devices.name', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('description', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('state', 'LIKE', '%'.$filtro.'%')
                                             ->orWhere('serial_number', 'LIKE', '%'.$filtro.'%');

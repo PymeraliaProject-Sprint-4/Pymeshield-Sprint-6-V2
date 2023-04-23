@@ -4,7 +4,7 @@
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #c92c00 #c92c00;
+    scrollbar-color: #c92c00 transparent;
   }
 
   /* Chrome, Edge, and Safari */
@@ -14,7 +14,7 @@
   }
 
   *::-webkit-scrollbar-track {
-    background-color: #c92c00;
+    background-color: transparent;
   }
 
   *::-webkit-scrollbar-thumb {

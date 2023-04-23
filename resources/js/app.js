@@ -129,9 +129,6 @@ app.component('show_budgets_admin', budgetsAdmin);
 const budgetsClient = defineAsyncComponent(() => import('./components/BudgetsClient.vue'));
 app.component('show_budgets_client', budgetsClient);
 
-const buscador = defineAsyncComponent(() => import('./components/Buscador.vue'));
-app.component('buscador', buscador);
-
 const inventory = defineAsyncComponent(() => import('./components/inventory.vue'));
 app.component('inventory', inventory);
 
