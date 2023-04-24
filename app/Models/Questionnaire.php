@@ -33,5 +33,4 @@ class Questionnaire extends Model
     {
         return $this->hasMany(Report::class);
     }
-
 }

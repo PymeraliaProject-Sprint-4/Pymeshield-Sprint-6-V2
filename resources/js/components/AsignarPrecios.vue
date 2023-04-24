@@ -43,9 +43,9 @@
                     <div v-if="!tarea.editing" class="py-2 px-4">
                         <input v-model="tarea.price"
                             class="shadow appearance-none border-2 text-center border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number" step="0.01" @input="sumPrices">
+                            type="number" step="0.01" @blur="sumPrices">
                     </div>
-                    <div v-else class="" :class="{ 'font-bold': tarea.price, 'font-bold text-red-500': !tarea.price }">
+                    <div v-else :class="{ 'font-bold': tarea.price, 'font-bold text-red-500': !tarea.price }">
                         {{ tarea.price ? tarea.price : 'No hay precio' }}
                     </div>
                 </td>
@@ -108,6 +108,7 @@ export default {
     },
     data() {
         return {
+            total: [],
             tareas: [],
             test: {},
             taskdata: {},
@@ -118,12 +119,15 @@ export default {
         };
     },
     mounted() {
-        this.getTasks()
+        this.getTasks();
+    },
+    updated(){
+        this.sumPrices();
     },
     methods: {
         getTasks(page = 1) {
             this.paginate(this.currentPage);
-            let id = this.$route.params.id;
+            let id = 1;
             this.$axios.get(`/mostrar-tareas/${id}`, {
                 params: {
                     page,
@@ -141,7 +145,7 @@ export default {
             this.getTasks(page);
         },
         paginate(page) {
-            this.$axios.get(`/mostrar-tareas/${this.$route.params.id}?page=${page}&itemsPerPage=${this.itemsPerPage}`)
+            this.$axios.get(`/mostrar-tareas/1?page=${page}&itemsPerPage=${this.itemsPerPage}`)
                 .then((response) => {
                     this.pagination = response.data.pagination;
                     this.currentPage = page;
@@ -159,11 +163,11 @@ export default {
                 })
                 .catch(error => {
                 });
-                Swal.fire({
-                        icon: 'success',
-                        text: 'Tareas enviadas correctamente!',
-                        confirmButtonText: '<a href="http://localhost/llista_pressupostos">Volver a presupuestos</a>'
-                    })
+            Swal.fire({
+                icon: 'success',
+                text: 'Tareas enviadas correctamente!',
+                confirmButtonText: '<a href="http://localhost/llista_pressupostos">Volver a presupuestos</a>'
+            })
         },
         updateSingleTask: function (tarea) {
             this.$axios.put('/update-task/' + tarea.id, {
@@ -179,10 +183,12 @@ export default {
                 });
         },
         sumPrices() {
+            this.total = 0;
             for (let i = 0; i < this.tareas.length; i++) {
-                this.total += this.tareas[i].price;
+                if (this.tareas[i].price) {
+                    this.total += parseFloat(this.tareas[i].price);
+                }
             }
-            this.total = this.tareas.reduce((accumulator, tarea) => accumulator + tarea.price, 0);
         },
 
     },

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rating extends Model
 {
@@ -12,13 +13,13 @@ class Rating extends Model
     protected $table = 'ratings';
 
     protected $fillable = [
-    'rating',
-    'feedback',
-    'course_id',
-    'hidden'
+        'rating',
+        'feedback',
+        'course_id',
+        'hidden'
     ];
-    
-    public function courses()
+
+    public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }

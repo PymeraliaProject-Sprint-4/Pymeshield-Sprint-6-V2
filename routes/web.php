@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\EmblemController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RulesController;
@@ -75,10 +76,15 @@ Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
+Route::get('listadoEmpresas/listcompanyshidden', [CompanyController::class, 'listcompanieshiddenDatos'])->middleware('auth');
+
 Route::post('listadoEmpresas/createCompany', [CompanyController::class, 'storeCompany'])->middleware('auth');
 Route::post('listadoEmpresas/editCompany', [CompanyController::class, 'editCompany'])->middleware('auth');
 Route::post('listadoEmpresas/unsuscribeCompany', [CompanyController::class, 'unsuscribeCompany'])->middleware('auth');
 Route::get('llistatEmpreses', [CompanyController::class, 'index'])->middleware('auth');
+Route::get('listcompanyhidden', [CompanyController::class, 'indexhidden'])->middleware('auth');
+Route::get('company/{id}/unHide', [CompanyController::class, 'unHideCompany'])->name('company.unHide');
+
 
 //Rutes per al perfil Personal i editarPerfil
 Route::get('Personal_Profile', [UserController::class, 'show_user'])->name('Personal-Profile')->middleware('auth');
@@ -101,6 +107,10 @@ Route::get('PerfilPersonal_Worker/EditarPerfilWorker', [UserController::class, '
 Route::post('PerfilPersonal_Worker/Editar_Perfil/update', [UserController::class, 'updateUserWorker'])->name('updateUserWorker')->middleware('auth');
 Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])->name('PerfilPersonal_Worker')->middleware('auth');
 
+//Dashboard
+Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
+Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
+Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
 
 
 ///////
@@ -186,10 +196,12 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
     Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
     Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+});
+
+Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function () {
     //Part Client Crear Cursos + visualitzar
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
-
 });
 
 //Part Client Crear Cursos + visualitzar
@@ -260,11 +272,11 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 //per borrar
 //Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
 
-Route::get('show_budgets', function () {
-    return view('Presupuestos/show_budgets_view/index');
-})->name('show_budgets')->middleware('auth', 'check_access_admin');
 
-Route::get('/show_budgets/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_admin', [BudgetController::class, 'index'])->name('show_budgets_admin')->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_client', [BudgetController::class, 'indexClient'])->name('show_budgets_client')->middleware('auth', 'check_access_client');
+
+//Route::get('/show_budgets_client') INPROGRESS
 
 
 //por revisar
@@ -294,12 +306,13 @@ Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('a
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
 Route::post('devices/edit', [DevicesController::class, 'edit'])->middleware('auth', 'check_access_admin');
+Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->middleware('auth', 'check_access_admin');
 //Route::post('/devices/delete', [DevicesController::class, 'delete']);
 
 //Mostrar inventari
 //por revisar
 Route::get('inventario', function () {
-    return view('inventario');
+    return view('inventory.inventario');
 })->middleware('auth', 'check_access_client');
 //por revisar
 Route::get('listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
@@ -309,3 +322,8 @@ Route::get('listInventory', [InventoryController::class, 'listInventary'])->midd
 Route::get('imagenes', [ImageDeviceController::class, 'index'])->name('image.index')->middleware('auth', 'check_access_admin');
 Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.guardar')->middleware('auth', 'check_access_admin');
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
+
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
