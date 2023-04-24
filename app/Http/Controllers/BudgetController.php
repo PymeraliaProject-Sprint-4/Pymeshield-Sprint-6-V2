@@ -146,11 +146,12 @@ class BudgetController extends Controller
 
     public function showAcceptModify(Request $request)
     {
-        $pagination = $request->id;
+            $pagination = $request->id;
 
-        if(!$pagination) $pagination = 999;
+            if(!$pagination) $pagination = 999;
 
-        $data = DB::table('tasks')
+        
+            $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
             ->join('answers', 'answers.id', '=', 'tasks.answer_id')
@@ -160,13 +161,49 @@ class BudgetController extends Controller
             ->where('tasks.user_id', '=', auth()->user()->id)
             ->orderBy('tasks.id')
             ->paginate($pagination);
+            
+            return response()->json($data);
+    }
 
-        return response()->json($data);
+    public function showTasksKivy()
+    {
+        if(auth()->user()->type == 'client'){
+
+            $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
+            ->where('tasks.user_id', '=', auth()->user()->id)
+            ->orderBy('tasks.id')
+            ->get();
+            
+            return response()->json($data);
+        }
+        else{
+            
+            $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
+            ->join('answers', 'answers.id', '=', 'tasks.answer_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
+            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
+            ->orderBy('tasks.id')
+            ->get();
+            
+            return response()->json($data);
+        }
+
+        
     }
 
     public function showBudgets()
     {
-        $data = DB::table('tasks')
+        if(auth()->user()->type == 'client'){
+            $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->select('budgets.id', 'budgets.price', 'budgets.accepted')
@@ -175,6 +212,18 @@ class BudgetController extends Controller
             ->get();
 
         return response()->json($data);
+        }
+        else{
+            $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->select('budgets.id', 'budgets.price', 'budgets.accepted')
+            ->groupBy('budgets.id')
+            ->get();
+
+            return response()->json($data);
+        }
+
     }
 
     public function search(Request $request)
