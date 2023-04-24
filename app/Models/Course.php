@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Emblem;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -16,24 +17,23 @@ class Course extends Model
 
     // Camps de la taula a replenar (El id i el timespace no es fiquen)
     protected $fillable = [
-    'name',
-    'description',
-    'image',
-    'created_at',
-    'hidden'
+        'name',
+        'description',
+        'image',
+        'hidden'
     ];
 
-    public function emblems()
+    public function emblems(): HasMany
     {
         return $this->hasMany(Emblem::class);
     }
 
-    public function categories()
+    public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
     }
 
-    public function ratings()
+    public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class);
     }
@@ -42,5 +42,4 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
-
 }

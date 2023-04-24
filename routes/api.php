@@ -32,17 +32,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum', 'auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
     Route::get('/course-user-data', [CourseController::class, 'course_User'])->name('course-user-data');
-    Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
+    Route::get('/all-data-kivy', [BudgetController::class, 'showTasksKivy'])->name('all-data-kivy');
     Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
     Route::get('/devicelist', [InventoryController::class, 'index']);
     Route::get('kivy/report', [ReportController::class, 'indexmobil']); 
-    Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
+    // Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
 });
 
 
+Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
 
 /** ----- EQUIP 4 ------ */
 //Controlador de la vista página Aceptación Tareas
@@ -54,10 +55,8 @@ Route::post('/crear-tareas', [TaskController::class, 'createTasks'])->name('crea
 Route::get('/gantt', [TaskController::class, 'gantt'])->name('vista-gantt');
 
 //Presupuestos
-//show all budgets
-
-
-Route::get('/mostrar-pressupostos', [BudgetController::class, 'show'])->name('mostrar-pressupostos'); //muestra presupuestos
+Route::get('/show_budgets_admin/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth:sanctum');
+Route::get('/show_budgets_client/list_client_budgets', [BudgetController::class, 'listClientBudgets'])->middleware('auth:sanctum');
 Route::get('/crear-pressupost', [BudgetController::class, 'crearPresupuesto'])->name('crear-pressupost'); //formulario para crear presupuestos
 Route::post('/enviar-pressupost', [BudgetController::class, 'store'])->name('enviar-pressupost'); //llamar al metodo de crear nuevo prespuesto
 

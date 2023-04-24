@@ -4,23 +4,21 @@
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #c92c00 #c92c00;
+    scrollbar-color: #c92c00 transparent;
   }
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
+    height: 5px;
   }
 
   *::-webkit-scrollbar-track {
-    background: var(--primary);
-    border-radius: 5px;
+    background-color: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: #c92c00;
-    border-radius: 14px;
-    border: 3px solid var(--primary);
   }
 @tailwind components;
 @tailwind utilities;

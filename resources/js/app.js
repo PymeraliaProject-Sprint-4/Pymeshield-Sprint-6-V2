@@ -13,10 +13,10 @@ import axiosPlugin from '../js/plugin-axios/plugins/axios-plugin';
 app.use(axiosPlugin)
 
 //registramos los componentes
-const navbar = defineAsyncComponent(() => import('./components/Navbar.vue'));
+const navbar = defineAsyncComponent(() => import('./components/layouts/Navbar.vue'));
 app.component('navbar', navbar);
 
-const admin = defineAsyncComponent(() => import('./components/AdminPanel.vue'));
+const admin = defineAsyncComponent(() => import('./components/layouts/AdminPanel.vue'));
 app.component('admin-layout', admin);
 
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
@@ -25,52 +25,52 @@ app.component('list-company', listcompany);
 const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
 app.component('list-company-hidden', ListCompanyHidden);
 
-const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
+const quillEditor = defineAsyncComponent(() => import('./components/rules/Editor.vue'));
 app.component('editor', quillEditor);
 
 const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
 app.component('list-users', listusers);
 
-const perfilPersonal = defineAsyncComponent(() => import('./components/PerfilPersonal.vue'));
+const perfilPersonal = defineAsyncComponent(() => import('./components/profile/PerfilPersonal.vue'));
 app.component('PerfilPersonal', perfilPersonal);
 
-const perfilPersonal_Admin = defineAsyncComponent(() => import('./components/PerfilPersonal_Admin.vue'));
+const perfilPersonal_Admin = defineAsyncComponent(() => import('./components/profile/PerfilPersonalAdmin.vue'));
 app.component('PerfilPersonalAdmin', perfilPersonal_Admin);
 
-const perfilPersonal_Worker = defineAsyncComponent(() => import('./components/PerfilPersonal_Worker.vue'));
+const perfilPersonal_Worker = defineAsyncComponent(() => import('./components/profile/PerfilPersonalWorker.vue'));
 app.component('PerfilPersonalWorker', perfilPersonal_Worker);
 
-const EditarPerfilAdmin = defineAsyncComponent(() => import('./components/EditarPerfilAdmin.vue'));
+const EditarPerfilAdmin = defineAsyncComponent(() => import('./components/profile/EditarPerfilAdmin.vue'));
 app.component('EditarPerfilAdmin', EditarPerfilAdmin);
 
-const EditarPerfilWorker = defineAsyncComponent(() => import('./components/EditarPerfilWorker.vue'));
+const EditarPerfilWorker = defineAsyncComponent(() => import('./components/profile/EditarPerfilWorker.vue'));
 app.component('EditarPerfilWorker', EditarPerfilWorker);
 
-const contacte = defineAsyncComponent(() => import('./components/contacte.vue'));
-app.component('contacte',contacte);
+const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
+app.component('contacte', contacte);
 
-const tableWeeks = defineAsyncComponent(() => import('./components/TableWeeks.vue'));
+const tableWeeks = defineAsyncComponent(() => import('./components/dashboard/TableWeeks.vue'));
 app.component('table-weeks', tableWeeks);
 
-const activityWeeks = defineAsyncComponent(() => import('./components/ActivityWeeks.vue'));
+const activityWeeks = defineAsyncComponent(() => import('./components/dashboard/ActivityWeeks.vue'));
 app.component('activity-weeks', activityWeeks);
 
-const chartUser = defineAsyncComponent(() => import('./components/chartUser.vue'));
+const chartUser = defineAsyncComponent(() => import('./components/dashboard/ChartUser.vue'));
 app.component('chart-user', chartUser);
 
-const chartAdmin = defineAsyncComponent(() => import('./components/chartAdmin.vue'));
+const chartAdmin = defineAsyncComponent(() => import('./components/dashboard/ChartAdmin.vue'));
 app.component('chart-admin', chartAdmin);
 
 //EQUIPO2
 
-const formComponent = defineAsyncComponent(() => import('./components/Form.vue'));
-app.component('form-component', formComponent);
+const createQuestion = defineAsyncComponent(() => import('./components/question/CreateQuestion.vue'));
+app.component('create-question', createQuestion);
 
-const questionnaireFormComponent = defineAsyncComponent(() => import('./components/QuestionnaireForm.vue'));
+const questionnaireFormComponent = defineAsyncComponent(() => import('./components/questionnaire/QuestionnaireForm.vue'));
 app.component('questionnaire-component', questionnaireFormComponent);
 
-const survey = defineAsyncComponent(() => import('./components/Survey.vue'));
-app.component('survey', survey);
+const audit = defineAsyncComponent(() => import('./components/audit/Audit.vue'));
+app.component('audit', audit);
 
 const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
 app.component('create-report', createReport);
@@ -120,16 +120,16 @@ app.component('asignar_precios', assign_prices);
 const gantt = defineAsyncComponent(() => import('./components/Gantt.vue'));
 app.component('gantt', gantt);
 
-const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
+const kanban = defineAsyncComponent(() => import('./components/kanban/Kanban.vue'));
 app.component('kanban', kanban);
 
-const budgets = defineAsyncComponent(() => import('./components/Budgets.vue'));
-app.component('show_budgets', budgets);
+const budgetsAdmin = defineAsyncComponent(() => import('./components/BudgetsAdmin.vue'));
+app.component('show_budgets_admin', budgetsAdmin);
 
-const buscador = defineAsyncComponent(() => import('./components/Buscador.vue'));
-app.component('buscador', buscador);
+const budgetsClient = defineAsyncComponent(() => import('./components/BudgetsClient.vue'));
+app.component('show_budgets_client', budgetsClient);
 
-const inventory = defineAsyncComponent(() => import('./components/inventory.vue'));
+const inventory = defineAsyncComponent(() => import('./components/inventory/Inventory.vue'));
 app.component('inventory', inventory);
 
 //EQUIP 5
@@ -139,12 +139,6 @@ app.component('list-devices', listdevices);
 //Restaurar
 const retoredevices = defineAsyncComponent(() => import('./components/restaurar.vue'));
 app.component('restore-devices', retoredevices);
-
-//Mapa
-const mapa = defineAsyncComponent(() => import('./components/Map.vue'));
-app.component('mapa-pymeralia', mapa);
-
-
 
 //laravel-permission-to-vuejs
 app.use(laravelPermissionToVuejs)
@@ -158,10 +152,10 @@ app.use(laravelPermissionToVuejs)
  *
  */
 app.use(i18nVue, {
-  resolve: async lang => {
-    const langs = import.meta.glob('../lang/*.json');
-    return await langs[`../lang/${lang}.json`]();
-  }
+    resolve: async lang => {
+        const langs = import.meta.glob('../lang/*.json');
+        return await langs[`../lang/${lang}.json`]();
+    }
 });
 
 app.use(ganttastic)

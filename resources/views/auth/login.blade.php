@@ -40,12 +40,14 @@
                 @csrf
                 <input type="hidden" name="remember" value="true">
                 <div class="-space-y-px rounded-md shadow-sm">
-                    <div>
+                    <div class="mb-2">
                         <label for="email-address" class="sr-only">{{ __('email') }}</label>
                         <input id="email-address" name="email" type="email" value="{{ old('email') }}"
                             autocomplete="email" required
                             class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                             placeholder="{{ __('email') }}" onblur="validateEmail()">
+                    <div id="email-error" class="text-sm text-red-600 pt-2"></div>
+
                     </div>
                     <div>
                         <label for="password" class="sr-only">{{ __('password') }}</label>
@@ -54,7 +56,6 @@
                             placeholder="{{ __('password') }}">
                     </div>
 
-                    <div id="email-error" class="text-sm text-red-600 pt-2"></div>
                 </div>
 
                 <div class="flex items-center justify-between">

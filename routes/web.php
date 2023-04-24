@@ -185,14 +185,13 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
     Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
     Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+});
+
+Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function () {
     //Part Client Crear Cursos + visualitzar
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
-
 });
-
-
-
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
@@ -254,11 +253,11 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 //per borrar
 //Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
 
-Route::get('show_budgets', function () {
-    return view('Presupuestos/show_budgets_view/index');
-})->name('show_budgets')->middleware('auth', 'check_access_admin');
 
-Route::get('/show_budgets/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_admin', [BudgetController::class, 'index'])->name('show_budgets_admin')->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_client', [BudgetController::class, 'indexClient'])->name('show_budgets_client')->middleware('auth', 'check_access_client');
+
+//Route::get('/show_budgets_client') INPROGRESS
 
 
 //por revisar
@@ -294,7 +293,7 @@ Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->mi
 //Mostrar inventari
 //por revisar
 Route::get('inventario', function () {
-    return view('inventario');
+    return view('inventory.inventario');
 })->middleware('auth', 'check_access_client');
 //por revisar
 Route::get('listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
@@ -309,5 +308,3 @@ Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('im
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
-
-

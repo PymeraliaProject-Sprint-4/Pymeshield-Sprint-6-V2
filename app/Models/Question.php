@@ -13,7 +13,8 @@ class Question extends Model
     protected $table = 'questions';
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'hidden'
 
     ];
 
@@ -27,5 +28,4 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
-
 }

@@ -269,7 +269,7 @@ export default {
                 { name: this.$t('Courses'), href: '/course', current: false, icon: AcademicCapIcon },
                 { name: this.$t('QualifyCourse'), href: '/CursosCalificar', current: false, icon: ClipboardIcon },
                 { name: this.$t('Emblems'), href: '/emblems', current: false, icon: StarIcon },
-                { name: this.$t('budgets'), href: '/llista_pressupostos', current: false, icon: CurrencyEuroIcon },
+                { name: this.$t('budgets'), href: '/show_budgets_admin', current: false, icon: CurrencyEuroIcon },
                 { name: this.$t('users'), href: '/userList', current: false, icon: UserIcon },
                 { name: this.$t('companies'), href: '/llistatEmpreses', current: false, icon: BriefcaseIcon, role: 'admin' },
                 { name: this.$t('inventory'), href: '/devices', current: false, icon: QrCodeIcon },

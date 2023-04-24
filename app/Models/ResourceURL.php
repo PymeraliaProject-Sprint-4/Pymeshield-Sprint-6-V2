@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ResourceURL extends Model
 {
     use HasFactory;
-    
+
     // Nom de la taula
     protected $table = 'resource_urls';
 
@@ -19,8 +20,8 @@ class ResourceURL extends Model
         'category_id',
         'hidden'
     ];
-    
-    public function categories()
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
