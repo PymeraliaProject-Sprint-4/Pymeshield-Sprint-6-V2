@@ -49,28 +49,28 @@ app.component('EditarPerfilWorker', EditarPerfilWorker);
 const contacte = defineAsyncComponent(() => import('./components/contacte.vue'));
 app.component('contacte',contacte);
 
-const tableWeeks = defineAsyncComponent(() => import('./components/TableWeeks.vue'));
+const tableWeeks = defineAsyncComponent(() => import('./components/dashboard/TableWeeks.vue'));
 app.component('table-weeks', tableWeeks);
 
-const activityWeeks = defineAsyncComponent(() => import('./components/ActivityWeeks.vue'));
+const activityWeeks = defineAsyncComponent(() => import('./components/dashboard/ActivityWeeks.vue'));
 app.component('activity-weeks', activityWeeks);
 
-const chartUser = defineAsyncComponent(() => import('./components/chartUser.vue'));
+const chartUser = defineAsyncComponent(() => import('./components/dashboard/ChartUser.vue'));
 app.component('chart-user', chartUser);
 
-const chartAdmin = defineAsyncComponent(() => import('./components/chartAdmin.vue'));
+const chartAdmin = defineAsyncComponent(() => import('./components/dashboard/ChartAdmin.vue'));
 app.component('chart-admin', chartAdmin);
 
 //EQUIPO2
 
-const formComponent = defineAsyncComponent(() => import('./components/Form.vue'));
-app.component('form-component', formComponent);
+const createQuestion = defineAsyncComponent(() => import('./components/question/CreateQuestion.vue'));
+app.component('create-question', createQuestion);
 
 const questionnaireFormComponent = defineAsyncComponent(() => import('./components/QuestionnaireForm.vue'));
 app.component('questionnaire-component', questionnaireFormComponent);
 
-const survey = defineAsyncComponent(() => import('./components/Survey.vue'));
-app.component('survey', survey);
+const audit = defineAsyncComponent(() => import('./components/audit/Audit.vue'));
+app.component('audit', audit);
 
 const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
 app.component('create-report', createReport);
