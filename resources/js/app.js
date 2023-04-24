@@ -31,19 +31,19 @@ app.component('editor', quillEditor);
 const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
 app.component('list-users', listusers);
 
-const perfilPersonal = defineAsyncComponent(() => import('./components/PerfilPersonal.vue'));
+const perfilPersonal = defineAsyncComponent(() => import('./components/profile/PerfilPersonal.vue'));
 app.component('PerfilPersonal', perfilPersonal);
 
-const perfilPersonal_Admin = defineAsyncComponent(() => import('./components/PerfilPersonal_Admin.vue'));
+const perfilPersonal_Admin = defineAsyncComponent(() => import('./components/profile/PerfilPersonalAdmin.vue'));
 app.component('PerfilPersonalAdmin', perfilPersonal_Admin);
 
-const perfilPersonal_Worker = defineAsyncComponent(() => import('./components/PerfilPersonal_Worker.vue'));
+const perfilPersonal_Worker = defineAsyncComponent(() => import('./components/profile/PerfilPersonalWorker.vue'));
 app.component('PerfilPersonalWorker', perfilPersonal_Worker);
 
-const EditarPerfilAdmin = defineAsyncComponent(() => import('./components/EditarPerfilAdmin.vue'));
+const EditarPerfilAdmin = defineAsyncComponent(() => import('./components/profile/EditarPerfilAdmin.vue'));
 app.component('EditarPerfilAdmin', EditarPerfilAdmin);
 
-const EditarPerfilWorker = defineAsyncComponent(() => import('./components/EditarPerfilWorker.vue'));
+const EditarPerfilWorker = defineAsyncComponent(() => import('./components/profile/EditarPerfilWorker.vue'));
 app.component('EditarPerfilWorker', EditarPerfilWorker);
 
 const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
@@ -66,7 +66,7 @@ app.component('chart-admin', chartAdmin);
 const createQuestion = defineAsyncComponent(() => import('./components/question/CreateQuestion.vue'));
 app.component('create-question', createQuestion);
 
-const questionnaireFormComponent = defineAsyncComponent(() => import('./components/QuestionnaireForm.vue'));
+const questionnaireFormComponent = defineAsyncComponent(() => import('./components/questionnaire/QuestionnaireForm.vue'));
 app.component('questionnaire-component', questionnaireFormComponent);
 
 const audit = defineAsyncComponent(() => import('./components/audit/Audit.vue'));
@@ -120,7 +120,7 @@ app.component('asignar_precios', assign_prices);
 const gantt = defineAsyncComponent(() => import('./components/Gantt.vue'));
 app.component('gantt', gantt);
 
-const kanban = defineAsyncComponent(() => import('./components/Kanban.vue'));
+const kanban = defineAsyncComponent(() => import('./components/kanban/Kanban.vue'));
 app.component('kanban', kanban);
 
 const budgetsAdmin = defineAsyncComponent(() => import('./components/BudgetsAdmin.vue'));
