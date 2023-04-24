@@ -85,11 +85,19 @@ class ReportController extends Controller
     function indexmobil()
     {
         if(auth()->user()->type == 'client'){
-            $data = Report::where('user_id', '=', auth()->user()->id)->get();
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+            
             return response()->json($data);
         }
         else{
-            return Report::all();
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->get();
+            
+            return response()->json($data);
         }
         
         

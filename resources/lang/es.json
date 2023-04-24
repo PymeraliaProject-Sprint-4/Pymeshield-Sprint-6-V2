@@ -158,6 +158,7 @@
     "report.impact": "Impacto",
     "report.pending": "Pendiente",
     "report.done": "Hecho",
+    "report.processpdf":"Preocesando...",
     "footer.by": "© pymeshield por Pymeralia",
     "footer.about": "Acerca de Pymeralia",
     "footer.privacy": "Política de privacidad",
