@@ -290,5 +290,10 @@
     "inventory.description": "Description",
     "inventory.state": "State",
     "inventory.serial.number": "Serial number",
-    "inventory.title": "Device inventory"
+    "inventory.title": "Device inventory",
+    "Visible.User" : "Visible Users",
+    "Deleted.User" : "Deleted Users"
+
+
+
 }

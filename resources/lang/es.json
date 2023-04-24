@@ -294,5 +294,9 @@
     "inventory.description": "Descripción",
     "inventory.state": "Estado",
     "inventory.serial.number": "Número de serie",
-    "inventory.title": "Inventario de dispositivos"
+    "inventory.title": "Inventario de dispositivos",
+    "Visible.User" : "Usuarios visibles",
+    "Deleted.User" : "Usuarios eliminados"
+
+
 }

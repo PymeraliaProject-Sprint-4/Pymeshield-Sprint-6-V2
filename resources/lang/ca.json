@@ -293,5 +293,8 @@
     "inventory.description": "Descripció",
     "inventory.state": "Estat",
     "inventory.serial.number": "Número de sèrie",
-    "inventory.title": "Inventari de dispositius"
+    "inventory.title": "Inventari de dispositius",
+    "Deleted.User" : "Usuaris eliminats",
+    "Visible.User" : "Visible Users"
+
 }
