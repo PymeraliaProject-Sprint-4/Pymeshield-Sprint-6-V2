@@ -221,13 +221,24 @@ class CourseController extends Controller
 
     public function course_User()
     {
-        $data = DB::table('course_user')
+        if(auth()->user()->type == 'client'){
+            $data = DB::table('course_user')
             ->join('courses', 'courses.id', '=', 'course_user.course_id')
             ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
             ->where('user_id', '=', auth()->user()->id)
             ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
             ->get();
 
-        return response()->json($data);
+            return response()->json($data);
+        }
+        else{
+            $data = DB::table('course_user')
+            ->join('courses', 'courses.id', '=', 'course_user.course_id')
+            ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
+            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+            ->get();
+
+            return response()->json($data);
+        }
     }
 }
