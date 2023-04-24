@@ -126,6 +126,7 @@ export default {
     data() {
         return {
             user: [],
+            currentUserIndex: 0,
             pagination: {},
             showModal: false,
             currentUser: {},
@@ -158,6 +159,7 @@ export default {
 
         openModal(user) {
             this.modal_calificar = true;
+            this.currentUserIndex = users.indexOf(user);
             this.currentUser = {
                 id: user.id,
                 name: user.name,
@@ -203,11 +205,14 @@ export default {
             });
         },
         nextUser() {
-
-            alert('HAAAAAA???')
-            // Actualiza los datos del usuario actual
-            // Carga los datos del siguiente usuario
-
+            // Si hay más usuarios, pasa al siguiente
+            if (this.currentUserIndex < this.user.length - 1) {
+                this.currentUserIndex++;
+            } else {  // Si has llegado al final de la lista, vuelve al primero
+                this.currentUserIndex = 0;
+            }
+            // Actualiza la información del usuario actual
+            this.currentUser = this.user[this.currentUserIndex];
         }
 
     }

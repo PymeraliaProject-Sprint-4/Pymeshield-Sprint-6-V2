@@ -166,7 +166,18 @@ Route::post('audit/save/{id}', [AuditController::class, 'store'])->name('audit.s
 //Part Admin Crear visualitzar
 Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function () {
     Route::get('course', [CourseController::class, 'index'])->name('course.index');
+    Route::get('course/categories', [CourseController::class, 'coursecategories'])->name('course.categories');
+    Route::get('categories/index_data', [CourseController::class, 'index_data_categories'])->name('course.index_data_categories');
+    Route::get('allCourses', [CourseController::class, 'allCourses'])->name('allCourses');
+    Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
+    Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
+
+
+
+
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
+    Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+
     Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
     Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data');
