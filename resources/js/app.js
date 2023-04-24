@@ -25,7 +25,7 @@ app.component('list-company', listcompany);
 const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
 app.component('list-company-hidden', ListCompanyHidden);
 
-const quillEditor = defineAsyncComponent(() => import('./components/Editor.vue'));
+const quillEditor = defineAsyncComponent(() => import('./components/rules/Editor.vue'));
 app.component('editor', quillEditor);
 
 const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
@@ -46,8 +46,8 @@ app.component('EditarPerfilAdmin', EditarPerfilAdmin);
 const EditarPerfilWorker = defineAsyncComponent(() => import('./components/EditarPerfilWorker.vue'));
 app.component('EditarPerfilWorker', EditarPerfilWorker);
 
-const contacte = defineAsyncComponent(() => import('./components/contacte.vue'));
-app.component('contacte',contacte);
+const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
+app.component('contacte', contacte);
 
 const tableWeeks = defineAsyncComponent(() => import('./components/dashboard/TableWeeks.vue'));
 app.component('table-weeks', tableWeeks);
@@ -129,7 +129,7 @@ app.component('show_budgets_admin', budgetsAdmin);
 const budgetsClient = defineAsyncComponent(() => import('./components/BudgetsClient.vue'));
 app.component('show_budgets_client', budgetsClient);
 
-const inventory = defineAsyncComponent(() => import('./components/inventory.vue'));
+const inventory = defineAsyncComponent(() => import('./components/inventory/Inventory.vue'));
 app.component('inventory', inventory);
 
 //EQUIP 5
@@ -139,12 +139,6 @@ app.component('list-devices', listdevices);
 //Restaurar
 const retoredevices = defineAsyncComponent(() => import('./components/restaurar.vue'));
 app.component('restore-devices', retoredevices);
-
-//Mapa
-const mapa = defineAsyncComponent(() => import('./components/Map.vue'));
-app.component('mapa-pymeralia', mapa);
-
-
 
 //laravel-permission-to-vuejs
 app.use(laravelPermissionToVuejs)
@@ -158,10 +152,10 @@ app.use(laravelPermissionToVuejs)
  *
  */
 app.use(i18nVue, {
-  resolve: async lang => {
-    const langs = import.meta.glob('../lang/*.json');
-    return await langs[`../lang/${lang}.json`]();
-  }
+    resolve: async lang => {
+        const langs = import.meta.glob('../lang/*.json');
+        return await langs[`../lang/${lang}.json`]();
+    }
 });
 
 app.use(ganttastic)

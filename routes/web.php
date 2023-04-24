@@ -293,7 +293,7 @@ Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->mi
 //Mostrar inventari
 //por revisar
 Route::get('inventario', function () {
-    return view('inventario');
+    return view('inventory.inventario');
 })->middleware('auth', 'check_access_client');
 //por revisar
 Route::get('listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
