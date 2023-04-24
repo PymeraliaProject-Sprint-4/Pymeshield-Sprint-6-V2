@@ -88,6 +88,7 @@ Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->
 
 /** ----- EQUIP 5 ------ */
 Route::post('/devices/delete', [DevicesController::class, 'delete']);
+Route::post('/image', [InventoryController::class, 'uploadImage']);
 
 /** -- kivy equip 2 */
 Route::get('kivy/json', [QuestionnaireController::class, 'indexmobil']);
