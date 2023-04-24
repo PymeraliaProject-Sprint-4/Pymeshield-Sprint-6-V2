@@ -13,10 +13,10 @@ import axiosPlugin from '../js/plugin-axios/plugins/axios-plugin';
 app.use(axiosPlugin)
 
 //registramos los componentes
-const navbar = defineAsyncComponent(() => import('./components/Navbar.vue'));
+const navbar = defineAsyncComponent(() => import('./components/layouts/Navbar.vue'));
 app.component('navbar', navbar);
 
-const admin = defineAsyncComponent(() => import('./components/AdminPanel.vue'));
+const admin = defineAsyncComponent(() => import('./components/layouts/AdminPanel.vue'));
 app.component('admin-layout', admin);
 
 const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
