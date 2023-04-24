@@ -7,6 +7,7 @@ use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 
 class LogActivity
@@ -16,8 +17,11 @@ class LogActivity
         $ip = request()->getClientIp(true);
         $user = $event->user->only('id', 'email');
 
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->toDateTimeString();
+
         // Formatear el mensaje solo con el usuario
-        $message = "El usuario {$user['email']} con ID {$user['id']} ha iniciado sesión desde la IP {$ip}";
+        $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']} ha iniciado sesión desde la IP {$ip}";
 
         $this->info($message);
     }
@@ -28,9 +32,11 @@ class LogActivity
     {
         $ip = request()->getClientIp(true);
         $user = $event->user->only('id', 'email');
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->toDateTimeString();
 
         // Formatear el mensaje solo con el usuario
-        $message = "El usuario {$user['email']} con ID {$user['id']} ha cerrado sesión desde la IP {$ip}";
+        $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']} ha cerrado sesión desde la IP {$ip}";
 
         $this->info($message);
     }
@@ -39,9 +45,11 @@ class LogActivity
     {
         $ip = request()->getClientIp(true);
         $user = $event->user->only('id', 'email');
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->toDateTimeString();
 
         // Formatear el mensaje solo con el usuario
-        $message = "El usuario {$user['email']} con ID {$user['id']} se ha registrado sesión desde la IP {$ip}";
+        $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']} se ha registrado sesión desde la IP {$ip}";
 
         $this->info($message);
 
@@ -51,9 +59,11 @@ class LogActivity
     {
         $ip = request()->getClientIp(true);
         $user = $event->user->only('id', 'email');
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->toDateTimeString();
 
         // Formatear el mensaje solo con el usuario
-        $message = "El usuario {$user['email']} con ID {$user['id']} ha fallado en el inicio de sesión desde la IP {$ip}";
+        $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']} ha fallado en el inicio de sesión desde la IP {$ip}";
 
         $this->info($message);
     }
@@ -62,9 +72,11 @@ class LogActivity
     {
         $ip = request()->getClientIp(true);
         $user = $event->user->only('id', 'email');
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->toDateTimeString();
 
         // Formatear el mensaje solo con el usuario
-        $message = "El usuario {$user['email']} con ID {$user['id']}  ha reseteado la contraseña desde la IP {$ip}";
+        $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']}  ha reseteado la contraseña desde la IP {$ip}";
 
         $this->info($message);
     }

@@ -18,9 +18,9 @@ class LogCourseMiddleware
 
         // Definir mensajes personalizados para cada ruta
         $messages = [
-            'course.index' => 'El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
-            'course.hidden' => 'El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
-            'course.client' => 'El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
+            'course.index' => 'El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
+            'course.hidden' => 'El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
+            'course.client' => 'El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha accedido a la ruta ' . $request->url(),
         ];
 
 // Guardar el log en Redis
@@ -37,7 +37,7 @@ class LogCourseMiddleware
             $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
 
             // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha creado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha creado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
         }
 
 // Si la ruta es course.update y la respuesta es exitosa (código 200)
@@ -46,7 +46,7 @@ class LogCourseMiddleware
             $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
 
             // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
 
         }
 
@@ -56,7 +56,7 @@ class LogCourseMiddleware
             $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
 
             // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso oculto con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso oculto con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
 
         }
         // Si la ruta es course.update_hidden y la respuesta es exitosa (código 200)
@@ -65,7 +65,7 @@ class LogCourseMiddleware
             $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
 
             // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha deshabilitado el curso con ID ' . $courseId . ' el dia  ' . now()->toDateTimeString());
+            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha deshabilitado el curso con ID ' . $courseId . ' el dia  ' . now()->toDateTimeString());
 
         }
 
@@ -75,7 +75,7 @@ class LogCourseMiddleware
             $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
 
             // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha habilitado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha habilitado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
 
         }
 
