@@ -7,45 +7,72 @@ use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class LogActivity
 {
     public function login(Login $event)
     {
         $ip = request()->getClientIp(true);
-        $this->info($event, "User {$event->user->email} logged in from {$ip}", $event->user->only('id', 'email'));
+        $user = $event->user->only('id', 'email');
+
+        // Formatear el mensaje solo con el usuario
+        $message = "El usuario {$user['email']} con ID {$user['id']} ha iniciado sesión desde la IP {$ip}";
+
+        $this->info($message);
     }
+
+
 
     public function logout(Logout $event)
     {
         $ip = request()->getClientIp(true);
-        $this->info($event, "User {$event->user->email} logged out from {$ip}", $event->user->only('id', 'email'));
+        $user = $event->user->only('id', 'email');
+
+        // Formatear el mensaje solo con el usuario
+        $message = "El usuario {$user['email']} con ID {$user['id']} ha cerrado sesión desde la IP {$ip}";
+
+        $this->info($message);
     }
 
     public function registered(Registered $event)
     {
         $ip = request()->getClientIp(true);
-        $this->info($event, "User registered: {$event->user->email} from {$ip}");
+        $user = $event->user->only('id', 'email');
+
+        // Formatear el mensaje solo con el usuario
+        $message = "El usuario {$user['email']} con ID {$user['id']} se ha registrado sesión desde la IP {$ip}";
+
+        $this->info($message);
+
     }
 
     public function failed(Failed $event)
     {
         $ip = request()->getClientIp(true);
-        $this->info($event, "User {$event->credentials['email']} login failed from {$ip}", ['email' => $event->credentials['email']]);
+        $user = $event->user->only('id', 'email');
+
+        // Formatear el mensaje solo con el usuario
+        $message = "El usuario {$user['email']} con ID {$user['id']} ha fallado en el inicio de sesión desde la IP {$ip}";
+
+        $this->info($message);
     }
 
     public function passwordReset(PasswordReset $event)
     {
         $ip = request()->getClientIp(true);
-        $this->info($event, "User {$event->user->email} password reset from {$ip}", $event->user->only('id', 'email'));
+        $user = $event->user->only('id', 'email');
+
+        // Formatear el mensaje solo con el usuario
+        $message = "El usuario {$user['email']} con ID {$user['id']}  ha reseteado la contraseña desde la IP {$ip}";
+
+        $this->info($message);
     }
 
-    protected function info(object $event, string $message, array $context = [])
+    protected function info(string $message)
     {
-        //$class = class_basename($event::class);
-        $class = get_class($event);
-
-        Log::channel('custom')->info("[{$class}] {$message}", $context);
+        // Guardar los registros en Redis sin json_encode()
+        Redis::rpush('logs', $message);
     }
 }
+
