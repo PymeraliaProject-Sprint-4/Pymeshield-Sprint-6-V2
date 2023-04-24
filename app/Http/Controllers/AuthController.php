@@ -65,10 +65,10 @@ class AuthController extends Controller
             $token = $user->createToken('token')->plainTextToken;
 
             if($user->type != 'worker'){
-                return redirect('/home')->cookie('tokenBearer', $token, 180);
+                return redirect('/home')->cookie('tokenBearer', $token);
             }
             else{
-                return redirect('/admin')->cookie('tokenBearer', $token, 180);
+                return redirect('/admin')->cookie('tokenBearer', $token);
             }
         }
 
