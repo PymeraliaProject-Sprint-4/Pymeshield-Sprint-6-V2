@@ -1,19 +1,21 @@
 <template>
-<div class="flex justify-center mt-5">
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center" @click="ModalCrear = true">
-        <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-        <span class="ml-2">{{ $t('create-company') }}</span>
-    </button>
-    <div class="w-4"></div> <!-- Espacio entre los botones -->
-    <button @click="redirectToDeletedCompany()" id="" class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
-        <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
-        {{ $t('Deleted.Company') }}
-    </button>
-</div>
+    <div class="flex justify-center mt-5">
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
+            @click="ModalCrear = true">
+            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+            <span class="ml-2">{{ $t('create-company') }}</span>
+        </button>
+        <div class="w-4"></div> <!-- Espacio entre los botones -->
+        <button @click="redirectToDeletedCompany()" id=""
+            class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+            <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+            {{ $t('Deleted.Company') }}
+        </button>
+    </div>
 
 
     <div class="m-5">
-        
+
         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
             <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -50,6 +52,7 @@
                         {{ company.cif }}
                     </td>
                     <td class="px-4 py-4 text-center align-middle">
+                        <div class="inline-flex">
                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded "
                             @click="this.openModalBaja(company.id)">
                             <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
@@ -57,6 +60,7 @@
                             @click="this.openModalEditar(company.id, company.name, company.email, company.phone, company.cif)">
                             <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -64,6 +68,9 @@
         </table>
 
     </div>
+
+   
+
     <!--Modal Crear Empresa-->
     <TransitionRoot as="template" :show="ModalCrear">
         <Dialog as="div" class="relative z-10" @close="ModalCrear = false">
@@ -101,15 +108,15 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
                                                             $t('name') }}</label>
                                                     <input v-model="crear.nameCrear" type="text" id="name"
-                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
-                                                        <span v-if="!crear.nameCrear"
+                                                    <span v-if="!crear.nameCrear"
                                                         class="absolute right-10 top-50 text-red-500">*</span>
                                                 </div>
                                             </div>
 
 
-                                           
+
 
                                             <div class="mt-2">
                                                 <div>
@@ -119,7 +126,7 @@
                                                     <input v-model="crear.emailCrear" type="text" id="email"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
-                                                        <span v-if="!crear.emailCrear"
+                                                    <span v-if="!crear.emailCrear"
                                                         class="absolute right-10 top-50 text-red-500">*</span>
                                                 </div>
                                             </div>
@@ -132,8 +139,8 @@
                                                         <input v-model="crear.phoneCrear" type="text" id="phone"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
-                                                            <span v-if="!crear.phoneCrear"
-                                                        class="absolute left-50 top-50 text-red-500">*</span>
+                                                        <span v-if="!crear.phoneCrear"
+                                                            class="absolute left-50 top-50 text-red-500">*</span>
                                                     </div>
                                                     <div class="w-full">
                                                         <label
@@ -142,8 +149,8 @@
                                                         <input v-model="crear.cifCrear" type="text" id="cif"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
-                                                            <span v-if="!crear.cifCrear"
-                                                        class="absolute right-10 top-50 text-red-500">*</span>
+                                                        <span v-if="!crear.cifCrear"
+                                                            class="absolute right-10 top-50 text-red-500">*</span>
                                                     </div>
 
                                                 </div>
@@ -153,16 +160,16 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                            
+
                                     <button type="button"
-                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                                         @click="ModalCrear = false" ref="cancelButtonRef"><i
                                             class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                                         @click="submitFormCrear()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
-                              
-                                       
+
+
                                 </div>
                             </form>
                         </DialogPanel>
@@ -268,7 +275,7 @@
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
 
                                     <button type="button"
-                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                                         @click="ModalEditar = false" ref="cancelButtonRef"><i
                                             class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
@@ -331,15 +338,17 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                  
+
                                     <button type="button"
-                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                                        @click="ModalBaja = false" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
-                                      
+                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                        @click="ModalBaja = false" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                            $t('cancel') }}
+
                                     </button>
                                     <button type="button"
-                                    class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
-                                        @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister') }}</button>
+                                        class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
+                                        @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister')
+                                        }}</button>
                                 </div>
                             </form>
                         </DialogPanel>
@@ -575,7 +584,7 @@ export default {
                 });
         },
 
-        redirectToDeletedCompany(){
+        redirectToDeletedCompany() {
             window.location.href = "/listcompanyhidden";
         }
     },

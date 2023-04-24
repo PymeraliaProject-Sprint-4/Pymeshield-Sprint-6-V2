@@ -279,5 +279,7 @@
     "edituser" : "Editar Usuari",
     "Deleted.Company" : "Eliminar Empreses",
     "Visible.Company" : "Empreses visibles",
-    "edit-company" : "Editar Empresa"
+    "Visible.User" : "Usuaris visibles",
+    "edit-company" : "Editar Empresa",
+    "Deleted.User" : "Usuaris eliminats"
 }

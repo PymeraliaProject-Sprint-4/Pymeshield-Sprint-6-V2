@@ -30,6 +30,38 @@ class UserController extends Controller
     {
         return view('users.list_of_users');
     }
+
+    public function userListhidden()
+    {
+        return view('users.list_of_hidden_users');
+    }
+
+    public function userListingHidden()
+    {
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNotNull('users.hidden')
+            ->get();
+        return $userInfo;
+    }
+
+    public function unHideUser($id)
+    {
+        $user = User::find($id);
+        $user->hidden = null;
+        $user->save();
+        $userId = $user->id;
+
+        $user =  User::whereNotNull('hidden')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return response()->json([
+            'id' => $userId,
+            'users' => $user,
+        ]);
+    }
+
     public function userListing()
     {
         $userInfo = DB::table('users')
@@ -39,13 +71,7 @@ class UserController extends Controller
             ->get();
         return $userInfo;
     }
-    public function userListingHidden()
-    {
 
-        $varusers = User::select(['id', 'name', 'last_name', 'nick_name', 'email', 'phone', 'company_id', 'password'])->whereNotNull('hidden')->get();
-
-        return $varusers;
-    }
     public function storeUser(Request $request)
     {
         $user = new User();
@@ -77,21 +103,19 @@ class UserController extends Controller
     //Editar usuario ADMIN
     public function editUser(Request $request)
     {
-        $user = Auth::user();
-        $company = Company::find($user->company_id); // Obtén el modelo de la compañía
-    
-        $user->name = $request['name'];
-        $user->last_name = $request['last_name'];
-        $user->nick_name = $request['nick_name'];
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
-        $company->name = $request['company_name'];
-        $company->update();
-        $user->update();
-    
-        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
-    }    
-    
+        $requestData = $request->validate([
+            'name' => 'required|string',
+            'last_name' => 'required|string',
+            'nick_name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'company_name' => 'required|string'
+        ]);
+
+        $user = User::findOrFail($request->id);
+        $user->update($requestData);
+    }
+
 
     // Baja usuario ADMIN 
     public function userDown(Request $request)
@@ -100,11 +124,25 @@ class UserController extends Controller
             'removed_reason' => 'nullable|max:255|string',
         ]);
         $currentTime = Carbon::now();
-        $user = User::findOrFail($request->user_id); // Busca el usuario por su ID
+        $user = User::findOrFail($request->id); // Busca el usuario por su ID
         $user->removed_reason = $request->removed_reason;
         $user->hidden = $currentTime->toDateTimeString();
         $user->update(); // Actualiza los datos en la base de datos
-        return response()->json(['success' => true, 'message' => 'User down successfully.']);
+    }
+
+    public function unsuscribeCompany(Request $request)
+    {
+        $request->validate([
+            'removed_reason' => 'nullable|max:255|string',
+        ]);
+
+        $currentTime = Carbon::now();
+
+
+        $company = Company::findOrFail($request->id);
+        $company->removed_reason =  $request->removed_reason;
+        $company->hidden = $currentTime->toDateTimeString();
+        $company->update();
     }
 
     //User

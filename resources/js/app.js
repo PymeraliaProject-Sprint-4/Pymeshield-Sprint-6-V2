@@ -31,6 +31,9 @@ app.component('editor', quillEditor);
 const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
 app.component('list-users', listusers);
 
+const ListUsersHidden = defineAsyncComponent(() => import('./components/ListUsersHidden.vue'));
+app.component('list-users-hidden', ListUsersHidden);
+
 const perfilPersonal = defineAsyncComponent(() => import('./components/PerfilPersonal.vue'));
 app.component('PerfilPersonal', perfilPersonal);
 

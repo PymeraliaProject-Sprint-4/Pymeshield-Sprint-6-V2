@@ -276,7 +276,10 @@
     "edituser" : "Edit User",
     "Deleted.Company" : "Deleted Companies",
     "Visible.Company" : "Visible Companies",
-    "edit-company" : "Edit Company"
+    "Visible.User" : "Visible Users",
+    "edit-company" : "Edit Company",
+    "Deleted.User" : "Deleted Users"
+
 
 
 }
