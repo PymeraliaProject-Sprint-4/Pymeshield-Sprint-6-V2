@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Device;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class InventoryController extends Controller
@@ -16,10 +19,19 @@ class InventoryController extends Controller
      */
     public function index(){
         if(auth()->user()->type == 'client'){
-            return Device::where('company_id', '=', auth()->user()->company_id)->get();
+            $data = DB::table('devices')
+            ->select('id', 'serial_number', 'state', 'model', 'brand', 'description', 'mac_ethernet', 'mac_wifi')
+            ->where('company_id', '=', auth()->user()->company_id)
+            ->get();
+            
+            return response()->json($data);
         }
         else{
-            return Device::all();
+            $data = DB::table('devices')
+            ->select('id', 'serial_number', 'state', 'model', 'brand', 'description', 'mac_ethernet', 'mac_wifi')
+            ->get();
+            
+            return response()->json($data);
         }
     }
 
