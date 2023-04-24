@@ -176,7 +176,18 @@ Route::post('audit/save/{id}', [AuditController::class, 'store'])->name('audit.s
 //Part Admin Crear visualitzar
 Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function () {
     Route::get('course', [CourseController::class, 'index'])->name('course.index');
+    Route::get('course/categories', [CourseController::class, 'coursecategories'])->name('course.categories');
+    Route::get('categories/index_data', [CourseController::class, 'index_data_categories'])->name('course.index_data_categories');
+    Route::get('allCourses', [CourseController::class, 'allCourses'])->name('allCourses');
+    Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
+    Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
+
+
+
+
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
+    Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+
     Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
     Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data');
@@ -185,10 +196,12 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('course/hidden_data', [CourseController::class, 'hidden_data'])->name('course.hidden_data');
     Route::get('course/{id}/hide', [CourseController::class, 'hide'])->name('course.hide');
     Route::get('course/{id}/unHide', [CourseController::class, 'unHide'])->name('course.unHide');
+});
+
+Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function () {
     //Part Client Crear Cursos + visualitzar
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
-
 });
 
 //Part Client Crear Cursos + visualitzar
@@ -259,11 +272,11 @@ Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-ga
 //per borrar
 //Route::get('llista_pressupostos', [BudgetController::class, 'index'])->middleware('auth', 'check_access_admin');
 
-Route::get('show_budgets', function () {
-    return view('Presupuestos/show_budgets_view/index');
-})->name('show_budgets')->middleware('auth', 'check_access_admin');
 
-Route::get('/show_budgets/list_all_budgets', [BudgetController::class, 'listAllBudgets'])->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_admin', [BudgetController::class, 'index'])->name('show_budgets_admin')->middleware('auth', 'check_access_admin');
+Route::get('show_budgets_client', [BudgetController::class, 'indexClient'])->name('show_budgets_client')->middleware('auth', 'check_access_client');
+
+//Route::get('/show_budgets_client') INPROGRESS
 
 
 //por revisar
@@ -299,7 +312,7 @@ Route::post('/devices/generateqr', [DevicesController::class, 'generateqr'])->mi
 //Mostrar inventari
 //por revisar
 Route::get('inventario', function () {
-    return view('inventario');
+    return view('inventory.inventario');
 })->middleware('auth', 'check_access_client');
 //por revisar
 Route::get('listInventory', [InventoryController::class, 'listInventary'])->middleware('auth', 'check_access_client');
@@ -314,5 +327,3 @@ Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('im
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
-
-

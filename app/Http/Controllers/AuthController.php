@@ -65,10 +65,10 @@ class AuthController extends Controller
             $token = $user->createToken('token')->plainTextToken;
 
             if($user->type != 'worker'){
-                return redirect('/home')->cookie('tokenBearer', $token, 180);
+                return redirect('/home')->cookie('tokenBearer', $token);
             }
             else{
-                return redirect('/admin')->cookie('tokenBearer', $token, 180);
+                return redirect('/admin')->cookie('tokenBearer', $token);
             }
         }
 
@@ -86,7 +86,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('tokenBearer')->plainTextToken;
 
-            return response()->json(['token' => $token, 'company_id' => $user->company_id, 'user_type' => $user->user_type, 'name' => $user->name, 'email'=>$user->email, 'phone'=>$user->phone, 'nick_name' => $user->nick_name]); //->cookie('tokenBearer', $token, 60)
+            return response()->json(['token' => $token, 'company_id' => $user->company_id, 'user_type' => $user->type, 'name' => $user->name, 'email'=>$user->email, 'phone'=>$user->phone, 'nick_name' => $user->nick_name]); //->cookie('tokenBearer', $token, 60)
         } else {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }

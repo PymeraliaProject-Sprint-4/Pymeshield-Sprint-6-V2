@@ -26,5 +26,4 @@ class Impact extends Model
     {
         return $this->hasMany(Task::class);
     }
-
 }

@@ -58,7 +58,7 @@ export default {
     methods: {
         async getBudgets() {
             try {
-                const response = await this.$axios.get('/show_budgets/list_all_budgets')
+                const response = await this.$axios.get('/show_budgets_admin/list_all_budgets')
                 this.budgetToColumns = response.data
             } catch (error) {
                 console.error(error)
