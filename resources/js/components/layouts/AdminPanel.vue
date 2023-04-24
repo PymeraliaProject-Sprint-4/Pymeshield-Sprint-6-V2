@@ -66,9 +66,11 @@
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex flex-grow flex-col overflow-y-auto bg-orange-500 pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">
-                <a href="/admin"><img class="inline-block mr-3 w-12" src="/img/logo_pymeshield.png" alt="Logo">PymeShield</a>
+                <a href="/admin"><img class="inline-block mr-3 w-12" src="/img/logo_pymeshield.png"
+                        alt="Logo">PymeShield</a>
             </div>
-            <nav class="mt-5 flex flex-1 flex-col divide-y divide-orange-800 overflow-y-auto custom-scrollbar" aria-label="Sidebar">
+            <nav class="mt-5 flex flex-1 flex-col divide-y divide-orange-800 overflow-y-auto custom-scrollbar"
+                aria-label="Sidebar">
                 <div class="space-y-1 px-2">
                     <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
                         :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
@@ -125,17 +127,19 @@
                             </MenuButton>
                         </div>
                         <transition enter-active-class="transition ease-out duration-100"
-                                    enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                    leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                                    leave-to-class="transform opacity-0 scale-95">
+                            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                            leave-active-class="transition ease-in duration-75"
+                            leave-from-class="transform opacity-100 scale-100"
+                            leave-to-class="transform opacity-0 scale-95">
                             <MenuItems
                                 class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
-                                    <a :href="item.href"
+                                <a :href="item.href"
                                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
-                                    <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
-                                        item.name
-                                    }}</a>
+                                    <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full"
+                                        aria-hidden="true" />{{
+                                            item.name
+                                        }}</a>
                                 </MenuItem>
                             </MenuItems>
                         </transition>
@@ -315,7 +319,7 @@ export default {
             }
         },
         languaje() {
-            return[
+            return [
                 { name: this.$t('english'), href: '/language/en', flag: '/img/english.svg' },
                 { name: this.$t('spanish'), href: '/language/es', flag: '/img/spanish.svg' },
                 { name: this.$t('catalan'), href: '/language/ca', flag: '/img/catalan.svg' },
@@ -325,12 +329,14 @@ export default {
     },
     components: { LockClosedIcon, ShieldExclamationIcon },
     mounted() {
-    const currentUrl = window.location.pathname;
-    this.navigation.forEach((item) => {
-      if (currentUrl.startsWith(item.href)) {
-        item.current = true;
-      }
-    });
-  },
+        const currentUrl = window.location.pathname;
+        const firstPathSegment = currentUrl.split('/')[1];
+        this.navigation.forEach((item) => {
+            const itemFirstPathSegment = item.href.split('/')[1];
+            if (firstPathSegment === itemFirstPathSegment) {
+                item.current = true;
+            }
+        });
+    },
 }
 </script>
