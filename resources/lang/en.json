@@ -306,5 +306,8 @@
     "inventory.title": "Device inventory",
     "dashboard.admin.devices": "Total devices",
     "dashboard.admin.courses": "Total courses",
-    "dashboard.admin.tasks": "Total tasks"
+    "dashboard.admin.companies": "Total companies",
+    "dashboard.admin.users": "Total users",
+    "dashboard.admin.title": "Welcome to Pymeshield, use the side menu to navigate between the different functionalities of the application.",
+    "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety."
 }

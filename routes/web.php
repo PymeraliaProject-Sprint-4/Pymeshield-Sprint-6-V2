@@ -108,10 +108,10 @@ Route::post('PerfilPersonal_Worker/Editar_Perfil/update', [UserController::class
 Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])->name('PerfilPersonal_Worker')->middleware('auth');
 
 //Dashboard
-Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
-Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
-Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
-Route::get('graphicAdminData', [UserController::class, 'graphicAdminData']);
+Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit'])->middleware('auth', 'check_access_client');
+Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser'])->middleware('auth', 'check_access_client');
+Route::get('graphicUserData', [UserController::class, 'graphicUserData'])->middleware('auth', 'check_access_client');
+Route::get('graphicAdminData', [UserController::class, 'graphicAdminData'])->middleware('auth', 'check_access_admin');
 
 
 ///////

@@ -435,12 +435,14 @@ class UserController extends Controller
 
         $countCourses = CourseUser::count();
 
-        $countTasks = Task::count();
+        $countCompanies = Company::count();
 
-        if ($countDevices == 0 && $countCourses == 0 && $countTasks == 0) {
+        $countUsers = User::count();
+
+        if ($countDevices == 0 && $countCourses == 0 && $countCompanies == 0 && $countUsers == 0) {
             return null;
         }
 
-        return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countTasks' => $countTasks]);
+        return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countCompanies' => $countCompanies, 'countUsers' => $countUsers]);
     }
 }
