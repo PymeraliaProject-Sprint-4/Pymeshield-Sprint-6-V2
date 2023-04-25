@@ -181,6 +181,8 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('allCourses', [CourseController::class, 'allCourses'])->name('allCourses');
     Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
+    Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
+
 
 
 

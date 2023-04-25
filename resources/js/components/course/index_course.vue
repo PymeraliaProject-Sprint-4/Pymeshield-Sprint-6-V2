@@ -1,8 +1,8 @@
 <template>
-    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
+    <h1 class="ml-7 mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
             class="text-transparent bg-clip-text bg-gradient-to-r to-orange-500 from-orange-300">{{ $t('Admin') }}</span>
     </h1>
-    <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">{{ $t('phrase.1.course') }}
+    <p class="ml-7 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">{{ $t('phrase.1.course') }}
     </p>
 
     <div style="display: flex; justify-content: center;">

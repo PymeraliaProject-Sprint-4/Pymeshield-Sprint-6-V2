@@ -35,10 +35,11 @@ class CourseController extends Controller
 
     public function index_data_categories()
     {
+        $postsperpage = 7;
         return Category::select('categories.id', 'categories.name', 'categories.course_id', 'courses.name as course_name')
             ->join('courses', 'categories.course_id', '=', 'courses.id')
             ->orderBy('categories.updated_at', 'desc')
-            ->get();
+            ->paginate($postsperpage);
     }
 
     public function allCourses()
@@ -51,7 +52,6 @@ class CourseController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-
     }
 
     public function users()
@@ -125,7 +125,7 @@ class CourseController extends Controller
 
     public function createCategory(Request $request)
     {
-  
+
         // Guardar la nueva categoría en la base de datos
         $currentTime = Carbon::now();
 
@@ -271,22 +271,21 @@ class CourseController extends Controller
 
     public function course_User()
     {
-        if(auth()->user()->type == 'client'){
+        if (auth()->user()->type == 'client') {
             $data = DB::table('course_user')
-            ->join('courses', 'courses.id', '=', 'course_user.course_id')
-            ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
-            ->where('user_id', '=', auth()->user()->id)
-            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
-            ->get();
+                ->join('courses', 'courses.id', '=', 'course_user.course_id')
+                ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
+                ->where('user_id', '=', auth()->user()->id)
+                ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+                ->get();
 
             return response()->json($data);
-        }
-        else{
+        } else {
             $data = DB::table('course_user')
-            ->join('courses', 'courses.id', '=', 'course_user.course_id')
-            ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
-            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
-            ->get();
+                ->join('courses', 'courses.id', '=', 'course_user.course_id')
+                ->select('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at AS date')
+                ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+                ->get();
 
             return response()->json($data);
         }
