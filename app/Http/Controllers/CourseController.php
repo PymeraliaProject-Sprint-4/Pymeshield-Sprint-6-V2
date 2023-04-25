@@ -282,10 +282,9 @@ class CourseController extends Controller
 
             return response()->json($data);
         } else {
-            $data = DB::table('course_user')
-                ->join('courses', 'courses.id', '=', 'course_user.course_id')
+            $data = DB::table('courses')
                 ->select('courses.id', 'courses.name', 'courses.description')
-                ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+                ->groupBy('courses.id', 'courses.name', 'courses.description')
                 ->get();
 
             return response()->json($data);
