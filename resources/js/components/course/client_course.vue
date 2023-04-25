@@ -89,7 +89,7 @@ export default {
         }
     },
     async created() {
-        const response = await axios.get('/course/index_data')
+        const response = await axios.get('/course/client_data')
         this.courses = response.data
     },
     computed: {

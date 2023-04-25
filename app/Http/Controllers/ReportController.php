@@ -84,11 +84,22 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        $data = Report::all();
-        return response()->json($data);
-    }
-    function indexmobilID($id)
-    {
-        return Report::find($id);
+        if(auth()->user()->type == 'client'){
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+            
+            return response()->json($data);
+        }
+        else{
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->get();
+            
+            return response()->json($data);
+        }
+        
+        
     }
 }

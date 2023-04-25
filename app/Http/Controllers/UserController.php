@@ -21,7 +21,7 @@ class UserController extends Controller
     // API
     public function indexAPI()
     {
-        $users = User::all();
+        $users = User::all()->where('id', '=', auth()->user()->id);
         return response()->json($users);
     }
 

@@ -116,6 +116,7 @@ import {
 } from '@headlessui/vue'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
