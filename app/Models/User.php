@@ -34,7 +34,8 @@ class User extends Authenticatable
         'type',
         'hidden',
         'removed_reason',
-        'remember_token'
+        'remember_token',
+        'company_id'
     ];
 
     /**
@@ -66,9 +67,9 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
-    public function devices(): HasMany
+    public function devices(): BelongsToMany
     {
-        return $this->hasMany(DeviceUser::class);
+        return $this->belongsToMany(Device::class);
     }
 
     public function reports(): HasMany

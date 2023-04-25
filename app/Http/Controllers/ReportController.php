@@ -6,7 +6,6 @@ use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
@@ -85,10 +84,22 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        return Report::all();
-    }
-    function indexmobilID($id)
-    {
-        return Report::find($id);
+        if(auth()->user()->type == 'client'){
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+            
+            return response()->json($data);
+        }
+        else{
+            $data = DB::table('reports')
+            ->select('id', 'name', 'status')
+            ->get();
+            
+            return response()->json($data);
+        }
+        
+        
     }
 }

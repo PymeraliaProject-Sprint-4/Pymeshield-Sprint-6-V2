@@ -1,5 +1,5 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
-    <router-view />
+    <cursos_calificar/>
 @stop

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Course;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Emblem extends Model
 {
@@ -15,14 +15,14 @@ class Emblem extends Model
 
     // Camps de la taula a replenar (El id i el timespace no es fiquen)
     protected $fillable = [
-    'name',
-    'description',
-    'image',
-    'course_id',
-    'hidden'
+        'name',
+        'description',
+        'image',
+        'course_id',
+        'hidden'
     ];
-    
-    public function course()
+
+    public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }

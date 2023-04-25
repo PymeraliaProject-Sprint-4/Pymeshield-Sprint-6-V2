@@ -4,20 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Device extends Model
 {
     use HasFactory;
 
-    public function type() {
+    public function type(): BelongsTo
+    {
         return $this->belongsTo(TypeDevice::class, 'type_device_id');
     }
 
-    public function deviceUsers() {
-       return $this->hasMany(DeviceUser::class);
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 
-    public function company() {
+    public function company(): BelongsTo
+    {
         return $this->belongsTo(Company::class);
     }
 

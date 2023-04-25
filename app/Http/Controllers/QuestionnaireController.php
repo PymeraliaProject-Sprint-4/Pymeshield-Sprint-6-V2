@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\Questionnaire;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redis;
+
 
 class QuestionnaireController extends Controller
 {
     public function index()
     {
+
         $questionnaires = Questionnaire::where('hidden', false)
-            ->orWhereNull('hidden')
-            ->Paginate(10);
+        ->orWhereNull('hidden')
+        ->Paginate(10);
 
         return view('questionnaire.index', compact('questionnaires'));
+
     }
 
     public function hidden()
@@ -38,6 +44,19 @@ class QuestionnaireController extends Controller
     {
 
         $questionnaire = new Questionnaire();
+
+        $validator = Validator::make($request->all(), [
+            'questionnaire_name' => ['required', 'string'],
+            'questionnaire_autor' => ['required', 'string']
+        ], [
+            'questionnaire_name.required' => __('validation.required.name'),
+            'questionnaire_autor.required' => __('validation.required.autor')
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $questionnaire->name = $request->questionnaire_name;
         $questionnaire->autor = $request->questionnaire_autor;
         $questionnaire->date = date('Y-m-d');
@@ -64,7 +83,14 @@ class QuestionnaireController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'autor' => 'required',
+            'date' => ['required', 'date_format:Y-m-d']
+        ]);
+
         $questionnaire = Questionnaire::find($id);
+
         $questionnaire->name = $request->name;
         $questionnaire->autor = $request->autor;
         $questionnaire->date = $request->date;
@@ -131,7 +157,7 @@ class QuestionnaireController extends Controller
         return Questionnaire::find($id);
     }
 
-    public function allQuestionnaires() 
+    public function allQuestionnaires()
     {
         return Questionnaire::all();
     }

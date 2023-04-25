@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
     <div class="py-3 rounded-lg sm:px-6 lg:px-8">
@@ -30,26 +30,26 @@
                     <x-input-label for="name" :value="__('questionnaire.name')" />
 
                     <x-text-input id="name" class="block mt-1" type="text" name="name"
-                        value="{{ $questionnaire->name }}" required autofocus />
+                        value="{{ $questionnaire->name }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="cost_per_hour" :value="__('questionnaire.autor')" />
 
                     <x-text-input id="autor" class="block mt-1" type="text" name="autor"
-                        value="{{ $questionnaire->autor }}" required autofocus />
+                        value="{{ $questionnaire->autor }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('autor')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="cost_per_hour" :value="__('questionnaire.date')" />
 
-                    <x-text-input id="date" class="block mt-1" type="text" name="date"
-                        value="{{ $questionnaire->date }}" required autofocus />
+                    <x-text-input id="date" class="block mt-1" type="date" name="date"
+                        value="{{ $questionnaire->date }}" autofocus />
 
-                    <x-input-error :messages="$errors->get('text')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
                 @if ($questionnaire->hidden != null)
                     <div>
@@ -73,7 +73,7 @@
 
     <div class="sm:rounded-lg m-5">
         <div class="flex items-center justify-end">
-            <x-button-link href="{{ route('answer.create') }}">
+            <x-button-link href="{{ route('question.create') }}">
                 {{ __('add.answer') }}
             </x-button-link>
         </div>
@@ -173,8 +173,7 @@
                     <tbody>
                         @foreach ($assigned_questions as $question)
                             @php($condition1 = $questionnaire->questions->where('id', $question->id)->isNotEmpty())
-                            <tr
-                                class="bg-orange-50 hover:bg-orange-100 text-center">
+                            <tr class="bg-orange-50 hover:bg-orange-100 text-center">
                                 <td class="p-4 w-4">
                                     <div class="flex items-center">
 
@@ -184,8 +183,7 @@
                                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                     </div>
                                 </td>
-                                <th scope="row"
-                                    class="px-6 py-3 uppercase">
+                                <th scope="row" class="px-6 py-3 uppercase">
                                     {{ $question->name }}
                                 </th>
                                 <td class="px-6 py-4">
@@ -198,9 +196,8 @@
             </form>
         </div>
     </div>
-    <script>
+    <component :is="'script'">
         function checkUncheckAssign(main) {
-            console.log("main", main.checked);
             var all = document.querySelectorAll('[id^="question-assign-"]');
             for (var a = 0; a < all.length; a++) {
                 all[a].checked = main.checked;
@@ -208,11 +205,10 @@
         }
 
         function checkUncheckUnAssign(main) {
-            console.log("main", main.checked);
             var all = document.querySelectorAll('[id^="question-unAssign-"]');
             for (var a = 0; a < all.length; a++) {
                 all[a].checked = main.checked;
             }
         }
-    </script>
+    </component>
 @endsection

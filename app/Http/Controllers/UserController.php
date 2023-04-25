@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseUser;
 use App\Models\Device;
+use App\Models\DeviceUser;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User; // Agrega esta línea
+use App\Models\Company;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -19,7 +21,7 @@ class UserController extends Controller
     // API
     public function indexAPI()
     {
-        $users = User::all();
+        $users = User::all()->where('id', '=', auth()->user()->id);
         return response()->json($users);
     }
 
@@ -30,12 +32,16 @@ class UserController extends Controller
     }
     public function userListing()
     {
-        $varusers = User::select(['id', 'name', 'last_name', 'nick_name', 'email', 'phone', 'company_id', 'password'])->whereNull('hidden')->get();
-
-        return $varusers;
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNull('users.hidden')
+            ->get();
+        return $userInfo;
     }
     public function userListingHidden()
     {
+
         $varusers = User::select(['id', 'name', 'last_name', 'nick_name', 'email', 'phone', 'company_id', 'password'])->whereNotNull('hidden')->get();
 
         return $varusers;
@@ -59,33 +65,34 @@ class UserController extends Controller
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        $user->company_id = $request['company_id'];
+        $user->company_name = $request['company_name'];
         $user->password = $request['password'];
         $user->save();
+        // Obtener la lista actualizada de usuarios
+        $users = User::where('hidden', false)->get();
+
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }
     //Editar usuario ADMIN
     public function editUser(Request $request)
     {
-        $user = User::where('id', $request['user_id'])->first(); // Busca el usuario por su ID
-
-        //Password
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
+        $user = Auth::user();
+        $company = Company::find($user->company_id); // Obtén el modelo de la compañía
+    
         $user->name = $request['name'];
         $user->last_name = $request['last_name'];
         $user->nick_name = $request['nick_name'];
         $user->email = $request['email'];
         $user->phone = $request['phone'];
-        $user->company_id = $request['company_id'];
+        $company->name = $request['company_name'];
+        $company->update();
+        $user->update();
+    
+        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
+    }    
+    
 
-        $user->update(); // Actualiza los datos en la base de datos
-
-        return response()->json(['success' => true, 'message' => 'User created successfully.']);
-    }
     // Baja usuario ADMIN 
     public function userDown(Request $request)
     {
@@ -222,9 +229,8 @@ class UserController extends Controller
         $updatedUser->phone = $request->input('phone');
 
         $updatedUser->save();
-        
-        return redirect()->route('Editar-Perfil');
 
+        return redirect()->route('Editar-Perfil');
     }
 
     public function updateProfileImage(Request $request)
@@ -353,7 +359,7 @@ class UserController extends Controller
 
     /**
      * assignedCoursesUser muestra los cursos que esta cursando el cliente.
-     * 
+     *
      * @return response Json
      */
     public function assignedCoursesUser()
@@ -383,8 +389,8 @@ class UserController extends Controller
 
     /**
      * graphicUserData
-     * 
-     * Acción que retorna un array JSON con los datos de total de dispositivos, cursos y tareas 
+     *
+     * Acción que retorna un array JSON con los datos de total de dispositivos, cursos y tareas
      * que tiene el usuario
      *
      * @return void
@@ -400,9 +406,9 @@ class UserController extends Controller
 
         $user_id = Auth::id();
 
-        $countDevices = Device::where('user_id', $user_id)
+        $countDevices = DeviceUser::where('user_id', $user_id)
             ->select(DB::raw("COUNT(*) as num_devices"))
-            ->whereNull('devices.hidden')
+            //->whereNull('devices.hidden')
             ->get();
 
         $countCourses = CourseUser::where('user_id', $user_id)
@@ -423,7 +429,7 @@ class UserController extends Controller
         return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countTasks' => $countTasks]);
     }
 
-    public function allUsers() 
+    public function allUsers()
     {
         return User::all();
     }

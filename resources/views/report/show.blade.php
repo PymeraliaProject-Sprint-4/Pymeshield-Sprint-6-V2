@@ -75,12 +75,4 @@
             </tbody>
         </table>
     </div>
-    <script>
-        function disableButton(btn) {
-            btn.disabled = true;
-            btn.innerText = "{{ __('report.processpdf') }}";
-            console.log("Funciona");
-            return true;
-        }
-    </script>
 @endsection

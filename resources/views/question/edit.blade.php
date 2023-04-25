@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
     <div class="max-w-xl sm:mx-auto m-5 ring-1 ring-gray-200 bg-white rounded-lg">

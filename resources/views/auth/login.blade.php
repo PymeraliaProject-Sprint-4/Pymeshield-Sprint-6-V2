@@ -8,14 +8,14 @@
                 <img class="mx-auto h-12 w-auto" src="{{ asset('img/logo_pymeshield.png') }}" alt="pymeshield">
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Pymeshield</h2>
                 <p class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
-                    {{__("home")}}
+                    {{ __('home') }}
 
                 </p>
             </div>
             @if (session('status'))
                 <div class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                     role="alert">
-                    <span class="sr-only">{{__("danger")}}</span>
+                    <span class="sr-only">{{ __('danger') }}</span>
                     <div>
                         <ul class="mt-1.5 ml-4 list-disc list-inside">
                             <li>{{ session('status') ?? '' }}</li>
@@ -26,7 +26,7 @@
             @if ($errors->any())
                 <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                     role="alert">
-                    <span class="sr-only">{{__("danger")}}</span>
+                    <span class="sr-only">{{ __('danger') }}</span>
                     <div>
                         <ul class="mt-1.5 ml-4 list-disc list-inside">
                             @foreach ($errors->all() as $error)
@@ -40,31 +40,34 @@
                 @csrf
                 <input type="hidden" name="remember" value="true">
                 <div class="-space-y-px rounded-md shadow-sm">
-                    <div>
-                        <label for="email-address" class="sr-only">{{__("email")}}</label>
+                    <div class="mb-2">
+                        <label for="email-address" class="sr-only">{{ __('email') }}</label>
                         <input id="email-address" name="email" type="email" value="{{ old('email') }}"
                             autocomplete="email" required
-                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                            placeholder="{{__("email")}}">
+                            class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                            placeholder="{{ __('email') }}" onblur="validateEmail()">
+                    <div id="email-error" class="text-sm text-red-600 pt-2"></div>
+
                     </div>
                     <div>
-                        <label for="password" class="sr-only">{{__("password")}}</label>
+                        <label for="password" class="sr-only">{{ __('password') }}</label>
                         <input id="password" name="password" type="password" autocomplete="current-password" required
-                            class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                            placeholder="{{__("password")}}">
+                            class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                            placeholder="{{ __('password') }}">
                     </div>
+
                 </div>
 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox"
                             class="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{__("remember-me")}}</label>
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{ __('remember-me') }}</label>
                     </div>
 
                     <div class="text-sm">
                         <a href="{{ route('rememberPassword') }}"
-                            class="font-medium text-orange-600 hover:text-orange-500">{{__("forgot-your-password?")}}</a>
+                            class="font-medium text-orange-600 hover:text-orange-500">{{ __('forgot-your-password?') }}</a>
                     </div>
                 </div>
                 <div class="flex items-center justify-center">
@@ -84,10 +87,12 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        {{__("enter")}}
+                        {{ __('enter') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    @include('components.validate-form')
 @stop

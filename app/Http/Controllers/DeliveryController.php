@@ -18,9 +18,9 @@ class DeliveryController extends Controller
         return view('activity.indexProva');
     }
 
-    public function CursosCalificarDatos() //Acció per agarrar les dades de la BD
+    public function CursosCalificarDatos()
     {
-        $courses = Course::get()->map(function ($course) {
+        $courses = Course::whereNull('hidden')->get()->map(function ($course) {
             return [
                 'id' => $course->id,
                 'name' => $course->name,
@@ -29,12 +29,23 @@ class DeliveryController extends Controller
         return response()->json($courses);
     }
 
+
+    public function courseActivities($id)
+    {
+        $course = Course::find($id);
+        $courseName = $course->name;
+        $activities = $course->activities;
+        return view('activity.categorias_curso', compact('courseName', 'activities'));
+    }
+
+
+
     public function courseActivitiesDatos($id) //Acció per agarrar les dades de la BD
     {
         // Obtener el nombre del curso y las categorías y actividades correspondientes del curso con el ID especificado
         $course = Course::findOrFail($id);
         $courseName = $course->name;
-        $categories = $course->categories()->with('activities')->get();
+        $categories = $course->categories()->with('activities')->get()->toArray();
 
         // Retornar los datos en formato JSON
         return response()->json([
@@ -59,7 +70,10 @@ class DeliveryController extends Controller
                 ->join('users', 'course_user.user_id', '=', 'users.id')
                 ->where('course_id', $id)
                 ->select('users.id', 'users.name')
-                ->simplePaginate($postsperpage);
+                ->distinct()
+                ->paginate($postsperpage);
+
+
 
             $data = [];
 

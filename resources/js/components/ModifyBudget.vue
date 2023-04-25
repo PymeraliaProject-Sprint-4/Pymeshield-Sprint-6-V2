@@ -20,7 +20,7 @@
                 <thead>
                     <tr class="bg-orange-400 text-white">
                         <th class="px-6 py-3 uppercase">
-                            {{ $t("name") }}
+                            {{ $t("survey.answer") }}
                         </th>
                         <th class="px-6 py-3 uppercase">
                             {{ $t("recommendation") }}
@@ -30,9 +30,6 @@
                         </th>
                         <th class="px-6 py-3 uppercase">
                             {{ $t("managed") }}
-                        </th>
-                        <th v-if="pricecol" class="px-6 py-3 uppercase">
-                            {{ $t("add_price") }}
                         </th>
                         <th class="px-6 py-3 uppercase">
                             {{ $t("price") }}
@@ -55,20 +52,18 @@
                             <RadioGroupComponent :default="task.manages"
                                 @selectedValue="(value) => editTask(value, task.id)" />
                         </td>
-                        <td class="px-6 py-4" v-if="pricecol">
-                            <div class="flex justify-center">
-                                <div class="relative mb-3">
-                                    <input type="text" step="0.01" v-if="task.manages == 'Me lo gestiono yo'"
-                                        v-bind:value="task.price_customer == '0' ? '' : task.price_customer /* ruteado a la variable buscado de data() */"
-                                        @keyup="addPrice($event, task.id) /* llama al método cuando acabas de pulsar la tecla */"
-                                        class="peer block min-h-[auto] w-20 text-center rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear text-gray-900 dark:text-black"
-                                        placeholder="Añade el precio" @keydown="keydown" v-on:keypress="isNUMBER($event)"
-                                        @copy.prevent @paste.prevent :disabled="final_budget" />
-                                </div>
-                            </div>
-                        </td>
                         <td class="px-6 py-4">
-                            {{ task.manages == 'No aceptada' || task.manages == 'Me lo gestiono yo' ? '0' : task.price }}
+                            <div>
+                                {{ task.manages == 'No aceptada' || task.manages == 'Me lo gestiono yo' ? '' : task.price }}
+                            </div>
+                            <div>
+                                <input type="text" step="0.01" v-if="task.manages == 'Me lo gestiono yo'"
+                                    v-bind:value="task.price_customer == '0' ? '' : task.price_customer /* ruteado a la variable buscado de data() */"
+                                    @keyup="addPrice($event, task.id) /* llama al método cuando acabas de pulsar la tecla */"
+                                    class="peer block min-h-[auto] w-20 text-center rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear text-gray-900 dark:text-black"
+                                    placeholder="Añade el precio" @keydown="keydown" v-on:keypress="isNUMBER($event)"
+                                    @copy.prevent @paste.prevent :disabled="final_budget" />
+                            </div>
                         </td>
                         <td class="px-6 py-4">
                             €
@@ -77,8 +72,6 @@
                     <tr v-show="swtotalcol" class="bg-orange-200 text-center font-bold">
                         <td class="px-6 py-4">{{ $t("total") }}</td>
                         <td class="px-6 py-4"></td>
-                        <td v-if="pricecol" class="px-6 py-4">
-                        </td>
                         <td class="px-6 py-4"></td>
                         <td class="px-6 py-4"></td>
                         <td class="px-6 py-4">{{ totals }}
@@ -122,7 +115,8 @@ import {
     ListboxOption,
 } from '@headlessui/vue'
 import axios from 'axios';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
@@ -167,13 +161,13 @@ export default {
 
         isLetter(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
-            if (/^[A-Za-z0-9?¿ ]+$/.test(char)) return true; // Match with regex 
+            if (/^[A-Za-z0-9?¿ ]+$/.test(char)) return true; // Match with regex
             else e.preventDefault(); // If not match, don't add to input text
         },
 
         isNUMBER(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
-            if (/^[0-9,.]+$/.test(char)) return true; // Match with regex 
+            if (/^[0-9,.]+$/.test(char)) return true; // Match with regex
             else e.preventDefault(); // If not match, don't add to input text
         },
         getTotal() {
@@ -193,7 +187,7 @@ export default {
             this.swtotalcol = true
             this.errsearchcol = false
             this.buscado = null;
-            this.url = 'all-data/' + 5;
+            this.url = 'all-data';
             this.getTasks()
         },
 
@@ -215,7 +209,13 @@ export default {
                 }
                 this.getTasks();
             }).catch(function (error) {
-                // swal("Oh no!", "Algo no funciona!", "danger");
+                /*
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
+                */
             });
         },
 
@@ -229,7 +229,13 @@ export default {
                     this.getTotal()
                     this.getTasks();
                 }).catch(function (error) {
-                    // swal("Oh no!", "Algo no funciona!", "danger");
+                    /*
+                    Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
+                    */
                 })
             }
                 , 900
@@ -273,7 +279,7 @@ export default {
         onPageChanged(page) {
             this.getTasks(page);
         },
-        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos 
+        //La función `editTask` hace una petición `PUT` utilizando la librería axios para actualizar una tarea en el servidor, pasando el identificador de la tarea `this.idTask` y los nuevos
         //datos de la tarea `this.dataTask`. Si la petición es exitosa, se ejecutan las siguientes acciones:
 
         //1.  Se asigna un valor vacío a `this.idTask`
@@ -289,14 +295,24 @@ export default {
                 this.idTask = ''
                 this.getTotal()
                 this.getTasks()
-                // swal("Editada!", "La tarea ha sido editada!", "success");
+                /*
+                Swal.fire({
+                    title: 'Editada!',
+                    text: 'La tarea ha sido editada!',
+                    icon: 'success',
+                });
+                */
                 if (value == 'Me lo gestiono yo') {
                     this.pricecol = true
                 } else {
                     this.pricecol = false
                 }
             }).catch(function (error) {
-                swal("Oh no!", "Algo no funciona!", "danger");
+                Swal.fire({
+                    title: 'Oh no!',
+                    text: 'Algo no funciona!',
+                    icon: 'danger',
+                });
             });
         },
     }

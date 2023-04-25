@@ -1,57 +1,61 @@
 <template>
-  <g-gantt-chart chart-start="2021-07-12 12:00" chart-end="2021-07-30 12:00" :bars="bars">
-
-    <g-gantt-row v-for="(rowData, index) in rows" :key="index" :label="rowData.label" />
-
+  <g-gantt-chart
+    chart-start="2023-01-01 00:00"
+    chart-end="2023-12-31 00:00"
+    precision="month"
+    bar-start="beginDate"
+    bar-end="endDate"
+  >
+    <g-gantt-row
+      v-for="(task, index) in taskList"
+      :key="'Tarea-' + (index + 1)"
+      :label="'Tarea ' + (index + 1)"
+      :bars="[
+        {
+          beginDate: task.start_date,
+          endDate: task.final_date,
+          ganttBarConfig: {
+            id: 'task-' + (index + 1),
+            label: task.recommendation,
+            hasHandles: true,
+            style: {
+              background: 'orange',
+              borderRadius: '20px',
+              color: 'black'
+            }
+          }
+        }
+      ]"
+    />
   </g-gantt-chart>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-import axios from "axios";
-import { ref } from "vue"
+const taskList = ref([])
+const bars = ref([])
 
-export default {
-  setup() {
-    const rows = ref([]);
-
-    axios.get("/tasks").then((response) => {
-      rows.value = response.data.map((data, index) => {
-        return {
-          label: `Tarea ${index + 1}`,
-          bars: [
-            {
-              start: data.start_date,
-              end: data.final_date,
-              ganttBarConfig: {
-                id: `${index + 1}`,
-                hasHandles: true,
-                label: data.recommendation,
-                style: {
-                  background: "black",
-                  borderRadius: "20px",
-                  color: "white",
-                }
-              },
-            }
-          ]
+onMounted(() => {
+  axios.get('/tasks').then(response => {
+    taskList.value = response.data
+    bars.value = taskList.value.map((task, index) => {
+      return {
+        beginDate: task.start_date,
+        endDate: task.final_date,
+        ganttBarConfig: {
+          id: 'Tarea-' + (index + 1),
+          label: task.recommendation,
+          hasHandles: true,
+          style: {
+            background: 'orange',
+            borderRadius: '20px',
+            color: 'black'
+          }
         }
-      })
-    });
-
-    const bars = ref([]);
-    console.log(bars);
-    const updateBars = () => {
-      bars.value = rows.value.flatMap(row => row.bars);
-    }
-
-    updateBars();
-
-    return {
-      rows,
-      bars,
-      updateBars
-    };
-  },
-};
+      }
+    })
+  })
+})
 </script>

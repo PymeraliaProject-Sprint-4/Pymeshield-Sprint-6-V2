@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\RedisHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
@@ -57,6 +58,27 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'redis' => [
+            'client' => env('REDIS_CLIENT', 'predis'),
+            'options' => [
+                'cluster' => env('REDIS_CLUSTER', 'redis'),
+            ],
+            'default' => [
+                'url' => env('REDIS_URL'),
+                'host' => env('REDIS_HOST', '127.0.0.1'),
+                'password' => env('REDIS_PASSWORD', null),
+                'port' => env('REDIS_PORT', '6379'),
+                'database' => env('REDIS_DB', '0'),
+            ],
+        ],
+
+        'custom' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/custom-logs.log'),
+            'level' => 'debug',
+            'days' => 30
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
@@ -85,7 +107,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 

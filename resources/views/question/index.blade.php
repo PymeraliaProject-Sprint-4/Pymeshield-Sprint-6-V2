@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
     <div class="m-5 flex items-center pt-4 justify-between space-x-3">

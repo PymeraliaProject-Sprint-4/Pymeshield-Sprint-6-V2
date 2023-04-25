@@ -20,11 +20,45 @@ class CompanyController extends Controller
     }
 
     public function listCompanies(){
-        $companies = Company::select(['id','name','email','phone','cif'])->whereNull('hidden')->get();
-
+        $companies = Company::select(['id','name','email','phone','cif'])
+                            ->whereNull('hidden')
+                            ->orderBy('updated_at', 'desc')
+                            ->get();
+    
         return $companies;
     }
 
+    public function indexhidden(){
+        return view('llistatEmpreses.empreseshiden');
+    }
+
+    public function listcompanieshiddenDatos(){
+        $companies = Company::select(['id','name','email','phone','cif'])
+                            ->whereNotNull('hidden')
+                            ->orderBy('updated_at', 'desc')
+                            ->get();
+    
+        return $companies;
+    }
+
+    public function unHideCompany($id){
+
+        $company = Company::find($id);
+        $company->hidden = null;
+        $company->save();
+        $companyId = $company->id;
+
+        $company =  Company::whereNotNull('hidden')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return response()->json([
+            'id' => $companyId,
+            'companies' => $company,
+        ]);
+
+    }
+    
+    
     public function storeCompany(Request $request){
         $company = new Company();
         $company->name = $request->name;
