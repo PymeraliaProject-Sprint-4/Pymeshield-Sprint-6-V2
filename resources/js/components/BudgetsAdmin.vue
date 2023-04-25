@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="p-5">
         <h1 class="p-3 text-center font-medium">{{ $t('budget.budget-list-title') }}</h1>
-        <table class="table-auto w-full shadow-lg rounded-lg p-4 overflow-hidden ">
+        <table class="table-auto w-full shadow-lg rounded-lg p-4 overflow-hidden">
             <thead class0="rounded-t-lg">
                 <tr class="bg-orange-400 text-white">
                     <th class="px-6 py-3 uppercase">{{ $t('budget.client-name') }}</th>
@@ -35,7 +35,9 @@
                 </tr>
             </tbody>
             <tbody v-else class="p-2.5 font-medium items-center">
-                {{ $t('no-results') }}
+                <div class="m-2">
+                    {{ $t('no-results') }}
+                </div>
             </tbody>
         </table>
     </div>

@@ -175,7 +175,7 @@ class BudgetController extends Controller
             ->join('answers', 'answers.id', '=', 'tasks.answer_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
-            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
+            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as danger', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
             ->where('tasks.user_id', '=', auth()->user()->id)
             ->orderBy('tasks.id')
             ->get();
@@ -190,7 +190,7 @@ class BudgetController extends Controller
             ->join('answers', 'answers.id', '=', 'tasks.answer_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
-            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
+            ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as danger', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
             ->orderBy('tasks.id')
             ->get();
             

@@ -12,7 +12,7 @@
                     enter-from="-translate-x-full" enter-to="translate-x-0"
                     leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0"
                     leave-to="-translate-x-full">
-                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-orange-700 pt-5 pb-4">
+                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-orange-500 pt-5 pb-4">
                         <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0"
                             enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100"
                             leave-to="opacity-0">
@@ -28,11 +28,11 @@
                         <div class="flex flex-shrink-0 items-center px-4">
                             <ShieldExclamationIcon class="h-6 w-6 text-black mr-3" aria-hidden="true" />PymeShield
                         </div>
-                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-orange-800 overflow-y-auto custom-scrollbar"
+                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-orange-700 overflow-y-auto custom-scrollbar"
                             aria-label="Sidebar">
                             <div class="space-y-1 px-2">
                                 <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
-                                    :class="[item.current ? 'bg-orange-800 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                    :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
                                     :aria-current="item.current ? 'page' : undefined">
                                     <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200"
                                         aria-hidden="true" />
@@ -43,7 +43,8 @@
                                 <div class="mt-6 pt-6">
                                     <div class="space-y-1 px-2">
                                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                                            class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-orange-100 hover:bg-orange-600 hover:text-white">
+                                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                            :aria-current="item.current ? 'page' : undefined">
                                             <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200"
                                                 aria-hidden="true" />
                                             {{ item.name }}
@@ -66,9 +67,11 @@
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex flex-grow flex-col overflow-y-auto bg-orange-500 pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">
-                <a href="/admin"><img class="inline-block mr-3 w-12" src="/img/logo_pymeshield.png" alt="Logo">PymeShield</a>
+                <a href="/admin"><img class="inline-block mr-3 w-12" src="/img/logo_pymeshield.png"
+                        alt="Logo">PymeShield</a>
             </div>
-            <nav class="mt-5 flex flex-1 flex-col divide-y divide-orange-800 overflow-y-auto custom-scrollbar" aria-label="Sidebar">
+            <nav class="mt-5 flex flex-1 flex-col divide-y divide-orange-800 overflow-y-auto custom-scrollbar"
+                aria-label="Sidebar">
                 <div class="space-y-1 px-2">
                     <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
                         :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
@@ -80,7 +83,8 @@
                 <div v-if="can('dashadmin.config')" class="mt-6 pt-6">
                     <div class="space-y-1 px-2">
                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                            class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-orange-100 hover:bg-orange-400 hover:text-white">
+                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
+                            :aria-current="item.current ? 'page' : undefined">
                             <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200" aria-hidden="true" />
                             {{ item.name }}
                         </a>
@@ -125,17 +129,19 @@
                             </MenuButton>
                         </div>
                         <transition enter-active-class="transition ease-out duration-100"
-                                    enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                    leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                                    leave-to-class="transform opacity-0 scale-95">
+                            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                            leave-active-class="transition ease-in duration-75"
+                            leave-from-class="transform opacity-100 scale-100"
+                            leave-to-class="transform opacity-0 scale-95">
                             <MenuItems
                                 class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
-                                    <a :href="item.href"
+                                <a :href="item.href"
                                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
-                                    <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
-                                        item.name
-                                    }}</a>
+                                    <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full"
+                                        aria-hidden="true" />{{
+                                            item.name
+                                        }}</a>
                                 </MenuItem>
                             </MenuItems>
                         </transition>
@@ -226,12 +232,10 @@ import {
 } from '@headlessui/vue'
 import {
     Bars3CenterLeftIcon,
-    BellIcon,
     CogIcon,
     HomeIcon,
     LockClosedIcon,
     QuestionMarkCircleIcon,
-    ScaleIcon,
     ShieldCheckIcon,
     ShieldExclamationIcon,
     UserGroupIcon,
@@ -244,7 +248,7 @@ import {
     ClipboardIcon,
 } from '@heroicons/vue/24/outline'
 import {
-    AcademicCapIcon, CurrencyEuroIcon, CalendarDaysIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
+    AcademicCapIcon, CurrencyEuroIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
     CheckCircleIcon,
     ChevronDownIcon,
     MagnifyingGlassIcon,
@@ -276,10 +280,10 @@ export default {
                 { name: this.$t('navbar.restore'), href: '/restore', current: false, icon: ArrowUpTrayIcon },
             ],
             secondaryNavigation: [
-                { name: this.$t('settings'), href: "#", icon: CogIcon },
-                { name: this.$t('edit-terms'), href: "/edit_terms", icon: CogIcon },
-                { name: this.$t('edit-privacy'), href: "/edit_privacy", icon: QuestionMarkCircleIcon },
-                { name: this.$t('edit-cookies'), href: "/edit_cookies", icon: ShieldCheckIcon },
+                { name: this.$t('settings'), href: "#", current: false, icon: CogIcon },
+                { name: this.$t('edit-terms'), href: "/edit_terms", current: false, icon: CogIcon },
+                { name: this.$t('edit-privacy'), href: "/edit_privacy", current: false, icon: QuestionMarkCircleIcon },
+                { name: this.$t('edit-cookies'), href: "/edit_cookies", current: false, icon: ShieldCheckIcon },
             ],
         };
     },
@@ -315,7 +319,7 @@ export default {
             }
         },
         languaje() {
-            return[
+            return [
                 { name: this.$t('english'), href: '/language/en', flag: '/img/english.svg' },
                 { name: this.$t('spanish'), href: '/language/es', flag: '/img/spanish.svg' },
                 { name: this.$t('catalan'), href: '/language/ca', flag: '/img/catalan.svg' },
@@ -325,12 +329,19 @@ export default {
     },
     components: { LockClosedIcon, ShieldExclamationIcon },
     mounted() {
-    const currentUrl = window.location.pathname;
-    this.navigation.forEach((item) => {
-      if (currentUrl.startsWith(item.href)) {
-        item.current = true;
-      }
-    });
-  },
+        const currentUrl = window.location.pathname;
+        const firstPathSegment = currentUrl.split('/')[1];
+        this.navigation.forEach((item) => {
+            const itemFirstPathSegment = item.href.split('/')[1];
+            if (firstPathSegment === itemFirstPathSegment) {
+                item.current = true;
+            }
+        });
+        this.secondaryNavigation.forEach((item) => {
+            if (currentUrl.startsWith(item.href)) {
+                item.current = true;
+            }
+        });
+    },
 }
 </script>
