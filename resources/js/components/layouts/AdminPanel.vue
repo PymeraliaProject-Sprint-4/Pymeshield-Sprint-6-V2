@@ -12,7 +12,7 @@
                     enter-from="-translate-x-full" enter-to="translate-x-0"
                     leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0"
                     leave-to="-translate-x-full">
-                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-orange-700 pt-5 pb-4">
+                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-orange-500 pt-5 pb-4">
                         <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0"
                             enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100"
                             leave-to="opacity-0">
@@ -28,11 +28,11 @@
                         <div class="flex flex-shrink-0 items-center px-4">
                             <ShieldExclamationIcon class="h-6 w-6 text-black mr-3" aria-hidden="true" />PymeShield
                         </div>
-                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-orange-800 overflow-y-auto custom-scrollbar"
+                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-orange-700 overflow-y-auto custom-scrollbar"
                             aria-label="Sidebar">
                             <div class="space-y-1 px-2">
                                 <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
-                                    :class="[item.current ? 'bg-orange-800 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                    :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
                                     :aria-current="item.current ? 'page' : undefined">
                                     <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200"
                                         aria-hidden="true" />
@@ -43,7 +43,7 @@
                                 <div class="mt-6 pt-6">
                                     <div class="space-y-1 px-2">
                                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                                            class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-orange-100 hover:bg-orange-600 hover:text-white">
+                                            class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-orange-100 hover:bg-orange-400 hover:text-white">
                                             <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200"
                                                 aria-hidden="true" />
                                             {{ item.name }}
