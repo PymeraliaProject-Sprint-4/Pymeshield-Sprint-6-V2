@@ -90,8 +90,12 @@ app.component('client_course', client_course);
 const client_rescources = defineAsyncComponent(() => import('./components/rescource/Rescources_Client.vue'));
 app.component('client_rescources', client_rescources);
 
-const admin_rescources = defineAsyncComponent(() => import('./components/rescource/Rescources_Client.vue'));
-app.component('admin_rescources', admin_rescources);
+const coursecategories = defineAsyncComponent(() => import('./components/rescource/Categories_Admin.vue'));
+app.component('course-categories', coursecategories);
+
+const rescources_admin = defineAsyncComponent(() => import('./components/rescource/Rescources_Admin.vue'));
+app.component('rescources-admin', rescources_admin);
+
 
 const CursosCalificar = defineAsyncComponent(() => import('./components/Cursos.vue'));
 app.component('cursos_calificar', CursosCalificar);

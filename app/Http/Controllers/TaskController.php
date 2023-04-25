@@ -8,6 +8,7 @@ use App\Models\Budget;
 use Illuminate\Console\View\Components\Error;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
@@ -241,14 +242,19 @@ class TaskController extends Controller
     public function tasksKanban()
     {
         $user_id = 1; // Aquí anirà l'ID de sessió de l'usuari
-
+    
         $tasks = Task::join('answers', 'tasks.answer_id', '=', 'answers.id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->where('users.id', $user_id)
             ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
             ->orWhere('tasks.manages', '=', 'Me lo gestiono yo')
             ->get(['tasks.*', 'answers.recommendation']);
-
+    
+        foreach ($tasks as $task) {
+            $task->start_date = (new DateTime($task->start_date))->format('Y-m-d H:i');
+            $task->final_date = (new DateTime($task->final_date))->format('Y-m-d H:i');
+        }
+    
         return response()->json($tasks);
     }
 

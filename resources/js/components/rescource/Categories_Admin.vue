@@ -2,7 +2,7 @@
     <h1 class="mt-5 ml-9 mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
             class="text-transparent bg-clip-text bg-gradient-to-r to-orange-500 from-orange-300">{{ $t('Admin') }}</span>
     </h1>
-    <p class="ml-9 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">{{ $t('phrase.1.rescources') }}
+    <p class="ml-9 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">{{ $t('phrase.1.categories') }}
     </p>
 
     <div style="display: flex; justify-content: center;">
@@ -11,7 +11,7 @@
             class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 ml-5 flex items-center"
             type="button">
             <PlusIcon class="h-6 w-6 text-white-400 font" aria-hidden="true" />
-            {{ $t('Add') }} {{ $t('rescource') }}
+            {{ $t('Add') }} {{ $t('category-name') }}
         </button>
 
         <button id="" @click="redirectToCourses()"
@@ -20,10 +20,10 @@
             {{ $t('Courses') }}
         </button>
 
-        <button id="" @click="redirectToCategories()"
+        <button id="" @click="redirectToRescources()"
             class=" ml-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded mt-5 flex items-center text-center ">
-            <ArrowLeftCircleIcon class="h-6 w-6 text-white-400 font-bold" />
-            {{ $t('Categories') }}
+            <ArrowRightCircleIcon class="h-6 w-6 text-white-400 font-bold" />
+            {{ $t('Rescources') }}
         </button>
 
     </div>
@@ -41,7 +41,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                             <tr class="bg-orange-400">
                                 <th scope="col" class="text-xs text-white uppercase p-4">
-                                    {{ $t('Rescources') }}
+                                    {{ $t('Categories') }}
                                 </th>
                                 <th scope="col" class="text-xs text-white uppercase p-4">
                                     {{ $t('Options') }}

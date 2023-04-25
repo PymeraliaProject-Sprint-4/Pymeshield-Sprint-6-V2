@@ -176,7 +176,20 @@ Route::post('audit/save/{id}', [AuditController::class, 'store'])->name('audit.s
 //Part Admin Crear visualitzar
 Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function () {
     Route::get('course', [CourseController::class, 'index'])->name('course.index');
+    Route::get('course/categories', [CourseController::class, 'coursecategories'])->name('course.categories');
+    Route::get('categories/index_data', [CourseController::class, 'index_data_categories'])->name('course.index_data_categories');
+    Route::get('allCourses', [CourseController::class, 'allCourses'])->name('allCourses');
+    Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
+    Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
+    Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
+
+
+
+
+
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
+    Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+
     Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
     Route::get('course/index_data', [CourseController::class, 'index_data'])->name('course.index_data');
@@ -193,6 +206,15 @@ Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function
     Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 });
 
+//Part Client Crear Cursos + visualitzar
+Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
+Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
+Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
+Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
+
+
+
+
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
 Route::post('emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
@@ -206,7 +228,6 @@ Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
-Route::get('recursos', [ResourceController::class, 'index'])->name('recourse.index')->middleware('auth', 'check_access_admin');
 
 
 
