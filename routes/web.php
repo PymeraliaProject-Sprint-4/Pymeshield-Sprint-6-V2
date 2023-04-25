@@ -111,6 +111,7 @@ Route::get('PerfilPersonal_Worker', [UserController::class, 'show_user_worker'])
 Route::get('taskLimit', [UserController::class, 'oneMonthTaskLimit']);
 Route::get('activitiesLimit', [UserController::class, 'assignedCoursesUser']);
 Route::get('graphicUserData', [UserController::class, 'graphicUserData']);
+Route::get('graphicAdminData', [UserController::class, 'graphicAdminData']);
 
 
 ///////

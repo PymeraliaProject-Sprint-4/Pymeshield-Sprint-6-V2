@@ -159,9 +159,9 @@
     "report.impact": "Impact",
     "report.pending": "Pending",
     "report.done": "Done",
-    "report.title":"Report list",
-    "report.titlereport":"Report number ",
-    "report.processpdf":"Downloading...",
+    "report.title": "Report list",
+    "report.titlereport": "Report number ",
+    "report.processpdf": "Downloading...",
     "footer.by": "© pymeshield by Pymeralia",
     "footer.about": "About Pymeralia",
     "footer.privacy": "Privacy Policy",
@@ -262,7 +262,7 @@
     "Categories": "Categories",
     "Rescources": "Rescources",
     "rescources": "rescources",
-    "rescource" : "rescource",
+    "rescource": "rescource",
     "navbar.restore": "Restore Device",
     "navbar.gantt": "Gantt",
     "QualifyCourse": "Qualify courses",
@@ -303,5 +303,8 @@
     "inventory.description": "Description",
     "inventory.state": "State",
     "inventory.serial.number": "Serial number",
-    "inventory.title": "Device inventory"
+    "inventory.title": "Device inventory",
+    "dashboard.admin.devices": "Total devices",
+    "dashboard.admin.courses": "Total courses",
+    "dashboard.admin.tasks": "Total tasks"
 }

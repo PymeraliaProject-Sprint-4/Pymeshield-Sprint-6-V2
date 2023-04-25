@@ -158,9 +158,9 @@
     "report.impact": "Impacto",
     "report.pending": "Pendiente",
     "report.done": "Hecho",
-    "report.title":"Lista informes",
-    "report.titlereport":"Informe número ",
-    "report.processpdf":"Descargando...",
+    "report.title": "Lista informes",
+    "report.titlereport": "Informe número ",
+    "report.processpdf": "Descargando...",
     "footer.by": "© pymeshield por Pymeralia",
     "footer.about": "Acerca de Pymeralia",
     "footer.privacy": "Política de privacidad",
@@ -259,7 +259,7 @@
     "Categories": "Categorias",
     "Rescources": "Recursos",
     "rescources": "recursos",
-    "rescource" : "recurso",
+    "rescource": "recurso",
     "Restore": "Restaurar",
     "Select": "Seleccionar",
     "select": "seleccionar",
@@ -307,5 +307,8 @@
     "inventory.description": "Descripción",
     "inventory.state": "Estado",
     "inventory.serial.number": "Número de serie",
-    "inventory.title": "Inventario de dispositivos"
+    "inventory.title": "Inventario de dispositivos",
+    "dashboard.admin.devices": "Dispositivos totales",
+    "dashboard.admin.courses": "Cursos totales",
+    "dashboard.admin.tasks": "Tareas totales"
 }

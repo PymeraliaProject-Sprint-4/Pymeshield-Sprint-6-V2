@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $company = Company::find($user->company_id); // Obtén el modelo de la compañía
-    
+
         $user->name = $request['name'];
         $user->last_name = $request['last_name'];
         $user->nick_name = $request['nick_name'];
@@ -88,12 +88,12 @@ class UserController extends Controller
         $company->name = $request['company_name'];
         $company->update();
         $user->update();
-    
-        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
-    }    
-    
 
-    // Baja usuario ADMIN 
+        return redirect()->route('userList')->with('success', 'Información actualizada con éxito');
+    }
+
+
+    // Baja usuario ADMIN
     public function userDown(Request $request)
     {
         $request->validate([
@@ -313,12 +313,6 @@ class UserController extends Controller
         return redirect()->route('Personal-Profile')->with('success', 'La contraseña ha sido cambiada correctamente.');
     }
 
-
-
-
-
-
-
     public function switchLanguage($locale)
     {
         session()->put('locale', $locale);
@@ -432,5 +426,21 @@ class UserController extends Controller
     public function allUsers()
     {
         return User::all();
+    }
+
+    public function graphicAdminData()
+    {
+
+        $countDevices = DeviceUser::count();
+
+        $countCourses = CourseUser::count();
+
+        $countTasks = Task::count();
+
+        if ($countDevices == 0 && $countCourses == 0 && $countTasks == 0) {
+            return null;
+        }
+
+        return response()->json(['countDevices' => $countDevices, 'countCourses' => $countCourses, 'countTasks' => $countTasks]);
     }
 }
