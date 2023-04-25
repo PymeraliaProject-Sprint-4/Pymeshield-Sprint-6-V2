@@ -158,7 +158,9 @@
     "report.impact": "Impacte",
     "report.pending": "Pendent",
     "report.done": "Fet",
-    "report.processpdf":"Pocessant...",
+    "report.title": "Llista informes",
+    "report.titlereport": "Informe número ",
+    "report.processpdf": "Descarregant...",
     "footer.by": "© pymeshield per Pymeralia",
     "footer.about": "Sobre Pymeralia",
     "footer.privacy": "Política de privadesa",
@@ -258,7 +260,7 @@
     "Categories": "Categories",
     "Rescources": "Recursos",
     "rescources": "recursos",
-    "rescource" : "recurs",
+    "rescource": "recurs",
     "Restore": "Restaurar",
     "Select": "Selecciona",
     "select": "selecciona",
@@ -303,5 +305,11 @@
     "inventory.description": "Descripció",
     "inventory.state": "Estat",
     "inventory.serial.number": "Número de sèrie",
-    "inventory.title": "Inventari de dispositius"
+    "inventory.title": "Inventari de dispositius",
+    "dashboard.admin.devices": "Total de dispositius",
+    "dashboard.admin.courses": "Total de cursos",
+    "dashboard.admin.companies": "Empreses totals",
+    "dashboard.admin.users": "Total de usuaris",
+    "dashboard.admin.title": "Benvingut a Pymeshield, fes servir el menú lateral per navegar entre les diferents funcionalitats de l'aplicació.",
+    "dashboard.admin.p1": "Pymeshield és una aplicació web de ciberseguretat desenvolupada pels alumnes de DAW2 de l'Institut Montsià per a l'empresa Pymeralia. L'aplicació compta amb una secció de qüestionaris de seguretat per avaluar el nivell de seguretat de l'empresa, cursos de seguretat en línia, un inventari de dispositius per portar un registre dels dispositius utilitzats i una secció de gestió de tasques per assignar tasques específiques relacionades amb la seguretat."
 }
