@@ -43,7 +43,8 @@
                                 <div class="mt-6 pt-6">
                                     <div class="space-y-1 px-2">
                                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                                            class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-orange-100 hover:bg-orange-400 hover:text-white">
+                                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                            :aria-current="item.current ? 'page' : undefined">
                                             <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200"
                                                 aria-hidden="true" />
                                             {{ item.name }}
@@ -82,7 +83,8 @@
                 <div v-if="can('dashadmin.config')" class="mt-6 pt-6">
                     <div class="space-y-1 px-2">
                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                            class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-orange-100 hover:bg-orange-400 hover:text-white">
+                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
+                            :aria-current="item.current ? 'page' : undefined">
                             <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200" aria-hidden="true" />
                             {{ item.name }}
                         </a>
@@ -230,12 +232,10 @@ import {
 } from '@headlessui/vue'
 import {
     Bars3CenterLeftIcon,
-    BellIcon,
     CogIcon,
     HomeIcon,
     LockClosedIcon,
     QuestionMarkCircleIcon,
-    ScaleIcon,
     ShieldCheckIcon,
     ShieldExclamationIcon,
     UserGroupIcon,
@@ -248,7 +248,7 @@ import {
     ClipboardIcon,
 } from '@heroicons/vue/24/outline'
 import {
-    AcademicCapIcon, CurrencyEuroIcon, CalendarDaysIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
+    AcademicCapIcon, CurrencyEuroIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
     CheckCircleIcon,
     ChevronDownIcon,
     MagnifyingGlassIcon,
@@ -280,10 +280,10 @@ export default {
                 { name: this.$t('navbar.restore'), href: '/restore', current: false, icon: ArrowUpTrayIcon },
             ],
             secondaryNavigation: [
-                { name: this.$t('settings'), href: "#", icon: CogIcon },
-                { name: this.$t('edit-terms'), href: "/edit_terms", icon: CogIcon },
-                { name: this.$t('edit-privacy'), href: "/edit_privacy", icon: QuestionMarkCircleIcon },
-                { name: this.$t('edit-cookies'), href: "/edit_cookies", icon: ShieldCheckIcon },
+                { name: this.$t('settings'), href: "#", current: false, icon: CogIcon },
+                { name: this.$t('edit-terms'), href: "/edit_terms", current: false, icon: CogIcon },
+                { name: this.$t('edit-privacy'), href: "/edit_privacy", current: false, icon: QuestionMarkCircleIcon },
+                { name: this.$t('edit-cookies'), href: "/edit_cookies", current: false, icon: ShieldCheckIcon },
             ],
         };
     },
@@ -334,6 +334,11 @@ export default {
         this.navigation.forEach((item) => {
             const itemFirstPathSegment = item.href.split('/')[1];
             if (firstPathSegment === itemFirstPathSegment) {
+                item.current = true;
+            }
+        });
+        this.secondaryNavigation.forEach((item) => {
+            if (currentUrl.startsWith(item.href)) {
                 item.current = true;
             }
         });
