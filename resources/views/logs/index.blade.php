@@ -33,6 +33,9 @@
             <pre class="whitespace-pre-wrap">{{ $logs }}</pre>
         </div>
     </div>
+
+
+
 @endsection
 
 
