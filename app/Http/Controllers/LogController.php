@@ -35,6 +35,12 @@ class LogController extends Controller
 
         if (!empty($startDate) || !empty($endDate)) {
 
+            // Comparar las fechas como strings
+            if ($endDate < $startDate) {
+                // Si la end_date es menor a la start_date, mostrar un mensaje de error
+                return view('logs.index', ['logs' => 'La fecha de fin no puede ser menor a la fecha de inicio.', 'users' => $users]);
+            }
+
             // Filtrar los registros en base al rango de fechas (3 de marzo al 10 de marzo)
             $filteredLogs = array_filter($filteredLogs, function ($log) use ($endDate, $startDate) {
                 // Extraer la fecha del log (asumiendo que está en el formato mencionado en la pregunta)
@@ -55,20 +61,5 @@ class LogController extends Controller
         }
         return view('logs.index', ['logs' => $filteredLogs, 'users' => $users]);
     }
-
-
-    private function filterLogsByName($logs, $name)
-    {
-        $filteredLogs = '';
-        $logLines = explode(PHP_EOL, $logs);
-
-        // Iterar por cada línea del log y filtrar por nombre
-        foreach ($logLines as $logLine) {
-            if (strpos($logLine, $name) !== false) {
-                $filteredLogs .= $logLine . PHP_EOL;
-            }
-        }
-
-        return $filteredLogs;
-    }
+    
 }
