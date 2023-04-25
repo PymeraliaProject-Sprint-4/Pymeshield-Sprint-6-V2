@@ -1,6 +1,7 @@
 @extends('layouts.user')
 
 @section('content')
+<h1 class="p-3 text-center font-medium">{{ __('report.title') }}</h1>
     <div><create-report :questionnaires='{{ json_encode($questionnaires) }}' :users='{{ json_encode($users) }}' /></div>
     <div class="overflow-x-auto shadow-md sm:rounded-lg m-5">
         <table class="table-auto w-full shadow-lg rounded-lg">

@@ -1,14 +1,15 @@
 @extends('layouts.user')
 
 @section('content')
+    <?php
+    $idreport = \Request::getPathInfo();
+    $idreport = substr($idreport, 8);
+    ?>
+    <h1 class="p-3 text-center font-medium">{{ __('report.titlereport') }} {{ $idreport }}</h1>
     <div class="flex justify-end">
 
-        <?php
-        $idreport = \Request::getPathInfo();
-        $idreport = substr($idreport, 8);
-        ?>
-
-        <a href="{{ route('report.pdf', [$idreport]) }}" class="botonPersonalizado">{{ __('table.pdf') }}</a>
+        <a href="{{ route('report.pdf', [$idreport]) }}" class="botonPersonalizado"
+            onclick="return disableButton(this)">{{ __('table.pdf') }}</a>
 
     </div>
     <div class="overflow-x-auto shadow-md sm:rounded-lg m-5">
@@ -74,4 +75,12 @@
             </tbody>
         </table>
     </div>
+    <script>
+        function disableButton(btn) {
+            btn.disabled = true;
+            btn.innerText = "{{ __('report.processpdf') }}";
+            console.log("Funciona");
+            return true;
+        }
+    </script>
 @endsection
