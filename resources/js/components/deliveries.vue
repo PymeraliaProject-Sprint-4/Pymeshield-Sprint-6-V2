@@ -1,5 +1,6 @@
 <template>
     <br>
+
     <table id="tableQualify">
         <thead>
             <tr class="bg-orange-400 text-white">
@@ -39,6 +40,30 @@
         </tbody>
     </table>
 
+    <div class="flex justify-center items-center mt-8">
+        <nav class="bg-white p-6 rounded-lg shadow-lg">
+            <ul class="flex space-x-4">
+                <li v-if="pagination.length > 0 && currentPage > 1">
+                    <button @click="changePage(currentPage - 1)"
+                        class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                        {{ $t('Previous') }}
+                    </button>
+                </li>
+                <li v-for="page in Math.ceil(user.length / perPage)" :key="page">
+                    <button @click="changePage(page)" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md"
+                        :class="{ 'bg-orange-400': page === currentPage }">
+                        {{ page }}
+                    </button>
+                </li>
+                <li v-if="pagination.length > 0 && currentPage < Math.ceil(user.length / perPage)">
+                    <button @click="changePage(currentPage + 1)"
+                        class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                        {{ $t('Next') }}
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <button
         class="ml-10 mb-10 mr-20 mt-10 px-3 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-400 focus:outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
         @click="goBack()">
@@ -63,7 +88,8 @@
                         <form>
                             <div class="p-4">
                                 <div class="mb-4">
-                                    <label for="name" class="block text-gray-700 font-bold mb-2">{{ $t('Name') }}</label>
+                                    <label for="name" class="block text-gray-700 font-bold mb-2">{{ $t('Name')
+                                    }}</label>
                                     <input type="text" id="name" name="name"
                                         class="border-gray-300 rounded-md w-full py-2 px-3" v-model="currentUser.name"
                                         disabled>
@@ -88,7 +114,7 @@
 
                                 <div class="flex justify-end">
                                     <button type="button"
-                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-2 px-4 ml-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-2 px-3 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
                                         @click="closeModal()">
                                         <i class="fas fa-times mr-2"></i>{{ $t('Cancel') }}
                                     </button>
@@ -116,12 +142,7 @@
 
 <script>
 import axios from "axios";
-
-
-
 export default {
-
-
 
     data() {
         return {
@@ -130,15 +151,24 @@ export default {
             pagination: {},
             showModal: false,
             currentUser: {},
-            page: 1,
+            page: 2,
             modal_calificar: false,
-            error: ''
+            error: '',
+            perPage: 2, // cantidad de elementos por página
+            currentPage: 1 // página actual
         };
     },
 
     mounted() {
-        this.loadDeliveries();
+        this.loadDeliveries(this.currentPage);
     },
+
+    paginate() {
+        const start = (this.currentPage - 1) * this.perPage;
+        const end = start + this.perPage;
+        this.pagination = this.user.slice(start, end);
+    },
+
 
     methods: {
         loadDeliveries(page = 1) {
@@ -146,26 +176,33 @@ export default {
             const cursoId = url.pathname.split('/')[2];
             const activityId = url.pathname.split('/')[4];
 
-
             axios
                 .get(`/CursosCalificar/${cursoId}/activities-Datos/${activityId}?page=${page}`)
                 .then((response) => {
                     this.user = response.data;
+                    this.currentPage = page;
+                    this.paginate(); // llamada al método paginate() para dividir los datos en páginas
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
+        changePage(page) {
+            this.loadDeliveries(page);
+        },
+
+
 
         openModal(user) {
             this.modal_calificar = true;
-            this.currentUserIndex = users.indexOf(user);
             this.currentUser = {
                 id: user.id,
                 name: user.name,
                 grade: user.grade,
                 feedback: user.feedback
             };
+            this.currentUserIndex = users.indexOf(user);
+
         },
 
         closeModal() {

@@ -14,19 +14,22 @@
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
                     <p class="font-bold">Recursos de tipo texto:</p>
                     <ul>
-                        <li v-for="resource in category.resources" :key="resource.resource_text_name">
-                            {{ resource.resource_text_name ?? 'No existen recursos de este tipo' }}
-                                
+                        <li v-for="resource in category.resources.filter(r => r.resource_type === 'text')"
+                            :key="resource.resource_name">
+                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                                resource.resource_description ?? '' }}
                         </li>
                     </ul>
+
                 </li>
 
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
                     <p class="font-bold">Recursos de tipo url:</p>
                     <ul>
-                        <li v-for="resource in category.resources" :key="resource.resource_url_name">
-                            {{ resource.resource_url_name ?? 'No existen recursos de este tipo' }} {{
-                                resource.rescource_url_location }}
+                        <li v-for="resource in category.resources.filter(r => r.resource_type === 'url')"
+                            :key="resource.resource_name">
+                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                                resource.resource_location ?? '' }}
                         </li>
                     </ul>
                 </li>
@@ -34,9 +37,10 @@
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
                     <p class="font-bold">Recursos de tipo archivo:</p>
                     <ul>
-                        <li v-for="resource in category.resources" :key="resource.resource_file_name">
-                            {{ resource.resource_file_name ?? 'No existen recursos de este tipo' }} {{
-                                resource.rescource_file_location }}
+                        <li v-for="resource in category.resources.filter(r => r.resource_type === 'file')"
+                            :key="resource.resource_name">
+                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                                resource.resource_location ?? '' }}
                         </li>
                     </ul>
                 </li>
@@ -53,7 +57,6 @@ export default {
         return {
             courseName: "",
             rescources: [],
-            noResources: false,
         };
     },
     mounted() {

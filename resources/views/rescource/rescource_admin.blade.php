@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <course-categories/>
+        <rescources-admin/>
     </div>
 @endsection
