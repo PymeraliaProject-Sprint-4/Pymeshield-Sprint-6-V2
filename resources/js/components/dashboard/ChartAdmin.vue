@@ -80,7 +80,7 @@ export default {
              * canvas hace referencia a la etiqueta y tipos de etiqueta donde se va a renderizar el gráfico
              */
             const chart = new Chart(canvas, {
-                type: 'doughnut', //tipo de gráfico que se va a mostrar
+                type: 'pie', //tipo de gráfico que se va a mostrar
                 data: data, //contiene los datos a representar en el gráfico y hace referéncia a la constante data
                 options: options //contiene opciones de configuración del gráfico y hace referéncia a la constante options
             });
