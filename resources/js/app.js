@@ -136,6 +136,9 @@ app.component('inventory', inventory);
 const listdevices = defineAsyncComponent(() => import('./components/ListDevices.vue'));
 app.component('list-devices', listdevices);
 
+const swiper = defineAsyncComponent(() => import('./components/swiper.vue'));
+app.component('swiper', swiper);
+
 //Restaurar
 const retoredevices = defineAsyncComponent(() => import('./components/restaurar.vue'));
 app.component('restore-devices', retoredevices);
