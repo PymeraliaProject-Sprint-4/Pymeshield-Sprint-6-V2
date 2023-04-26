@@ -25,6 +25,19 @@ class EmblemController extends Controller
         
     }
 
+
+    public function mostrar()
+    {
+        $emblems = Emblem::with('course')->orderby('id', 'desc')->whereNull('hidden')->paginate(10);
+        $courses = Course::all();
+    
+        return response()->json([
+            'emblems' => $emblems,
+            'courses' => $courses,
+        ]);
+    }
+
+
     public function create (){
 
         $courses = Course::all();

@@ -194,6 +194,7 @@ Route::middleware(['auth', 'check_access_client', 'log.course'])->group(function
 });
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
+Route::get('emblems/show', [EmblemController::class, 'mostrar'])->name('emblems.show')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
 Route::post('emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
 Route::get('emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit')->middleware('auth', 'check_access_admin');

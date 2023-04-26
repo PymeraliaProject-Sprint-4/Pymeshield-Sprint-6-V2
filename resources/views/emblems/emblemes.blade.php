@@ -80,4 +80,6 @@
                         </table>
                         {{ $emblems->links('pagination::tailwind', ['max_links' => 5]) }}
                     </div>
+
+                    <emblem></emblem>
 @stop
