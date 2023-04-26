@@ -23,24 +23,25 @@ class ImageDeviceController extends Controller
     }
 
     public function guardar(Request $request) {
-
         // Validem que la imatge sigui correcta
         $request->validate([
             'files.*' => 'image|mimes:png,jpg,jpeg|max:2048'
         ]);
-
+        
         // Guardem l'arxiu i recuperem la ruta
         $files = $request->file('files');
-        //Storage::disk('local')->put('test', $files);
+        
+        if (is_array($files)) foreach ($files as $file) $this->save_image($file);
+        else $this->save_image($files, $request->id_device);
+    }
 
-        foreach ($files as $file) {
-            $route = $file->store('public/images');
-
-            // Guardem a la base de dades la ruta a aquesta imatge
-            ImageDevice::create([
-                'location' => 'storage/' . substr($route, 7), // eliminem "public/" de la ruta
-                'device_id' => 1
-            ]);
-        }
+    private function save_image($file, $id_device) {
+        $route = $file->store('public/images');
+    
+        // Guardem a la base de dades la ruta a aquesta imatge
+        ImageDevice::create([
+            'location' => 'storage/' . substr($route, 7), // eliminem "public/" de la ruta
+            'device_id' => $id_device
+        ]);
     }
 }

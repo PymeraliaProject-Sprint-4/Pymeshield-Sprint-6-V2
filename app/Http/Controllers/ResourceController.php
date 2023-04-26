@@ -17,78 +17,81 @@ class ResourceController extends Controller
     {
         // Obtener el nombre del curso
         $course = DB::table('courses')->select('name')->where('id', $id)->first();
-
+    
         // Obtener todas las categorías del curso seleccionado
         $categories = DB::table('categories')->select('id', 'name')->where('course_id', $id)->get();
-
-        // Obtener los recursos de cada categoría (texto)
-        $resources_texts = DB::table('resource_texts')
-            ->join('categories', 'resource_texts.category_id', '=', 'categories.id')
-            ->select('categories.id as category_id', 'resource_texts.name as resource_name', 'resource_texts.description')
-            ->where('categories.course_id', $id)
-            ->get();
-
-        // Obtener los recursos de cada categoría (url)
-        $resources_urls = DB::table('resource_urls')
-            ->join('categories', 'resource_urls.category_id', '=', 'categories.id')
-            ->select('categories.id as category_id', 'resource_urls.name as resource_name', 'resource_urls.location')
-            ->where('categories.course_id', $id)
-            ->get();
-
-        // Obtener los recursos de cada categoría (archivo)
-        $resources_files = DB::table('resource_files')
-            ->join('categories', 'resource_files.category_id', '=', 'categories.id')
-            ->select('categories.id as category_id', 'resource_files.name as resource_name', 'resource_files.location')
-            ->where('categories.course_id', $id)
-            ->get();
-
+    
         // Crear el objeto JSON combinando todos los resultados
         $json = [
             'course_name' => $course->name,
             'categories' => [],
         ];
-
+    
         foreach ($categories as $category) {
             $category_json = [
                 'category_id' => $category->id,
                 'category_name' => $category->name,
                 'resources' => [],
             ];
-
+    
+            // Obtener los recursos de texto de la categoría
+            $resources_texts = DB::table('resource_texts')
+                ->select('name as resource_name', 'description as resource_description')
+                ->where('category_id', $category->id)
+                ->get();
+    
             foreach ($resources_texts as $resource) {
-                if ($resource->category_id == $category->id) {
-                    $resource_json = [
-                        'resource_text_name' => $resource->resource_name,
-                        'description_rescource_text' => $resource->description,
-                    ];
-                    $category_json['resources'][] = $resource_json;
-                }
+                $resource_json = [
+                    'resource_type' => 'text',
+                    'resource_name' => $resource->resource_name,
+                    'resource_description' => $resource->resource_description,
+                ];
+                $category_json['resources'][] = $resource_json;
             }
-
+    
+            // Obtener los recursos de URL de la categoría
+            $resources_urls = DB::table('resource_urls')
+                ->select('name as resource_name', 'location as resource_location')
+                ->where('category_id', $category->id)
+                ->get();
+    
             foreach ($resources_urls as $resource) {
-                if ($resource->category_id == $category->id) {
-                    $resource_json = [
-                        'resource_url_name' => $resource->resource_name,
-                        'rescource_url_location' => $resource->location,
-                    ];
-                    $category_json['resources'][] = $resource_json;
-                }
+                $resource_json = [
+                    'resource_type' => 'url',
+                    'resource_name' => $resource->resource_name,
+                    'resource_location' => $resource->resource_location,
+                ];
+                $category_json['resources'][] = $resource_json;
             }
-
+    
+            // Obtener los recursos de archivo de la categoría
+            $resources_files = DB::table('resource_files')
+                ->select('name as resource_name', 'location as resource_location')
+                ->where('category_id', $category->id)
+                ->get();
+    
             foreach ($resources_files as $resource) {
-                if ($resource->category_id == $category->id) {
-                    $resource_json = [
-                        'resource_file_name' => $resource->resource_name,
-                        'rescource_file_location' => $resource->location,
-                    ];
-                    $category_json['resources'][] = $resource_json;
-                }
+                $resource_json = [
+                    'resource_type' => 'file',
+                    'resource_name' => $resource->resource_name,
+                    'resource_location' => $resource->resource_location,
+                ];
+                $category_json['resources'][] = $resource_json;
             }
-
+    
             $json['categories'][] = $category_json;
         }
-
+    
         // Devolver el objeto JSON
         return response()->json($json);
     }
-}
+
+
+    public function index_admin(){
+        return view('rescource.rescource_admin');
+    }
+
+    public function index_admin_datos(){
+
+    }
+}    

@@ -10,13 +10,8 @@
 </head>
 
 <body>
-    <style>
-        a {
-            color: black;
-        }
-    </style>
-
     <img src="{{ public_path('img/Logo+text.png') }}">
+    <p class="right-align">{{ $today }}</p>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -49,21 +44,28 @@
     </div>
 
     <footer class="bg-gray-900 py-8 text-center">
-        <div>
-            <div class="text-white">
-                {{-- <img src="{{ public_path('img/logo_pymeshield_black.png') }}" alt="Logo" class="w-16"> --}}
-            </div>
-            <div class="text-white">
-                <h4 class="font-bold text-lg ">{{ __('footer.contact') }}</h4>
-                <ul class="mt-4 ">
-                    <li><a href="tel:682849274" class="text-lg">682849274</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="mailto:support@pymeshield.com" class="text-lg">info@pymeshield.com</a> <p>{{$today}}</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <h4 class="font-bold text-lg">{{ __('footer.contact') }}</h4>
+        <ul class="mt-4 ">
+            <li style="display: inline-block;"><a href="tel:682849274" class="text-lg">682849274</a><br><br>
+                <a href="mailto:support@pymeshield.com" class="text-lg">info@pymeshield.com</a>
+            </li>
+        </ul>
+
     </footer>
+
+    <style>
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .right-align {
+            text-align: right;
+            position: fixed;
+            top: 5%;
+            right: 0;
+        }
+    </style>
 
 </body>
 

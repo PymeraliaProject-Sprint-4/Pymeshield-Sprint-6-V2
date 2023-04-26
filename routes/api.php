@@ -13,6 +13,7 @@ use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ImageDeviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'indexAPI']);
     Route::get('/course-user-data', [CourseController::class, 'course_User'])->name('course-user-data');
-    Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
+    Route::get('/all-data-kivy', [BudgetController::class, 'showTasksKivy'])->name('all-data-kivy');
     Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
     Route::get('/devicelist', [InventoryController::class, 'index']);
     Route::get('kivy/report', [ReportController::class, 'indexmobil']); 
@@ -43,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+Route::get('/all-data', [BudgetController::class, 'showAcceptModify'])->name('all-data');
 
 /** ----- EQUIP 4 ------ */
 //Controlador de la vista página Aceptación Tareas
@@ -87,6 +89,7 @@ Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->
 
 /** ----- EQUIP 5 ------ */
 Route::post('/devices/delete', [DevicesController::class, 'delete']);
+Route::post('/image', [ImageDeviceController::class, 'guardar']);
 
 /** -- kivy equip 2 */
 Route::get('kivy/json', [QuestionnaireController::class, 'indexmobil']);
