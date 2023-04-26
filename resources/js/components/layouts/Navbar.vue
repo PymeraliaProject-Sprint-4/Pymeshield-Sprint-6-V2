@@ -15,17 +15,18 @@
                         </MenuButton>
                     </div>
                     <transition enter-active-class="transition ease-out duration-100"
-                                enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                                leave-to-class="transform opacity-0 scale-95">
+                        enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                        leave-active-class="transition ease-in duration-75"
+                        leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
-                                <a :href="item.href"
+                            <a :href="item.href"
                                 :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
-                                <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
-                                    item.name
-                                }}</a>
+                                <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full"
+                                    aria-hidden="true" />{{
+                                        item.name
+                                    }}</a>
                             </MenuItem>
                         </MenuItems>
                     </transition>
@@ -38,22 +39,22 @@
                             class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span class="sr-only">{{ $t('user-menu') }}</span>
                             <vue-avatar v-if="!user.profile_image" :size="40" :username="user.name + user.last_name" />
-                            <vue-avatar v-else :size="40" :img-src="'/img/profile_images/'+user.profile_image" />
+                            <vue-avatar v-else :size="40" :img-src="'/img/profile_images/' + user.profile_image" />
                         </MenuButton>
                     </div>
                     <transition enter-active-class="transition ease-out duration-100"
                         enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                         leave-active-class="transition ease-in duration-75"
-                        leave-from-class="transform opacity-100 scale-100"
-                        leave-to-class="transform opacity-0 scale-95">
+                        leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                            <a :href="item.href"
+                            <a :href="item.href" :target="item.target"
                                 :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
                                 <component :is="item.icon" class="inline-block mr-1 h-5 w-5" aria-hidden="true" />{{
                                     item.name
-                                }}</a>
+                                }}
+                            </a>
                             </MenuItem>
                         </MenuItems>
                     </transition>
@@ -106,10 +107,11 @@
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <vue-avatar v-if="!user.profile_image" :size="40" :username="user.name + user.last_name" />
-                                <vue-avatar v-else :size="40" :img-src="'/img/profile_images/'+user.profile_image" />
+                                <vue-avatar v-else :size="40" :img-src="'/img/profile_images/' + user.profile_image" />
                             </div>
                             <div class="ml-3">
-                                <div class="text-base font-medium leading-none text-gray-900">{{ user.name + ' ' + user.last_name }}</div>
+                                <div class="text-base font-medium leading-none text-gray-900">{{ user.name + ' ' +
+                                    user.last_name }}</div>
                                 <div class="text-sm font-medium leading-none text-gray-700">{{ user.email }}</div>
                             </div>
                         </div>
@@ -123,17 +125,21 @@
                                     </MenuButton>
                                 </div>
                                 <transition enter-active-class="transition ease-out duration-100"
-                                            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                                            leave-to-class="transform opacity-0 scale-95">
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95">
                                     <MenuItems
                                         class="absolute z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <MenuItem v-for="item in languaje" :key="languaje.name" v-slot="{ active }">
-                                            <a :href="item.href"
+                                        <a :href="item.href"
                                             :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
-                                            <img :src="item.flag" class="inline-block mr-2 h-5 w-5 object-cover rounded-full" aria-hidden="true" />{{
-                                                item.name
-                                            }}</a>
+                                            <img :src="item.flag"
+                                                class="inline-block mr-2 h-5 w-5 object-cover rounded-full"
+                                                aria-hidden="true" />{{
+                                                    item.name
+                                                }}</a>
                                         </MenuItem>
                                     </MenuItems>
                                 </transition>
@@ -141,21 +147,21 @@
                         </div>
                     </div>
                     <div class="mt-3 space-y-1 px-2">
-                        <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href"
+                        <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" :target="item.target"
                             class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-700 hover:text-white">
                             <component :is="item.icon" class="inline-block mr-1 h-5 w-5" aria-hidden="true" />
-                            {{ item.name }}</DisclosureButton>
+                            {{ item.name }}
+                        </DisclosureButton>
                     </div>
                 </div>
             </DisclosurePanel>
         </Disclosure>
     </div>
-
 </template>
 
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { AcademicCapIcon, Bars3Icon, BellIcon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QuestionMarkCircleIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, CogIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, ViewIcon, DocumentIcon, QueueListIcon,} from '@heroicons/vue/24/outline'
+import { AcademicCapIcon, Bars3Icon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, QueueListIcon, LifebuoyIcon } from '@heroicons/vue/24/outline'
 import VueAvatar from "@webzlodimir/vue-avatar";
 import "@webzlodimir/vue-avatar/dist/style.css";
 
@@ -182,20 +188,20 @@ export default {
             if (this.user.type === 'admin') {
                 return [
                     { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
-                    { name: this.$t('settings'), href: '#', icon: CogIcon },
+                    { name: this.$t('help'), href: '/manuals/manual_usuari.pdf', target: '_blank', icon: LifebuoyIcon },
                     { name: this.$t('admin-mode'), href: '/admin', icon: WrenchScrewdriverIcon },
-                    { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style:"background-color: #EF4444;"  },
+                    { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style: "background-color: #EF4444;" },
                 ];
             } else {
                 return [
                     { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
-                    { name: this.$t('settings'), href: '#', icon: CogIcon },
-                    { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style:"background-color: #EF4444;"  },
+                    { name: this.$t('help'), href: '/manuals/manual_usuari.pdf', target: '_blank', icon: LifebuoyIcon },
+                    { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style: "background-color: #EF4444;" },
                 ];
             }
         },
         languaje() {
-            return[
+            return [
                 { name: this.$t('english'), href: '/language/en', flag: '/img/english.svg' },
                 { name: this.$t('spanish'), href: '/language/es', flag: '/img/spanish.svg' },
                 { name: this.$t('catalan'), href: '/language/ca', flag: '/img/catalan.svg' },
@@ -204,12 +210,12 @@ export default {
         }
     },
     mounted() {
-    const currentUrl = window.location.pathname;
-    this.navigation.forEach((item) => {
-      if (currentUrl.startsWith(item.href)) {
-        item.current = true;
-      }
-    });
-  },
+        const currentUrl = window.location.pathname;
+        this.navigation.forEach((item) => {
+            if (currentUrl.startsWith(item.href)) {
+                item.current = true;
+            }
+        });
+    },
 }
 </script>
