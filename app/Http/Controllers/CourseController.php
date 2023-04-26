@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Category;
 use App\Models\CourseUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,6 +19,11 @@ class CourseController extends Controller
         return view('course.index');
     }
 
+    public function coursecategories()
+    {
+        return view('course.coursecategories');
+    }
+
     public function index_data()
     {
         return Course::whereNull('hidden')
@@ -26,6 +32,27 @@ class CourseController extends Controller
                 $query->select('user_id');
             }])
             ->get();
+    }
+
+    public function index_data_categories()
+    {
+        $postsperpage = 7;
+        return Category::select('categories.id', 'categories.name', 'categories.course_id', 'courses.name as course_name')
+            ->join('courses', 'categories.course_id', '=', 'courses.id')
+            ->orderBy('categories.updated_at', 'desc')
+            ->paginate($postsperpage);
+    }
+
+    public function allCourses()
+    {
+        return Course::whereNull('hidden')
+            ->get();
+    }
+
+    public function CategoryDelete($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
     }
 
     public function users()
@@ -97,7 +124,30 @@ class CourseController extends Controller
         ]);
     }
 
+    public function createCategory(Request $request)
+    {
 
+        // Guardar la nueva categoría en la base de datos
+        $currentTime = Carbon::now();
+
+        $category = new Category;
+        $category->name = $request->name;
+        $category->course_id = $request->selectedCourse; // agregando la relación con el curso seleccionado
+        $category->hidden = $currentTime->toDateTimeString();
+        $category->created_at = now();
+        $category->save();
+
+        return response()->json(['message' => 'Categoría creada'], 200);
+    }
+
+    public function updateCategory($id, Request $request)
+    {
+        $category = Category::find($id);
+        $category->name = strip_tags($request->name_edit);
+        $category->course_id = $request->selectedCourse;
+        $category->save();
+        return response()->json(['courses' => $category->course]);
+    }
 
     public function restore($id)
     {
@@ -222,22 +272,20 @@ class CourseController extends Controller
 
     public function course_User()
     {
-        if(auth()->user()->type == 'client'){
+        if (auth()->user()->type == 'client') {
             $data = DB::table('course_user')
-            ->join('courses', 'courses.id', '=', 'course_user.course_id')
-            ->select('courses.id', 'courses.name', 'courses.description')
-            ->where('user_id', '=', auth()->user()->id)
-            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
-            ->get();
+                ->join('courses', 'courses.id', '=', 'course_user.course_id')
+                ->select('courses.id', 'courses.name', 'courses.description')
+                ->where('user_id', '=', auth()->user()->id)
+                ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
+                ->get();
 
             return response()->json($data);
-        }
-        else{
-            $data = DB::table('course_user')
-            ->join('courses', 'courses.id', '=', 'course_user.course_id')
-            ->select('courses.id', 'courses.name', 'courses.description')
-            ->groupBy('courses.id', 'courses.name', 'courses.description', 'course_user.updated_at')
-            ->get();
+        } else {
+            $data = DB::table('courses')
+                ->select('courses.id', 'courses.name', 'courses.description')
+                ->groupBy('courses.id', 'courses.name', 'courses.description')
+                ->get();
 
             return response()->json($data);
         }
