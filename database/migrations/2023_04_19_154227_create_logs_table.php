@@ -16,6 +16,7 @@ class CreateLogsTable extends Migration
     {
         // Set JSON value in Redis key 'logs'
         Redis::set('logs', json_encode([]));
+        Redis::flushDB();
     }
 
     /**
@@ -27,5 +28,6 @@ class CreateLogsTable extends Migration
     {
         // Remove Redis key 'logs'
         Redis::del('logs');
+        Redis::flushDB();
     }
 }
