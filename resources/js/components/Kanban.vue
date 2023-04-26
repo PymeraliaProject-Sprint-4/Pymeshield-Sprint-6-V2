@@ -9,7 +9,7 @@
                     {{ board.name }} :<div class=""> {{ taskCount(board.id) }} Tasks</div>
                 </div>
                 <div class="items flex p-2 gap-2.5 flex-col mt-4">
-                    <div class="item hover:border-solid hover:border-2 border-black p-2 rounded-lg select-none"
+                    <div class="hover:border-solid hover:border-2 border-black p-2 rounded-lg select-none"
                         v-for="task in board.items" :key="task.id" 
                         @click="showAlert(task)" 
                         @dragstart="onDragStart(task)"
