@@ -247,6 +247,8 @@ import {
     UserCircleIcon,
     ClipboardIcon,
     LifebuoyIcon,
+DocumentMagnifyingGlassIcon,
+FingerPrintIcon,
 } from '@heroicons/vue/24/outline'
 import {
     AcademicCapIcon, CurrencyEuroIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
@@ -281,7 +283,7 @@ export default {
                 { name: this.$t('navbar.restore'), href: '/restore', current: false, icon: ArrowUpTrayIcon },
             ],
             secondaryNavigation: [
-                { name: this.$t('settings'), href: "#", current: false, icon: CogIcon },
+                { name: this.$t('logs'), href: "/logs", current: false, icon: FingerPrintIcon },
                 { name: this.$t('edit-terms'), href: "/edit_terms", current: false, icon: CogIcon },
                 { name: this.$t('edit-privacy'), href: "/edit_privacy", current: false, icon: QuestionMarkCircleIcon },
                 { name: this.$t('edit-cookies'), href: "/edit_cookies", current: false, icon: ShieldCheckIcon },

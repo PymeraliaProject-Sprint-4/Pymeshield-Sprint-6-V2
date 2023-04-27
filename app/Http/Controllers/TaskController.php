@@ -22,7 +22,7 @@ class TaskController extends Controller
      * acceptacioTasques
      *
      * Acción que recupera una vista del aplicatiu web
-     * 
+     *
      * @return void
      */
     public function acceptacioTasques()
@@ -35,7 +35,7 @@ class TaskController extends Controller
      * kanban
      *
      * Acción que devuelve la vista de la página kanban
-     * 
+     *
      * @return void
      */
     public function kanban()
@@ -46,7 +46,7 @@ class TaskController extends Controller
 
     /**
      * gantt
-     * 
+     *
      * Acción que devuelve la vista de la página gantt
      *
      * @return void
@@ -62,7 +62,7 @@ class TaskController extends Controller
      * datosTasques
      *
      * Acció que recupera les dades corresponent a un usuari i a un questionari que ha contestat
-     * 
+     *
      * param  mixed $request parametre que passem per a poder canviar de págines
      * @return void
      */
@@ -135,7 +135,7 @@ class TaskController extends Controller
         return $data;
         // return Task::all();
     }
-    // Guarda una tarea específica  
+    // Guarda una tarea específica
     public function store(Request $request, Task $idTask)
     {
         # Valida los datos entrantes
@@ -183,7 +183,7 @@ class TaskController extends Controller
         }
     }
 
-    // Edita una tarea específica  
+    // Edita una tarea específica
     public function update(Request $request, Task $idTask)
     {
         # Valida los datos entrantes
@@ -207,10 +207,10 @@ class TaskController extends Controller
             'final_date' => $request->final_date,
         ]);
     }
-    // Elimina una tarea específica  
+    // Elimina una tarea específica
     public function destroy(Task $idTask)
     {
-        // Elimina la tarea registrada en la base de datos 
+        // Elimina la tarea registrada en la base de datos
         $idTask->delete();
     }
 
@@ -221,7 +221,7 @@ class TaskController extends Controller
 
     public function mostrarTareas($id)
     {
-        $userId = 1; // Aquí anirà la ID de sessió de l'usuari
+        $userId = auth()->user()->id; // Aquí anirà la ID de sessió de l'usuari
 
         $tareas = DB::table('tasks')
             ->select('tasks.*', 'answers.recommendation')
@@ -241,20 +241,20 @@ class TaskController extends Controller
 
     public function tasksKanban()
     {
-        $user_id = 1; // Aquí anirà l'ID de sessió de l'usuari
-    
+        $user_id = auth()->user()->id; // Aquí anirà l'ID de sessió de l'usuari
+
         $tasks = Task::join('answers', 'tasks.answer_id', '=', 'answers.id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->where('users.id', $user_id)
             ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
             ->orWhere('tasks.manages', '=', 'Me lo gestiono yo')
             ->get(['tasks.*', 'answers.recommendation']);
-    
+
         foreach ($tasks as $task) {
             $task->start_date = (new DateTime($task->start_date))->format('Y-m-d H:i');
             $task->final_date = (new DateTime($task->final_date))->format('Y-m-d H:i');
         }
-    
+
         return response()->json($tasks);
     }
 
@@ -264,6 +264,4 @@ class TaskController extends Controller
         $task->state = $request->state;
         $task->save();
     }
-
-
 }

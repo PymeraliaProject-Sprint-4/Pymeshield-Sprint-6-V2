@@ -22,7 +22,6 @@ class InterventionFactory extends Factory
         $array = ['Inmediata', 'A largo plazo', 'A corto plazo'];
         return [
             'name' => $array[self::$counter++ % count($array)],
-            'hidden' => $this->faker->date(),
         ];
     }
 }
