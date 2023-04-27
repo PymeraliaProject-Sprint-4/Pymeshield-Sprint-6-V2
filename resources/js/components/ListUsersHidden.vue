@@ -1,68 +1,80 @@
 <template>
     <div class="flex justify-center mt-5">
         <div class="w-4"></div> <!-- Espacio entre los botones -->
-        <button @click=" redirectToVisibleUsers()" id=""
+        <button @click="redirectToVisibleUsers()" id=""
             class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
             <EyeIcon class="h-6 w-6 text-white-400 font-bold" />
             {{ $t('Visible.User') }}
         </button>
     </div>
-    <div class="m-5">
-        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
-            <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('name') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('lastname') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('email') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('phone') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('company') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('functions') }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody v-if="user.length > 0">
-                <tr v-for="users in user" :key="id" class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ users.name }}
-                    </th>
-                    <td class="px-6 py-4">
-                        {{ users.last_name }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.email }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.phone }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.company_name }}
-                    </td>
-                    <td class="px-4 py-4 text-center align-middle">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 ml-2 rounded "
-                            @click="restoreUser(users)">
-                            <ArrowUpIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                        </button>
-                        <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 ml-2 rounded"
-                            @click="openModalEditar(users)">
-                            <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
-        </table>
-
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="p-6 text-gray-900">
+                <div class="mb-4">
+                    <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('name') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('lastname') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('email') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('phone') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('company') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('functions') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="user.length > 0">
+                                <tr v-for="users in user" :key="id"
+                                    class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ users.name }}
+                                    </th>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.last_name }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.email }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.phone }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.company_name }}
+                                    </td>
+                                    <td class="px-4 py-4 text-center align-middle">
+                                        <button
+                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 ml-2 rounded "
+                                            @click="restoreUser(users)">
+                                            <ArrowUpIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                        </button>
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 ml-2 rounded"
+                                            @click="openModalEditar(users)">
+                                            <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--Modal editar Usuari-->
@@ -162,19 +174,42 @@
                                                             class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-full relative">
-                                                    <label for="company_id"
+                                                <div class="relative">
+                                                    <label for="company_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
-                                                    <input type="text" v-model="currentUser.company_name" id="company_name"
-                                                        name="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                    <select v-model="currentUser.company_name" id="company_name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
                                                         required>
+                                                        <option value="" disabled selected>{{ $t('select_company') }}
+                                                        </option>
+                                                        <option v-for="company in companies" :key="company.id"
+                                                            :value="company.name">{{ company.name }}</option>
+                                                    </select>
                                                     <span v-if="!currentUser.company_name"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
 
+                                            <div class="w-full">
+                                                <div class="relative">
+                                                    <label for="rols"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('Role') }}</label>
+                                                    <select v-model="currentUser.type" id="rols"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        required>
+                                                        <option value="" disabled selected>{{ $t('Select a role') }}
+                                                        </option>
+                                                        <option value="worker">{{ $t('Worker') }}</option>
+                                                        <option value="admin">{{ $t('Admin') }}</option>
+                                                        <option value="client">{{ $t('Client') }}</option>
+                                                    </select>
+
+                                                    <span v-if="!type"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                </div>
+                                            </div>
                                             <div class="mt-2">
                                                 <div>
 
@@ -214,11 +249,14 @@ export default {
     data() {
         return {
             user: [],
+            companies: [],
             currentUser: {},
             ModalEditar: false,
             ModalBaja: false,
             ModalCrear: false,
-            selectedUser: null,
+            selectedRole: '',
+            selectedType: '',
+
         };
     },
     mounted() {
@@ -233,7 +271,17 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+
+                axios.get(`/listadoEmpresas/listCompanies`)
+                .then((response) => {
+                    this.companies = response.data;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
+        
         openModalEditar(user) {
             this.ModalEditar = true;
             this.currentUser = {
@@ -243,6 +291,7 @@ export default {
                 nick_name: user.nick_name,
                 email: user.email,
                 phone: user.phone,
+                type: user.type,
                 company_name: user.company_name
             };
         },
@@ -282,7 +331,7 @@ export default {
                 .catch(error => {
                     console.log(error.response)
                 })
-            },
+        },
         redirectToVisibleUsers() {
             window.location.href = "/userList";
         }

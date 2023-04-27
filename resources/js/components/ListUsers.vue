@@ -1,6 +1,5 @@
 <template>
     <div class="grid justify-items-end mr-5">
-        <!-- <UpUser></UpUser> -->
     </div>
     <div class="flex justify-center mt-5">
         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
@@ -14,71 +13,116 @@
             <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
             {{ $t('Deleted.User') }}
         </button>
+        <div class="w-4"></div> <!-- Espacio entre los botones -->
+      
     </div>
-    <div class="m-5">
-        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
-            <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('name') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('lastname') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('email') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('phone') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('company') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('functions') }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody v-if="user.length > 0">
-                <tr v-for="users in user" :key="id" class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ users.name }}
-                    </th>
-                    <td class="px-6 py-4">
-                        {{ users.last_name }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.email }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.phone }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ users.company_name }}
-                    </td>
-                    <td class="px-4 py-4 text-center align-middle">
-                        <div class="inline-flex">
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded"
-                                @click="openModalBaja(users)">
-                                <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                            </button>
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 ml-2 rounded"
-                                @click="openModalEditar(users)">
-                                <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                            </button>
+    <div class="flex items-center">
+        <button class="mr-5 text-black font-bold focus:ring-4 focus:outline-none rounded ml-auto flex items-center text-center h-6 px-2">
+  <select v-model="selectedType" @change="sortTable">
+    <option value="Admin">Admin</option>
+    <option value="Worker">Worker</option>
+    <option value="Client">Client</option>
+  </select>
+</button>
+
+  </div>
+
+
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="p-6 text-gray-900">
+                <div class="mb-4">
+                    <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full shadow-lg rounded-lg">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                <tr class="bg-orange-400">
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('name') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('lastname') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('email') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('phone') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('company') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('functions') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-orange-50 hover:bg-orange-100 text-center" v-for="users in user" :key="id">
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.name }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.last_name }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.email }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.phone }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ users.company_name }}
+                                    </td>
+                                    <td class="px-4 py-4 text-center align-middle">
+                                        <div class="inline-flex">
+                                            <button
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded"
+                                                @click="openModalBaja(users)">
+                                                <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                            </button>
+                                            <button
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 ml-2 rounded"
+                                                @click="openModalEditar(users)">
+                                                <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="flex justify-center items-center mt-8">
+                            <nav class="bg-white p-6 rounded-lg shadow-lg">
+                                <ul class="flex space-x-4">
+                                    <li v-if="pagination.length > 0 && currentPage > 1">
+                                        <button @click="changePage(currentPage - 1)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                            {{ $t('Previous') }}
+                                        </button>
+                                    </li>
+                                    <li v-for="page in Math.ceil(user.length / perPage)" :key="page">
+                                        <button @click="changePage(page)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md"
+                                            :class="{ 'bg-orange-400': page === currentPage }">
+                                            {{ page }}
+                                        </button>
+                                    </li>
+                                    <li v-if="pagination.length > 0 && currentPage < Math.ceil(user.length / perPage)">
+                                        <button @click="changePage(currentPage + 1)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                            {{ $t('Next') }}
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
 
-
-                    </td>
-
-                </tr>
-            </tbody>
-            <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
-        </table>
-
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!--Modal Crear usauri-->
+    <!--Modal Crear usaurio-->
     <TransitionRoot as="template" :show="ModalCrear">
         <Dialog as="div" class="relative z-10" @close="ModalCrear = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -176,20 +220,45 @@
                                                     <label for="company_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
-                                                    <input type="text" v-model="company_name" id="company_name"
+                                                    <select v-model="company.id" id="company_name"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
                                                         required>
+                                                        <option value="" disabled selected>{{ $t('select_company') }}
+                                                        </option>
+                                                        <option v-for="company in companies" :key="company.id"
+                                                            :value="company.name">{{ company.name }}</option>
+                                                    </select>
                                                     <span v-if="!company_name"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-
-
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div>
 
+
+                                            <div class="w-full">
+                                                <div class="relative">
+                                                    <label for="rols"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('Role') }}</label>
+                                                    <select v-model="type" id="rols"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        required>
+                                                        <option value="" disabled selected>{{ $t('Select a role') }}
+                                                        </option>
+                                                        <option value="worker">{{ $t('Worker') }}</option>
+                                                        <option value="admin">{{ $t('Admin') }}</option>
+                                                        <option value="client">{{ $t('Client') }}</option>
+                                                    </select>
+
+                                                    <span v-if="!type"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                </div>
                                             </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -204,16 +273,16 @@
                                     class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                                     @click="createUser()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
                             </div>
+
                         </DialogPanel>
                     </TransitionChild>
                 </div>
             </div>
+
         </Dialog>
     </TransitionRoot>
 
-
-    <!--FINAL DEL MODAL-->
-    <!--Modal editar Usuari-->
+    <!--Modal editar Usuario-->
     <TransitionRoot as="template" :show="ModalEditar">
         <Dialog as="div" class="relative z-10" @close="ModalEditar = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -310,15 +379,39 @@
                                                             class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-full relative">
-                                                    <label for="company_id"
+                                                <div class="relative">
+                                                    <label for="company_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
-                                                    <input type="text" v-model="currentUser.company_name" id="company_name"
-                                                        name="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                    <select v-model="currentUser.company_name" id="company_name"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
                                                         required>
+                                                        <option value="" disabled selected>{{ $t('select_company') }}
+                                                        </option>
+                                                        <option v-for="company in companies" :key="company.id"
+                                                            :value="company.name">{{ company.name }}</option>
+                                                    </select>
                                                     <span v-if="!currentUser.company_name"
+                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-full">
+                                                <div class="relative">
+                                                    <label for="rols"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                            $t('Role') }}</label>
+                                                    <select v-model="currentUser.type" id="rols"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        required>
+                                                        <option value="" disabled selected>{{ $t('Select a role') }}
+                                                        </option>
+                                                        <option value="worker">{{ $t('Worker') }}</option>
+                                                        <option value="admin">{{ $t('Admin') }}</option>
+                                                        <option value="client">{{ $t('Client') }}</option>
+                                                    </select>
+
+                                                    <span v-if="!currentUser.type"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
@@ -354,7 +447,7 @@
         </Dialog>
     </TransitionRoot>
 
-    <!--Modal baja Usuari-->
+    <!--Modal baja Usuario-->
     <TransitionRoot as="template" :show="ModalBaja">
         <Dialog as="div" class="relative z-10" @close="ModalBaja = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -417,7 +510,7 @@
                         </DialogPanel>
                     </TransitionChild>
 
-                    <!--Notificacion Crear Empresa-->
+                    <!--Notificacion Crear Usuario-->
 
                     <TransitionRoot as="template" :show="NotificacionCrear">
                         <Dialog as="div" class="relative z-10" @close="NotificacionCrear = false">
@@ -458,7 +551,7 @@
                         </Dialog>
                     </TransitionRoot>
 
-                    <!--Notificacion Editar Empresa-->
+                    <!--Notificacion Editar Usuario-->
 
                     <TransitionRoot as="template" :show="NotificacionEditar">
                         <Dialog as="div" class="relative z-10" @close="NotificacionEditar = false">
@@ -499,10 +592,10 @@
                         </Dialog>
                     </TransitionRoot>
 
-                    <!--Notificacion Baja Empresa-->
+                    <!--Notificacion Baja Usuario-->
 
-                    <TransitionRoot as="template" :show="NotificacionBaja">
-                        <Dialog as="div" class="relative z-10" @close="NotificacionBaja = false">
+                    <TransitionRoot as="template" :show="NotificacionBajaUser">
+                        <Dialog as="div" class="relative z-10" @close="NotificacionBajaUser = false">
                             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
                                 enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
                                 leave-to="opacity-0">
@@ -548,40 +641,85 @@
 
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
-
 
 export default {
     data() {
         return {
             user: [],
+            companies: [],
             currentUser: {},
             ModalEditar: false,
             ModalBaja: false,
             ModalCrear: false,
-            NotificacionCrear: ref (false),
-            NotificacionEditar:ref (false),
-            NotificacionBaja:ref(false),
-
+            NotificacionCrear: ref(false),
+            NotificacionEditar: ref(false),
+            NotificacionBajaUser: false,
+            pagination: {},
+            page: 1,
+            perPage: 1, // cantidad de elementos por página
+            currentPage: 1, // página actual
+            selectedType: '',
         };
     },
+
     mounted() {
-        this.getUsers();
+        this.getUsers(this.currentPage);
     },
     methods: {
-        getUsers() {
-            axios.get("userList/userListing")
+        getUsers(page = 1) {
+            axios.get(`userList/userListing?page=${page}`)
                 .then(response => {
-                    this.user = response.data;
+                    this.user = response.data.data;
+                    this.currentPage = page;
                 })
                 .catch(error => {
                     console.log(error);
                 });
+
+            axios.get(`/listadoEmpresas/listCompanies`)
+                .then((response) => {
+                    this.companies = response.data;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
+
+        changePage(page) {
+            this.getUsers(page);
+        },
+
+        
 
 
         openModalCrear() {
             this.ModalCrear = true;
+        },
+
+        createUser(){
+            axios.post('/addUser', {
+                name: this.name,
+                last_name: this.last_name,
+                nick_name: this.nick_name,
+                email: this.email,
+                phone: this.phone,
+                id_company: this.company.id,
+                type: this.type,
+            })
+            .then(async response => {
+                this.name = '';
+                this.last_name = '';
+                this.nick_name = '';
+                this.email = '';
+                this.phone = '';
+                this.id_company = '';
+                this.type = '';
+                this.ModalCrear = false;
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
         },
 
         closeModalCrear() {
@@ -596,6 +734,7 @@ export default {
                 nick_name: user.nick_name,
                 email: user.email,
                 phone: user.phone,
+                type: user.type,
                 company_name: user.company_name
             };
         },
@@ -620,16 +759,17 @@ export default {
                     console.log(response);
                     this.ModalEditar = false;
                     this.currentUser = {};
+                    this.NotificacionEditar = true;
                     setTimeout(() => { this.NotificacionEditar = false; }, 2000);
                 })
-            
+
                 .catch(error => {
                     console.error(error);
                 });
         },
 
 
-     
+
         openModalBaja(user) {
             this.ModalBaja = true;
             this.currentUser = {
@@ -640,19 +780,34 @@ export default {
         submitFormBaja() {
             axios.post("userList/unuscribeUser", {
                 id: this.currentUser.id,
-                removed_reason: this.currentUser.removed_reason
+                removed_reason: this.currentUser.removed_reason,
             })
-                .then(response => {
+                .then((response) => {
                     this.getUsers();
                     console.log(response);
                     this.ModalBaja = false;
-                    this.NotificacionBaja = true;
-                    setTimeout(() => { this.NotificacionBaja = false; },  300000);
+                    this.NotificacionBajaUser = true;
+
+                    let cerradoManualmente = false; // variable para verificar si se cerró manualmente
+
+                    setTimeout(() => {
+                        if (!cerradoManualmente) { // si no se cerró manualmente, ocultar notificación
+                            this.NotificacionBajaUser = false;
+                        }
+                    }, 3000);
+
+                    // evento para cerrar manualmente la notificación
+                    document.getElementById('cerrarNotificacion').addEventListener('click', () => {
+                        cerradoManualmente = true;
+                        this.NotificacionBajaUser = false;
+                    });
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error(error);
                 });
-        },
+        }
+
+        ,
         closeModalBaja() {
             this.ModalBaja = false;
             this.currentUser = {};
@@ -666,7 +821,8 @@ export default {
 </script>
 
 <script setup>
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
+import { ref } from 'vue';
+import { ShieldCheckIcon, PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 </script>

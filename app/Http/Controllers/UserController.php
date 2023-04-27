@@ -63,14 +63,19 @@ class UserController extends Controller
     }
 
     public function userListing()
-    {
-        $userInfo = DB::table('users')
-            ->join('companies', 'users.company_id', '=', 'companies.id')
-            ->select('users.*', 'companies.name AS company_name')
-            ->whereNull('users.hidden')
-            ->get();
-        return $userInfo;
-    }
+{
+    $postsPerPage = 7;
+    $userInfo = DB::table('users')
+        ->join('companies', 'users.company_id', '=', 'companies.id')
+        ->select('users.*', 'companies.name AS company_name')
+        ->whereNull('users.hidden')
+        ->orderBy('users.type', 'asc') // Agregar el método orderBy
+        ->paginate($postsPerPage);
+
+    return response()->json($userInfo);
+}
+
+    
 
     public function storeUser(Request $request)
     {
@@ -86,17 +91,14 @@ class UserController extends Controller
     {
 
         $user = new User();
-        $user->name = $request['name'];
-        $user->last_name = $request['last_name'];
-        $user->nick_name = $request['nick_name'];
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
-        $user->company_name = $request['company_name'];
-        $user->password = $request['password'];
+        $user->name = $request-> name;
+        $user->last_name = $request -> last_name;
+        $user->nick_name = $request -> nick_name;
+        $user->email = $request -> email;
+        $user->phone = $request -> phone;
+        $user->id_company = $request -> id_company;
+        $user->type = $request -> type;
         $user->save();
-        // Obtener la lista actualizada de usuarios
-        $users = User::where('hidden', false)->get();
-
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }

@@ -12,64 +12,71 @@
             {{ $t('Deleted.Company') }}
         </button>
     </div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="p-6 text-gray-900">
+                <div class="mb-4">
+                    <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('company-name') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('email') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('phone') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('cif') }}
+                                    </th>
+                                    <th scope="col" class="text-xs text-white uppercase p-4">
+                                        {{ $t('functions') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="companies.length > 0">
+                                <tr v-for="(company, key) in companies" :key="key"
+                                    class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white    ">
+                                        {{ company.name }}
+                                    </th>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ company.email }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ company.phone }}
+                                    </td>
+                                    <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                        {{ company.cif }}
+                                    </td>
 
-
-    <div class="m-5">
-
-        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
-            <thead class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3 ">
-                        {{ $t('company-name') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('email') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('phone') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('cif') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ $t('functions') }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody v-if="companies.length > 0">
-                <tr v-for="(company, key) in companies" :key="key"
-                    class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white    ">
-                        {{ company.name }}
-                    </th>
-                    <td class="px-6 py-4">
-                        {{ company.email }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ company.phone }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ company.cif }}
-                    </td>
-                    <td class="px-4 py-4 text-center align-middle">
-                        <div class="inline-flex">
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded "
-                            @click="this.openModalBaja(company.id)">
-                            <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                        </button> <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 ml-2 rounded"
-                            @click="this.openModalEditar(company.id, company.name, company.email, company.phone, company.cif)">
-                            <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-                        </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
-        </table>
-
+                                    <td class="px-4 py-4 text-center align-middle">
+                                        <div class="inline-flex">
+                                            <button
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded "
+                                                @click="this.openModalBaja(company.id)">
+                                                <TrashIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                            </button> <button
+                                                class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-2 ml-2 rounded"
+                                                @click="this.openModalEditar(company.id, company.name, company.email, company.phone, company.cif)">
+                                                <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-   
 
     <!--Modal Crear Empresa-->
     <TransitionRoot as="template" :show="ModalCrear">
