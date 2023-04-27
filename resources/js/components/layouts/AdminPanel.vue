@@ -166,7 +166,7 @@
                             <MenuItems
                                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <MenuItem v-for="item in adminNavigation" :key="item.name" v-slot="{ active }">
-                                <a :href="item.href"
+                                <a :href="item.href" :target="item.target"
                                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
                                     <component :is="item.icon" class="inline-block mr-1 h-5 w-5" aria-hidden="true" />{{
                                         item.name
@@ -246,6 +246,9 @@ import {
     LanguageIcon,
     UserCircleIcon,
     ClipboardIcon,
+    LifebuoyIcon,
+DocumentMagnifyingGlassIcon,
+FingerPrintIcon,
 } from '@heroicons/vue/24/outline'
 import {
     AcademicCapIcon, CurrencyEuroIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
@@ -280,7 +283,7 @@ export default {
                 { name: this.$t('navbar.restore'), href: '/restore', current: false, icon: ArrowUpTrayIcon },
             ],
             secondaryNavigation: [
-                { name: this.$t('settings'), href: "#", current: false, icon: CogIcon },
+                { name: this.$t('logs'), href: "/logs", current: false, icon: FingerPrintIcon },
                 { name: this.$t('edit-terms'), href: "/edit_terms", current: false, icon: CogIcon },
                 { name: this.$t('edit-privacy'), href: "/edit_privacy", current: false, icon: QuestionMarkCircleIcon },
                 { name: this.$t('edit-cookies'), href: "/edit_cookies", current: false, icon: ShieldCheckIcon },
@@ -306,14 +309,14 @@ export default {
             if (this.user.type === 'admin') {
                 return [
                     { name: this.$t('profile'), href: '/PerfilPersonal_Admin', icon: IdentificationIcon },
-                    { name: this.$t('settings'), href: '#', icon: CogIcon },
+                    { name: this.$t('help'), href: '/manuals/manual_admin.pdf', target: '_blank', icon: LifebuoyIcon },
                     { name: this.$t('client-mode'), href: '/home', icon: UserCircleIcon },
                     { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon },
                 ];
             } else {
                 return [
                     { name: this.$t('profile'), href: '#', icon: IdentificationIcon },
-                    { name: this.$t('settings'), href: '#', icon: CogIcon },
+                    { name: this.$t('help'), href: '/manuals/manual_admin.pdf', target: '_blank', icon: LifebuoyIcon },
                     { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon },
                 ];
             }

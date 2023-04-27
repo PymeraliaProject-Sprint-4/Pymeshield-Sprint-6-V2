@@ -254,6 +254,14 @@
     "visible": "visible",
     "Visible": "Visible",
     "visible.courses": "Cursos Visibles",
+    "budget.budget-list-title": "Llista de pressupostos",
+    "budget.client-name": "Nom del client",
+    "budget.client-surname": "Cognom del client",
+    "budget.company-name": "Empresa",
+    "budget.creation-date": "Data de creació",
+    "budget.updated-date": "Última actualització",
+    "budget.status": "Estat",
+    "budget.price": "Preu",
     "emblem": "emblema",
     "Emblem": "Emblema",
     "Emblems": "Emblemes",
@@ -311,5 +319,7 @@
     "dashboard.admin.companies": "Empreses totals",
     "dashboard.admin.users": "Total de usuaris",
     "dashboard.admin.title": "Benvingut a Pymeshield, fes servir el menú lateral per navegar entre les diferents funcionalitats de l'aplicació.",
-    "dashboard.admin.p1": "Pymeshield és una aplicació web de ciberseguretat desenvolupada pels alumnes de DAW2 de l'Institut Montsià per a l'empresa Pymeralia. L'aplicació compta amb una secció de qüestionaris de seguretat per avaluar el nivell de seguretat de l'empresa, cursos de seguretat en línia, un inventari de dispositius per portar un registre dels dispositius utilitzats i una secció de gestió de tasques per assignar tasques específiques relacionades amb la seguretat."
+    "dashboard.admin.p1": "Pymeshield és una aplicació web de ciberseguretat desenvolupada pels alumnes de DAW2 de l'Institut Montsià per a l'empresa Pymeralia. L'aplicació compta amb una secció de qüestionaris de seguretat per avaluar el nivell de seguretat de l'empresa, cursos de seguretat en línia, un inventari de dispositius per portar un registre dels dispositius utilitzats i una secció de gestió de tasques per assignar tasques específiques relacionades amb la seguretat.",
+    "help": "Ajuda",
+    "logs": "Registres"
 }

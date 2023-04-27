@@ -31,8 +31,8 @@ class TaskFactory extends Factory
 
         return [
             'state' => fake()->randomElement(['ToDo', 'InProgress', 'Done']),
-            'start_date' => fake()->dateTimeBetween('-1 year', 'now'),
-            'final_date' => fake()->dateTimeBetween('-1 year', 'now'),
+            'start_date' => fake()->dateTimeBetween('-1 month', 'now'),
+            'final_date' => fake()->dateTimeBetween('now', '+1 month'),
             'price' => fake()->randomFloat(2,0,100), //genera un número random con 2 decimales entre 0 y 100
             'manages' => fake()->randomElement(['Me aconseja Pymeralia', 'Me lo gestiono yo', 'No aceptada']),
             'user_id' => $this->faker->randomElement($user_id), //hace referencia a la tabla con la que tiene llave foránea
@@ -41,8 +41,8 @@ class TaskFactory extends Factory
             'budget_id' => $this->faker->randomElement($budget_id),
             'impact_id' => $this->faker->randomElement($impact_id),
             'percentage' => fake()->randomNumber(2),
-            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'created_at' => fake()->dateTimeBetween('-1 month', 'now'),
+            'updated_at' => fake()->dateTimeBetween('now', '+3 month'),
         ];
     }
 }

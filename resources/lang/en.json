@@ -269,6 +269,12 @@
     "Restore": "Restore",
     "assignable.users": "Asignable Users",
     "assignable.courses": "Select a course",
+    "Save": "Save",
+    "edit": "edit",
+    "Edit": "Edit",
+    "visible": "visible",
+    "Visible": "Visible",
+    "visible.courses": "Visible Courses",
     "budget.budget-list-title": "Budget list",
     "budget.client-name": "Client name",
     "budget.client-surname": "Client surname",
@@ -309,5 +315,7 @@
     "dashboard.admin.companies": "Total companies",
     "dashboard.admin.users": "Total users",
     "dashboard.admin.title": "Welcome to Pymeshield, use the side menu to navigate between the different functionalities of the application.",
-    "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety."
+    "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety.",
+    "help": "Help",
+    "logs": "Logs"
 }

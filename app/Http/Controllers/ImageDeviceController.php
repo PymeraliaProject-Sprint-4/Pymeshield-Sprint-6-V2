@@ -32,16 +32,16 @@ class ImageDeviceController extends Controller
         $files = $request->file('files');
         
         if (is_array($files)) foreach ($files as $file) $this->save_image($file);
-        else $this->save_image($files);
+        else $this->save_image($files, $request->id_device);
     }
 
-    private function save_image($file) {
+    private function save_image($file, $id_device) {
         $route = $file->store('public/images');
     
         // Guardem a la base de dades la ruta a aquesta imatge
         ImageDevice::create([
             'location' => 'storage/' . substr($route, 7), // eliminem "public/" de la ruta
-            'device_id' => 1
+            'device_id' => $id_device
         ]);
     }
 }

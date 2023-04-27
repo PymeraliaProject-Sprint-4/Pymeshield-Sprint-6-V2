@@ -21,7 +21,7 @@ class ResourceURLFactory extends Factory
         return [
 
             'name'=>$this->faker->name(255),
-            'location'=>$this->faker->city(255),
+            'location'=>$this->faker->url(),
             'category_id'=>$this->faker->randomElement($category_id),
         ];
     }

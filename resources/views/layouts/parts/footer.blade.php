@@ -1,7 +1,7 @@
 <footer class="bg-black text-center lg:text-center mt-auto p-6">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div>
-            <a class="text-gray-100" href="#"><img src="{{ asset('img/logo_pymeshield_black.png') }}" alt="Logo" class="inline-block mr-1 w-12">© pymeshield by Pymeralia</a>
+            <a class="text-gray-100" href="/home"><img src="{{ asset('img/logo_pymeshield_black.png') }}" alt="Logo" class="inline-block mr-1 w-12">© pymeshield by Pymeralia</a>
         </div>
         <div>
             <h6>{{__("about-pymeralia")}}</h6>

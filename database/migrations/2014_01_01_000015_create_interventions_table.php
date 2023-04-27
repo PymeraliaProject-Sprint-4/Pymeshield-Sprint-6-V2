@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50)->nullable(false);
-            $table->date('hidden');
+            $table->date('hidden')->nullable();
             $table->timestamps();
         });
     }
