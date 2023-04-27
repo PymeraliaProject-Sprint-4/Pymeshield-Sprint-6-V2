@@ -184,10 +184,6 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
 
-
-
-
-
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
 
@@ -213,9 +209,6 @@ Route::get('course/client_data', [CourseController::class, 'client_data'])->name
 Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
 
-
-
-
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
 Route::post('emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
@@ -229,9 +222,6 @@ Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
-
-
-
 //Part de Evaluacións
 Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursos')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
 Route::get('CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos'])->name('Evaluar.CursosDatos')->middleware('auth', 'check_access_admin');
@@ -241,8 +231,6 @@ Route::get('CursosCalificar/{id}/activities/{activityId}', [DeliveryController::
 Route::get('CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne
 //FIN EQUIP 3
-
-
 
 /** ------ EQUIP 4 ------ */
 
@@ -327,6 +315,6 @@ Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
 
 
-Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index')->middleware('auth', 'check_access_admin');
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
