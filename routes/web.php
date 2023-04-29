@@ -67,12 +67,19 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
 Route::get('userList', [UserController::class, 'userList'])->name('userList')->middleware('auth');
-Route::get('userList/userListing', [UserController::class, 'userListing'])->middleware('auth');
-Route::get('userList/userListingHidden', [UserController::class, 'userListing'])->middleware('auth');
+Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden')->middleware('auth');
+
+Route::get('userList/userListing/Admin', [UserController::class, 'userListing'])->middleware('auth'); //Usuarios ordenados por Admin(Por defecto)
+Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker'])->middleware('auth'); //Usuarios ordenados por Worker
+Route::get('userList/userListing/Client', [UserController::class, 'userListingClient'])->middleware('auth'); //Usuarios ordenados por Client
+
+Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden'])->middleware('auth');
+Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('user.unHide');
+
 
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
-Route::post('userDown', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
+Route::post('userList/unuscribeUser', [UserController::class, 'userDown'])->middleware('auth');
+Route::post('userList/editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');

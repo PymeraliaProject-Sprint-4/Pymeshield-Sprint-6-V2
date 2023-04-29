@@ -44,6 +44,7 @@
     "deregister": "Donar de baixa",
     "company-succesfully-created": "Empresa creada correctament.",
     "company-succesfully-edited": "Empresa editada correctament.",
+    "company-succesfully-deleted": "Empresa donada de baixa correctament.",
     "create-user": "Crear usuari",
     "add": "Afegir",
     "saved-changes": "Guardar canvis",
@@ -83,6 +84,9 @@
     "here-change-terms": "Aquí podràs editar l'Avís Legal de la pàgina.",
     "select-image": "Seleccionar imatge",
     "delete": "Eliminar",
+    "Role": "Rol",
+    "deregister user": "Donar de baixa a l'usuari",
+    "Deregister": "Desregistrar",
     "select-language": "Seleccionar idioma",
     "english": "English",
     "spanish": "Español",
@@ -321,5 +325,8 @@
     "dashboard.admin.title": "Benvingut a Pymeshield, fes servir el menú lateral per navegar entre les diferents funcionalitats de l'aplicació.",
     "dashboard.admin.p1": "Pymeshield és una aplicació web de ciberseguretat desenvolupada pels alumnes de DAW2 de l'Institut Montsià per a l'empresa Pymeralia. L'aplicació compta amb una secció de qüestionaris de seguretat per avaluar el nivell de seguretat de l'empresa, cursos de seguretat en línia, un inventari de dispositius per portar un registre dels dispositius utilitzats i una secció de gestió de tasques per assignar tasques específiques relacionades amb la seguretat.",
     "help": "Ajuda",
-    "logs": "Registres"
+    "logs": "Registres",
+    "Deleted.User" : "Usuaris eliminats",
+    "Visible.User" : "Visible Users"
+
 }
