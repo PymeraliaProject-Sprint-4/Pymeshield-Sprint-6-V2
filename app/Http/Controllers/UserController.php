@@ -63,45 +63,64 @@ class UserController extends Controller
     }
 
     public function userListing()
-{
-    $postsPerPage = 7;
-    $userInfo = DB::table('users')
-        ->join('companies', 'users.company_id', '=', 'companies.id')
-        ->select('users.*', 'companies.name AS company_name')
-        ->whereNull('users.hidden')
-        ->orderBy('users.type', 'asc') // Agregar el método orderBy
-        ->paginate($postsPerPage);
+    {
+        $postsPerPage = 7;
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNull('users.hidden')
+            ->orderByRaw("CASE WHEN users.type = 'admin' THEN 1 ELSE 2 END, users.type ASC")
+            ->paginate($postsPerPage);
 
-    return response()->json($userInfo);
-}
+        return response()->json($userInfo);
+    }
 
-    
 
-    public function storeUser(Request $request)
+    public function userListingWorker()
+    {
+         $postsPerPage = 7;
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNull('users.hidden')
+            ->orderByRaw("CASE WHEN users.type = 'worker' THEN 1 ELSE 2 END, users.type ASC")
+            ->paginate($postsPerPage);
+
+        return response()->json($userInfo);
+    }
+
+    public function userListingClient()
+    {
+        $postsPerPage = 7;
+        $userInfo = DB::table('users')
+            ->join('companies', 'users.company_id', '=', 'companies.id')
+            ->select('users.*', 'companies.name AS company_name')
+            ->whereNull('users.hidden')
+            ->orderByRaw("CASE WHEN users.type = 'client' THEN 1 ELSE 2 END, users.type ASC")
+            ->paginate($postsPerPage);
+
+        return response()->json($userInfo);
+    }
+
+
+
+    // Agrega un usuario ADMIN
+    public function addUser(Request $request)
     {
         $user = new User();
         $user->name = $request->name;
         $user->last_name = $request->last_name;
+        $user->nick_name = $request->nick_name;
         $user->email = $request->email;
-        $user->phone =   $request->phone;
-        $user->save();
-    }
-    // Agrega un usuario ADMIN
-    public function addUser(Request $request)
-    {
-
-        $user = new User();
-        $user->name = $request-> name;
-        $user->last_name = $request -> last_name;
-        $user->nick_name = $request -> nick_name;
-        $user->email = $request -> email;
-        $user->phone = $request -> phone;
-        $user->id_company = $request -> id_company;
-        $user->type = $request -> type;
+        $user->password = bcrypt('password');
+        $user->phone = $request->phone;
+        $user->company_id = $request->selectedCompany;
+        $user->type = $request->selectedType;
         $user->save();
 
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }
+
     //Editar usuario ADMIN
     public function editUser(Request $request)
     {

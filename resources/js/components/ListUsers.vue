@@ -14,20 +14,27 @@
             {{ $t('Deleted.User') }}
         </button>
         <div class="w-4"></div> <!-- Espacio entre los botones -->
-      
     </div>
+
     <div class="flex items-center">
-        <button class="mr-5 text-black font-bold focus:ring-4 focus:outline-none rounded ml-auto flex items-center text-center h-6 px-2">
-  <select v-model="selectedType" @change="sortTable">
-    <option value="Admin">Admin</option>
-    <option value="Worker">Worker</option>
-    <option value="Client">Client</option>
-  </select>
-</button>
-
-  </div>
-
-
+        <div class="mr-5">
+            <button
+                class="text-black font-bold focus:ring-4 focus:outline-none rounded ml-10 flex items-center text-center h-6 px-2">
+                <select v-model="selectedType" @change="sortTable">
+                    <option value="worker">{{ $t('Worker') }}</option>
+                    <option value="admin" selected>{{ $t('Admin') }}</option>
+                    <option value="client">{{ $t('Client') }}</option>
+                </select>
+            </button>
+        </div>
+        <div class="flex justify-end">
+            <div class="mb-4">
+                <input v-model="searchTerm" type="text"
+                    class=" mt-5 px-4 py-2 border rounded-lg w-60 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    :placeholder="$t('Search')" />
+            </div>
+        </div>
+    </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
             <div class="p-6 text-gray-900">
@@ -57,7 +64,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-orange-50 hover:bg-orange-100 text-center" v-for="users in user" :key="id">
+                                <tr class="bg-orange-50 hover:bg-orange-100 text-center" v-for="users in filteredUsers"
+                                    :key="id">
                                     <td class="break-all px-6 py-4 font-medium text-gray-900">
                                         {{ users.name }}
                                     </td>
@@ -129,7 +137,6 @@
                 leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
-
             <div class="fixed inset-0 z-10 overflow-y-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <TransitionChild as="template" enter="ease-out duration-300"
@@ -146,21 +153,18 @@
                                         <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                             {{ $t('create-user') }}</DialogTitle>
                                     </div>
-
                                     <div class="mt-3 text-center md:text-left">
                                         <div class="mt-2">
                                             <div class="relative">
                                                 <label for="name"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                         $t('name') }}</label>
-
                                                 <input type="text" v-model="name" id="name"
                                                     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
                                                     required>
                                                 <span v-show="!name"
                                                     class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                             </div>
-
                                         </div>
                                         <div class="mt-2">
                                             <div class="relative">
@@ -220,26 +224,25 @@
                                                     <label for="company_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
-                                                    <select v-model="company.id" id="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                    <input v-model="selectedCompany" list="companies" id="company_name"
+                                                        class="w-full h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
                                                         required>
+                                                    <datalist id="companies">
                                                         <option value="" disabled selected>{{ $t('select_company') }}
                                                         </option>
                                                         <option v-for="company in companies" :key="company.id"
-                                                            :value="company.name">{{ company.name }}</option>
-                                                    </select>
-                                                    <span v-if="!company_name"
+                                                            :value="company.id">{{ company.name }}</option>
+                                                    </datalist>
+                                                    <span v-if="!selectedCompany"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
-
                                             <div class="w-full">
                                                 <div class="relative">
                                                     <label for="rols"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('Role') }}</label>
-                                                    <select v-model="type" id="rols"
+                                                    <select v-model="selectedType" id="rols"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('Select a role') }}
@@ -248,12 +251,10 @@
                                                         <option value="admin">{{ $t('Admin') }}</option>
                                                         <option value="client">{{ $t('Client') }}</option>
                                                     </select>
-
-                                                    <span v-if="!type"
+                                                    <span v-if="!selectedType"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="mt-2">
@@ -268,17 +269,14 @@
                                     class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                                     @click="closeModalCrear()"><i class="fas fa-times mr-2"></i>{{
                                         $t('cancel') }}</button>
-
                                 <button
                                     class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                                     @click="createUser()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
                             </div>
-
                         </DialogPanel>
                     </TransitionChild>
                 </div>
             </div>
-
         </Dialog>
     </TransitionRoot>
 
@@ -289,7 +287,6 @@
                 leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
-
             <div class="fixed inset-0 z-10 overflow-y-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <TransitionChild as="template" enter="ease-out duration-300"
@@ -309,7 +306,6 @@
                                         <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> {{
                                             $t('edituser') }}</DialogTitle>
                                     </div>
-
                                     <div class="mt-3 text-center md:text-left">
                                         <form>
                                             <div class="mt-2">
@@ -324,7 +320,6 @@
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
                                             <div class="mt-2">
                                                 <div class="relative">
                                                     <label for="last_name"
@@ -338,8 +333,6 @@
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
-
                                             <div class="mt-2">
                                                 <div class="relative">
                                                     <label for="nick_name"
@@ -353,7 +346,6 @@
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
                                             <div class="mt-2">
                                                 <div class="flex w-full space-x-8">
                                                     <div class="w-full relative">
@@ -395,7 +387,6 @@
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
                                             <div class="w-full">
                                                 <div class="relative">
                                                     <label for="rols"
@@ -410,12 +401,10 @@
                                                         <option value="admin">{{ $t('Admin') }}</option>
                                                         <option value="client">{{ $t('Client') }}</option>
                                                     </select>
-
                                                     <span v-if="!currentUser.type"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
-
                                             <div class="mt-2">
                                                 <div>
 
@@ -431,15 +420,11 @@
                                     @click="closeModal()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
                                         $t('cancel') }}
                                 </button>
-
                                 <button type="button"
                                     class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
                                     @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                 </button>
-
-
                             </div>
-
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -498,141 +483,14 @@
                                         class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                                         @click="closeModalBaja()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
                                             $t('cancel') }}</button>
-
                                     <button type="button"
                                         class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
                                         @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister')
                                         }}</button>
                                 </div>
-
                             </form>
-
                         </DialogPanel>
                     </TransitionChild>
-
-                    <!--Notificacion Crear Usuario-->
-
-                    <TransitionRoot as="template" :show="NotificacionCrear">
-                        <Dialog as="div" class="relative z-10" @close="NotificacionCrear = false">
-                            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
-                                enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
-                                leave-to="opacity-0">
-                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                            </TransitionChild>
-
-                            <div class="fixed inset-0 z-10 overflow-y-auto">
-                                <div
-                                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                    <TransitionChild as="template" enter="ease-out duration-300"
-                                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                                        <DialogPanel
-                                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                <div class="xl:items-start">
-                                                    <div class="flex space-x-2 items-center">
-                                                        <div
-                                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400"
-                                                                aria-hidden="true" />
-                                                        </div>
-                                                        <DialogTitle as="h3"
-                                                            class="text-lg font-medium leading-6 text-gray-900">{{
-                                                                $t('company-succesfully-created') }}</DialogTitle>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </DialogPanel>
-                                    </TransitionChild>
-                                </div>
-                            </div>
-                        </Dialog>
-                    </TransitionRoot>
-
-                    <!--Notificacion Editar Usuario-->
-
-                    <TransitionRoot as="template" :show="NotificacionEditar">
-                        <Dialog as="div" class="relative z-10" @close="NotificacionEditar = false">
-                            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
-                                enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
-                                leave-to="opacity-0">
-                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                            </TransitionChild>
-
-                            <div class="fixed inset-0 z-10 overflow-y-auto">
-                                <div
-                                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                    <TransitionChild as="template" enter="ease-out duration-300"
-                                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                                        <DialogPanel
-                                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                <div class="xl:items-start">
-                                                    <div class="flex space-x-2 items-center">
-                                                        <div
-                                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400"
-                                                                aria-hidden="true" />
-                                                        </div>
-                                                        <DialogTitle as="h3"
-                                                            class="text-lg font-medium leading-6 text-gray-900">
-                                                            {{ $t('company-succesfully-edited') }}</DialogTitle>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </DialogPanel>
-                                    </TransitionChild>
-                                </div>
-                            </div>
-                        </Dialog>
-                    </TransitionRoot>
-
-                    <!--Notificacion Baja Usuario-->
-
-                    <TransitionRoot as="template" :show="NotificacionBajaUser">
-                        <Dialog as="div" class="relative z-10" @close="NotificacionBajaUser = false">
-                            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
-                                enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
-                                leave-to="opacity-0">
-                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                            </TransitionChild>
-
-                            <div class="fixed inset-0 z-10 overflow-y-auto">
-                                <div
-                                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                    <TransitionChild as="template" enter="ease-out duration-300"
-                                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                                        <DialogPanel
-                                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                <div class="xl:items-start">
-                                                    <div class="flex space-x-2 items-center">
-                                                        <div
-                                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400"
-                                                                aria-hidden="true" />
-                                                        </div>
-                                                        <DialogTitle as="h3"
-                                                            class="text-lg font-medium leading-6 text-gray-900">
-                                                            {{ $t('company-succesfully-edited') }}</DialogTitle>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </DialogPanel>
-                                    </TransitionChild>
-
-                                </div>
-                            </div>
-                        </Dialog>
-                    </TransitionRoot>
                 </div>
             </div>
         </Dialog>
@@ -651,23 +509,23 @@ export default {
             ModalEditar: false,
             ModalBaja: false,
             ModalCrear: false,
-            NotificacionCrear: ref(false),
-            NotificacionEditar: ref(false),
-            NotificacionBajaUser: false,
             pagination: {},
             page: 1,
             perPage: 1, // cantidad de elementos por página
             currentPage: 1, // página actual
             selectedType: '',
+            selectedCompany: '',
+            searchTerm: '',
         };
     },
 
     mounted() {
         this.getUsers(this.currentPage);
+        this.selectedType = 'admin';
     },
     methods: {
         getUsers(page = 1) {
-            axios.get(`userList/userListing?page=${page}`)
+            axios.get(`userList/userListing/Admin?page=${page}`)
                 .then(response => {
                     this.user = response.data.data;
                     this.currentPage = page;
@@ -690,36 +548,55 @@ export default {
             this.getUsers(page);
         },
 
-        
-
+        sortTable() {
+            let url = '';
+            switch (this.selectedType) {
+                case 'admin':
+                    url = 'userList/userListing/Admin';
+                    break;
+                case 'worker':
+                    url = 'userList/userListing/Worker';
+                    break;
+                case 'client':
+                    url = 'userList/userListing/Client';
+                    break;
+            }
+            axios.get(url)
+                .then(response => {
+                    this.user = response.data.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
 
         openModalCrear() {
             this.ModalCrear = true;
         },
 
-        createUser(){
+        createUser() {
             axios.post('/addUser', {
                 name: this.name,
                 last_name: this.last_name,
                 nick_name: this.nick_name,
                 email: this.email,
                 phone: this.phone,
-                id_company: this.company.id,
-                type: this.type,
+                selectedCompany: this.selectedCompany,
+                selectedType: this.selectedType,
             })
-            .then(async response => {
-                this.name = '';
-                this.last_name = '';
-                this.nick_name = '';
-                this.email = '';
-                this.phone = '';
-                this.id_company = '';
-                this.type = '';
-                this.ModalCrear = false;
-            })
-            .catch(error => {
-                console.log(error.response)
-            })
+                .then(async response => {
+                    this.name = '';
+                    this.last_name = '';
+                    this.nick_name = '';
+                    this.email = '';
+                    this.phone = '';
+                    this.selectedCompany = '';
+                    this.selectedType = '';
+                    this.ModalCrear = false;
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
         },
 
         closeModalCrear() {
@@ -786,21 +663,6 @@ export default {
                     this.getUsers();
                     console.log(response);
                     this.ModalBaja = false;
-                    this.NotificacionBajaUser = true;
-
-                    let cerradoManualmente = false; // variable para verificar si se cerró manualmente
-
-                    setTimeout(() => {
-                        if (!cerradoManualmente) { // si no se cerró manualmente, ocultar notificación
-                            this.NotificacionBajaUser = false;
-                        }
-                    }, 3000);
-
-                    // evento para cerrar manualmente la notificación
-                    document.getElementById('cerrarNotificacion').addEventListener('click', () => {
-                        cerradoManualmente = true;
-                        this.NotificacionBajaUser = false;
-                    });
                 })
                 .catch((error) => {
                     console.error(error);
@@ -816,16 +678,26 @@ export default {
         redirectToDeletedUser() {
             window.location.href = "/userListhidden";
         }
-    }
+    },
+    computed: {
+        filteredUsers() {
+            const searchTermLower = this.searchTerm.toLowerCase();
+            return this.user.filter(users => {
+                const userString = users.name.toLowerCase() + users.last_name.toLowerCase() + users.email.toLowerCase() + users.phone.toLowerCase() + users.company_name.toLowerCase();
+                return userString.includes(searchTermLower);
+            });
+        }
+
+    },
 }
 </script>
 
 <script setup>
-import { ref } from 'vue';
-import { ShieldCheckIcon, PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
+import { PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 </script>
+
 
 
 
