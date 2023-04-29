@@ -44,6 +44,7 @@
     "deregister": "Dar de baja",
     "company-succesfully-created": "Empresa creada correctamente.",
     "company-succesfully-edited": "Empresa editada correctamente.",
+    "company-succesfully-deleted": "Empresa dada de baja correctamente.",    
     "create-user": "Crear usuario",
     "add": "Agregar",
     "saved-changes": "Guardar cambios",

@@ -44,6 +44,7 @@
     "deregister": "Deregister",
     "company-succesfully-created": "Company succesfully created.",
     "company-succesfully-edited": "Company succesfully edited.",
+    "company-succesfully-deleted": "Company unuscribed succesfully.",
     "create-user": "Create User",
     "add": "Add",
     "saved-changes": "Saved Changes",
