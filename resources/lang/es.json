@@ -83,6 +83,9 @@
     "here-change-terms": "Aquí podrás editar el Aviso Legal de la página.",
     "select-image": "Seleccionar imagen",
     "delete": "Eliminar",
+    "Role": "Rol",
+    "deregister user": "Dar de baja al usuario",
+    "Deregister": "Desregistrar",
     "select-language": "Seleccionar idioma",
     "english": "English",
     "spanish": "Español",
@@ -323,5 +326,7 @@
     "dashboard.admin.title": "Bienvenido a Pymeshield, usa el menú lateral para navegar entre las diferentes funcionalidades de la aplicación.",
     "dashboard.admin.p1": "Pymeshield es una aplicación web de ciberseguridad desarrollada por los alumnos de DAW2 del Institut Montsià para la empresa Pymeralia. La aplicación cuenta con una sección de cuestionarios de seguridad para evaluar el nivel de seguridad de la empresa, cursos de seguridad en línea, un inventario de dispositivos para llevar un registro de los dispositivos utilizados y una sección de gestión de tareas para asignar tareas específicas relacionadas con la seguridad.",
     "help": "Ayuda",
-    "logs": "Registros"
+    "logs": "Registros",
+    "Visible.User" : "Usuarios visibles",
+    "Deleted.User" : "Usuarios eliminados"
 }

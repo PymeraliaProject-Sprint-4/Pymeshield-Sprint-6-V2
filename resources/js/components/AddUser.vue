@@ -1,11 +1,6 @@
 <template>
-    <div class="grid justify-items-end  flex">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 flex items-center"
-            @click="open = true">
-            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-            <span class="ml-2">{{ $t('create-user') }}</span>
-        </button>
-    </div>
+ 
+
     <TransitionRoot as="template" :show="open">
         <Dialog as="div" class="relative z-10" @close="open = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -143,7 +138,7 @@
 import axios from 'axios';
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 const open = ref(false)
 
 </script>

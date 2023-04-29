@@ -83,6 +83,9 @@
     "here-change-terms": "Here you can edit the site's Terms and Conditions",
     "select-image": "Select image",
     "delete": "Delete",
+    "Role": "Role",
+    "deregister user": "Unsubscribe the user",
+    "Deregister": "Unsubscribe",
     "select-language": "Select language",
     "english": "English",
     "spanish": "Español",
@@ -317,5 +320,10 @@
     "dashboard.admin.title": "Welcome to Pymeshield, use the side menu to navigate between the different functionalities of the application.",
     "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety.",
     "help": "Help",
-    "logs": "Logs"
+    "logs": "Logs",
+    "Visible.User" : "Visible Users",
+    "Deleted.User" : "Deleted Users"
+
+
+
 }
