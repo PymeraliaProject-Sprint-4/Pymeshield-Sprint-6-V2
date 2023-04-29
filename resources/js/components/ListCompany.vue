@@ -465,7 +465,7 @@
                                             <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
                                         </div>
                                         <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                                            {{ $t('company-succesfully-edited') }}</DialogTitle>
+                                            {{ $t('company-succesfully-deleted') }}</DialogTitle>
                                     </div>
                                 </div>
                             </div>
