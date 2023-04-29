@@ -182,13 +182,17 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
-
-
-
-
+    Route::get('rescources/admin-datos', [ResourceController::class, 'index_admin_datos'])->name('rescources-datoss.admin');
+    Route::get('allCategories', [ResourceController::class, 'allCategories'])->name('allCategories');
 
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+
+    Route::post('CreateResourceText', [ResourceController::class, 'createRescourceText'])->name('addResourceText');
+    Route::post('CreateResourceURL', [ResourceController::class, 'createRescourceURL'])->name('addResourceURL');
+    Route::post('CreateResourceFile', [ResourceController::class, 'createRescourceFile'])->name('addResourceFile');
+    Route::post('resource/{type}/{id}/delete', [ResourceController::class, 'deleteResource'])->name('resource.delete');
+
 
     Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
