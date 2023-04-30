@@ -24,6 +24,11 @@
             <ArrowRightCircleIcon class="h-6 w-6 text-white-400 font-bold" />
             {{ $t('Categories') }}
         </button>
+        <button id="" @click="redirectToResources()"
+            class=" ml-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded mt-5 flex items-center text-center ">
+            <ArrowRightCircleIcon class="h-6 w-6 text-white-400 font-bold" />
+            {{ $t('Rescources') }}
+        </button>
 
     </div>
 
@@ -461,6 +466,10 @@ export default {
 
         redirectToCategories() {
             window.location.href = "course/categories";
+        },
+
+        redirectToResources() {
+            window.location.href = "rescources/admin";
         },
     },
 }

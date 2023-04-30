@@ -64,8 +64,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-orange-50 hover:bg-orange-100 text-center" v-for="users in filteredUsers"
-                                    :key="id">
+                                <tr class="bg-orange-50 hover:bg-orange-100 text-center" v-for="users in filteredUsers">
                                     <td class="break-all px-6 py-4 font-medium text-gray-900">
                                         {{ users.name }}
                                     </td>
@@ -172,7 +171,7 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                         $t('lastname') }}</label>
                                                 <input type="text" v-model="last_name" id="last_name"
-                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                     required>
                                                 <span v-if="!last_name"
                                                     class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
@@ -185,7 +184,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('username') }}</label>
                                                     <input type="text" v-model="nick_name" id="nick_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                     <span v-if="!nick_name"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
@@ -200,7 +199,7 @@
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                                 $t('email') }}</label>
                                                         <input type="text" v-model="email" id="email"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                             required>
                                                         <span v-if="!email"
                                                             class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
@@ -212,7 +211,7 @@
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                                 $t('phone') }}</label>
                                                         <input type="text" v-model="phone" id="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                             required>
                                                         <span v-if="!phone"
                                                             class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
@@ -225,7 +224,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
                                                     <input v-model="selectedCompany" list="companies" id="company_name"
-                                                        class="w-full h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                     <datalist id="companies">
                                                         <option value="" disabled selected>{{ $t('select_company') }}
@@ -243,7 +242,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('Role') }}</label>
                                                     <select v-model="selectedType" id="rols"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('Select a role') }}
                                                         </option>
@@ -270,7 +269,7 @@
                                     @click="closeModalCrear()"><i class="fas fa-times mr-2"></i>{{
                                         $t('cancel') }}</button>
                                 <button
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                     @click="createUser()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
                             </div>
                         </DialogPanel>
@@ -376,7 +375,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
                                                     <select v-model="currentUser.company_name" id="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('select_company') }}
                                                         </option>
@@ -393,7 +392,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('Role') }}</label>
                                                     <select v-model="currentUser.type" id="rols"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('Select a role') }}
                                                         </option>
@@ -421,7 +420,7 @@
                                         $t('cancel') }}
                                 </button>
                                 <button type="button"
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                     @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                 </button>
                             </div>
@@ -629,6 +628,7 @@ export default {
                 nick_name: this.currentUser.nick_name,
                 email: this.currentUser.email,
                 phone: this.currentUser.phone,
+                type: this.currentUser.type,
                 company_name: this.currentUser.company_name
             })
                 .then(response => {
