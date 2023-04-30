@@ -16,6 +16,11 @@
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
             <div class="p-6 text-gray-900">
                 <div class="mb-4">
+                    <div class="mb-4">
+                        <input v-model="searchTerm" type="text"
+                            class="px-4 py-2 border rounded-lg w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            :placeholder="$t('Search')" />
+                    </div>
                     <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
                             <thead
@@ -39,7 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody v-if="companies.length > 0">
-                                <tr v-for="(company, key) in companies" :key="key"
+                                <tr v-for="company in filteredCompanies" :key="company.id"
                                     class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white    ">
@@ -72,6 +77,32 @@
                             </tbody>
                             <h1 class="text-lg content-center" v-else>{{ $t('no-existing-records') }}</h1>
                         </table>
+                        <div class="flex justify-center items-center mt-8">
+                            <nav class="bg-white p-6 rounded-lg shadow-lg">
+                                <ul class="flex space-x-4">
+                                    <li v-if="pagination.length > 0 && currentPage > 1">
+                                        <button @click="changePage(currentPage - 1)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                            {{ $t('Previous') }}
+                                        </button>
+                                    </li>
+                                    <li v-for="page in Math.ceil(companies.length / perPage)" :key="page">
+                                        <button @click="changePage(page)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md"
+                                            :class="{ 'bg-orange-400': page === currentPage }">
+                                            {{ page }}
+                                        </button>
+                                    </li>
+                                    <li
+                                        v-if="pagination.length > 0 && currentPage < Math.ceil(companies.length / perPage)">
+                                        <button @click="changePage(currentPage + 1)"
+                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                            {{ $t('Next') }}
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -493,14 +524,18 @@ export default {
             ModalBaja: ref(false),
             NotificacionBaja: ref(false),
             companies: [],
+            searchTerm: '',
             crear: { nameCrear: "", emailCrear: "", phoneCrear: "", cifCrear: "" },
             editar: { id: "", nameEditar: "", emailEditar: "", phoneEditar: "", cifEditar: "" },
             baja: { id: "", removed_reason: "" },
-            paginaActual: 1
+            pagination: {},
+            page: 1,
+            perPage: 2, // cantidad de elementos por página
+            currentPage: 1 // página actual
         };
     },
     mounted() {
-        this.getCompanies();
+        this.getCompanies(this.currentPage);
     },
     methods: {
         openModalCrear() {
@@ -518,16 +553,23 @@ export default {
             this.baja.id = id;
             this.ModalBaja = true;
         },
-        getCompanies() {
-            axios.get("/listadoEmpresas/listCompanies")
+        getCompanies(page = 1) {
+            axios.get(`/listadoEmpresas/listCompanies?page=${page}`)
                 .then(response => {
                     this.companies = [];
-                    this.companies = response.data;
+                    this.companies = response.data.data;
+                    this.currentPage = page;
+
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
+
+        changePage(page) {
+            this.getCompanies(page);
+        },
+
         submitFormCrear() {
             axios.post("listadoEmpresas/createCompany", {
                 name: this.crear.nameCrear,
@@ -593,6 +635,15 @@ export default {
 
         redirectToDeletedCompany() {
             window.location.href = "/listcompanyhidden";
+        }
+    },
+    computed: {
+        filteredCompanies() {
+            const searchTermLower = this.searchTerm.toLowerCase();
+            return this.companies.filter(company => {
+                const userString = company.name.toLowerCase() + company.email.toLowerCase() + company.phone.toLowerCase() + company.cif.toLowerCase();
+                return userString.includes(searchTermLower);
+            });
         }
     },
 };
