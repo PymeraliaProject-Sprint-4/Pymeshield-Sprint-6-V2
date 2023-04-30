@@ -272,6 +272,7 @@
     "Rescources": "Rescources",
     "rescources": "rescources",
     "rescource": "rescource",
+    "location" : "Location",
     "navbar.restore": "Restore Device",
     "navbar.gantt": "Gantt",
     "QualifyCourse": "Qualify courses",

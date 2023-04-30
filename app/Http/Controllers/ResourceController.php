@@ -98,34 +98,41 @@ class ResourceController extends Controller
         return view('rescource.rescource_admin');
     }
 
-    public function index_admin_datos()
+    public function index_admin_datos_text()
     {
-        // Obtener los recursos de tipo texto
+        // Obtener los recursos de tipo texto y paginarlos
         $recursos_texto = DB::table('resource_texts')
             ->select('id', 'name', 'description', 'category_id', DB::raw("'text' as type"))
-            ->orderBy('updated_at', 'asc');
-    
-        // Obtener los recursos de tipo archivo
-        $recursos_archivo = DB::table('resource_files')
-            ->select('id', 'name', 'location', 'category_id', DB::raw("'file' as type"))
-            ->orderBy('updated_at', 'asc');
-    
-        // Obtener los recursos de tipo URL
-        $recursos_url = DB::table('resource_urls')
-            ->select('id', 'name', 'location', 'category_id', DB::raw("'url' as type"))
-            ->orderBy('updated_at', 'asc');
-    
-        // Combinar todos los resultados en una sola colección paginada
-        $recursos = $recursos_texto->union($recursos_archivo)->union($recursos_url)->paginate(8);
-    
-        // Agregar el campo 'type' a cada objeto del resultado
-        $recursos_con_tipo = $recursos->map(function ($recurso) {
-            $recurso->type = strtolower($recurso->type);
-            return $recurso;
-        });
+            ->orderBy('updated_at', 'desc')
+            ->paginate(8);
     
         // Devolver los resultados como JSON con el campo 'type' agregado
-        return response()->json($recursos_con_tipo);
+        return response()->json($recursos_texto);
+    }
+    
+
+    public function index_admin_datos_URL(){
+          // Obtener los recursos de tipo texto
+          $recursos_URL = DB::table('resource_urls')
+          ->select('id', 'name', 'location', 'category_id', DB::raw("'url' as type"))
+          ->orderBy('updated_at', 'desc')
+          ->paginate(8);
+  
+
+      // Devolver los resultados como JSON con el campo 'type' agregado
+      return response()->json($recursos_URL);
+    }
+
+    public function index_admin_datos_FILE(){
+         // Obtener los recursos de tipo texto
+         $recursos_FILE = DB::table('resource_files')
+         ->select('id', 'name', 'location', 'category_id', DB::raw("'file' as type"))
+         ->orderBy('updated_at', 'desc')
+         ->paginate(8);
+ 
+
+     // Devolver los resultados como JSON con el campo 'type' agregado
+     return response()->json($recursos_FILE);
     }
     
 
@@ -170,6 +177,33 @@ class ResourceController extends Controller
         $resourceFile->hidden = NULL;
         $resourceFile->created_at = now();
         $resourceFile->save();
+    }
+
+    public function updateResourceText($id, Request $request){
+        $resource_text = ResourceText::find($id);
+        $resource_text->name = strip_tags($request->name_edit);
+        $resource_text->description = strip_tags($request->description_edit);
+        $resource_text->category_id = $request->selectedCategory;
+        $resource_text->save();
+
+    }
+
+    public function updateResourceURL_FILE($type, $id, Request $request){
+        switch ($type) {
+            case 'url':
+                $resource = ResourceURL::findOrFail($id);
+                break;
+            case 'file':
+                $resource = ResourceFile::findOrFail($id);
+                break;
+            default:
+                return abort(404);
+        }
+
+        $resource->name = strip_tags($request->name_edit);
+        $resource->location = strip_tags($request->location_edit);
+        $resource->category_id = $request->selectedCategory;
+        $resource->save();
     }
 
     public function deleteResource($type, $id)

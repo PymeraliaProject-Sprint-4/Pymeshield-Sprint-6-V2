@@ -190,8 +190,17 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
-    Route::get('rescources/admin-datos', [ResourceController::class, 'index_admin_datos'])->name('rescources-datoss.admin');
     Route::get('allCategories', [ResourceController::class, 'allCategories'])->name('allCategories');
+    
+    Route::get('rescources/admin-datos-TEXT', [ResourceController::class, 'index_admin_datos_text'])->name('rescources-datoss.admin'); //Dades recursos tipus text
+    Route::get('rescources/admin-datos-URL', [ResourceController::class, 'index_admin_datos_URL'])->name('rescources-datoss.admin'); //Dades recursos tipus URL
+    Route::get('rescources/admin-datos-FILE', [ResourceController::class, 'index_admin_datos_FILE'])->name('rescources-datoss.admin'); //Dades recursos tipus FILE
+    Route::put('resource/text/{id}/edit', [ResourceController::class, 'updateResourceText'])->name('resourceText.update'); // Editar recurs tipus text
+    Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceText.update'); //Editar recurs tipus URL o FILE
+
+
+
+
 
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
