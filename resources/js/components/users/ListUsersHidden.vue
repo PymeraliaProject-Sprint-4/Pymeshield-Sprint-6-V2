@@ -12,7 +12,7 @@
             <div class="p-6 text-gray-900">
                 <div class="mb-4">
                     <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
+                        <table class="w-full text-base text-gray-500 dark:text-gray-400 text-center">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -37,7 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody v-if="user.length > 0">
-                                <tr v-for="users in user" :key="id"
+                                <tr v-for="users in user"
                                     class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -179,7 +179,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('company') }}</label>
                                                     <select v-model="currentUser.company_name" id="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('select_company') }}
                                                         </option>
@@ -197,7 +197,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('Role') }}</label>
                                                     <select v-model="currentUser.type" id="rols"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6 pl-10"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('Select a role') }}
                                                         </option>
@@ -227,7 +227,7 @@
                                 </button>
 
                                 <button type="button"
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                     @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                 </button>
 
@@ -281,7 +281,7 @@ export default {
                     console.log(error);
                 })
         },
-        
+
         openModalEditar(user) {
             this.ModalEditar = true;
             this.currentUser = {
@@ -309,6 +309,7 @@ export default {
                 nick_name: this.currentUser.nick_name,
                 email: this.currentUser.email,
                 phone: this.currentUser.phone,
+                type: this.currentUser.type,
                 company_name: this.currentUser.company_name
             })
                 .then(response => {
@@ -340,7 +341,7 @@ export default {
 </script>
 
 <script setup>
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon, ArrowUpIcon, EyeIcon } from '@heroicons/vue/24/outline'
+import { PencilSquareIcon, ArrowUpIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 </script>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\CourseUser;
-use App\Models\Device;
 use App\Models\DeviceUser;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User; // Agrega esta línea
 use App\Models\Company;
 use Carbon\Carbon;
+use Password;
 
 class UserController extends Controller
 {
@@ -78,7 +78,7 @@ class UserController extends Controller
 
     public function userListingWorker()
     {
-         $postsPerPage = 7;
+        $postsPerPage = 7;
         $userInfo = DB::table('users')
             ->join('companies', 'users.company_id', '=', 'companies.id')
             ->select('users.*', 'companies.name AS company_name')
@@ -118,33 +118,46 @@ class UserController extends Controller
         $user->type = $request->selectedType;
         $user->save();
 
+        // se le envía un email para que pueda poner una contraseña
+        Password::sendResetLink(
+            ['email' => $request->email]
+        );
+
         return response()->json(['success' => true, 'message' => 'User created successfully.']);
     }
 
     //Editar usuario ADMIN
     public function editUser(Request $request)
     {
-        $user = Auth::user();
+        $user = User::find($request->id); // para que coja el id de la tabla
         $company = Company::find($user->company_id); // Obtén el modelo de la compañía
-        $user->name = $request['name'];
-        $user->last_name = $request['last_name'];
-        $user->nick_name = $request['nick_name'];
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
-        $company->name = $request['company_name'];
-        $company->update();
-        $user->update();
         $requestData = $request->validate([
             'name' => 'required|string',
             'last_name' => 'required|string',
             'nick_name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'required|string',
-            'company_name' => 'required|string'
+            'company_name' => 'required|string',
+            'type' => 'required|string'
         ]);
 
-        $user = User::findOrFail($request->id);
-        $user->update($requestData);
+        $user->name = $requestData['name'];
+        $user->last_name = $requestData['last_name'];
+        $user->nick_name = $requestData['nick_name'];
+        $user->phone = $requestData['phone'];
+        $user->type = $requestData['type'];
+        $company->name = $requestData['company_name'];
+        if ($user->email != $requestData['email']) {
+            $user->email = $requestData['email'];
+            $user->update();
+            // se le envía la contraseña al nuevo email
+            Password::sendResetLink(
+                ['email' => $request->email]
+            );
+        } else {
+            $company->update();
+            $user->update();
+        }
     }
 
     // Baja usuario ADMIN

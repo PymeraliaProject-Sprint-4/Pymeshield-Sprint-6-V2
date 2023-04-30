@@ -28,11 +28,11 @@ app.component('list-company-hidden', ListCompanyHidden);
 const quillEditor = defineAsyncComponent(() => import('./components/rules/Editor.vue'));
 app.component('editor', quillEditor);
 
-const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
+const listusers = defineAsyncComponent(() => import('./components/users/ListUsers.vue'));
 app.component('list-users', listusers);
 
 
-const ListUsersHidden = defineAsyncComponent(() => import('./components/ListUsersHidden.vue'));
+const ListUsersHidden = defineAsyncComponent(() => import('./components/users/ListUsersHidden.vue'));
 app.component('list-users-hidden', ListUsersHidden);
 
 const perfilPersonal = defineAsyncComponent(() => import('./components/profile/PerfilPersonal.vue'));

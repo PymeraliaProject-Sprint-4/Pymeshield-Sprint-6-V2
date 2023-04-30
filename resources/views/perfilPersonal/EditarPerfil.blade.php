@@ -45,16 +45,16 @@
                                                     <div class="flex justify-end">
 
                                                         <button type="submit"
-                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center">
+                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center">
                                                             <i class="far fa-save mr-2"></i>{{ __('save') }}
                                                         </button>
                                                         <button type="button"
-                                                            class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 ml-8 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                                            class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
                                                             onclick="closeModal()">
                                                             <i class="fas fa-times mr-2"></i>{{ __('cancel') }}
                                                         </button>
                                                         <button type="button" onclick="confirmDelete()"
-                                                            class="bg-red-600 hover:bg-red-800 text-white  font-medium py-1 px-2 ml-8 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mx-2 mt-1 ml-4 flex items-center">
+                                                            class="bg-red-600 hover:bg-red-800 text-white  font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mx-2 mt-1 ml-4 flex items-center">
                                                             <i class="far fa-trash-alt mr-2"></i>
                                                             <span class="ml-2">{{ __('delete') }}</span>
                                                         </button>
@@ -215,7 +215,7 @@
                                 </button>
 
                                 <button type="button"
-                                    class="bg-gray-400 hover:bg-gray-500 text-black font-medium py-1 px-2 ml-1 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4"
+                                    class="bg-gray-400 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4"
                                     onclick="closeModal1()">
                                     <i class="fas fa-times mr-2"></i>{{ __('cancel') }}
                                 </button>
@@ -328,86 +328,84 @@
     </div>
     </div>
     </div>
+    <style>
+        #block1 {
+            margin-right: 0px;
+
+        }
+
+        .left-table {
+            float: left;
+            margin-left: 50px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .right-table {
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .right-table1 {
+            float: right;
+            margin-bottom: 5px;
+        }
+
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-body {
+            width: 80%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        .img-fluid {
+            max-width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        td {
+            padding: 7px;
+        }
+
+        table {
+            border: 1px solid black;
+            width: 100%;
+            height: 70%;
+            border-collapse: separate;
+            border-spacing: 10px;
+        }
+
+        h4 {
+            /*donarli forma al text del nom i cognom on esta la imatge*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        td:first-child {
+            padding-right: 20px;
+        }
+
+        td:last-child {
+            padding-left: 20px;
+        }
+
+        tr:nth-child(odd) {
+            /*Ficar color a les linies inpars*/
+            background-color: lightgray;
+        }
+
+        tr:nth-child(even) {
+            /*Ficar color a les linies pars*/
+            background-color: white;
+        }
+    </style>
 @endsection
-<style>
-    #block1 {
-        margin-right: 0px;
 
-    }
-
-    .left-table {
-        float: left;
-        margin-left: 50px;
-        margin-top: 40px;
-        text-align: center;
-    }
-
-    .right-table {
-        float: right;
-        margin-right: 100px;
-        margin-bottom: 20px;
-    }
-
-    .right-table1 {
-        float: right;
-        margin-right: 100px;
-        margin-bottom: 5px;
-    }
-
-
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .main-body {
-        width: 80%;
-        height: 100%;
-        margin: 0 auto;
-    }
-
-    .img-fluid {
-        max-width: 200px;
-        height: auto;
-        border-radius: 50%;
-    }
-
-    td {
-        padding: 7px;
-    }
-
-    table {
-        border: 1px solid black;
-        width: 100%;
-        height: 70%;
-        border-collapse: separate;
-        border-spacing: 10px;
-        margin-left: 12%;
-    }
-
-    h4 {
-        /*donarli forma al text del nom i cognom on esta la imatge*/
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    td:first-child {
-        padding-right: 20px;
-    }
-
-    td:last-child {
-        padding-left: 20px;
-    }
-
-    tr:nth-child(odd) {
-        /*Ficar color a les linies inpars*/
-        background-color: lightgray;
-    }
-
-    tr:nth-child(even) {
-        /*Ficar color a les linies pars*/
-        background-color: white;
-    }
-</style>
