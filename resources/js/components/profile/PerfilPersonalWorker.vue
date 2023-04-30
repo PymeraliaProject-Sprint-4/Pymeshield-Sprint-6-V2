@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="main-body">
+        <div class="main-body p-3 overflow-x-auto">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3 left-table">
                     <div class="card">
@@ -62,8 +62,8 @@
         </div>
     </div>
 </template>
- 
- 
+
+
 <script>
 import axios from 'axios';
 
@@ -81,14 +81,8 @@ export default {
     },
 };
 </script>
- 
-<style scoped>
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
+<style scoped>
 td {
     padding: 7px;
 }
@@ -106,4 +100,3 @@ table {
     text-align: center;
 }
 </style>
- 

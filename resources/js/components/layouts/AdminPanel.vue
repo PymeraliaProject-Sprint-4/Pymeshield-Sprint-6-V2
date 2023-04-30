@@ -315,7 +315,7 @@ export default {
                 ];
             } else {
                 return [
-                    { name: this.$t('profile'), href: '#', icon: IdentificationIcon },
+                    { name: this.$t('profile'), href: '/PerfilPersonal_Worker', icon: IdentificationIcon },
                     { name: this.$t('help'), href: '/manuals/manual_admin.pdf', target: '_blank', icon: LifebuoyIcon },
                     { name: this.$t('sign-out'), href: '/logout', icon: WrenchScrewdriverIcon },
                 ];

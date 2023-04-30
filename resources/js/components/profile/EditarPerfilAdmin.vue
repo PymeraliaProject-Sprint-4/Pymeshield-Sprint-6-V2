@@ -28,6 +28,7 @@
 
                     <h4 id="block1" class="text-2xl font-bold"></h4>
 
+
                     <table class="table mt-10">
                         <thead>
                             <tr class="bg-orange-400 text-white">
@@ -282,7 +283,7 @@ export default {
 
         changePassword() {
             //es per a evitar que senvie per defecte les dades
-            event.preventDefault();
+            preventDefault();
             //Variables que agafen la contraseña que posem
             //('actualPassword') son ides
             const currentPassword = document.getElementById('actualPassword').value;
@@ -369,16 +370,7 @@ export default {
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 </script>
 
-
-
-
 <style scoped>
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 td {
     padding: 7px;
 }
@@ -420,4 +412,5 @@ table {
     line-height: 1.25rem;
     padding: 0.5rem;
     width: 100%;
-}</style>
+}
+</style>

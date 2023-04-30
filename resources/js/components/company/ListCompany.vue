@@ -22,7 +22,7 @@
                             :placeholder="$t('Search')" />
                     </div>
                     <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
+                        <table class="w-full text-base text-gray-500 dark:text-gray-400 text-center">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -93,8 +93,7 @@
                                             {{ page }}
                                         </button>
                                     </li>
-                                    <li
-                                        v-if="pagination.length > 0 && currentPage < Math.ceil(companies.length / perPage)">
+                                    <li v-if="pagination.length > 0 && currentPage < Math.ceil(companies.length / perPage)">
                                         <button @click="changePage(currentPage + 1)"
                                             class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
                                             {{ $t('Next') }}
@@ -204,7 +203,7 @@
                                         @click="ModalCrear = false" ref="cancelButtonRef"><i
                                             class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                         @click="submitFormCrear()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
 
 
@@ -317,7 +316,7 @@
                                         @click="ModalEditar = false" ref="cancelButtonRef"><i
                                             class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                         @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                     </button>
                                 </div>
@@ -652,7 +651,7 @@ export default {
 <script setup>
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon, ShieldCheckIcon, PencilSquareIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 </script>
 
 

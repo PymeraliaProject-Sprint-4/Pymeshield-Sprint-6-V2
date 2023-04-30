@@ -256,7 +256,7 @@ export default {
 }
 </script>
 <script setup>
-import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 </script>
 
 <style scoped>

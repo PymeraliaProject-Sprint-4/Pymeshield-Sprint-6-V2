@@ -12,7 +12,7 @@
             <div class="p-6 text-gray-900">
                 <div class="mb-4">
                     <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-base text-left text-gray-500 dark:text-gray-400 text-center">
+                        <table class="w-full text-base text-gray-500 dark:text-gray-400 text-center">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-orange-400 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -173,7 +173,7 @@
                                         @click="ModalEditar = false" ref="cancelButtonRef"><i
                                             class="fas fa-times mr-2"></i>{{ $t('cancel') }}</button>
                                     <button type="button"
-                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center"
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
                                         @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                     </button>
                                 </div>
@@ -225,12 +225,10 @@
         </Dialog>
     </TransitionRoot>
 </template>
-    
+
 <script>
 
 import axios from 'axios';
-import { PlusIcon, TrashIcon } from '@heroicons/vue/24/outline'
-
 
 export default {
     data() {
@@ -317,13 +315,12 @@ export default {
     },
 };
 </script>
-    
+
 <script setup>
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ShieldCheckIcon, ArchiveBoxArrowDownIcon, PencilSquareIcon, EyeIcon, ArrowUpIcon } from '@heroicons/vue/24/outline'
+import { ShieldCheckIcon, PencilSquareIcon, EyeIcon, ArrowUpIcon } from '@heroicons/vue/24/outline'
 </script>
-    
-    
-    
-    
+
+
+

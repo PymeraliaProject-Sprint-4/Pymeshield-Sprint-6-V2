@@ -19,10 +19,10 @@ app.component('navbar', navbar);
 const admin = defineAsyncComponent(() => import('./components/layouts/AdminPanel.vue'));
 app.component('admin-layout', admin);
 
-const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
+const listcompany = defineAsyncComponent(() => import('./components/company/ListCompany.vue'));
 app.component('list-company', listcompany);
 
-const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
+const ListCompanyHidden = defineAsyncComponent(() => import('./components/company/ListCompanyHidden.vue'));
 app.component('list-company-hidden', ListCompanyHidden);
 
 const quillEditor = defineAsyncComponent(() => import('./components/rules/Editor.vue'));
@@ -101,13 +101,13 @@ const rescources_admin = defineAsyncComponent(() => import('./components/rescour
 app.component('rescources-admin', rescources_admin);
 
 
-const CursosCalificar = defineAsyncComponent(() => import('./components/Cursos.vue'));
+const CursosCalificar = defineAsyncComponent(() => import('./components/qualify_course/Cursos.vue'));
 app.component('cursos_calificar', CursosCalificar);
 
-const CategoriasCurso = defineAsyncComponent(() => import('./components/Categorias_curso.vue'));
+const CategoriasCurso = defineAsyncComponent(() => import('./components/qualify_course/Categorias_curso.vue'));
 app.component('categorias_curso', CategoriasCurso);
 
-const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
+const deliveries = defineAsyncComponent(() => import('./components/qualify_course/Deliveries.vue'));
 app.component('deliveries', deliveries);
 
 

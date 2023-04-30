@@ -83,12 +83,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 td {
     padding: 7px;
 }
