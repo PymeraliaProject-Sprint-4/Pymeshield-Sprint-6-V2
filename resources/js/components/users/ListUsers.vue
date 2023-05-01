@@ -535,7 +535,7 @@ export default {
 
             axios.get(`/listadoEmpresas/listCompanies`)
                 .then((response) => {
-                    this.companies = response.data;
+                    this.companies = response.data.data;
 
                 })
                 .catch((error) => {

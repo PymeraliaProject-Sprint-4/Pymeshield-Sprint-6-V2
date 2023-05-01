@@ -196,7 +196,7 @@
                                                     <label for="rols"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
                                                             $t('Role') }}</label>
-                                                    <select v-model="currentUser.type" id="rols"
+                                                    <select v-model="selectedType" id="rols"
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
                                                         required>
                                                         <option value="" disabled selected>{{ $t('Select a role') }}
@@ -206,7 +206,7 @@
                                                         <option value="client">{{ $t('Client') }}</option>
                                                     </select>
 
-                                                    <span v-if="!type"
+                                                    <span v-if="!selectedType"
                                                         class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
                                                 </div>
                                             </div>
@@ -274,7 +274,7 @@ export default {
 
                 axios.get(`/listadoEmpresas/listCompanies`)
                 .then((response) => {
-                    this.companies = response.data;
+                    this.companies = response.data.data;
 
                 })
                 .catch((error) => {
