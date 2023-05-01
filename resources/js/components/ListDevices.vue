@@ -14,7 +14,7 @@
                 @click="openModalCrear()">Crear dispositivo</button>
             </div>
         </div>
-        <table class="mt-2 table-fixed w-full text-base text-left text-gray-800 dark:text-gray-400 text-center">
+        <table class="mt-2 table-fixed w-full text-base text-gray-800 dark:text-gray-400 text-center">
             <thead class="bg-orange-500 text-white">
                 <tr>
                     <th scope="col" class="px-6 py-3 ">{{ $t('brand') }}</th>
@@ -591,8 +591,7 @@ export default {
             })
         },
         getDevices(page = 1) {
-            this.devicesData.value = [];
-            this.devicesData.data = [];
+            this.devicesData = [];
             axios.get("/devices/list?page=" + page)
                 .then(response => {
                     this.devices = response.data;
@@ -795,5 +794,5 @@ export default {
 
 <script setup>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, InboxArrowDownIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
 </script>

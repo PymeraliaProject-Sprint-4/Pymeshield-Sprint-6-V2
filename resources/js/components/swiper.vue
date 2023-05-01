@@ -18,6 +18,7 @@
 
 <script>
 import { register } from 'swiper/element/bundle';
+let appUrl = import.meta.env.APP_URL;
 register()
 export default {
     props: ['images'],
@@ -34,7 +35,7 @@ export default {
             }
 
             // If the URL is a relative URL, construct an absolute URL from the base URL
-            return 'http://localhost/' + url.replace('dispositivo/', '');
+            return appUrl + url.replace('dispositivo/', '');
         }
 
     }
