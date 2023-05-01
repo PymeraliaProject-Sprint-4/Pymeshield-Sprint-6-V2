@@ -103,7 +103,6 @@ Route::post('update-profile-image', [UserController::class, 'updateProfileImage'
 Route::post('delete-profile-image', [UserController::class, 'delete'])->name('deleteProfileImage')->middleware('auth');
 Route::post('change-password', [UserController::class, 'changePassword'])->name('changePassword');
 Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');
-Route::patch('Perfil_Personal/Editar_Perfil', [UserController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 //Admin
 Route::get('PerfilPersonal_Admin/EditarPerfilAdmin', [UserController::class, 'EditarPerfilAdmin'])->name('EditarPerfilAdmin')->middleware('auth');
 //Ruta para editar el usuario admin
@@ -191,12 +190,12 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
     Route::get('allCategories', [ResourceController::class, 'allCategories'])->name('allCategories');
-    
-    Route::get('rescources/admin-datos-TEXT', [ResourceController::class, 'index_admin_datos_text'])->name('rescources-datoss.admin'); //Dades recursos tipus text
-    Route::get('rescources/admin-datos-URL', [ResourceController::class, 'index_admin_datos_URL'])->name('rescources-datoss.admin'); //Dades recursos tipus URL
-    Route::get('rescources/admin-datos-FILE', [ResourceController::class, 'index_admin_datos_FILE'])->name('rescources-datoss.admin'); //Dades recursos tipus FILE
+
+    Route::get('rescources/admin-datos-TEXT', [ResourceController::class, 'index_admin_datos_text'])->name('rescources-text.admin'); //Dades recursos tipus text
+    Route::get('rescources/admin-datos-URL', [ResourceController::class, 'index_admin_datos_URL'])->name('rescources-url.admin'); //Dades recursos tipus URL
+    Route::get('rescources/admin-datos-FILE', [ResourceController::class, 'index_admin_datos_FILE'])->name('rescources-file.admin'); //Dades recursos tipus FILE
     Route::put('resource/text/{id}/edit', [ResourceController::class, 'updateResourceText'])->name('resourceText.update'); // Editar recurs tipus text
-    Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceText.update'); //Editar recurs tipus URL o FILE
+    Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceUrl.update'); //Editar recurs tipus URL o FILE
 
 
 
@@ -308,8 +307,8 @@ Route::get('restore', function () {
 })->middleware('auth', 'check_access_admin');
 
 Route::get('restaurar', [RestoreController::class, 'devices'])->name('restaurar')->middleware('auth', 'check_access_admin');
-Route::post('restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
-Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
+Route::post('restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar.post')->middleware('auth', 'check_access_admin');
+Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar.id')->middleware('auth', 'check_access_admin');
 
 
 //Mostrar Dispositivos
