@@ -1,7 +1,7 @@
 <template>
-    <div class="flex items-center pt-4 justify-between m-5">
+    <div class="flex items-center justify-between m-5">
         <a @click="open = true"
-            class="inline-flex items-center px-4 py-2 cursor-pointer bg-orange-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-orange-400  active:bg-orange-700 md:bg-orange-600 dark:hover:bg-orange-700 dark:active:bg-orange-700 focus:outline-none focus:active:bg-orange-700 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+            class="inline-flex items-center px-4 py-2 cursor-pointer bg-green-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-green-400  active:bg-green-700 md:bg-green-600 dark:hover:bg-green-700 dark:active:bg-green-700 focus:outline-none focus:active:bg-green-700 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
             <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
             <span class="ml-2">{{ $t('survey.create') }}</span>
         </a>
@@ -51,7 +51,7 @@
                                                         <option :value="null" disabled>{{ $t('survey.choose.questionnaire')
                                                         }}
                                                         </option>
-                                                        <option v-for="questionnaire in questionnaires"
+                                                        <option v-for="questionnaire in questionnaire"
                                                             :value="questionnaire.id">
                                                             {{ questionnaire.name }}</option>
                                                     </select>
@@ -121,7 +121,7 @@ import axios from 'axios'
 
 // datos para rellenar el modal
 const props = defineProps({
-    questionnaires: Object,
+    questionnaire: Object,
     users: Object,
 })
 
