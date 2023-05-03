@@ -44,7 +44,7 @@
     "deregister": "Dar de baja",
     "company-succesfully-created": "Empresa creada correctamente.",
     "company-succesfully-edited": "Empresa editada correctamente.",
-    "company-succesfully-deleted": "Empresa dada de baja correctamente.",    
+    "company-succesfully-deleted": "Empresa dada de baja correctamente.",
     "create-user": "Crear usuario",
     "add": "Agregar",
     "saved-changes": "Guardar cambios",
@@ -339,5 +339,11 @@
     "help": "Ayuda",
     "logs": "Registros",
     "Visible.User" : "Usuarios visibles",
-    "Deleted.User" : "Usuarios eliminados"
+    "Deleted.User" : "Usuarios eliminados",
+    "start_date" : "Fecha Inicio",
+    "end_date" : "Fecha Final",
+    "select_user" : "Selecciona un Usuario",
+    "no.logs.result" : "No se ha encontrado ningún registro",
+    "start.date.major.than.final.date" : "La fecha de fin no puede ser menor que la fecha inicio."
+
 }

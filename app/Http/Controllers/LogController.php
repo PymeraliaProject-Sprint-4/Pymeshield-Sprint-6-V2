@@ -38,7 +38,8 @@ class LogController extends Controller
             // Comparar las fechas como strings
             if ($endDate < $startDate) {
                 // Si la end_date es menor a la start_date, mostrar un mensaje de error
-                return view('logs.index', ['logs' => 'La fecha de fin no puede ser menor a la fecha de inicio.', 'users' => $users]);
+                $filteredLogs = __('start.date.major.than.final.date');
+                return view('logs.index', ['logs' => $filteredLogs, 'users' => $users]);
             }
 
             // Filtrar los registros en base al rango de fechas (3 de marzo al 10 de marzo)
@@ -54,12 +55,12 @@ class LogController extends Controller
 
         // Convertir los registros filtrados en un string, o asignar todos los registros si no hay filtro
         if (empty($filteredLogs)) {
-            $filteredLogs = "No se ha encontrado ningún registro";
+            $filteredLogs = __('no.logs.result');
         } else {
             // Convertir los registros filtrados en un string
             $filteredLogs = implode("\n", $filteredLogs);
         }
         return view('logs.index', ['logs' => $filteredLogs, 'users' => $users]);
     }
-    
+
 }

@@ -337,6 +337,10 @@
     "help": "Ajuda",
     "logs": "Registres",
     "Deleted.User" : "Usuaris eliminats",
-    "Visible.User" : "Visible Users"
-
+    "Visible.User" : "Visible Users",
+    "start_date" : "Data Inici",
+    "end_date" : "Data Final",
+    "select_user" : "Selecciona un Usuari",
+    "no.logs.result" : "No s'ha trobat cap resgitre",
+    "start.date.major.than.final.date" : "La data de fi no pot ser menor que la data inici."
 }

@@ -7,8 +7,8 @@
         <form action="/logs" method="get" id="logsSearchForm" class="flex flex-wrap items-center">
             @csrf
             <div class="mb-4 w-full md:w-auto">
-                <select name="search" id="searchSelect" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Seleccionar usuario</option>
+                <select name="search" id="searchSelect" class="w-full px-4 py-2 bg-white border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md ">
+                    <option value="">{{__('select_user')}}</option>
                     @foreach ($users as $user)
                         <option value="{{ $user->email }}">{{ $user->id }} - {{ $user->name }} - {{ $user->email }}</option>
                     @endforeach
@@ -17,19 +17,19 @@
 
             <div class="grid md:grid-cols-2 gap-4 mb-4 w-full">
                 <div class="w-full">
-                    <label for="start_date" class="mr-2">Fecha de inicio:</label>
-                    <input type="date" name="start_date" id="start_date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <label for="start_date" class="mr-2">{{__('start_date')}}:</label>
+                    <input type="date" name="start_date" id="start_date" class="w-full px-4 py-2 bg-white border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md">
                 </div>
 
                 <div class="w-full">
-                    <label for="end_date" class="mr-2">Fecha de fin:</label>
-                    <input type="date" name="end_date" id="end_date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <label for="end_date" class="mr-2">{{__('end_date')}}:</label>
+                    <input type="date" name="end_date" id="end_date" class="w-full px-4 py-2 bg-white border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md">
                 </div>
             </div>
 
             <div class="flex flex-col md:flex-row mb-2">
                 <button type="submit" class="px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 md:mr-4 mt-4 md:mt-0">
-                    Buscar
+                    {{__('search')}}
                 </button>
             </div>
         </form>

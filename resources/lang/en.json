@@ -333,8 +333,11 @@
     "help": "Help",
     "logs": "Logs",
     "Visible.User" : "Visible Users",
-    "Deleted.User" : "Deleted Users"
-
-
+    "Deleted.User" : "Deleted Users",
+    "start_date" : "Start Date",
+    "end_date" : "Finish Date",
+    "select_user" : "Select an User",
+    "no.logs.result" : "No record found",
+    "start.date.major.than.final.date" : "The end date cannot be less than the start date."
 
 }
