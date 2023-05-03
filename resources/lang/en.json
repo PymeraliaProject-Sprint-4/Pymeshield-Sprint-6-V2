@@ -45,6 +45,7 @@
     "deregister": "Deregister",
     "company-succesfully-created": "Company succesfully created.",
     "company-succesfully-edited": "Company succesfully edited.",
+    "company-succesfully-deleted": "Company unuscribed succesfully.",
     "create-user": "Create User",
     "add": "Add",
     "saved-changes": "Saved Changes",
@@ -84,6 +85,9 @@
     "here-change-terms": "Here you can edit the site's Terms and Conditions",
     "select-image": "Select image",
     "delete": "Delete",
+    "Role": "Role",
+    "deregister user": "Unsubscribe the user",
+    "Deregister": "Unsubscribe",
     "select-language": "Select language",
     "english": "English",
     "spanish": "Español",
@@ -232,6 +236,11 @@
     "phrase.1.categories": "Create, update, delete and manage categories. You can also check all the categories that are right now.",
     "phrase.1.rescources": "Create, update, delete and manage rescources. You can also check all the recources that are right now.",
     "phrase.deleteCategory": "Are you sure you want to delete the following category?",
+    "phrase.deleteRescource": "Are you sure you want to delete the following rescource?",
+    "type.rescource": "Select the type of rescource",
+    "URL" : "URL",
+    "text": "Text",
+    "file": "File",
     "admin": "administrator",
     "Admin": "Administrator",
     "all": "all",
@@ -264,6 +273,7 @@
     "Rescources": "Rescources",
     "rescources": "rescources",
     "rescource": "rescource",
+    "location" : "Location",
     "navbar.restore": "Restore Device",
     "navbar.gantt": "Gantt",
     "QualifyCourse": "Qualify courses",
@@ -276,6 +286,7 @@
     "visible": "visible",
     "Visible": "Visible",
     "visible.courses": "Visible Courses",
+    "assignable.categories": "Select a category",
     "budget.budget-list-title": "Budget list",
     "budget.client-name": "Client name",
     "budget.client-surname": "Client surname",
@@ -316,5 +327,12 @@
     "dashboard.admin.companies": "Total companies",
     "dashboard.admin.users": "Total users",
     "dashboard.admin.title": "Welcome to Pymeshield, use the side menu to navigate between the different functionalities of the application.",
-    "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety."
+    "dashboard.admin.p1": "Pymeshield is a cybersecurity web application developed by the DAW2 students of the Institut Montsià for the company Pymeralia. The app features a security quiz section to assess the company's security level, online security courses, a device inventory to keep track of devices used, and a task management section to assign specific related tasks. With safety.",
+    "help": "Help",
+    "logs": "Logs",
+    "Visible.User" : "Visible Users",
+    "Deleted.User" : "Deleted Users"
+
+
+
 }

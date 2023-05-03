@@ -22,10 +22,10 @@ class ActivityFactory extends Factory
         return [
             'name'=>$this->faker->company(),
             'description'=>$this->faker->text(),
-            'start_date'=>$this->faker->date(),
-            'final_date'=>$this->faker->date(),
+            'start_date'=>fake()->dateTimeBetween('-1 month', 'now'),
+            'final_date'=>fake()->dateTimeBetween('now', '+1 month'),
             'category_id'=>$this->faker->randomElement($category_id),
-            'hidden'=>$this->faker->date()
+            'hidden'=>$this->faker->optional()->dateTimeThisYear()
         ];
     }
 }

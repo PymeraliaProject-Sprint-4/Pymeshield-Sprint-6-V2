@@ -75,12 +75,12 @@
             </tbody>
         </table>
     </div>
-    <script>
+    <component :is="'script'">
         function disableButton(btn) {
             btn.disabled = true;
             btn.innerText = "{{ __('report.processpdf') }}";
             console.log("Funciona");
             return true;
         }
-    </script>
+    </component>
 @endsection

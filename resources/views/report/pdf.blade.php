@@ -53,7 +53,7 @@
 
     </footer>
 
-    <style>
+    <style scoped>
         a {
             color: black;
             text-decoration: none;

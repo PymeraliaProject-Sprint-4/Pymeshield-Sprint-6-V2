@@ -67,12 +67,19 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
 Route::get('userList', [UserController::class, 'userList'])->name('userList')->middleware('auth');
-Route::get('userList/userListing', [UserController::class, 'userListing'])->middleware('auth');
-Route::get('userList/userListingHidden', [UserController::class, 'userListing'])->middleware('auth');
+Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden')->middleware('auth');
+
+Route::get('userList/userListing/Admin', [UserController::class, 'userListing'])->middleware('auth'); //Usuarios ordenados por Admin(Por defecto)
+Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker'])->middleware('auth'); //Usuarios ordenados por Worker
+Route::get('userList/userListing/Client', [UserController::class, 'userListingClient'])->middleware('auth'); //Usuarios ordenados por Client
+
+Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden'])->middleware('auth');
+Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('user.unHide');
+
 
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
-Route::post('userDown', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
+Route::post('userList/unuscribeUser', [UserController::class, 'userDown'])->middleware('auth');
+Route::post('userList/editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
 
 //Crud empresas
 Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
@@ -96,7 +103,6 @@ Route::post('update-profile-image', [UserController::class, 'updateProfileImage'
 Route::post('delete-profile-image', [UserController::class, 'delete'])->name('deleteProfileImage')->middleware('auth');
 Route::post('change-password', [UserController::class, 'changePassword'])->name('changePassword');
 Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');
-Route::patch('Perfil_Personal/Editar_Perfil', [UserController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 //Admin
 Route::get('PerfilPersonal_Admin/EditarPerfilAdmin', [UserController::class, 'EditarPerfilAdmin'])->name('EditarPerfilAdmin')->middleware('auth');
 //Ruta para editar el usuario admin
@@ -183,6 +189,13 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
+    Route::get('allCategories', [ResourceController::class, 'allCategories'])->name('allCategories');
+
+    Route::get('rescources/admin-datos-TEXT', [ResourceController::class, 'index_admin_datos_text'])->name('rescources-text.admin'); //Dades recursos tipus text
+    Route::get('rescources/admin-datos-URL', [ResourceController::class, 'index_admin_datos_URL'])->name('rescources-url.admin'); //Dades recursos tipus URL
+    Route::get('rescources/admin-datos-FILE', [ResourceController::class, 'index_admin_datos_FILE'])->name('rescources-file.admin'); //Dades recursos tipus FILE
+    Route::put('resource/text/{id}/edit', [ResourceController::class, 'updateResourceText'])->name('resourceText.update'); // Editar recurs tipus text
+    Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceUrl.update'); //Editar recurs tipus URL o FILE
 
 
 
@@ -190,6 +203,12 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
 
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+
+    Route::post('CreateResourceText', [ResourceController::class, 'createRescourceText'])->name('addResourceText');
+    Route::post('CreateResourceURL', [ResourceController::class, 'createRescourceURL'])->name('addResourceURL');
+    Route::post('CreateResourceFile', [ResourceController::class, 'createRescourceFile'])->name('addResourceFile');
+    Route::post('resource/{type}/{id}/delete', [ResourceController::class, 'deleteResource'])->name('resource.delete');
+
 
     Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::put('course/update_hidden/{id}', [CourseController::class, 'update_hidden'])->name('course.update_hidden');
@@ -213,9 +232,6 @@ Route::get('course/client_data', [CourseController::class, 'client_data'])->name
 Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
 
-
-
-
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/show', [EmblemController::class, 'mostrar'])->name('emblems.show')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
@@ -230,9 +246,6 @@ Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
 
-
-
-
 //Part de Evaluacións
 Route::get('CursosCalificar', [DeliveryController::class, 'CursosCalificar'])->name('Evaluar.Cursos')->middleware('auth', 'check_access_admin'); //Vista pagina tots els cursos
 Route::get('CursosCalificar-datos', [DeliveryController::class, 'CursosCalificarDatos'])->name('Evaluar.CursosDatos')->middleware('auth', 'check_access_admin');
@@ -242,8 +255,6 @@ Route::get('CursosCalificar/{id}/activities/{activityId}', [DeliveryController::
 Route::get('CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne
 //FIN EQUIP 3
-
-
 
 /** ------ EQUIP 4 ------ */
 
@@ -297,8 +308,8 @@ Route::get('restore', function () {
 })->middleware('auth', 'check_access_admin');
 
 Route::get('restaurar', [RestoreController::class, 'devices'])->name('restaurar')->middleware('auth', 'check_access_admin');
-Route::post('restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
-Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar')->middleware('auth', 'check_access_admin');
+Route::post('restore/{id}', [RestoreController::class, 'restoreDevice'])->name('restaurar.post')->middleware('auth', 'check_access_admin');
+Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('restaurar.id')->middleware('auth', 'check_access_admin');
 
 
 //Mostrar Dispositivos
@@ -328,6 +339,6 @@ Route::post('imagenes', [ImageDeviceController::class, 'guardar'])->name('image.
 Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('image.mostrar')->middleware('auth', 'check_access_admin');
 
 
-Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index')->middleware('auth', 'check_access_admin');
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');

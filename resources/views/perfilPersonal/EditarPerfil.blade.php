@@ -45,16 +45,16 @@
                                                     <div class="flex justify-end">
 
                                                         <button type="submit"
-                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center">
+                                                            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center">
                                                             <i class="far fa-save mr-2"></i>{{ __('save') }}
                                                         </button>
                                                         <button type="button"
-                                                            class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 ml-8 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                                            class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
                                                             onclick="closeModal()">
                                                             <i class="fas fa-times mr-2"></i>{{ __('cancel') }}
                                                         </button>
                                                         <button type="button" onclick="confirmDelete()"
-                                                            class="bg-red-600 hover:bg-red-800 text-white  font-medium py-1 px-2 ml-8 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mx-2 mt-1 ml-4 flex items-center">
+                                                            class="bg-red-600 hover:bg-red-800 text-white  font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mx-2 mt-1 ml-4 flex items-center">
                                                             <i class="far fa-trash-alt mr-2"></i>
                                                             <span class="ml-2">{{ __('delete') }}</span>
                                                         </button>
@@ -132,7 +132,7 @@
                     </table>
 
                     <!-- py-2 es per a donarli el grosor del boton
-                                                                              px-4 es per a donarli la llargada del boton-->
+                                                                                  px-4 es per a donarli la llargada del boton-->
                     <div>
                         <button type="submit"
                             class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-10"
@@ -215,7 +215,7 @@
                                 </button>
 
                                 <button type="button"
-                                    class="bg-gray-400 hover:bg-gray-500 text-black font-medium py-1 px-2 ml-1 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4"
+                                    class="bg-gray-400 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg border-2 border-black transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4"
                                     onclick="closeModal1()">
                                     <i class="fas fa-times mr-2"></i>{{ __('cancel') }}
                                 </button>
@@ -228,186 +228,184 @@
             <!-- Capa de fondo para cerrar el modal -->
             <div id="modal-background1" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-40 hidden"></div>
 
-            <script>
-                function openModal() {
-                    document.getElementById('modal1').classList.remove('hidden');
-                    document.getElementById('modal-background').classList.remove('hidden');
-                }
-
-                function closeModal() {
-                    document.getElementById('modal1').classList.add('hidden');
-                    document.getElementById('modal-background').classList.add('hidden');
-                }
-                // Cerrar el modal cuando se hace clic en la capa de fondo
-                document.getElementById('modal-background').addEventListener('click', closeModal);
-
-                function confirmDelete() {
-                    if (confirm('¿Estás seguro de que deseas eliminar tu imagen de perfil?')) {
-                        // Crea una instancia de XMLHttpRequest o usa fetch
-                        var xhr = new XMLHttpRequest();
-                        window.location.reload();
-
-                        // Configura la solicitud
-                        xhr.open('POST', '/delete-profile-image');
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                        xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
-                        window.location.reload();
-
-                        // Define la función que se ejecutará cuando se complete la solicitud
-                        xhr.onload = function() {
-                            if (xhr.status === 200) {
-                                var data = JSON.parse(xhr.responseText);
-                                if (data.success) {
-                                    // Mostrar un mensaje de éxito
-                                    alert(data.success);
-                                }
-                            } else {
-                                console.log(xhr.statusText);
-                            }
-                        };
-
-                        // Envía la solicitud
-                        xhr.send();
-                    }
-                }
-
-                function openModal1() {
-                    document.getElementById('modal').classList.remove('hidden');
-                    document.getElementById('modal-background1').classList.remove('hidden');
-                }
-
-
-                function closeModal1() {
-                    document.getElementById('modal').classList.add('hidden');
-                    document.getElementById('modal-background1').classList.add('hidden');
-                }
-
-                // Cerrar el modal cuando se hace clic en la capa de fondo
-                document.getElementById('modal-background1').addEventListener('click', closeModal1);
-
-                function togglePasswordVisibility(inputId) {
-                    const input = document.getElementById(inputId);
-                    const toggle = input.nextSibling.querySelector("i");
-                    if (input.type === "password") {
-                        input.type = "text";
-                        toggle.classList.remove("fa-eye-slash");
-                        toggle.classList.add("fa-eye");
-                    } else {
-                        input.type = "password";
-                        toggle.classList.remove("fa-eye");
-                        toggle.classList.add("fa-eye-slash");
-                    }
-                }
-
-                function validatePassword(password) {
-                    const currentPassword = document.getElementById('actualPassword').value;
-                    const newPassword = document.getElementById('newPassword').value;
-                    const confirmNewPassword = document.getElementById('confirmPassword').value;
-
-                    // Validaciones
-                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                    if (newPassword !== confirmNewPassword) {
-                        alert('Las contraseñas no coinciden');
-                        return false;
-                    } else if (!passwordRegex.test(newPassword)) {
-                        alert(
-                            'La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un numero y un caracter especial'
-                        );
-                        return false;
-                    }
-                    return true;
-                }
-
-                function submitFormIfValid() {
-                    if (validatePassword()) {
-                        document.getElementById('change-password-form').submit();
-                    }
-                }
-            </script>
         </div>
     </div>
     </div>
     </div>
+
+    <style scoped>
+        #block1 {
+            margin-right: 0px;
+
+        }
+
+        .left-table {
+            float: left;
+            margin-left: 50px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .right-table {
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .right-table1 {
+            float: right;
+            margin-bottom: 5px;
+        }
+
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-body {
+            width: 80%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        .img-fluid {
+            max-width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        td {
+            padding: 7px;
+        }
+
+        table {
+            border: 1px solid black;
+            width: 100%;
+            height: 70%;
+            border-collapse: separate;
+            border-spacing: 10px;
+        }
+
+        h4 {
+            /*donarli forma al text del nom i cognom on esta la imatge*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        td:first-child {
+            padding-right: 20px;
+        }
+
+        td:last-child {
+            padding-left: 20px;
+        }
+
+        tr:nth-child(odd) {
+            /*Ficar color a les linies inpars*/
+            background-color: lightgray;
+        }
+
+        tr:nth-child(even) {
+            /*Ficar color a les linies pars*/
+            background-color: white;
+        }
+    </style>
+    <script>
+        function openModal() {
+            document.getElementById('modal1').classList.remove('hidden');
+            document.getElementById('modal-background').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal1').classList.add('hidden');
+            document.getElementById('modal-background').classList.add('hidden');
+        }
+        // Cerrar el modal cuando se hace clic en la capa de fondo
+        document.getElementById('modal-background').addEventListener('click', closeModal);
+
+        function confirmDelete() {
+            if (confirm('¿Estás seguro de que deseas eliminar tu imagen de perfil?')) {
+                // Crea una instancia de XMLHttpRequest o usa fetch
+                var xhr = new XMLHttpRequest();
+                window.location.reload();
+
+                // Configura la solicitud
+                xhr.open('POST', '/delete-profile-image');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+                window.location.reload();
+
+                // Define la función que se ejecutará cuando se complete la solicitud
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        if (data.success) {
+                            // Mostrar un mensaje de éxito
+                            alert(data.success);
+                        }
+                    } else {
+                        console.log(xhr.statusText);
+                    }
+                };
+
+                // Envía la solicitud
+                xhr.send();
+            }
+        }
+
+        function openModal1() {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal-background1').classList.remove('hidden');
+        }
+
+
+        function closeModal1() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal-background1').classList.add('hidden');
+        }
+
+        // Cerrar el modal cuando se hace clic en la capa de fondo
+        document.getElementById('modal-background1').addEventListener('click', closeModal1);
+
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input.nextSibling.querySelector("i");
+            if (input.type === "password") {
+                input.type = "text";
+                toggle.classList.remove("fa-eye-slash");
+                toggle.classList.add("fa-eye");
+            } else {
+                input.type = "password";
+                toggle.classList.remove("fa-eye");
+                toggle.classList.add("fa-eye-slash");
+            }
+        }
+
+        function validatePassword(password) {
+            const currentPassword = document.getElementById('actualPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmPassword').value;
+
+            // Validaciones
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (newPassword !== confirmNewPassword) {
+                alert('Las contraseñas no coinciden');
+                return false;
+            } else if (!passwordRegex.test(newPassword)) {
+                alert(
+                    'La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un numero y un caracter especial'
+                );
+                return false;
+            }
+            return true;
+        }
+
+        function submitFormIfValid() {
+            if (validatePassword()) {
+                document.getElementById('change-password-form').submit();
+            }
+        }
+    </script>
 @endsection
-<style>
-    #block1 {
-        margin-right: 0px;
-
-    }
-
-    .left-table {
-        float: left;
-        margin-left: 50px;
-        margin-top: 40px;
-        text-align: center;
-    }
-
-    .right-table {
-        float: right;
-        margin-right: 100px;
-        margin-bottom: 20px;
-    }
-
-    .right-table1 {
-        float: right;
-        margin-right: 100px;
-        margin-bottom: 5px;
-    }
-
-
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .main-body {
-        width: 80%;
-        height: 100%;
-        margin: 0 auto;
-    }
-
-    .img-fluid {
-        max-width: 200px;
-        height: auto;
-        border-radius: 50%;
-    }
-
-    td {
-        padding: 7px;
-    }
-
-    table {
-        border: 1px solid black;
-        width: 100%;
-        height: 70%;
-        border-collapse: separate;
-        border-spacing: 10px;
-        margin-left: 12%;
-    }
-
-    h4 {
-        /*donarli forma al text del nom i cognom on esta la imatge*/
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    td:first-child {
-        padding-right: 20px;
-    }
-
-    td:last-child {
-        padding-left: 20px;
-    }
-
-    tr:nth-child(odd) {
-        /*Ficar color a les linies inpars*/
-        background-color: lightgray;
-    }
-
-    tr:nth-child(even) {
-        /*Ficar color a les linies pars*/
-        background-color: white;
-    }
-</style>

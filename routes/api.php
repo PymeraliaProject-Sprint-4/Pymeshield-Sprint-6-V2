@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/all-data-kivy', [BudgetController::class, 'showTasksKivy'])->name('all-data-kivy');
     Route::get('/budgets-data', [BudgetController::class, 'showBudgets'])->name('budgets-data');
     Route::get('/devicelist', [InventoryController::class, 'index']);
-    Route::get('kivy/report', [ReportController::class, 'indexmobil']); 
+    Route::get('kivy/report', [ReportController::class, 'indexmobil']);
     // Route::get('kivy/report/{id}/', [ReportController::class, 'indexmobilID']);
 });
 
@@ -79,8 +79,8 @@ Route::get('/buscador-tasks/{buscado}', [TaskController::class, 'search'])->name
 
 
 // Asignar Precios
-Route::get('/Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar-Precios'); //Vista para la pagina Aceptar-Presupuestos
-Route::get('/mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->name('mostrarTareas'); //Datos que le paso a la vista de la pagina Aceptar-Presupuestos
+Route::get('/Asignar-Precios/{id}', [TaskController::class, 'asignarPrecios'])->name('Asignar.precios'); //Vista para la pagina Aceptar-Presupuestos
+Route::get('/mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->name('mostrar.tareas'); //Datos que le paso a la vista de la pagina Aceptar-Presupuestos
 Route::put('/actualizar-tareas', [BudgetController::class, 'updateTasks'])->name('updateTask');
 Route::put('/update-task/{id}', [BudgetController::class, 'updateSingleTask'])->name('updateSingleTask');
 

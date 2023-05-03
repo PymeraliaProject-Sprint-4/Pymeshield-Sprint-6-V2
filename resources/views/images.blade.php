@@ -4,7 +4,7 @@
 
 @section('content')
 
-<style>
+<style scoped>
     #fullpage {
         display: none;
         position: absolute;
