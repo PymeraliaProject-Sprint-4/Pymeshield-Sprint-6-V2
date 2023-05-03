@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Budget;
@@ -43,6 +44,10 @@ class TaskController extends Controller
         return view('Tareas.kanban.kanban');
     }
 
+    public function kanbanAdmin()
+    {
+        return view('Tareas.kanban.kanbanAdmin');
+    }
 
     /**
      * gantt
@@ -219,10 +224,9 @@ class TaskController extends Controller
         return view('Presupuestos.Asignacion_Precios.AcceptarPresupostos');
     }
 
-    public function mostrarTareas($id)
+    public function mostrarTareas($id, Request $request)
     {
-        $userId = 1; // Aquí anirà la ID de sessió de l'usuari
-
+        $userId = Auth::user()->id;
         $tareas = DB::table('tasks')
             ->select('tasks.*', 'answers.recommendation')
             ->join('answers', 'tasks.answer_id', '=', 'answers.id')
@@ -241,23 +245,45 @@ class TaskController extends Controller
 
     public function tasksKanban()
     {
-        $user_id = 1; // Aquí anirà l'ID de sessió de l'usuari
-    
+        $user_id = Auth::user()->id;
+
         $tasks = Task::join('answers', 'tasks.answer_id', '=', 'answers.id')
-            ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->where('users.id', $user_id)
-            ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
-            ->orWhere('tasks.manages', '=', 'Me lo gestiono yo')
+            ->where('tasks.user_id', $user_id)
+            ->where(function ($query) {
+                $query->where('tasks.manages', '=', 'Me aconseja Pymeralia')
+                    ->orWhere('tasks.manages', '=', 'Me lo gestiono yo');
+            })
             ->get(['tasks.*', 'answers.recommendation']);
-    
+        
         foreach ($tasks as $task) {
             $task->start_date = (new DateTime($task->start_date))->format('Y-m-d H:i');
             $task->final_date = (new DateTime($task->final_date))->format('Y-m-d H:i');
         }
-    
+        
         return response()->json($tasks);
+        
     }
 
+    public function tasksGantt()
+    {
+        $user_id = Auth::user()->id;
+
+        $tasks = Task::join('answers', 'tasks.answer_id', '=', 'answers.id')
+                ->join('users', 'users.id', '=', 'tasks.user_id')
+                ->where('users.id', $user_id)
+                ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
+                ->whereIn('tasks.state', ['ToDo', 'InProgress'])
+                ->orderBy('start_date')
+                ->get(['tasks.*', 'answers.recommendation']);
+        
+        foreach ($tasks as $task) {
+            $task->start_date = (new DateTime($task->start_date))->format('Y-m-d H:i');
+            $task->final_date = (new DateTime($task->final_date))->format('Y-m-d H:i');
+        }
+        
+        return response()->json($tasks);        
+    }
+    
     public function updateState($id, Request $request)
     {
         $task = Task::find($id);

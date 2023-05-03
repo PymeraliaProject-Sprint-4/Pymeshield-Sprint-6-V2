@@ -121,17 +121,17 @@ export default {
     mounted() {
         this.getTasks();
     },
-    updated(){
+    updated() {
         this.sumPrices();
     },
     methods: {
         getTasks(page = 1) {
             this.paginate(this.currentPage);
-            let id = 1;
+            const id = window.location.pathname.split('/').pop();
             this.$axios.get(`/mostrar-tareas/${id}`, {
                 params: {
                     page,
-                }
+                },
             })
                 .then((response) => {
                     this.tareas = response.data.data;
@@ -140,6 +140,7 @@ export default {
                 .catch((error) => {
                 });
         },
+
 
         onPageChanged(page) {
             this.getTasks(page);
@@ -158,7 +159,7 @@ export default {
             let data = this.tareas.map(tarea => {
                 return [tarea.id, tarea.price, tarea.start_date, tarea.final_date];
             });
-            this.$axios.put('/actualizar-tareas', { data: data })
+            this.$axios.put('/api/actualizar-tareas', { data: data })
                 .then(response => {
                 })
                 .catch(error => {
@@ -166,11 +167,11 @@ export default {
             Swal.fire({
                 icon: 'success',
                 text: 'Tareas enviadas correctamente!',
-                confirmButtonText: '<a href="http://localhost/llista_pressupostos">Volver a presupuestos</a>'
+                confirmButtonText: '<a href="/show_budgets_admin">Volver a presupuestos</a>'
             })
         },
         updateSingleTask: function (tarea) {
-            this.$axios.put('/update-task/' + tarea.id, {
+            this.$axios.put('/api/update-task/' + tarea.id, {
                 price: tarea.price,
                 start_date: tarea.start_date,
                 final_date: tarea.final_date,

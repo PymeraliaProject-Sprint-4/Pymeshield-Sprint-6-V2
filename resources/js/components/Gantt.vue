@@ -1,5 +1,5 @@
 <template>
-  <g-gantt-chart
+<g-gantt-chart
     chart-start="2023-01-01 00:00"
     chart-end="2023-12-31 00:00"
     precision="month"
@@ -17,7 +17,7 @@
           ganttBarConfig: {
             id: 'task-' + (index + 1),
             label: task.recommendation,
-            hasHandles: true,
+            hasHandles: false,
             style: {
               background: 'orange',
               borderRadius: '20px',
@@ -38,24 +38,8 @@ const taskList = ref([])
 const bars = ref([])
 
 onMounted(() => {
-  axios.get('/tasks').then(response => {
+  axios.get('/tasks-gantt').then(response => {
     taskList.value = response.data
-    bars.value = taskList.value.map((task, index) => {
-      return {
-        beginDate: task.start_date,
-        endDate: task.final_date,
-        ganttBarConfig: {
-          id: 'Tarea-' + (index + 1),
-          label: task.recommendation,
-          hasHandles: true,
-          style: {
-            background: 'orange',
-            borderRadius: '20px',
-            color: 'black'
-          }
-        }
-      }
-    })
   })
 })
 </script>
