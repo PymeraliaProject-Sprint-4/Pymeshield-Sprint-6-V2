@@ -136,6 +136,9 @@ app.component('gantt', gantt);
 const kanban = defineAsyncComponent(() => import('./components/kanban/Kanban.vue'));
 app.component('kanban', kanban);
 
+const kanbanAdmin = defineAsyncComponent(() => import('./components/kanban/Kanban-Admin.vue'));
+app.component('kanban-admin', kanbanAdmin);
+
 const budgetsAdmin = defineAsyncComponent(() => import('./components/BudgetsAdmin.vue'));
 app.component('show_budgets_admin', budgetsAdmin);
 

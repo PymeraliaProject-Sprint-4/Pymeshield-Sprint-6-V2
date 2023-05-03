@@ -281,6 +281,7 @@ Route::get('mostrar-tareas/{id}', [TaskController::class, 'mostrarTareas'])->nam
 Route::get('kanban', [TaskController::class, 'kanban'])->name('vista-kanban')->middleware('auth', 'check_access_client');
 Route::get('tasks', [TaskController::class, 'tasksKanban'])->name('tasks-kanban')->middleware('auth', 'check_access_client');
 Route::put('tasks-update/{id}', [TaskController::class, 'updateState'])->name('update-state')->middleware('auth', 'check_access_client');
+Route::get('kanban-admin', [TaskController::class, 'kanbanAdmin'])->name('vista-kanbanAdmin')->middleware('auth', 'check_access_admin');
 
 // Gantt
 Route::get('tasks-gantt', [TaskController::class, 'tasksGantt'])->name('tasks-gantt')->middleware('auth', 'check_access_client');
