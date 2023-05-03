@@ -1,11 +1,9 @@
 <template>
-    <swiper-container
+    <swiper-container v-if="images.length > 0"
         navigation="true"
         pagination="true" paginationClickable="true"
         loop="true"
         class="w-full h-60">
-
-
 
         <swiper-slide class="flex align-center justify-center flex-none" v-for="(item, index) in images" :key="index">
             <a :href="getAbsoluteUrl(item)" target="_blank" class="flex align-center justify-center flex-none">
@@ -14,6 +12,8 @@
         </swiper-slide>
 
     </swiper-container>
+
+    <h4 v-else class="font-bold">No hay imagenes disponibles.</h4>
 </template>
 
 <script>
