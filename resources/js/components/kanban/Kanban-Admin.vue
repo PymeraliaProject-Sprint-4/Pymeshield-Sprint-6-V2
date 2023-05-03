@@ -7,11 +7,11 @@
                     {{ board.name }} :<div class=""> {{ taskCount(board.id) }} {{ taskCount(board.id) == 1 ?
                         $t('kanban.task') : $t('kanban.tasks') }}</div>
                 </div>
-                <div class="items flex p-2 gap-2.5 flex-col mt-4">
+                <div class="flex p-2 gap-2.5 flex-col mt-4">
                     <div class="hover:border-solid hover:border-2 border-black p-2 rounded-lg select-none"
                         v-for="task in board.items.filter(item => item.manages === 'Me aconseja Pymeralia')" :key="task.id"
                         @dragstart="onDragStart(task)"
-                        :class="{ 'bg-orange-300': task.manages === 'Me aconseja Pymeralia', 'bg-gray-300': task.manages === 'Me lo gestiono yo' }"
+                        :class="{ 'bg-orange-300': task.manages === 'Me aconseja Pymeralia'}"
                         :draggable="task.manages === 'Me aconseja Pymeralia' ? true : false">
                         {{ task.recommendation }}
                     </div>
