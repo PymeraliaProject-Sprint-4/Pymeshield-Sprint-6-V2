@@ -30,7 +30,7 @@
                         <p class="text-sm text-gray-900">{{ formatDate (activity.final_date) }}</p>
                     </td>
                     <td class="px-2 py-2 text-center">
-                        <p class="text-sm text-gray-900"><a href="courses" class="text-base font-medium bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded-full transition-colors duration-300">{{ $t('go') }}</a></p>
+                        <p class="text-sm text-gray-900"><a href="course/client" class="text-base font-medium bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded-full transition-colors duration-300">{{ $t('go') }}</a></p>
                     </td>
                 </tr>
             </tbody>

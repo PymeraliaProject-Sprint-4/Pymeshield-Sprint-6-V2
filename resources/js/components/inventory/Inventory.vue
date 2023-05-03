@@ -37,7 +37,7 @@
             <tbody>
                 <tr v-for="dispositivo in dispositivoD.data" :key="dispositivo.id"
                     class="bg-orange-50 hover:bg-orange-100 text-center">
-                    <td class="px-6 py-4">{{ dispositivo.brand }}</td>
+                    <td class="px-6 py-4">{{ dispositivo.band }}</td>
                     <td class="px-6 py-4">{{ dispositivo.model }}</td>
                     <td class="px-6 py-4">{{ dispositivo.mac_ethernet }} / {{ dispositivo.mac_wifi }}</td>
                     <td class="px-6 py-4">{{ dispositivo.name }}</td>

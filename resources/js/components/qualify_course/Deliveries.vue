@@ -20,7 +20,7 @@
                 <td class="px-6 py-4">
                     <p class="font-medium text-gray-900">
                         <a v-if="users.locate"
-                            :href="'http://localhost/' + users.locate.substring(users.locate.lastIndexOf('/files') + 1)"
+                            :href="appUrl + users.locate.substring(users.locate.lastIndexOf('/files') + 1)"
                             class="text-blue-500 underline" download>{{
                                 users.locate.substring(users.locate.lastIndexOf('/') + 1) }}</a>
                         <span class="text-red-600" v-else>X</span>
@@ -142,6 +142,7 @@
 
 <script>
 import axios from "axios";
+let appUrl = import.meta.env.APP_URL;
 export default {
 
     data() {
@@ -256,7 +257,7 @@ export default {
 }
 </script>
 <script setup>
-import { Dialog, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 </script>
 
 <style scoped>

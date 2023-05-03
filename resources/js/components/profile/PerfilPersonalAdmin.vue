@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="main-body">
+        <div class="main-body p-3 overflow-x-auto">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3 left-table">
                     <div class="card">
@@ -9,10 +9,9 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="col-md-8">
                     <h3 class="mt-5 font-bold" style="text-align: center;">{{ $t('personal-info') }}</h3>
                     <div class="overflow-x-auto">
-
                         <table class="table">
                             <thead>
                                 <tr class="bg-orange-400 text-white">
@@ -25,27 +24,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.name }}</p>
-                                </td>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.last_name }}</p>
-                                </td>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.nick_name }}</p>
-                                </td>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.email }}</p>
-                                </td>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.phone }}</p>
-                                </td>
-                                <td class="bg-orange-50 text-center">
-                                    <p class="font-medium text-gray-900">{{ user.company_name }}</p>
-                                </td>
+                                <tr>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.name }}</p>
+                                    </td>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.last_name }}</p>
+                                    </td>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.nick_name }}</p>
+                                    </td>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.email }}</p>
+                                    </td>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.phone }}</p>
+                                    </td>
+                                    <td class="bg-orange-50 text-center">
+                                        <p class="font-medium text-gray-900">{{ user.company_name }}</p>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-
                     </div>
 
 
@@ -62,8 +62,8 @@
         </div>
     </div>
 </template>
- 
- 
+
+
 <script>
 import axios from 'axios';
 
@@ -81,14 +81,8 @@ export default {
     },
 };
 </script>
- 
-<style scoped>
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
+<style scoped>
 td {
     padding: 7px;
 }
@@ -106,4 +100,3 @@ table {
     text-align: center;
 }
 </style>
- 

@@ -19,17 +19,21 @@ app.component('navbar', navbar);
 const admin = defineAsyncComponent(() => import('./components/layouts/AdminPanel.vue'));
 app.component('admin-layout', admin);
 
-const listcompany = defineAsyncComponent(() => import('./components/ListCompany.vue'));
+const listcompany = defineAsyncComponent(() => import('./components/company/ListCompany.vue'));
 app.component('list-company', listcompany);
 
-const ListCompanyHidden = defineAsyncComponent(() => import('./components/ListCompanyHidden.vue'));
+const ListCompanyHidden = defineAsyncComponent(() => import('./components/company/ListCompanyHidden.vue'));
 app.component('list-company-hidden', ListCompanyHidden);
 
 const quillEditor = defineAsyncComponent(() => import('./components/rules/Editor.vue'));
 app.component('editor', quillEditor);
 
-const listusers = defineAsyncComponent(() => import('./components/ListUsers.vue'));
+const listusers = defineAsyncComponent(() => import('./components/users/ListUsers.vue'));
 app.component('list-users', listusers);
+
+
+const ListUsersHidden = defineAsyncComponent(() => import('./components/users/ListUsersHidden.vue'));
+app.component('list-users-hidden', ListUsersHidden);
 
 const perfilPersonal = defineAsyncComponent(() => import('./components/profile/PerfilPersonal.vue'));
 app.component('PerfilPersonal', perfilPersonal);
@@ -75,6 +79,11 @@ app.component('audit', audit);
 const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
 app.component('create-report', createReport);
 
+const ReportModificar = defineAsyncComponent(() => import('./components/ReportModificar.vue'));
+app.component('report-modificar', ReportModificar);
+
+const ReportEliminar = defineAsyncComponent(() => import('./components/ReportEliminar.vue'));
+app.component('report-eliminar', ReportEliminar);
 
 //EQUIP3
 
@@ -97,13 +106,13 @@ const rescources_admin = defineAsyncComponent(() => import('./components/rescour
 app.component('rescources-admin', rescources_admin);
 
 
-const CursosCalificar = defineAsyncComponent(() => import('./components/Cursos.vue'));
+const CursosCalificar = defineAsyncComponent(() => import('./components/qualify_course/Cursos.vue'));
 app.component('cursos_calificar', CursosCalificar);
 
-const CategoriasCurso = defineAsyncComponent(() => import('./components/Categorias_curso.vue'));
+const CategoriasCurso = defineAsyncComponent(() => import('./components/qualify_course/Categorias_curso.vue'));
 app.component('categorias_curso', CategoriasCurso);
 
-const deliveries = defineAsyncComponent(() => import('./components/deliveries.vue'));
+const deliveries = defineAsyncComponent(() => import('./components/qualify_course/Deliveries.vue'));
 app.component('deliveries', deliveries);
 
 

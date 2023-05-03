@@ -24,6 +24,11 @@
             <ArrowRightCircleIcon class="h-6 w-6 text-white-400 font-bold" />
             {{ $t('Categories') }}
         </button>
+        <button id="" @click="redirectToResources()"
+            class=" ml-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded mt-5 flex items-center text-center ">
+            <ArrowRightCircleIcon class="h-6 w-6 text-white-400 font-bold" />
+            {{ $t('Rescources') }}
+        </button>
 
     </div>
 
@@ -125,7 +130,7 @@
                             class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                             <form action="" id="course-form" method="POST" v-on:submit.prevent="saveCourse()">
                                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div class="flex items-center flex items-center mx-1 my-1">
+                                    <div class="flex items-center mx-1 my-1">
                                         <div
                                             class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                             <AcademicCapIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
@@ -175,17 +180,15 @@
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button type="submit" v-bind:disabled="sending" @click="open = false"
-                                        class="
-                                                                    bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 ml-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out
-                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center
-                                                                    inline-flex w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto">
+                                        class="bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 mr-2  transition-all duration-300 ease-in-out
+                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center
+                                                                    w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto">
                                         <i class="far fa-save mr-2"></i> {{ $t('Create') }}
                                     </button>
                                     <button type="button"
-                                        class="
-                                                                    bg-gray-300 hover:bg-gray-500 text-black  font-medium py-1 px-2  rounded-lg  transition-all duration-300 ease-in-out
-                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center
-                                                                    inline-flex w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto"
+                                        class="bg-gray-300 hover:bg-gray-500 text-black  font-medium py-1 px-2  transition-all duration-300 ease-in-out
+                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center
+                                                                     w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto"
                                         @click="modal_crear = false" ref="cancelButtonRef">
                                         <i class="fas fa-times mr-2"></i>
                                         {{ $t('Cancel') }}
@@ -198,7 +201,7 @@
             </div>
         </Dialog>
     </TransitionRoot>
-    
+
     <!--//MODAL EDITAR-->
     <TransitionRoot as="template" :show="modal_edit">
         <Dialog as="div" class="relative z-10" @close="modal_edit = false">
@@ -219,7 +222,7 @@
                             <form action="" id="course-edit" method="POST" v-on:submit.prevent="updateCourse()">
 
                                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div class="flex items-center flex items-center mx-1 my-1">
+                                    <div class="flex items-center mx-1 my-1">
                                         <div
                                             class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                             <AcademicCapIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
@@ -268,17 +271,15 @@
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button type="submit" v-bind:disabled="sending" @click="open = false"
-                                        class="
-                                                                    bg-orange-400 hover:bg-orange-600 font-medium py-2 px-2 ml-2 mr-2 rounded-lg  transition-all duration-300 ease-in-out
-                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center
-                                                                    inline-flex w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto">
+                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-2 px-2 mr-2  transition-all duration-300 ease-in-out
+                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center
+                                                                     w-full justify-center rounded-md text-sm shadow-sm sm:ml-3 sm:w-auto">
                                         <i class="far fa-save mr-2"></i> {{ $t('Save') }}
                                     </button>
                                     <button type="button"
-                                        class="
-                                                                    bg-gray-300 hover:bg-gray-500 text-black  font-medium py-1 px-2  rounded-lg  transition-all duration-300 ease-in-out
-                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto block flex items-center
-                                                                    inline-flex w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto"
+                                        class="bg-gray-300 hover:bg-gray-500 text-black  font-medium py-1 px-2  transition-all duration-300 ease-in-out
+                                                                    transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center
+                                                                 w-full justify-center rounded-md text-sm   shadow-sm sm:ml-3 sm:w-auto"
                                         @click="modal_edit = false" ref="cancelButtonRef">
                                         <i class="fas fa-times mr-2"></i>
                                         {{ $t('Cancel') }}
@@ -295,10 +296,6 @@
 
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
-import { forEach } from "lodash";
-import * as response from "autoprefixer";
-
 
 export default {
     data() {
@@ -330,7 +327,6 @@ export default {
     async created() {
         const response = await axios.get('/course/index_data')
         this.courses = response.data
-        console.log(this.courses)
         const response_users = await axios.get('/course/users')
         this.users = response_users.data
     },
@@ -353,8 +349,6 @@ export default {
                 const end = start + this.perPage
                 return this.courses.slice(start, end)
             } else {
-                const start = this.currentPage * this.perPage
-                const end = start + this.perPage
                 const searchTermLower = this.searchTerm.toLowerCase();
                 //todo buscar en todas las paginas
                 return this.courses.filter(course => {
@@ -399,7 +393,6 @@ export default {
         },
 
         selectCourse(course) {
-            console.log(course)
             this.user_ids = course.users
             this.modal_edit = true;
             this.selectedCourse = course;
@@ -462,6 +455,10 @@ export default {
         redirectToCategories() {
             window.location.href = "course/categories";
         },
+
+        redirectToResources() {
+            window.location.href = "rescources/admin";
+        },
     },
 }
 
@@ -470,14 +467,12 @@ export default {
 
 
 <script setup>
-import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
     AcademicCapIcon,
     PlusIcon,
     TrashIcon,
     PencilSquareIcon,
-    XMarkIcon,
     EyeSlashIcon,
     ArrowRightCircleIcon
 } from '@heroicons/vue/24/outline'

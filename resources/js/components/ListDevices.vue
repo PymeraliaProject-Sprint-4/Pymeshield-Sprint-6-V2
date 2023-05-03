@@ -1,65 +1,83 @@
 <template>
-
     <div class="mx-5 mt-3">
         <div class="flex justify-between">
             <div class="flex items-center">
                 <p class="text-2xl font-semibold">Listado dispositivos</p>
             </div>
             <div class="flex items-center">
-                <button class="bg-red-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                @click="openModalImages(1)">Prova imatges</button>
-                <button class="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                @click="generateqr()">Generar QR Prova</button>
                 <button class="bg-orange-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                @click="openModalCrear()">Crear dispositivo</button>
+                    @click="openModalCrear()">Crear dispositivo</button>
             </div>
         </div>
-        <table class="mt-2 table-fixed w-full text-base text-left text-gray-800 dark:text-gray-400 text-center">
+        <table class="mt-2 table-fixed w-full text-base text-gray-800 dark:text-gray-400 text-center">
             <thead class="bg-orange-500 text-white">
                 <tr>
-                    <th scope="col" class="px-6 py-3 ">{{ $t('brand') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ $t('model') }}</th>
+                    <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
+                    <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
                     <th scope="col" class="px-6 py-3">MAC-ethernet</th>
                     <th scope="col" class="px-6 py-3">MAC-wifi</th>
                     <th scope="col" class="px-6 py-3">Tipo</th>
                     <th scope="col" class="px-6 py-3">Descripcion</th>
                     <th scope="col" class="px-6 py-3">Estado</th>
-                    <th scope="col" class="w-29 px-6 py-3">Funciones</th>
+                    <th scope="col" class="px-6 py-3">Empresa</th>
+                    <th scope="col" class="px-6 py-3">Funciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="device in this.devicesData" :key="device.id"
                     class="bg-orange-50 hover:bg-orange-100 border-b dark:border-gray-700">
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 font-semibold">
                         {{ device.brand }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 font-semibold">
                         {{ device.model }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td v-if="device.mac_ethernet === null" class="px-6 py-4">
+                        No dispone.
+                    </td>
+                    <td v-else class="px-6 py-4 font-semibold">
                         {{ device.mac_ethernet }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td v-if="device.mac_wifi === null" class="px-6 py-4">
+                        No dispone.
+                    </td>
+                    <td v-else class="px-6 py-4 font-semibold">
                         {{ device.mac_wifi }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 font-semibold">
                         {{ device.name }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td v-if="device.description === null" class="px-6 py-4">
+                        No dispone.
+                    </td>
+                    <td v-else class="px-6 py-4 font-semibold">
                         {{ device.description }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 font-semibold">
                         {{ device.state }}
+                    </td>
+                    <td class="px-6 py-4 font-semibold">
+                        {{ device.company_name }}
                     </td>
                     <td class="px-4 py-4 text-center align-middle">
                         <button @click="openModalBorrar(device.id)"
-                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-2 ml-2 rounded ">
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-2 ml-2 rounded ">
                             <ArchiveBoxArrowDownIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
                         <button
-                            @click="openModalEditar(device.id, device.brand, device.model, device.mac_ethernet, device.mac_wifi, device.type_device_id, device.state, device.serial_number, device.description)"
+                            @click="openModalEditar(device.id, device.brand, device.model, device.mac_ethernet, device.mac_wifi, device.type_device_id, device.state, device.serial_number, device.description, device.company_id)"
                             class="bg-orange-400 hover:bg-orange-600  text-white font-bold py-2 px-2 ml-2 rounded">
                             <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                        </button>
+                        <button
+                            @click="openModalImages(device.id)"
+                            class="bg-blue-500 hover:bg-blue-600  text-white font-bold py-2 px-2 ml-2 mt-1 rounded">
+                            <PhotoIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                        </button>
+                        <button
+                            @click="downloadQr(device.id)"
+                            class="bg-gray-600 hover:bg-gray-800  text-white font-bold py-2 px-2 ml-2 mt-1 rounded">
+                            <QrCodeIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
                     </td>
                 </tr>
@@ -147,7 +165,7 @@
                                                 <div class="flex w-full space-x-8">
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de dispositivo</label>
                                                         <select v-model="crear.type_device_id"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400">
                                                             <option value="Seleccione">Seleccione un tipo...</option>
@@ -168,6 +186,19 @@
                                                             <option value="Deshabilitado">Deshabilitado</option>
                                                         </select>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <div>
+                                                    <label
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+                                                    <select v-model="crear.company_id"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400">
+                                                        <option value="Seleccione">Seleccione una empresa</option>
+                                                        <option v-for="company in companies" :key="company.id"
+                                                            :value="company.id">{{
+                                                                company.name }}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="mt-2">
@@ -308,6 +339,19 @@
                                             <div class="mt-2">
                                                 <div>
                                                     <label
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+                                                    <select v-model="editar.company_id"
+                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400">
+                                                        <option value="Seleccione">Seleccione una empresa...</option>
+                                                        <option v-for="company in companies" :key="company.id"
+                                                            :value="company.id">{{
+                                                                company.name }}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <div>
+                                                    <label
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero
                                                         de serie</label>
                                                     <input v-model="editar.serial_number" type="text" id="serial_number"
@@ -405,24 +449,30 @@
     <!-- Modal imatges -->
     <TransitionRoot as="template" :show="ModalImages">
         <Dialog as="div" class="relative z-10" @close="ModalImages = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="xl:items-start">
-                        <div class="flex space-x-2 items-center justify-center">
-                            <swiper :images="this.images"></swiper>
-                        </div>
-                    </div>
-                    </div>
-                </DialogPanel>
-                </TransitionChild>
-            </div>
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <TransitionChild as="template" enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <DialogPanel
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="xl:items-start">
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <swiper :images="this.images"></swiper>
+                                    </div>
+                                </div>
+                            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
             </div>
         </Dialog>
     </TransitionRoot>
@@ -430,27 +480,35 @@
     <!-- Notificacio crear dispositiu -->
     <TransitionRoot as="template" :show="NotificacionCrear">
         <Dialog as="div" class="relative z-10" @close="NotificacionCrear = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="xl:items-start">
-                        <div class="flex space-x-2 items-center justify-center">
-                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <TransitionChild as="template" enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <DialogPanel
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="xl:items-start">
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <div
+                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                        </div>
+                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo
+                                            creado correctamente</DialogTitle>
+                                    </div>
+                                </div>
                             </div>
-                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo creado correctamente</DialogTitle>
-                        </div>
-                    </div>
-                    </div>
-                </DialogPanel>
-                </TransitionChild>
-            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
             </div>
         </Dialog>
     </TransitionRoot>
@@ -458,27 +516,35 @@
     <!-- Notificacio editar dispositiu -->
     <TransitionRoot as="template" :show="NotificacionEditar">
         <Dialog as="div" class="relative z-10" @close="NotificacionEditar = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="xl:items-start">
-                        <div class="flex space-x-2 items-center justify-center">
-                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <TransitionChild as="template" enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <DialogPanel
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="xl:items-start">
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <div
+                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                        </div>
+                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo
+                                            editado correctamente</DialogTitle>
+                                    </div>
+                                </div>
                             </div>
-                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo editado correctamente</DialogTitle>
-                        </div>
-                    </div>
-                    </div>
-                </DialogPanel>
-                </TransitionChild>
-            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
             </div>
         </Dialog>
     </TransitionRoot>
@@ -486,27 +552,35 @@
     <!-- Notificacio eliminar dispositiu -->
     <TransitionRoot as="template" :show="NotificacionBorrar">
         <Dialog as="div" class="relative z-10" @close="NotificacionBorrar = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="items-center">
-                        <div class="flex space-x-2 items-center justify-center">
-                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <TransitionChild as="template" enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <DialogPanel
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="items-center">
+                                    <div class="flex space-x-2 items-center justify-center">
+                                        <div
+                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <ShieldCheckIcon class="h-6 w-6 text-orange-400" aria-hidden="true" />
+                                        </div>
+                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo
+                                            eliminado correctamente</DialogTitle>
+                                    </div>
+                                </div>
                             </div>
-                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Dispositivo eliminado correctamente</DialogTitle>
-                        </div>
-                    </div>
-                    </div>
-                </DialogPanel>
-                </TransitionChild>
-            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
             </div>
         </Dialog>
     </TransitionRoot>
@@ -536,16 +610,18 @@ export default {
 
             //Variables per guardar els arrays de les dades
             types_device: [],
+            companies: [],
 
             //Variables v-model
-            crear: { brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "Seleccione", state: "Seleccione", serial_number: "", description: "" },
-            editar: { id: "", brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "", state: "", serial_number: "", description: "" },
+            crear: { brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "Seleccione", state: "Seleccione", serial_number: "", description: "", company_id: "Seleccione"},
+            editar: { id: "", brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "", state: "", serial_number: "", description: "" , company_id: ""},
             borrar: { id: "" }
         };
     },
     mounted() {
         this.typeDevice();
         this.getDevices();
+        this.listCompanies();
     },
     computed: {
         macValida() {
@@ -556,7 +632,7 @@ export default {
             const regex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/; // Expresión regular para validar la dirección MAC
             return regex.test(mac); // Devuelve true si la dirección MAC es válida, de lo contrario, devuelve false
         },
-        macValidaEditar(){
+        macValidaEditar() {
             const mac = this.editar.mac_ethernet || this.editar.mac_wifi;
             if (!mac) {
                 return true; // Si no se ha ingresado ninguna dirección MAC, no es necesario validarla
@@ -579,20 +655,19 @@ export default {
         },
     },
     methods: {
-        generateqr(id = 1){
+        generateqr(id = 1) {
             axios.post("/devices/generateqr", {
                 id: id
             })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         getDevices(page = 1) {
-            this.devicesData.value = [];
-            this.devicesData.data = [];
+            this.devicesData = [];
             axios.get("/devices/list?page=" + page)
                 .then(response => {
                     this.devices = response.data;
@@ -606,10 +681,11 @@ export default {
             this.getDevices(page)
         },
         openModalCrear() {
-            this.typeDevice()
+            this.typeDevice();
+            this.listCompanies();
             this.ModalCrear = true;
         },
-        openModalEditar(id, brand, model, mac_ethernet, mac_wifi, type_device_id, state, serial_number, description) {
+        openModalEditar(id, brand, model, mac_ethernet, mac_wifi, type_device_id, state, serial_number, description, company_id) {
             this.editar.id = id;
             this.editar.brand = brand;
             this.editar.model = model;
@@ -619,15 +695,9 @@ export default {
             this.editar.state = state;
             this.editar.serial_number = serial_number;
             this.editar.description = description;
+            this.editar.company_id = company_id;
 
             this.ModalEditar = true;
-
-            this.types_device.forEach(type => {
-                // Si el tipus de dispositiu coincideix amb el valor seleccionat, el seleccionem al element select
-                if (type.id === this.type_device_id) {
-                    option.selected = true;
-                }
-            });
         },
         openModalBorrar(id) {
             this.borrar.id = id;
@@ -649,6 +719,15 @@ export default {
                     console.log(error);
                 });
         },
+        listCompanies() {
+            axios.get('listadoEmpresas/listCompanies')
+                .then((response) => {
+                    this.companies = response.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         submitFormCrear() {
             this.errors = [];
 
@@ -662,7 +741,7 @@ export default {
 
             if (!this.crear.mac_ethernet && !this.crear.mac_wifi) {
                 this.errors.push("Se requiere al menos una dirección MAC");
-            }else if (!this.macValida) {
+            } else if (!this.macValida) {
                 this.errors.push("La dirección MAC no es válida");
             }
 
@@ -678,6 +757,10 @@ export default {
                 this.errors.push("El número de serie es obligatorio");
             }
 
+            if (this.crear.company_id === "Seleccione"){
+                this.errors.push("Seleccione una empresa")
+            }
+
             if (this.errors.length === 0) {
                 axios.post("/devices/create", {
                     brand: this.crear.brand,
@@ -687,7 +770,8 @@ export default {
                     type_device_id: this.crear.type_device_id,
                     description: this.crear.description,
                     state: this.crear.state,
-                    serial_number: this.crear.serial_number
+                    serial_number: this.crear.serial_number,
+                    company_id: this.crear.company_id
                 })
                     .then(response => {
                         this.getDevices();
@@ -695,12 +779,12 @@ export default {
                         this.ModalCrear = false;
 
                         this.crear.brand = "",
-                        this.crear.description = "",
-                        this.crear.mac_ethernet = "",
-                        this.crear.mac_wifi = "",
-                        this.crear.description = "",
-                        this.crear.state = "",
-                        this.crear.serial_number = ""
+                            this.crear.description = "",
+                            this.crear.mac_ethernet = "",
+                            this.crear.mac_wifi = "",
+                            this.crear.description = "",
+                            this.crear.state = "",
+                            this.crear.serial_number = ""
                         this.NotificacionCrear = true;
                         setTimeout(() => { this.NotificacionCrear = false; }, 2500);
                     })
@@ -723,7 +807,7 @@ export default {
 
             if (!this.editar.mac_ethernet && !this.editar.mac_wifi) {
                 this.errors.push("Se requiere al menos una dirección MAC");
-            }else if (!this.macValidaEditar) {
+            } else if (!this.macValidaEditar) {
                 this.errors.push("La dirección MAC no es válida");
             }
 
@@ -739,33 +823,38 @@ export default {
                 this.errors.push("El número de serie es obligatorio");
             }
 
+            if (this.editar.company_id === "Seleccione"){
+                this.errors.push("Seleccione una empresa")
+            }
+
             if (this.errors.length === 0) {
                 axios.post('/devices/edit', {
-                id: this.editar.id,
-                brand: this.editar.brand,
-                model: this.editar.model,
-                mac_ethernet: this.editar.mac_ethernet,
-                mac_wifi: this.editar.mac_wifi,
-                type_device_id: this.editar.type_device_id,
-                description: this.editar.description,
-                state: this.editar.state,
-                serial_number: this.editar.serial_number
+                    id: this.editar.id,
+                    brand: this.editar.brand,
+                    model: this.editar.model,
+                    mac_ethernet: this.editar.mac_ethernet,
+                    mac_wifi: this.editar.mac_wifi,
+                    type_device_id: this.editar.type_device_id,
+                    description: this.editar.description,
+                    state: this.editar.state,
+                    serial_number: this.editar.serial_number,
+                    company_id: this.editar.company_id
                 })
-                .then(response => {
-                    this.getDevices();
-                    this.ModalEditar = false;
-                    this.NotificacionEditar = true;
-                    setTimeout(() => { this.NotificacionEditar = false; }, 2500);
-                    console.log(response)
-                })
-                .then(error => {
-                    console.log(error)
-                })
+                    .then(response => {
+                        this.getDevices();
+                        this.ModalEditar = false;
+                        this.NotificacionEditar = true;
+                        setTimeout(() => { this.NotificacionEditar = false; }, 2500);
+                        console.log(response)
+                    })
+                    .then(error => {
+                        console.log(error)
+                    })
             }
             return true;
 
         },
-        submitFormBorrar(){
+        submitFormBorrar() {
             this.$axios.post("devices/delete", {
                 id: this.borrar.id
             })
@@ -795,5 +884,5 @@ export default {
 
 <script setup>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, InboxArrowDownIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon } from '@heroicons/vue/24/outline'
 </script>

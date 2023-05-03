@@ -7,16 +7,16 @@
     <div class="flex-1 flex-col ml-2">
         <div class="bg-orange-200 rounded-lg p-5 m-2" v-for="category in rescources" :key="category.category_id">
             <div class="flex justify-between">
-                <h2 class="font-bold text-lg m-2">Categoria: {{ category.category_name }}</h2>
+                <h2 class="font-bold text-lg m-2">{{ $t('category-name') }} {{ category.category_name }}</h2>
                 <div class="block m-2"></div>
             </div>
             <ul>
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
-                    <p class="font-bold">Recursos de tipo texto:</p>
+                    <p class="font-bold">{{ $t('text-resources') }}</p>
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'text')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                            {{ resource.resource_name}} - {{
                                 resource.resource_description ?? '' }}
                         </li>
                     </ul>
@@ -24,22 +24,22 @@
                 </li>
 
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
-                    <p class="font-bold">Recursos de tipo url:</p>
+                    <p class="font-bold">{{ $t('url-resources') }}</p>
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'url')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                            {{ resource.resource_name}} - {{
                                 resource.resource_location ?? '' }}
                         </li>
                     </ul>
                 </li>
 
                 <li class="bg-orange-400 rounded-lg p-5 m-2">
-                    <p class="font-bold">Recursos de tipo archivo:</p>
+                    <p class="font-bold">{{ $t('file-resources') }}</p>
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'file')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name ?? 'No existen recursos de este tipo' }} - {{
+                            {{ resource.resource_name}} - {{
                                 resource.resource_location ?? '' }}
                         </li>
                     </ul>

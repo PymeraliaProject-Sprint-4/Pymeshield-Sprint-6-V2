@@ -23,7 +23,7 @@ class TaskController extends Controller
      * acceptacioTasques
      *
      * Acción que recupera una vista del aplicatiu web
-     * 
+     *
      * @return void
      */
     public function acceptacioTasques()
@@ -36,7 +36,7 @@ class TaskController extends Controller
      * kanban
      *
      * Acción que devuelve la vista de la página kanban
-     * 
+     *
      * @return void
      */
     public function kanban()
@@ -51,7 +51,7 @@ class TaskController extends Controller
 
     /**
      * gantt
-     * 
+     *
      * Acción que devuelve la vista de la página gantt
      *
      * @return void
@@ -67,7 +67,7 @@ class TaskController extends Controller
      * datosTasques
      *
      * Acció que recupera les dades corresponent a un usuari i a un questionari que ha contestat
-     * 
+     *
      * param  mixed $request parametre que passem per a poder canviar de págines
      * @return void
      */
@@ -140,7 +140,7 @@ class TaskController extends Controller
         return $data;
         // return Task::all();
     }
-    // Guarda una tarea específica  
+    // Guarda una tarea específica
     public function store(Request $request, Task $idTask)
     {
         # Valida los datos entrantes
@@ -188,7 +188,7 @@ class TaskController extends Controller
         }
     }
 
-    // Edita una tarea específica  
+    // Edita una tarea específica
     public function update(Request $request, Task $idTask)
     {
         # Valida los datos entrantes
@@ -212,10 +212,10 @@ class TaskController extends Controller
             'final_date' => $request->final_date,
         ]);
     }
-    // Elimina una tarea específica  
+    // Elimina una tarea específica
     public function destroy(Task $idTask)
     {
-        // Elimina la tarea registrada en la base de datos 
+        // Elimina la tarea registrada en la base de datos
         $idTask->delete();
     }
 
@@ -290,6 +290,4 @@ class TaskController extends Controller
         $task->state = $request->state;
         $task->save();
     }
-
-
 }

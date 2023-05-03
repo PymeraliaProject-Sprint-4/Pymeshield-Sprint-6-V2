@@ -12,19 +12,19 @@ use Illuminate\Support\Facades\Storage;
 
 class DevicesController extends Controller
 {
-    public function generateqr(Request $request)
+    public function generateqr($id)
     {
-        $id = $request->id;
         $size = 300;
         $filename = 'device_'.$id.'.png';
-        $storagePath = public_path('qr/' . $filename);
+        $storagePath = storage_path('app/public/devices_qr/'.$filename);
         QrCode::format('png')->size($size)->generate($id, $storagePath);
     }
     //Funcio per a llistar
     public function devices(){
-        return Device::where('hidden', '=', null)
+        return Device::where('devices.hidden', '=', null)
         ->join('type_devices','devices.type_device_id','=','type_devices.id')
-        ->select('devices.*','type_devices.name')
+        ->join('companies','devices.company_id','=','companies.id')
+        ->select('devices.*','type_devices.name', 'companies.name as company_name')
         ->orderBy('devices.id','asc')->paginate(5);
     }
 
@@ -46,7 +46,11 @@ class DevicesController extends Controller
         $device->description = $request->description;
         $device->state = $request->state;
         $device->serial_number = $request->serial_number;
+        $device->company_id = $request->company_id;
         $device->save();
+
+        $device_id = $device->id;
+        $this->generateqr($device_id);
     }
 
     //Funcio per a modificar dispositiu, recuperem informacio dels inputs del modal i fer update
@@ -60,6 +64,7 @@ class DevicesController extends Controller
         $device->state = $request->state;
         $device->serial_number = $request->serial_number;
         $device->type_device_id = $request->type_device_id;
+        $device->company_id = $request->company_id;
         $device->save();
     }
 
@@ -74,5 +79,11 @@ class DevicesController extends Controller
     public function type_devices(){
         $types = TypeDevice::all();
         return $types;
+    }
+
+    public function downloadQr(Request $request){
+        $device_id = $request->id;
+
+
     }
 }
