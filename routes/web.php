@@ -66,21 +66,21 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
-Route::middleware(['auth', 'check_access_admin', 'log.users'])->group(function () {
-Route::get('userList', [UserController::class, 'userList'])->name('userList');
-Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden');
+Route::middleware(['auth', 'check_access_admin', 'log.user'])->group(function () {
+    Route::get('userList', [UserController::class, 'userList'])->name('userList');
+    Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden');
 
-Route::get('userList/userListing/Admin', [UserController::class, 'userListing']); //Usuarios ordenados por Admin(Por defecto)
-Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker']); //Usuarios ordenados por Worker
-Route::get('userList/userListing/Client', [UserController::class, 'userListingClient']); //Usuarios ordenados por Client
+    Route::get('userList/userListing/Admin', [UserController::class, 'userListing'])->name('admin'); //Usuarios ordenados por Admin(Por defecto)
+    Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker'])->name('worker'); //Usuarios ordenados por Worker
+    Route::get('userList/userListing/Client', [UserController::class, 'userListingClient'])->name('client'); //Usuarios ordenados por Client
 
-Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden']);
-Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('user.unHide');
+    Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden'])->name('userListingHidden');
+    Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('user.unHide')->name('unHide');
 
 
-Route::post('addUser', [UserController::class, 'addUser'])->name('addUser');
-Route::post('userList/unuscribeUser', [UserController::class, 'userDown']);
-Route::post('userList/editUser', [UserController::class, 'editUser'])->name('editUser');
+    Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->name('addUser');
+    Route::post('userList/unuscribeUser', [UserController::class, 'userDown'])->name('unuscribeUser');
+    Route::post('userList/editUser', [UserController::class, 'editUser'])->name('editUser')->name('editUser');
 });
 
 //Crud empresas
@@ -199,9 +199,6 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('rescources/admin-datos-FILE', [ResourceController::class, 'index_admin_datos_FILE'])->name('rescources-file.admin'); //Dades recursos tipus FILE
     Route::put('resource/text/{id}/edit', [ResourceController::class, 'updateResourceText'])->name('resourceText.update'); // Editar recurs tipus text
     Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceUrl.update'); //Editar recurs tipus URL o FILE
-
-
-
 
 
     Route::post('course', [CourseController::class, 'store'])->name('course.store');
@@ -343,4 +340,4 @@ Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('im
 
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index')->middleware('auth', 'check_access_admin');
 
-Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
+Route::get('phpinfo', fn() => phpinfo())->middleware('auth', 'check_access_admin');
