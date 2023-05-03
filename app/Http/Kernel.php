@@ -69,6 +69,9 @@ class Kernel extends HttpKernel
         'log.course' => \App\Http\Middleware\LogCourseMiddleware::class,
         'log.company' => \App\Http\Middleware\LogCompanyMiddleware::class,
         'log.user' => \App\Http\Middleware\LogUserMiddleware::class,
+        'log.question' => \App\Http\Middleware\LogQuestionMiddleware::class,
+        'log.questionnaire' => \App\Http\Middleware\LogQuestionnaireMiddleware::class,
+        'log.report' => \App\Http\Middleware\LogReportMiddleware::class,
 
     ];
 }
