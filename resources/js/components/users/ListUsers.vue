@@ -1,40 +1,40 @@
 <template>
-    <div class="grid justify-items-end mr-5">
-    </div>
-    <div class="flex justify-center mt-5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
-            @click="openModalCrear()">
-            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-            <span class="ml-2">{{ $t('create-user') }}</span>
-        </button>
-        <div class="w-4"></div> <!-- Espacio entre los botones -->
-        <button @click="redirectToDeletedUser()" id=""
-            class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
-            <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
-            {{ $t('Deleted.User') }}
-        </button>
-        <div class="w-4"></div> <!-- Espacio entre los botones -->
-    </div>
-
-    <div class="flex items-center">
-        <div class="mr-5">
-            <button
-                class="text-black font-bold focus:ring-4 focus:outline-none rounded ml-10 flex items-center text-center h-6 px-2">
-                <select v-model="selectedType" @change="sortTable">
-                    <option value="worker">{{ $t('Worker') }}</option>
-                    <option value="admin" selected>{{ $t('Admin') }}</option>
-                    <option value="client">{{ $t('Client') }}</option>
-                </select>
-            </button>
-        </div>
-        <div class="flex justify-end">
-            <div class="mb-4">
-                <input v-model="searchTerm" type="text"
-                    class=" mt-5 px-4 py-2 border rounded-lg w-60 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    :placeholder="$t('Search')" />
+    <div class="flex items-center justify-center flex-col">
+        <h1 class="mt-5 text-center text-2xl font-semibold">{{ $t('list-users') }}</h1>
+        <div class="flex justify-between mt-5 w-full">
+            <div class="flex items-center">
+                <div class="ml-5">
+                    <button
+                        class="text-black font-bold focus:ring-4 focus:outline-none rounded flex items-center text-center h-6 px-2">
+                        {{ $t('order-by') }}
+                        <select v-model="selectedType" @change="sortTable" class="ml-2">
+                            <option value="worker">{{ $t('Worker') }}</option>
+                            <option value="admin" selected>{{ $t('Admin') }}</option>
+                            <option value="client">{{ $t('Client') }}</option>
+                        </select>
+                    </button>
+                </div>
+                <div class="mb-4 ml-10 ">
+                    <input v-model="searchTerm" type="text"
+                        class="mt-5 px-4 py-2 border rounded-lg w-60 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        :placeholder="$t('Search')" />
+                </div>
+            </div>
+            <div class=" mr-12 flex items-center">
+                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
+                    @click="openModalCrear()">
+                    <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                    <span class="ml-2">{{ $t('create-user') }}</span>
+                </button>
+                <button @click="redirectToDeletedUser()" id=""
+                    class="ml-4 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+                    <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+                    {{ $t('Deleted.User') }}
+                </button>
             </div>
         </div>
     </div>
+
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
             <div class="p-6 text-gray-900">

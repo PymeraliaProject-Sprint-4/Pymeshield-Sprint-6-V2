@@ -1,17 +1,20 @@
 <template>
-    <div class="flex justify-center mt-5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
+   <div class="flex justify-between items-center ml-10 mt-5">
+  <h1 class="mr-5 text-2xl font-semibold" > {{ $t('list-companies') }}</h1>
+  <div class="flex items-center mr-10">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
             @click="ModalCrear = true">
-            <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-            <span class="ml-2">{{ $t('create-company') }}</span>
-        </button>
-        <div class="w-4"></div> <!-- Espacio entre los botones -->
-        <button @click="redirectToDeletedCompany()" id=""
-            class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
-            <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
-            {{ $t('Deleted.Company') }}
-        </button>
-    </div>
+      <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+      <span class="ml-2">{{ $t('create-company') }}</span>
+    </button>
+    <div class="w-4"></div>
+    <button @click="redirectToDeletedCompany()" id=""
+            class="text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+      <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+      {{ $t('Deleted.Company') }}
+    </button>
+  </div>
+</div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
             <div class="p-6 text-gray-900">
