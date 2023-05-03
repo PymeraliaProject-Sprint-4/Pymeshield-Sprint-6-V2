@@ -24,3 +24,4 @@ _ide_helper_models.php
 /public/files/*.txt
 /public/img/profile_images/*
 /public/img/imatgesemblemes/*
+lang/php_*.json

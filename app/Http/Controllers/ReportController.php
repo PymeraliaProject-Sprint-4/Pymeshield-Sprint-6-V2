@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
-use Dompdf\Dompdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
@@ -22,7 +22,6 @@ class ReportController extends Controller
 
         $questionnaires = Questionnaire::all();
         $users = User::all();
-
         return view('report.index', compact('reports', 'questionnaires', 'users'));
     }
     //acció
@@ -41,17 +40,15 @@ class ReportController extends Controller
             ->join('type_measures', 'type_measures.id', '=', 'answers.type_measure_id')
             ->where('reports.id', '=', $id)
             ->get();
-
         return view('report.show', compact('report'));
     }
-
     public function pdf($id)
     {
-
         $report = Report::with(['answers', 'answers.impact', 'answers.intervention', 'answers.probability', 'answers.question', 'answers.risk', 'answers.typeMeasure'])
             ->findOrFail($id);
 
-        $pdf = PDF::loadView('report.pdf', compact('report'))->setPaper('legal', 'landscape');
+        $today = Carbon::now()->format('d/m/Y');
+        $pdf = PDF::loadView('report.pdf', compact('report', 'today'))->setPaper('legal', 'landscape');
         return $pdf->stream();
     }
 
@@ -59,7 +56,6 @@ class ReportController extends Controller
     {
         // crear un report (desde la vista auditorías)
         $report = new Report();
-
         // validar datos
         $validated = $request->validate([
             'reportName' => 'required|string|max:50',
@@ -69,39 +65,46 @@ class ReportController extends Controller
         $reportName = $validated['reportName'];
         $selectedQuestionnaire = $validated['selectedQuestionnaire'];
         $selectedUser = $validated['selectedUser'];
-
         $report->name = $reportName;
         $report->questionnaire_id = $selectedQuestionnaire;
         $report->user_id = $selectedUser;
         $report->date = date('Y-m-d');
         $report->status = "pending";
-
         $report->save();
-
         return response()->json([
             'redirect' => route('audit.index')
         ]);
     }
     function indexmobil()
     {
-        return Report::all();
-    }
-    function indexmobilID($id)
-    {
-        return Report::find($id);
-    }
+        if (auth()->user()->type == 'client') {
+            $data = DB::table('reports')
+                ->select('id', 'name', 'status')
+                ->where('user_id', '=', auth()->user()->id)
+                ->get();
 
-    public function modificar(Request $request, $id){
+            return response()->json($data);
+        } else {
+            $data = DB::table('reports')
+                ->select('id', 'name', 'status')
+                ->get();
+
+            return response()->json($data);
+        }
+    }
+    public function modificar(Request $request, $id)
+    {
         $report = Report::find($id);
         $report->name = $request->input('name');
         $report->status = $request->input('status');
-        
-        $report->save();
-      
-        return back();
-      }
 
-    public function eliminar($id){
+        $report->save();
+
+        return back();
+    }
+
+    public function eliminar($id)
+    {
         $report = Report::find($id);
         $dateNow = date('Y-m-d');
         $report->hidden = $dateNow;
