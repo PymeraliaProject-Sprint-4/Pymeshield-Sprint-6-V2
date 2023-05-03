@@ -126,7 +126,7 @@
                                     <button type="button"
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 flex items-center"
                                         @click="nextUser">
-                                        <i class="fas fa-arrow-right mr-2"></i>Següent
+                                        <i class="fas fa-arrow-right mr-2"></i>{{$t('pagination.next')}}
                                     </button>
 
                                 </div>
