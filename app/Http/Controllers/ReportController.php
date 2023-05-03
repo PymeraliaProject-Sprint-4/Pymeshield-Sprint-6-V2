@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
-use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Http\Request;
@@ -15,7 +15,8 @@ class ReportController extends Controller
     public function index()
     {
         //pagina principal de informes mostra llistat informes (solo sin completar)
-        $reports = Report::orderBy('status', 'asc')
+        $reports = Report::whereNull('hidden')
+            ->orderBy('status', 'asc')
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
@@ -50,8 +51,7 @@ class ReportController extends Controller
         $report = Report::with(['answers', 'answers.impact', 'answers.intervention', 'answers.probability', 'answers.question', 'answers.risk', 'answers.typeMeasure'])
             ->findOrFail($id);
 
-        $today = Carbon::now()->format('d/m/Y');
-        $pdf = PDF::loadView('report.pdf', compact('report', 'today'))->setPaper('legal', 'landscape');
+        $pdf = PDF::loadView('report.pdf', compact('report'))->setPaper('legal', 'landscape');
         return $pdf->stream();
     }
 
@@ -84,22 +84,30 @@ class ReportController extends Controller
     }
     function indexmobil()
     {
-        if(auth()->user()->type == 'client'){
-            $data = DB::table('reports')
-            ->select('id', 'name', 'status')
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
-            
-            return response()->json($data);
-        }
-        else{
-            $data = DB::table('reports')
-            ->select('id', 'name', 'status')
-            ->get();
-            
-            return response()->json($data);
-        }
+        return Report::all();
+    }
+    function indexmobilID($id)
+    {
+        return Report::find($id);
+    }
+
+    public function modificar(Request $request, $id){
+        $report = Report::find($id);
+        $report->name = $request->input('name');
+        $report->status = $request->input('status');
         
-        
+        $report->save();
+      
+        return back();
+      }
+
+    public function eliminar($id){
+        $report = Report::find($id);
+        $dateNow = date('Y-m-d');
+        $report->hidden = $dateNow;
+
+        $report->save();
+
+        return back();
     }
 }

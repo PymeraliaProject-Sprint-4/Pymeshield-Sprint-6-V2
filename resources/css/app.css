@@ -452,3 +452,20 @@ footer svg {
 
 }
 /*FINAL EQUIP 3--------------------------------*/
+
+.detallsReport{
+    margin-top: 7%
+}
+
+.modificarReport{
+    margin-top: -1%
+}
+
+.eliminarReport{
+    margin-top: -1%;
+    margin-left: -8%;
+}
+
+.marginBotons{
+    margin-right: 2%;
+}

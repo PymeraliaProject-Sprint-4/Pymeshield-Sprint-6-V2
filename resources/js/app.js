@@ -79,6 +79,11 @@ app.component('audit', audit);
 const createReport = defineAsyncComponent(() => import('./components/CreateReport.vue'));
 app.component('create-report', createReport);
 
+const ReportModificar = defineAsyncComponent(() => import('./components/ReportModificar.vue'));
+app.component('report-modificar', ReportModificar);
+
+const ReportEliminar = defineAsyncComponent(() => import('./components/ReportEliminar.vue'));
+app.component('report-eliminar', ReportEliminar);
 
 //EQUIP3
 
