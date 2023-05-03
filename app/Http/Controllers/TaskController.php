@@ -226,7 +226,6 @@ class TaskController extends Controller
 
     public function mostrarTareas($id, Request $request)
     {
-        $userId = Auth::user()->id;
         $tareas = DB::table('tasks')
             ->select('tasks.*', 'answers.recommendation')
             ->join('answers', 'tasks.answer_id', '=', 'answers.id')
@@ -235,7 +234,6 @@ class TaskController extends Controller
             ->where([
                 ['tasks.manages', '=', 'Me aconseja Pymeralia'],
                 ['budgets.id', '=', $id],
-                ['users.id', '=', $userId]
             ])
             ->paginate(5);
 
