@@ -69,13 +69,11 @@
                             class="bg-orange-400 hover:bg-orange-600  text-white font-bold py-2 px-2 ml-2 rounded">
                             <PencilSquareIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
-                        <button
-                            @click="openModalImages(device.id)"
+                        <button @click="openModalImages(device.id)"
                             class="bg-blue-500 hover:bg-blue-600  text-white font-bold py-2 px-2 ml-2 mt-1 rounded">
                             <PhotoIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
-                        <button
-                            @click="downloadQr(device.id)"
+                        <button @click="openModalQr(device.id)"
                             class="bg-gray-600 hover:bg-gray-800  text-white font-bold py-2 px-2 ml-2 mt-1 rounded">
                             <QrCodeIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
                         </button>
@@ -165,7 +163,8 @@
                                                 <div class="flex w-full space-x-8">
                                                     <div class="w-full">
                                                         <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de dispositivo</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo
+                                                            de dispositivo</label>
                                                         <select v-model="crear.type_device_id"
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400">
                                                             <option value="Seleccione">Seleccione un tipo...</option>
@@ -477,6 +476,43 @@
         </Dialog>
     </TransitionRoot>
 
+    <!-- Modal QR -->
+    <TransitionRoot as="template" :show="ModalQR">
+        <Dialog as="div" class="relative z-10" @close="ModalQR = false">
+            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </TransitionChild>
+
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <TransitionChild as="template" enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <DialogPanel
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="xl:items-center">
+                                    <div id="divQR" class="flex space-x-2 items-center justify-center">
+                                        <img v-if="ModalQR" :src="imgSource" alt="Imagen">
+                                    </div>
+                                    <a v-if="ModalQR" :href="imgSource" download="Imagen.png">
+                                        <button
+                                            class="bg-orange-500 hover:bg-orange-700 mt-4 text-white font-bold py-2 px-4 rounded">
+                                            Descargar
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                </div>
+            </div>
+        </Dialog>
+    </TransitionRoot>
+
     <!-- Notificacio crear dispositiu -->
     <TransitionRoot as="template" :show="NotificacionCrear">
         <Dialog as="div" class="relative z-10" @close="NotificacionCrear = false">
@@ -600,10 +636,12 @@ export default {
             ModalEditar: ref(false),
             ModalBorrar: ref(false),
             ModalImages: ref(false),
+            ModalQR: ref(false),
             NotificacionCrear: ref(false),
             NotificacionEditar: ref(false),
             NotificacionBorrar: ref(false),
             devices: {},
+            imgSource: "",
             devicesData: [],
             errors: [],
             images: [],
@@ -613,8 +651,8 @@ export default {
             companies: [],
 
             //Variables v-model
-            crear: { brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "Seleccione", state: "Seleccione", serial_number: "", description: "", company_id: "Seleccione"},
-            editar: { id: "", brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "", state: "", serial_number: "", description: "" , company_id: ""},
+            crear: { brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "Seleccione", state: "Seleccione", serial_number: "", description: "", company_id: "Seleccione" },
+            editar: { id: "", brand: "", model: "", mac_ethernet: "", mac_wifi: "", type_device_id: "", state: "", serial_number: "", description: "", company_id: "" },
             borrar: { id: "" }
         };
     },
@@ -655,7 +693,7 @@ export default {
         },
     },
     methods: {
-        generateqr(id = 1) {
+        generateqr(id) {
             axios.post("/devices/generateqr", {
                 id: id
             })
@@ -710,6 +748,10 @@ export default {
             this.ModalImages = true;
 
         },
+        openModalQr(id) {
+            this.imgSource = "storage/devices_qr/device_" + id + ".png";
+            this.ModalQR = true;
+        },
         typeDevice() {
             axios.get('/devices/type_devices')
                 .then((response) => {
@@ -720,7 +762,7 @@ export default {
                 });
         },
         listCompanies() {
-            axios.get('listadoEmpresas/listCompanies')
+            axios.get('company/listAllCompanies')
                 .then((response) => {
                     this.companies = response.data;
                 })
@@ -757,7 +799,7 @@ export default {
                 this.errors.push("El número de serie es obligatorio");
             }
 
-            if (this.crear.company_id === "Seleccione"){
+            if (this.crear.company_id === "Seleccione") {
                 this.errors.push("Seleccione una empresa")
             }
 
@@ -823,7 +865,7 @@ export default {
                 this.errors.push("El número de serie es obligatorio");
             }
 
-            if (this.editar.company_id === "Seleccione"){
+            if (this.editar.company_id === "Seleccione") {
                 this.errors.push("Seleccione una empresa")
             }
 

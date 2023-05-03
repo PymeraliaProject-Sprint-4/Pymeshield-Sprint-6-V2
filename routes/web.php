@@ -94,6 +94,7 @@ Route::middleware(['auth', 'check_access_admin', 'log.company'])->group(function
     Route::get('llistatEmpreses', [CompanyController::class, 'index'])->name('company.llistatEmpreses');
     Route::get('listcompanyhidden', [CompanyController::class, 'indexhidden'])->name('company.listcompanyhidden');
     Route::get('company/{id}/unHide', [CompanyController::class, 'unHideCompany'])->name('company.unHide');
+    Route::get('company/listAllCompanies', [CompanyController::class, 'listAllCompanies'])->middleware('auth');
 });
 
 //Rutes per al perfil Personal i editarPerfil

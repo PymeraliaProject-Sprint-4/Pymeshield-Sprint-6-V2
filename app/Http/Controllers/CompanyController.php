@@ -18,6 +18,11 @@ class CompanyController extends Controller
         }
     }
 
+    public function listAllCompanies(){
+        $companies = Company::where('hidden','=',null)->get();
+        return $companies;
+    }
+
     public function listCompanies()
     {
         $companies = Company::select(['id', 'name', 'email', 'phone', 'cif'])
