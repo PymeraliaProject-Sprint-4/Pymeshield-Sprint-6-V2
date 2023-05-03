@@ -3,7 +3,7 @@
     <div class="flex items-center pt-4 justify-between m-5">
       <a @click="open = true">
         <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-3 ml-2 rounded"
-                data-modal-target="modificar{{ id }},{{ name }},{{ status }}" 
+                data-modal-target="modificar{{ id }},{{ name }},{{ status }}"
                 data-modal-toggle="modificar{{ id }},{{ name }},{{ status }}">
             <i class="fa-regular fa-pen-to-square "></i>
         </button>
@@ -87,13 +87,13 @@
                                 <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center">
                                     <button type="submit" id="yes"
                                             class="w-full rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 sm:ml-3 sm:w-auto marginBotons"
-                                            :class="{ 'opacity-50 cursor-not-allowed': hasError === 0 }" 
-                                            :disabled="hasError === 0" 
-                                            @click="modificarReport" 
+                                            :class="{ 'opacity-50 cursor-not-allowed': hasError === 0 }"
+                                            :disabled="hasError === 0"
+                                            @click="modificarReport"
                                             >
                                             {{ $t('savechanges') }}
                                     </button>
-                                    <button type="button" 
+                                    <button type="button"
                                             class="w-full rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 sm:w-auto"
                                             @click="open = false">
                                             {{ $t('cancel') }}
@@ -115,7 +115,7 @@ import axios from 'axios'
 
 // datos para rellenar el modal
 const props = defineProps({
-  id: String,
+  id: Number,
   name: String,
   status: String
 });
@@ -133,10 +133,10 @@ const open = ref(false)
 
 // enviar asignación cuestionario
 async function modificarReport() {
-   
+
     console.log(props.name)
     try {
-   
+
         const response = await axios.post(`/report/${props.id}`, {
   name: nameModificar.value,
   status: statusModificar.value,
