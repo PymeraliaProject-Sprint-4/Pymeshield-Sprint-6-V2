@@ -159,7 +159,7 @@ export default {
             let data = this.tareas.map(tarea => {
                 return [tarea.id, tarea.price, tarea.start_date, tarea.final_date];
             });
-            this.$axios.put('/api/actualizar-tareas', { data: data })
+            this.$axios.put('/actualizar-tareas', { data: data })
                 .then(response => {
                 })
                 .catch(error => {
@@ -171,7 +171,7 @@ export default {
             })
         },
         updateSingleTask: function (tarea) {
-            this.$axios.put('/api/update-task/' + tarea.id, {
+            this.$axios.put('/update-task/' + tarea.id, {
                 price: tarea.price,
                 start_date: tarea.start_date,
                 final_date: tarea.final_date,
