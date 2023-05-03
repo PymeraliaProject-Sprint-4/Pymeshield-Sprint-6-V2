@@ -152,15 +152,16 @@ Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pd
 Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_client');
 
 //Question ROUTES
-Route::get('question', [QuestionController::class, 'index'])->name('question.index')->middleware('auth', 'check_access_admin');
-Route::post('question', [QuestionController::class, 'store'])->name('question.store')->middleware('auth', 'check_access_admin');
-Route::get('question/create', [QuestionController::class, 'create'])->name('question.create')->middleware('auth', 'check_access_admin');
-Route::get('question/hidden', [QuestionController::class, 'hidden'])->name('question.hidden')->middleware('auth', 'check_access_admin');
-Route::get('question/{id}/activate', [QuestionController::class, 'activate'])->name('question.activate')->middleware('auth', 'check_access_admin');
-Route::get('question/{id}/unActivate', [QuestionController::class, 'unActivate'])->name('question.unActivate')->middleware('auth', 'check_access_admin');
-Route::put('question/{question}', [QuestionController::class, 'update'])->name('question.update')->middleware('auth', 'check_access_admin');
-Route::get('question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit')->middleware('auth', 'check_access_admin');
-
+Route::middleware(['auth', 'check_access_admin', 'log.question'])->group(function () {
+    Route::get('question', [QuestionController::class, 'index'])->name('question.index');
+    Route::post('question', [QuestionController::class, 'store'])->name('question.store');
+    Route::get('question/create', [QuestionController::class, 'create'])->name('question.create');
+    Route::get('question/hidden', [QuestionController::class, 'hidden'])->name('question.hidden');
+    Route::get('question/{id}/activate', [QuestionController::class, 'activate'])->name('question.activate');
+    Route::get('question/{id}/unActivate', [QuestionController::class, 'unActivate'])->name('question.unActivate');
+    Route::put('question/{question}', [QuestionController::class, 'update'])->name('question.update');
+    Route::get('question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit');
+});
 
 //Questionnaire ROUTES
 Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.index')->middleware('auth', 'check_access_admin');
