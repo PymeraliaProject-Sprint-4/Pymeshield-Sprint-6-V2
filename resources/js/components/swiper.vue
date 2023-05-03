@@ -35,7 +35,7 @@ export default {
             }
 
             // If the URL is a relative URL, construct an absolute URL from the base URL
-            return appUrl + url.replace('dispositivo/', '');
+            return url.replace('dispositivo/', '');
         }
 
     }
