@@ -40,7 +40,7 @@ class LogQuestionMiddleware
             // Almacenar en Redis la información del evento
             Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha creado la pregunta con ID ' . $questionId . ' el dia ' . now()->toDateTimeString());
         }
-        
+
 
 
         // Resto del código del middleware...

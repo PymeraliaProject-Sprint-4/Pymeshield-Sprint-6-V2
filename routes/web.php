@@ -146,13 +146,14 @@ Route::get('admin', function () {
 
 // grup2
 /* Grup de rutes per a CRUD Informe */
-Route::get('report', [ReportController::class, 'index'])->name('report.index')->middleware('auth', 'check_access_client');
-Route::post('report', [ReportController::class, 'store'])->name('report.store')->middleware('auth', 'check_access_client');
-Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
-Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_client');
-Route::post('/report/{id}', [ReportController::class, 'eliminar'])->name('report.eliminar');
-Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar');
-
+Route::middleware(['auth', 'check_access_admin', 'log.report'])->group(function () {
+    Route::get('report', [ReportController::class, 'index'])->name('report.index')->middleware('auth', 'check_access_client');
+    Route::post('report', [ReportController::class, 'store'])->name('report.store')->middleware('auth', 'check_access_client');
+    Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
+    Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_client');
+    Route::post('/report/{id}', [ReportController::class, 'eliminar'])->name('report.eliminar');
+    Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar');
+});
 //Question ROUTES
 Route::middleware(['auth', 'check_access_admin', 'log.question'])->group(function () {
     Route::get('question', [QuestionController::class, 'index'])->name('question.index');
@@ -166,17 +167,19 @@ Route::middleware(['auth', 'check_access_admin', 'log.question'])->group(functio
 });
 
 //Questionnaire ROUTES
-Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.index')->middleware('auth', 'check_access_admin');
-Route::get('questionnaire/create', [QuestionnaireController::class, 'create'])->name('questionnaire.create')->middleware('auth', 'check_access_admin');
-Route::post('questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store')->middleware('auth', 'check_access_admin');
-Route::get('questionnaire/{questionnaire}/edit', [QuestionnaireController::class, 'edit'])->name('questionnaire.edit')->middleware('auth', 'check_access_admin');
-Route::put('questionnaire/{questionnaire}', [QuestionnaireController::class, 'update'])->name('questionnaire.update')->middleware('auth', 'check_access_admin');
-Route::get('questionnaire/hidden', [QuestionnaireController::class, 'hidden'])->name('questionnaire.hidden')->middleware('auth', 'check_access_admin');
-Route::get('questionnaire/{id}/activate', [QuestionnaireController::class, 'activate'])->name('questionnaire.activate')->middleware('auth', 'check_access_admin');
-Route::get('questionnaire/{id}/unActivate', [QuestionnaireController::class, 'unActivate'])->name('questionnaire.unActivate')->middleware('auth', 'check_access_admin');
-Route::post('questionnaire/{questionnaire}/updateQuestion', [QuestionnaireController::class, 'updateQuestion'])->name('questionnaire.updateQuestion')->middleware('auth', 'check_access_admin');
-Route::post('questionnaire/{questionnaire}/assignQuestion', [QuestionnaireController::class, 'assignQuestion'])->name('questionnaire.assignQuestion')->middleware('auth', 'check_access_admin');
-Route::post('questionnaire/{questionnaire}/unassignQuestion', [QuestionnaireController::class, 'unassignQuestion'])->name('questionnaire.unassignQuestion')->middleware('auth', 'check_access_admin');
+Route::middleware(['auth', 'check_access_admin', 'log.questionnaire'])->group(function () {
+    Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.index');
+    Route::get('questionnaire/create', [QuestionnaireController::class, 'create'])->name('questionnaire.create');
+    Route::post('questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
+    Route::get('questionnaire/{questionnaire}/edit', [QuestionnaireController::class, 'edit'])->name('questionnaire.edit');
+    Route::put('questionnaire/{questionnaire}', [QuestionnaireController::class, 'update'])->name('questionnaire.update');
+    Route::get('questionnaire/hidden', [QuestionnaireController::class, 'hidden'])->name('questionnaire.hidden');
+    Route::get('questionnaire/{id}/activate', [QuestionnaireController::class, 'activate'])->name('questionnaire.activate');
+    Route::get('questionnaire/{id}/unActivate', [QuestionnaireController::class, 'unActivate'])->name('questionnaire.unActivate');
+    Route::post('questionnaire/{questionnaire}/updateQuestion', [QuestionnaireController::class, 'updateQuestion'])->name('questionnaire.updateQuestion');
+    Route::post('questionnaire/{questionnaire}/assignQuestion', [QuestionnaireController::class, 'assignQuestion'])->name('questionnaire.assignQuestion');
+    Route::post('questionnaire/{questionnaire}/unassignQuestion', [QuestionnaireController::class, 'unassignQuestion'])->name('questionnaire.unassignQuestion');
+});
 
 //Audits ROUTES
 Route::get('audit', [AuditController::class, 'index'])->name('audit.index')->middleware('auth', 'check_access_client');
