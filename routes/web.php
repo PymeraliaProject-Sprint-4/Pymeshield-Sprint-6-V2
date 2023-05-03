@@ -67,20 +67,20 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
 Route::middleware(['auth', 'check_access_admin', 'log.users'])->group(function () {
-Route::get('userList', [UserController::class, 'userList'])->name('userList')->middleware('auth');
-Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden')->middleware('auth');
+Route::get('userList', [UserController::class, 'userList'])->name('userList');
+Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden');
 
-Route::get('userList/userListing/Admin', [UserController::class, 'userListing'])->middleware('auth'); //Usuarios ordenados por Admin(Por defecto)
-Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker'])->middleware('auth'); //Usuarios ordenados por Worker
-Route::get('userList/userListing/Client', [UserController::class, 'userListingClient'])->middleware('auth'); //Usuarios ordenados por Client
+Route::get('userList/userListing/Admin', [UserController::class, 'userListing']); //Usuarios ordenados por Admin(Por defecto)
+Route::get('userList/userListing/Worker', [UserController::class, 'userListingWorker']); //Usuarios ordenados por Worker
+Route::get('userList/userListing/Client', [UserController::class, 'userListingClient']); //Usuarios ordenados por Client
 
-Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden'])->middleware('auth');
+Route::get('userList/userListingHidden', [UserController::class, 'userListingHidden']);
 Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('user.unHide');
 
 
-Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
-Route::post('userList/unuscribeUser', [UserController::class, 'userDown'])->middleware('auth');
-Route::post('userList/editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
+Route::post('addUser', [UserController::class, 'addUser'])->name('addUser');
+Route::post('userList/unuscribeUser', [UserController::class, 'userDown']);
+Route::post('userList/editUser', [UserController::class, 'editUser'])->name('editUser');
 });
 
 //Crud empresas
