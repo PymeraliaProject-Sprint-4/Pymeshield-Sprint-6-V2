@@ -1,14 +1,19 @@
 @extends('layouts.admin')
 
 @section('content')
-
+<h1 class="p-3 text-center font-medium">{{ __('survey.questionnaires') }}</h1>
     <div class="m-5 flex items-center pt-4 justify-between space-x-3">
+        
         <div>
             <x-button-link href="{{route('questionnaire.create')}}">
                 <i class="fa-solid fa-plus mr-2"></i>
                 {{__('questionnaire.create')}}
             </x-button-link>
         </div>
+        <div>
+            <create-report :questionnaire='{{ json_encode($questionnaire) }}' :users='{{ json_encode($users) }}' />
+        </div>
+
         <div class="flex items-center justify-end">
             <x-button-link href="{{route('questionnaire.hidden')}}">
                 {{__('questionnaire.unactive')}}

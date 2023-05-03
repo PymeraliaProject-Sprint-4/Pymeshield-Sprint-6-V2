@@ -20,10 +20,11 @@ class ReportController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
-        $questionnaires = Questionnaire::all();
-        $users = User::all();
-        return view('report.index', compact('reports', 'questionnaires', 'users'));
-    }
+            $questionnaire = Questionnaire::all();
+            $users = User::all();
+    
+            return view('report.index', compact('reports', 'questionnaire', 'users'));
+        }
     //acció
     public function show($id)
     {
@@ -72,7 +73,7 @@ class ReportController extends Controller
         $report->status = "pending";
         $report->save();
         return response()->json([
-            'redirect' => route('audit.index')
+            'redirect' => route('questionnaire.index')
         ]);
     }
     function indexmobil()

@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\Questionnaire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redis;
 
@@ -18,8 +19,11 @@ class QuestionnaireController extends Controller
         $questionnaires = Questionnaire::where('hidden', false)
         ->orWhereNull('hidden')
         ->Paginate(10);
+        
+        $questionnaire = Questionnaire::all();
+        $users = User::all();
 
-        return view('questionnaire.index', compact('questionnaires'));
+        return view('questionnaire.index', compact('questionnaire','questionnaires', 'users'));
 
     }
 
