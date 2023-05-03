@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'check_access_client' => \App\Http\Middleware\CheckAccessClient::class,
         'check_access_admin' => \App\Http\Middleware\CheckAccessAdmin::class,
         'log.course' => \App\Http\Middleware\LogCourseMiddleware::class,
+        'log.company' => \App\Http\Middleware\LogCompanyMiddleware::class,
 
     ];
 }

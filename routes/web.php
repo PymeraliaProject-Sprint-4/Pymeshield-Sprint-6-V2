@@ -66,6 +66,7 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
+Route::middleware(['auth', 'check_access_admin', 'log.users'])->group(function () {
 Route::get('userList', [UserController::class, 'userList'])->name('userList')->middleware('auth');
 Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden')->middleware('auth');
 
@@ -80,18 +81,20 @@ Route::get('user/{id}/unHide', [UserController::class, 'unHideUser'])->name('use
 Route::post('addUser', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
 Route::post('userList/unuscribeUser', [UserController::class, 'userDown'])->middleware('auth');
 Route::post('userList/editUser', [UserController::class, 'editUser'])->middleware('auth')->name('editUser');
+});
 
 //Crud empresas
-Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->middleware('auth');
-Route::get('listadoEmpresas/listcompanyshidden', [CompanyController::class, 'listcompanieshiddenDatos'])->middleware('auth');
+Route::middleware(['auth', 'check_access_admin', 'log.company'])->group(function () {
+    Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->name('company.listCompanies');
+    Route::get('listadoEmpresas/listcompanyshidden', [CompanyController::class, 'listcompanieshiddenDatos'])->name('company.listcompanyshidden');
 
-Route::post('listadoEmpresas/createCompany', [CompanyController::class, 'storeCompany'])->middleware('auth');
-Route::post('listadoEmpresas/editCompany', [CompanyController::class, 'editCompany'])->middleware('auth');
-Route::post('listadoEmpresas/unsuscribeCompany', [CompanyController::class, 'unsuscribeCompany'])->middleware('auth');
-Route::get('llistatEmpreses', [CompanyController::class, 'index'])->middleware('auth');
-Route::get('listcompanyhidden', [CompanyController::class, 'indexhidden'])->middleware('auth');
-Route::get('company/{id}/unHide', [CompanyController::class, 'unHideCompany'])->name('company.unHide');
-
+    Route::post('listadoEmpresas/createCompany', [CompanyController::class, 'storeCompany'])->name('company.storeCompany');
+    Route::post('listadoEmpresas/editCompany', [CompanyController::class, 'editCompany'])->name('company.editCompany');
+    Route::post('listadoEmpresas/unsuscribeCompany', [CompanyController::class, 'unsuscribeCompany'])->name('company.unsuscribeCompany');
+    Route::get('llistatEmpreses', [CompanyController::class, 'index'])->name('company.llistatEmpreses');
+    Route::get('listcompanyhidden', [CompanyController::class, 'indexhidden'])->name('company.listcompanyhidden');
+    Route::get('company/{id}/unHide', [CompanyController::class, 'unHideCompany'])->name('company.unHide');
+});
 
 //Rutes per al perfil Personal i editarPerfil
 Route::get('Personal_Profile', [UserController::class, 'show_user'])->name('Personal-Profile')->middleware('auth');
