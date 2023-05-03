@@ -2,8 +2,8 @@
     <div class="eliminarReport">
     <div class="flex items-center pt-4 justify-between m-5">
       <a @click="open = true">
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 ml-2 rounded" 
-                data-modal-target="eliminar{{ id }}" 
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 ml-2 rounded"
+                data-modal-target="eliminar{{ id }}"
                 data-modal-toggle="eliminar{{ id }}">
           <i class="fa-regular fa-trash-can"></i>
         </button>
@@ -65,13 +65,13 @@
                                 <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center">
                                     <button type="submit" id="yes"
                                             class="w-full rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 sm:ml-3 sm:w-auto marginBotons"
-                                            :class="{ 'opacity-50 cursor-not-allowed': hasError === 0 }" 
-                                            :disabled="hasError === 0" 
-                                            @click="eliminarReport" 
+                                            :class="{ 'opacity-50 cursor-not-allowed': hasError === 0 }"
+                                            :disabled="hasError === 0"
+                                            @click="eliminarReport"
                                             >
                                             {{ $t('savechanges') }}
                                     </button>
-                                    <button type="button" 
+                                    <button type="button"
                                             class="w-full rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 sm:w-auto"
                                             @click="open = false">
                                             {{ $t('cancel') }}
@@ -89,12 +89,11 @@
 <script setup>
 import { defineProps, ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { ChevronDoubleLeftIcon, PlusCircleIcon, PlusIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
 
 // datos para rellenar el modal
 const props = defineProps({
-  id: String
+  id: Number
 });
 
 // por si hay errores
@@ -107,9 +106,9 @@ const open = ref(false)
 
 // enviar asignación cuestionario
 async function eliminarReport() {
-   
+
     try {
-   
+
         const response = await axios.post('/report/' + props.id);
         hasError.value = 0
         setTimeout(() => {
