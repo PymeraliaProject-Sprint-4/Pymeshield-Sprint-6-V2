@@ -17,7 +17,7 @@
                         {{ __('table.date') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{__('actions')}}
+                        {{ __('actions') }}
                     </th>
 
 
@@ -37,17 +37,17 @@
                         <td class="px-6 py-4">
                             {{ date('d-m-Y', strtotime($report->date)) }}
                         </td>
-                        <td class="px-6 py-4">
-                            <div class="flex justify-center">
-                                <a class="detallsReport" href="{{ route('report.show', [$report->id]) }}" class="font-medium text-orange-600 dark:text-orange-500 hover:underline">{{ __('table.show.more') }}</a>
-
-                                <div class="modificarReport pr-3">
-                                    <report-modificar :id='{{ json_encode($report->id) }}' :name='{{ json_encode($report->name) }}' :status='{{ json_encode($report->status) }}'  />
+                        <td class="flex items-center justify-center px-6 py-4 space-x-1">
+                                <a class="bg-orange-500 hover:bg-gray-700 text-white font-bold py-2 px-3 ml-2 rounded"
+                                    href="{{ route('report.show', [$report->id]) }}"><i class="fa-solid fa-eye"></i></a>
+                                <div>
+                                    <report-modificar :id='{{ json_encode($report->id) }}'
+                                        :name='{{ json_encode($report->name) }}'
+                                        :status='{{ json_encode($report->status) }}' />
                                 </div>
-                                <div class="eliminarReport">
+                                <div>
                                     <report-eliminar :id='{{ json_encode($report->id) }}' />
-                                  </div>
-                            </div>
+                                </div>
                         </td>
                     </tr>
                 @endforeach

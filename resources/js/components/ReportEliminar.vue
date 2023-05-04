@@ -1,14 +1,8 @@
 <template>
     <div class="eliminarReport">
-    <div class="flex items-center pt-4 justify-between m-5">
-      <a @click="open = true">
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 ml-2 rounded"
-                data-modal-target="eliminar{{ id }}"
-                data-modal-toggle="eliminar{{ id }}">
+      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 ml-2 rounded" @click="open = true">
           <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </a>
-    </div>
+      </button>
     </div>
     <TransitionRoot as="template" :show="open">
         <Dialog as="div" class="relative z-10" @close="open = false">
@@ -109,7 +103,7 @@ async function eliminarReport() {
 
     try {
 
-        const response = await axios.post('/report/' + props.id);
+        const response = await axios.post('/report/' + props.id + '/delete');
         hasError.value = 0
         setTimeout(() => {
             open.value = false;
