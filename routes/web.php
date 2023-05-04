@@ -240,8 +240,7 @@ Route::get('emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('em
 Route::post('emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth', 'check_access_admin');
-Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
-
+Route::get('emblems/{emblem}/eliminar', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
 // por revisar
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 

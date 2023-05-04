@@ -102,6 +102,16 @@ class EmblemController extends Controller
         
     }
 
+    public function restaurarMostrar()
+    {
+        $emblems = Emblem::whereNotNull('hidden')->orderBy('id', 'desc')->paginate(10);
+
+        return response()->json([
+            'emblems' => $emblems,
+        ]);
+        
+    }
+
     public function restaurarhide($emblem)
     {
         
