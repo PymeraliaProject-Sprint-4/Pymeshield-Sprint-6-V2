@@ -1,31 +1,34 @@
 <template>
-    <swiper-container v-if="images.length > 0"
-        navigation="true"
-        pagination="true" paginationClickable="true"
-        loop="true"
-        class="w-full h-60">
+    <swiper v-if="images.length > 0" :spaceBetween="30" :centeredSlides="true" :pagination="clickable = true"
+        :navigation="true" :modules="modules">
 
-        <swiper-slide class="flex align-center justify-center flex-none" v-for="(item, index) in images" :key="index">
-            <a :href="getAbsoluteUrl(item)" target="_blank" class="flex align-center justify-center flex-none">
-                <img :src="getAbsoluteUrl(item)" alt="image" class="h-full rounded-md object-cover">
+        <swiper-slide v-for="(item, index) in images" :key="index">
+            <a :href="getAbsoluteUrl(item)" target="_blank">
+                <img :src="getAbsoluteUrl(item)" alt="image" class="object-contain max-w-96 mx-auto" />
             </a>
         </swiper-slide>
 
-    </swiper-container>
+    </swiper>
 
     <h4 v-else class="font-bold">No hay imagenes disponibles.</h4>
 </template>
 
 <script>
-import { register } from 'swiper/element/bundle';
-let appUrl = import.meta.env.APP_URL;
-register()
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination, Navigation } from 'swiper';
 export default {
+    components: {
+        Swiper,
+        SwiperSlide,
+    },
     props: ['images'],
-    data() {
+    setup() {
         return {
-
-        }
+            modules: [Pagination, Navigation],
+        };
     },
     methods: {
         getAbsoluteUrl(url) {
