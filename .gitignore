@@ -25,3 +25,4 @@ _ide_helper_models.php
 /public/img/profile_images/*
 /public/img/imatgesemblemes/*
 lang/php_*.json
+/public/devices_qr/*

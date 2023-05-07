@@ -350,6 +350,7 @@
     "end_date" : "Fecha Final",
     "select_user" : "Selecciona un Usuario",
     "no.logs.result" : "No se ha encontrado ningún registro",
-    "start.date.major.than.final.date" : "La fecha de fin no puede ser menor que la fecha inicio."
+    "start.date.major.than.final.date" : "La fecha de fin no puede ser menor que la fecha inicio.",
+    "passwords.user": "Usuario no encontrado"
 
 }

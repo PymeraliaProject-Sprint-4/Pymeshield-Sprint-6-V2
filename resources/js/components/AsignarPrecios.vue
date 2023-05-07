@@ -19,7 +19,7 @@
                             class="shadow appearance-none border-2 text-center border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="date">
                     </div>
-                    <!-- Fem un binding (lliguem) les possibles respostes, 
+                    <!-- Fem un binding (lliguem) les possibles respostes,
                         si es true "font-bold" si es false "font-bold text-red-500"-->
                     <div v-else class="py-2 px-4"
                         :class="{ 'font-bold': tarea.start_date, 'font-bold text-red-500': !tarea.start_date }">
@@ -43,7 +43,7 @@
                     <div v-if="!tarea.editing" class="py-2 px-4">
                         <input v-model="tarea.price"
                             class="shadow appearance-none border-2 text-center border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number" step="0.01" @blur="sumPrices">
+                            type="number" step="0.01">
                     </div>
                     <div v-else :class="{ 'font-bold': tarea.price, 'font-bold text-red-500': !tarea.price }">
                         {{ tarea.price ? tarea.price : 'No hay precio' }}
@@ -67,7 +67,7 @@
                 <td class="w-1/5 h-10 font-bold">Total : </td>
                 <td class=""></td>
                 <td class=""></td>
-                <td class="font-bold">{{ total }}</td>
+                <td class="font-bold">{{ sumPrices }}</td>
                 <td class="font-bold">€</td>
                 <td> </td>
 
@@ -77,7 +77,7 @@
     <div class="flex justify-center mt-10">
 
         <button @click="updateTasks();"
-            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 block flex justify-center">
+            class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 flex justify-center">
             Enviar todas las tareas
         </button>
 
@@ -92,20 +92,17 @@
         </div>
     </div>
 </template>
-
 <script setup>
 import RadioGroupComponent from '../components/Radio.vue'
 </script>
 
 <script>
-import axios from 'axios';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { TailwindPagination } from 'laravel-vue-pagination';
-import Swal from 'sweetalert2'
+
 
 export default {
-    components: {
-        'laravel-pagination': TailwindPagination,
-    },
     data() {
         return {
             total: [],
@@ -114,15 +111,24 @@ export default {
             taskdata: {},
             itemsPerPage: 10,
             currentPage: 1,
-            tarea: { id: "", price: "", start_date: "", final_date: "" },
+            tarea: { },
             pagination: {},
         };
     },
     mounted() {
         this.getTasks();
     },
-    updated() {
-        this.sumPrices();
+
+    computed: {
+        sumPrices() {
+            return this.tareas.reduce((total, tarea) => {
+                if (tarea.price) {
+                    return total + parseFloat(tarea.price);
+                } else {
+                    return total;
+                }
+            }, 0);
+        }
     },
     methods: {
         getTasks(page = 1) {
@@ -182,14 +188,6 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-        },
-        sumPrices() {
-            this.total = 0;
-            for (let i = 0; i < this.tareas.length; i++) {
-                if (this.tareas[i].price) {
-                    this.total += parseFloat(this.tareas[i].price);
-                }
-            }
         },
 
     },

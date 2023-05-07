@@ -749,7 +749,7 @@ export default {
 
         },
         openModalQr(id) {
-            this.imgSource = "storage/devices_qr/device_" + id + ".png";
+            this.imgSource = "/devices_qr/device_" + id + ".png";
             this.ModalQR = true;
         },
         typeDevice() {
