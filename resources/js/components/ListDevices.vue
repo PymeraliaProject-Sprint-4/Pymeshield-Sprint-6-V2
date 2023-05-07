@@ -14,8 +14,7 @@
                 <tr>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
-                    <th scope="col" class="px-6 py-3">MAC-ethernet</th>
-                    <th scope="col" class="px-6 py-3">MAC-wifi</th>
+                    <th scope="col" class="px-6 py-3">MAC-ethernet / Wifi</th>
                     <th scope="col" class="px-6 py-3">Tipo</th>
                     <th scope="col" class="px-6 py-3">Descripcion</th>
                     <th scope="col" class="px-6 py-3">Estado</th>
@@ -32,17 +31,9 @@
                     <td class="px-6 py-4 font-semibold">
                         {{ device.model }}
                     </td>
-                    <td v-if="device.mac_ethernet === null" class="px-6 py-4">
-                        No dispone.
-                    </td>
-                    <td v-else class="px-6 py-4 font-semibold">
-                        {{ device.mac_ethernet }}
-                    </td>
-                    <td v-if="device.mac_wifi === null" class="px-6 py-4">
-                        No dispone.
-                    </td>
-                    <td v-else class="px-6 py-4 font-semibold">
-                        {{ device.mac_wifi }}
+                    <td class="px-6 py-4">
+                        <p>{{ device.mac_ethernet === null ? 'No dispone.' : device.mac_ethernet }}</p> <p>{{ device.mac_wifi ===
+                            null ? 'No dispone.' : device.mac_wifi }}</p>
                     </td>
                     <td class="px-6 py-4 font-semibold">
                         {{ device.name }}
