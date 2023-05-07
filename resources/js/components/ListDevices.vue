@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-5 mt-3">
+    <div class="mx-5 mt-3 overflow-x-auto">
         <div class="flex justify-between">
             <div class="flex items-center">
                 <p class="text-2xl font-semibold">Listado dispositivos</p>
@@ -9,7 +9,7 @@
                     @click="openModalCrear()">Crear dispositivo</button>
             </div>
         </div>
-        <table class="mt-2 table-fixed w-full text-base text-gray-800 dark:text-gray-400 text-center">
+        <table class="mt-2 table-auto w-full text-base text-gray-800 dark:text-gray-400 text-center">
             <thead class="bg-orange-500 text-white">
                 <tr>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
