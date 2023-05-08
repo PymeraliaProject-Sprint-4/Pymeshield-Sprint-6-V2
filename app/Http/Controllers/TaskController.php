@@ -84,13 +84,13 @@ class TaskController extends Controller
             ->join('questionnaires', 'questionnaires.id', '=', 'question_questionnaire.questionnaire_id')
             ->join('reports', 'reports.questionnaire_id', '=', 'questionnaires.id')
             ->join('answer_report', 'answer_report.answer_id', '=', 'answers.id')
-            ->where('reports.id', '=', 4) //El que recoge por get en la url desde un cuestionario
-            ->where('answer_report.report_id', '=', 4) //El que recoge por get en la url desde un cuestionario
+            ->where('reports.id', '=', $id) //El que recoge por get en la url desde un cuestionario
+            ->where('answer_report.report_id', '=', $id) //El que recoge por get en la url desde un cuestionario
             // /** filtros para la búsqueda */
             ->where('answers.recommendation', 'LIKE', '%' . $filtro . '%')
             ->orWhere('questions.description', 'LIKE', '%' . $filtro . '%')
-            ->where('reports.id', '=', 4) //El que recoge por get en la url desde un cuestionario
-            ->where('answer_report.report_id', '=', 4) //El que recoge por get en la url desde un cuestionario
+            ->where('reports.id', '=', $id) //El que recoge por get en la url desde un cuestionario
+            ->where('answer_report.report_id', '=', $id) //El que recoge por get en la url desde un cuestionario
             /** filtros para la búsqueda */
             ->paginate(10);
 
