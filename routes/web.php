@@ -278,7 +278,7 @@ Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::
 
 /** ------ EQUIP 4 ------ */
 
-Route::get('acceptacio-tasques', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth', 'check_access_client'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
+Route::get('acceptacio-tasques/{id}', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth', 'check_access_client'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
 
 Route::get('modificar_presupuesto', function () {
     return view('Presupuestos/modificar_presupuesto/index');
@@ -334,10 +334,7 @@ Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('res
 
 
 //Mostrar Dispositivos
-Route::get('devices', function () {
-    return view('listdevices');
-})->middleware('auth', 'check_access_admin');
-
+Route::get('devices', [DevicesController::class, 'index'])->name('index.devices')->middleware('auth', 'check_access_admin');
 Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('auth', 'check_access_admin');
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');

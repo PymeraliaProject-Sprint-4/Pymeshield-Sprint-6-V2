@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
+    <div>
+        <create-report :questionnaires='{{ json_encode($questionnaires) }}' :users='{{ json_encode($users) }}' />
+    </div>
     <div class="overflow-x-auto shadow-md sm:rounded-lg m-5">
         <table class="table-auto w-full shadow-lg rounded-lg">
             <thead>
@@ -38,16 +41,16 @@
                             {{ date('d-m-Y', strtotime($report->date)) }}
                         </td>
                         <td class="flex items-center justify-center px-6 py-4 space-x-1">
-                                <a class="bg-orange-500 hover:bg-gray-700 text-white font-bold py-2 px-3 ml-2 rounded"
-                                    href="{{ route('report.show', [$report->id]) }}"><i class="fa-solid fa-eye"></i></a>
-                                <div>
-                                    <report-modificar :id='{{ json_encode($report->id) }}'
-                                        :name='{{ json_encode($report->name) }}'
-                                        :status='{{ json_encode($report->status) }}' />
-                                </div>
-                                <div>
-                                    <report-eliminar :id='{{ json_encode($report->id) }}' />
-                                </div>
+                            <a class="bg-orange-500 hover:bg-gray-700 text-white font-bold py-2 px-3 ml-2 rounded"
+                                href="{{ route('report.show', [$report->id]) }}"><i class="fa-solid fa-eye"></i></a>
+                            <div>
+                                <report-modificar :id='{{ json_encode($report->id) }}'
+                                    :name='{{ json_encode($report->name) }}'
+                                    :status='{{ json_encode($report->status) }}' />
+                            </div>
+                            <div>
+                                <report-eliminar :id='{{ json_encode($report->id) }}' />
+                            </div>
                         </td>
                     </tr>
                 @endforeach

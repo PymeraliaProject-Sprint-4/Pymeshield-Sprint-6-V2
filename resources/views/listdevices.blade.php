@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <list-devices/>
+    <div>
+        <list-devices />
+    </div>
 @endsection

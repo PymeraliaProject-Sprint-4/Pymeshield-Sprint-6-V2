@@ -14,7 +14,8 @@
                 <tr>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ $t('inventory.mac.ethernet') }} / {{ $t('inventory.mac.wifi') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('inventory.mac.ethernet') }} / {{ $t('inventory.mac.wifi') }}
+                    </th>
                     <th scope="col" class="px-6 py-3">{{ $t('inventory.type') }}</th>
                     <th scope="col" class="px-6 py-3">{{ $t('inventory.description') }}</th>
                     <th scope="col" class="px-6 py-3">{{ $t('inventory.state') }}</th>
@@ -32,7 +33,8 @@
                         {{ device.model }}
                     </td>
                     <td class="px-6 py-4">
-                        <p>{{ device.mac_ethernet === null ? 'No dispone.' : device.mac_ethernet }}</p> <p>{{ device.mac_wifi ===
+                        <p>{{ device.mac_ethernet === null ? 'No dispone.' : device.mac_ethernet }}</p>
+                        <p>{{ device.mac_wifi ===
                             null ? 'No dispone.' : device.mac_wifi }}</p>
                     </td>
                     <td class="px-6 py-4 font-semibold">
@@ -613,8 +615,12 @@
     </TransitionRoot>
 </template>
 
-<script>
+<script setup>
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon } from '@heroicons/vue/24/outline';
+</script>
 
+<script>
 import axios from 'axios';
 import { ref } from "vue";
 import { TailwindPagination } from 'laravel-vue-pagination';
@@ -647,7 +653,7 @@ export default {
             borrar: { id: "" }
         };
     },
-    mounted() {
+    beforeMount() {
         this.typeDevice();
         this.getDevices();
         this.listCompanies();
@@ -913,9 +919,4 @@ export default {
         }
     },
 };
-</script>
-
-<script setup>
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon } from '@heroicons/vue/24/outline'
 </script>
