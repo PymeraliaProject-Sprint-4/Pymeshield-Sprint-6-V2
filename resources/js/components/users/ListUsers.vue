@@ -97,403 +97,413 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="flex justify-center items-center mt-8">
-                            <nav class="bg-white p-6 rounded-lg shadow-lg">
-                                <ul class="flex space-x-4">
-                                    <li v-if="pagination.length > 0 && currentPage > 1">
-                                        <button @click="changePage(currentPage - 1)"
-                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
-                                            {{ $t('Previous') }}
-                                        </button>
-                                    </li>
-                                    <li v-for="page in Math.ceil(user.length / perPage)" :key="page">
-                                        <button @click="changePage(page)"
-                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md"
-                                            :class="{ 'bg-orange-400': page === currentPage }">
-                                            {{ page }}
-                                        </button>
-                                    </li>
-                                    <li v-if="pagination.length > 0 && currentPage < Math.ceil(user.length / perPage)">
-                                        <button @click="changePage(currentPage + 1)"
-                                            class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
-                                            {{ $t('Next') }}
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
+
+
+
+
+                        <div class="flex justify-center items-center mt-8" v-if="searchTerm == ''">
+
+
+                            <div class="flex justify-center items-center">
+                                <nav class="bg-white p-6 rounded-lg shadow-lg">
+                                    <ul class="flex space-x-4">
+                                        <li v-if="pagination.length > 0 && currentPage > 1">
+                                            <button @click="changePage(currentPage - 1)"
+                                                class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                                {{ $t('Previous') }}
+                                            </button>
+                                        </li>
+                                        <li v-for="page in Math.ceil(user.length / perPage)" :key="page">
+                                            <button @click="changePage(page)"
+                                                class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md"
+                                                :class="{ 'bg-orange-400': page === currentPage }">
+                                                {{ page }}
+                                            </button>
+                                        </li>
+                                        <li v-if="pagination.length > 0 && currentPage < Math.ceil(user.length / perPage)">
+                                            <button @click="changePage(currentPage + 1)"
+                                                class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md shadow-md">
+                                                {{ $t('Next') }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
                         </div>
+
+
+                        <!--Modal Crear usaurio-->
+                        <TransitionRoot as="template" :show="ModalCrear">
+                            <Dialog as="div" class="relative z-10" @close="ModalCrear = false">
+                                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                </TransitionChild>
+                                <div class="fixed inset-0 z-10 overflow-y-auto">
+                                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                        <TransitionChild as="template" enter="ease-out duration-300"
+                                            enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                            enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                                            leave-from="opacity-100 translate-y-0 sm:scale-100"
+                                            leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                            <DialogPanel
+                                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                    <div class="xl:items-start">
+                                                        <div class="flex space-x-2 items-center">
+
+                                                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                                                                {{ $t('create-user') }}</DialogTitle>
+                                                        </div>
+                                                        <div class="mt-3 text-center md:text-left">
+                                                            <div class="mt-2">
+                                                                <div class="relative">
+                                                                    <label for="name"
+                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                            $t('name') }}</label>
+                                                                    <input type="text" v-model="name" id="name"
+                                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                        required>
+                                                                    <span v-show="!name"
+                                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <div class="relative">
+                                                                    <label for="last_name"
+                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                            $t('lastname') }}</label>
+                                                                    <input type="text" v-model="last_name" id="last_name"
+                                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                        required>
+                                                                    <span v-if="!last_name"
+                                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <div class="relative">
+                                                                    <div>
+                                                                        <label for="nick_name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('username') }}</label>
+                                                                        <input type="text" v-model="nick_name" id="nick_name"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                            required>
+                                                                        <span v-if="!nick_name"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <div class="relative">
+                                                                    <div class="flex w-full space-x-8">
+                                                                        <div class="w-full">
+                                                                            <label for="email"
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                    $t('email') }}</label>
+                                                                            <input type="text" v-model="email" id="email"
+                                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                                required>
+                                                                            <span v-if="!email"
+                                                                                class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="w-full">
+                                                                        <div class="relative">
+                                                                            <label for="phone"
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                    $t('phone') }}</label>
+                                                                            <input type="text" v-model="phone" id="phone"
+                                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                                required>
+                                                                            <span v-if="!phone"
+                                                                                class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-full">
+                                                                    <div class="relative">
+                                                                        <label for="company_name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('company') }}</label>
+                                                                        <input v-model="selectedCompany" list="companies" id="company_name"
+                                                                            class="w-full h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                            required>
+                                                                        <datalist id="companies">
+                                                                            <option value="" disabled selected>{{ $t('select_company') }}
+                                                                            </option>
+                                                                            <option v-for="company in companies" :key="company.id"
+                                                                                :value="company.id">{{ company.name }}</option>
+                                                                        </datalist>
+                                                                        <span v-if="!selectedCompany"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-full">
+                                                                    <div class="relative">
+                                                                        <label for="rols"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('Role') }}</label>
+                                                                        <select v-model="selectedType" id="rols"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                            required>
+                                                                            <option value="" disabled selected>{{ $t('Select a role') }}
+                                                                            </option>
+                                                                            <option value="worker">{{ $t('Worker') }}</option>
+                                                                            <option value="admin">{{ $t('Admin') }}</option>
+                                                                            <option value="client">{{ $t('Client') }}</option>
+                                                                        </select>
+                                                                        <span v-if="!selectedType"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                    <button type="button"
+                                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                                        @click="closeModalCrear()"><i class="fas fa-times mr-2"></i>{{
+                                                            $t('cancel') }}</button>
+                                                    <button
+                                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
+                                                        @click="createUser()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
+                                                </div>
+                                            </DialogPanel>
+                                        </TransitionChild>
+                                    </div>
+                                </div>
+                            </Dialog>
+                        </TransitionRoot>
+
+                        <!--Modal editar Usuario-->
+                        <TransitionRoot as="template" :show="ModalEditar">
+                            <Dialog as="div" class="relative z-10" @close="ModalEditar = false">
+                                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                </TransitionChild>
+                                <div class="fixed inset-0 z-10 overflow-y-auto">
+                                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                        <TransitionChild as="template" enter="ease-out duration-300"
+                                            enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                            enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                                            leave-from="opacity-100 translate-y-0 sm:scale-100"
+                                            leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                            <DialogPanel
+                                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                    <div class="xl:items-start">
+                                                        <div class="flex space-x-2 items-center">
+                                                            <div
+                                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                                <i class="fas fa-edit mr-2"></i>
+                                                            </div>
+                                                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> {{
+                                                                $t('edituser') }}</DialogTitle>
+                                                        </div>
+                                                        <div class="mt-3 text-center md:text-left">
+                                                            <form>
+                                                                <div class="mt-2">
+                                                                    <div class="relative">
+                                                                        <label for="name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('name') }}</label>
+                                                                        <input type="text" v-model="currentUser.name" id="name" name="name"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                            required>
+                                                                        <span v-if="!currentUser.name"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <div class="relative">
+                                                                        <label for="last_name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('lastname') }}</label>
+                                                                        <input type="text" v-model="currentUser.last_name" id="last_name"
+                                                                            name="last_name"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                            required>
+                                                                        <span v-if="!currentUser.last_name"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <div class="relative">
+                                                                        <label for="nick_name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('username') }}</label>
+                                                                        <input type="text" v-model="currentUser.nick_name" id="nick_name"
+                                                                            name="nick_name"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                            required>
+                                                                        <span v-if="!currentUser.nick_name"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <div class="flex w-full space-x-8">
+                                                                        <div class="w-full relative">
+                                                                            <label for="email"
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                    $t('email') }}</label>
+                                                                            <input type="email" v-model="currentUser.email" id="email"
+                                                                                name="email"
+                                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                                required>
+                                                                            <span v-if="!currentUser.email"
+                                                                                class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                        </div>
+                                                                        <div class="w-full relative">
+                                                                            <label for="phone"
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                    $t('phone') }}</label>
+                                                                            <input type="text" v-model="currentUser.phone" id="phone"
+                                                                                name="phone"
+                                                                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
+                                                                                required>
+                                                                            <span v-if="!currentUser.phone"
+                                                                                class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="relative">
+                                                                        <label for="company_name"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('company') }}</label>
+                                                                        <select v-model="currentUser.company_name" id="company_name"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                            required>
+                                                                            <option value="" disabled selected>{{ $t('select_company') }}
+                                                                            </option>
+                                                                            <option v-for="company in companies" :key="company.id"
+                                                                                :value="company.name">{{ company.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="!currentUser.company_name"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-full">
+                                                                    <div class="relative">
+                                                                        <label for="rols"
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
+                                                                                $t('Role') }}</label>
+                                                                        <select v-model="currentUser.type" id="rols"
+                                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
+                                                                            required>
+                                                                            <option value="" disabled selected>{{ $t('Select a role') }}
+                                                                            </option>
+                                                                            <option value="worker">{{ $t('Worker') }}</option>
+                                                                            <option value="admin">{{ $t('Admin') }}</option>
+                                                                            <option value="client">{{ $t('Client') }}</option>
+                                                                        </select>
+                                                                        <span v-if="!currentUser.type"
+                                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                    <button type="button"
+                                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                                        @click="closeModal()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                                            $t('cancel') }}
+                                                    </button>
+                                                    <button type="button"
+                                                        class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
+                                                        @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
+                                                    </button>
+                                                </div>
+                                            </DialogPanel>
+                                        </TransitionChild>
+                                    </div>
+                                </div>
+                            </Dialog>
+                        </TransitionRoot>
+
+                        <!--Modal baja Usuario-->
+                        <TransitionRoot as="template" :show="ModalBaja">
+                            <Dialog as="div" class="relative z-10" @close="ModalBaja = false">
+                                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                </TransitionChild>
+
+                                <div class="fixed inset-0 z-10 overflow-y-auto">
+                                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                        <TransitionChild as="template" enter="ease-out duration-300"
+                                            enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                            enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                                            leave-from="opacity-100 translate-y-0 sm:scale-100"
+                                            leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                            <DialogPanel
+                                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                <form>
+                                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                        <div class="xl:items-start">
+                                                            <div class="flex space-x-2 items-center">
+                                                                <div
+                                                                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
+                                                                    <i class="fas fa-edit mr-2"></i>
+                                                                </div>
+                                                                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                                                                    {{ $t('deregister user') }}</DialogTitle>
+                                                            </div>
+
+                                                            <div class="mt-3 text-center md:text-left">
+
+                                                                <div class="mt-2">
+                                                                    <div>
+                                                                        <label
+                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                                                                                $t('deregistration-reason') }}</label>
+                                                                        <textarea maxlength="255" v-model="currentUser.removed_reason"
+                                                                            id="removed_reason" name="removed_reason"
+                                                                            class="w-full h-24 align-top bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
+                                                                            cols="auto" rows="10"></textarea>
+                                                                        <input type="hidden" v-model="currentUser.id">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                        <button type="button"
+                                                            class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                                            @click="closeModalBaja()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
+                                                                $t('cancel') }}</button>
+                                                        <button type="button"
+                                                            class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
+                                                            @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister')
+                                                            }}</button>
+                                                    </div>
+                                                </form>
+                                            </DialogPanel>
+                                        </TransitionChild>
+                                    </div>
+                                </div>
+                            </Dialog>
+                        </TransitionRoot>
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Modal Crear usaurio-->
-    <TransitionRoot as="template" :show="ModalCrear">
-        <Dialog as="div" class="relative z-10" @close="ModalCrear = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
-                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </TransitionChild>
-            <div class="fixed inset-0 z-10 overflow-y-auto">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <TransitionChild as="template" enter="ease-out duration-300"
-                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <DialogPanel
-                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div class="xl:items-start">
-                                    <div class="flex space-x-2 items-center">
-
-                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                                            {{ $t('create-user') }}</DialogTitle>
-                                    </div>
-                                    <div class="mt-3 text-center md:text-left">
-                                        <div class="mt-2">
-                                            <div class="relative">
-                                                <label for="name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                        $t('name') }}</label>
-                                                <input type="text" v-model="name" id="name"
-                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                    required>
-                                                <span v-show="!name"
-                                                    class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div class="relative">
-                                                <label for="last_name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                        $t('lastname') }}</label>
-                                                <input type="text" v-model="last_name" id="last_name"
-                                                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                    required>
-                                                <span v-if="!last_name"
-                                                    class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div class="relative">
-                                                <div>
-                                                    <label for="nick_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('username') }}</label>
-                                                    <input type="text" v-model="nick_name" id="nick_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                        required>
-                                                    <span v-if="!nick_name"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div class="relative">
-                                                <div class="flex w-full space-x-8">
-                                                    <div class="w-full">
-                                                        <label for="email"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                                $t('email') }}</label>
-                                                        <input type="text" v-model="email" id="email"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                            required>
-                                                        <span v-if="!email"
-                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                    </div>
-                                                </div>
-                                                <div class="w-full">
-                                                    <div class="relative">
-                                                        <label for="phone"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                                $t('phone') }}</label>
-                                                        <input type="text" v-model="phone" id="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                            required>
-                                                        <span v-if="!phone"
-                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="w-full">
-                                                <div class="relative">
-                                                    <label for="company_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('company') }}</label>
-                                                    <input v-model="selectedCompany" list="companies" id="company_name"
-                                                        class="w-full h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                        required>
-                                                    <datalist id="companies">
-                                                        <option value="" disabled selected>{{ $t('select_company') }}
-                                                        </option>
-                                                        <option v-for="company in companies" :key="company.id"
-                                                            :value="company.id">{{ company.name }}</option>
-                                                    </datalist>
-                                                    <span v-if="!selectedCompany"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="w-full">
-                                                <div class="relative">
-                                                    <label for="rols"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('Role') }}</label>
-                                                    <select v-model="selectedType" id="rols"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                        required>
-                                                        <option value="" disabled selected>{{ $t('Select a role') }}
-                                                        </option>
-                                                        <option value="worker">{{ $t('Worker') }}</option>
-                                                        <option value="admin">{{ $t('Admin') }}</option>
-                                                        <option value="client">{{ $t('Client') }}</option>
-                                                    </select>
-                                                    <span v-if="!selectedType"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-2">
-                                        <div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="button"
-                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                                    @click="closeModalCrear()"><i class="fas fa-times mr-2"></i>{{
-                                        $t('cancel') }}</button>
-                                <button
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                    @click="createUser()"><i class="fas fa-plus mr-2"></i> {{ $t('add') }}</button>
-                            </div>
-                        </DialogPanel>
-                    </TransitionChild>
-                </div>
-            </div>
-        </Dialog>
-    </TransitionRoot>
-
-    <!--Modal editar Usuario-->
-    <TransitionRoot as="template" :show="ModalEditar">
-        <Dialog as="div" class="relative z-10" @close="ModalEditar = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
-                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </TransitionChild>
-            <div class="fixed inset-0 z-10 overflow-y-auto">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <TransitionChild as="template" enter="ease-out duration-300"
-                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <DialogPanel
-                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div class="xl:items-start">
-                                    <div class="flex space-x-2 items-center">
-                                        <div
-                                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
-                                            <i class="fas fa-edit mr-2"></i>
-                                        </div>
-                                        <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> {{
-                                            $t('edituser') }}</DialogTitle>
-                                    </div>
-                                    <div class="mt-3 text-center md:text-left">
-                                        <form>
-                                            <div class="mt-2">
-                                                <div class="relative">
-                                                    <label for="name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('name') }}</label>
-                                                    <input type="text" v-model="currentUser.name" id="name" name="name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                        required>
-                                                    <span v-if="!currentUser.name"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div class="relative">
-                                                    <label for="last_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('lastname') }}</label>
-                                                    <input type="text" v-model="currentUser.last_name" id="last_name"
-                                                        name="last_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                        required>
-                                                    <span v-if="!currentUser.last_name"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div class="relative">
-                                                    <label for="nick_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('username') }}</label>
-                                                    <input type="text" v-model="currentUser.nick_name" id="nick_name"
-                                                        name="nick_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                        required>
-                                                    <span v-if="!currentUser.nick_name"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div class="flex w-full space-x-8">
-                                                    <div class="w-full relative">
-                                                        <label for="email"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                                $t('email') }}</label>
-                                                        <input type="email" v-model="currentUser.email" id="email"
-                                                            name="email"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                            required>
-                                                        <span v-if="!currentUser.email"
-                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                    </div>
-                                                    <div class="w-full relative">
-                                                        <label for="phone"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                                $t('phone') }}</label>
-                                                        <input type="text" v-model="currentUser.phone" id="phone"
-                                                            name="phone"
-                                                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pr-8"
-                                                            required>
-                                                        <span v-if="!currentUser.phone"
-                                                            class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                    </div>
-                                                </div>
-                                                <div class="relative">
-                                                    <label for="company_name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('company') }}</label>
-                                                    <select v-model="currentUser.company_name" id="company_name"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                        required>
-                                                        <option value="" disabled selected>{{ $t('select_company') }}
-                                                        </option>
-                                                        <option v-for="company in companies" :key="company.id"
-                                                            :value="company.name">{{ company.name }}</option>
-                                                    </select>
-                                                    <span v-if="!currentUser.company_name"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="w-full">
-                                                <div class="relative">
-                                                    <label for="rols"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{{
-                                                            $t('Role') }}</label>
-                                                    <select v-model="currentUser.type" id="rols"
-                                                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400 pl-6"
-                                                        required>
-                                                        <option value="" disabled selected>{{ $t('Select a role') }}
-                                                        </option>
-                                                        <option value="worker">{{ $t('Worker') }}</option>
-                                                        <option value="admin">{{ $t('Admin') }}</option>
-                                                        <option value="client">{{ $t('Client') }}</option>
-                                                    </select>
-                                                    <span v-if="!currentUser.type"
-                                                        class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2">
-                                                <div>
-
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="button"
-                                    class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                                    @click="closeModal()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
-                                        $t('cancel') }}
-                                </button>
-                                <button type="button"
-                                    class="bg-orange-400 hover:bg-orange-600 font-medium py-1 px-2 mr-4 rounded-lg  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                    @click="submitFormEditar()"> <i class="far fa-save mr-2"></i>{{ $t('save') }}
-                                </button>
-                            </div>
-                        </DialogPanel>
-                    </TransitionChild>
-                </div>
-            </div>
-        </Dialog>
-    </TransitionRoot>
-
-    <!--Modal baja Usuario-->
-    <TransitionRoot as="template" :show="ModalBaja">
-        <Dialog as="div" class="relative z-10" @close="ModalBaja = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
-                leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </TransitionChild>
-
-            <div class="fixed inset-0 z-10 overflow-y-auto">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <TransitionChild as="template" enter="ease-out duration-300"
-                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
-                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <DialogPanel
-                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                            <form>
-                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div class="xl:items-start">
-                                        <div class="flex space-x-2 items-center">
-                                            <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center sm:mx-0 sm:h-10 sm:w-10">
-                                                <i class="fas fa-edit mr-2"></i>
-                                            </div>
-                                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                                                {{ $t('deregister user') }}</DialogTitle>
-                                        </div>
-
-                                        <div class="mt-3 text-center md:text-left">
-
-                                            <div class="mt-2">
-                                                <div>
-                                                    <label
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
-                                                            $t('deregistration-reason') }}</label>
-                                                    <textarea maxlength="255" v-model="currentUser.removed_reason"
-                                                        id="removed_reason" name="removed_reason"
-                                                        class="w-full h-24 align-top bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
-                                                        cols="auto" rows="10"></textarea>
-                                                    <input type="hidden" v-model="currentUser.id">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                    <button type="button"
-                                        class="bg-gray-300 hover:bg-gray-500 text-black font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                                        @click="closeModalBaja()" ref="cancelButtonRef"><i class="fas fa-times mr-2"></i>{{
-                                            $t('cancel') }}</button>
-                                    <button type="button"
-                                        class="bg-red-600 hover:bg-red-800 text-white font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-6"
-                                        @click="submitFormBaja()"><i class="fas fa-minus mr-2"></i>{{ $t('Deregister')
-                                        }}</button>
-                                </div>
-                            </form>
-                        </DialogPanel>
-                    </TransitionChild>
-                </div>
-            </div>
-        </Dialog>
-    </TransitionRoot>
 </template>
 
 <script>
@@ -697,21 +707,3 @@ import { PencilSquareIcon, TrashIcon, PlusIcon, EyeSlashIcon } from '@heroicons/
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

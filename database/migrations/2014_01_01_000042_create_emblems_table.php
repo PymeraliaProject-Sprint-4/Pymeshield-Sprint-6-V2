@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('emblems', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->string('description', 50);
+            $table->string('description');
             $table->longText('image');
             $table->foreignId('course_id')->references('id')->on('courses');
             $table->date('hidden')->nullable()->default(null);

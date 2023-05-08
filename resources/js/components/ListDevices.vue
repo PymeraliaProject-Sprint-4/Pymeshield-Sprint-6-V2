@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-5 mt-3">
+    <div class="mx-5 mt-3 overflow-x-auto">
         <div class="flex justify-between">
             <div class="flex items-center">
                 <p class="text-2xl font-semibold">Listado dispositivos</p>
@@ -9,13 +9,12 @@
                     @click="openModalCrear()">Crear dispositivo</button>
             </div>
         </div>
-        <table class="mt-2 table-fixed w-full text-base text-gray-800 dark:text-gray-400 text-center">
+        <table class="mt-2 table-auto w-full text-base text-gray-800 dark:text-gray-400 text-center">
             <thead class="bg-orange-500 text-white">
                 <tr>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
-                    <th scope="col" class="px-6 py-3">MAC-ethernet</th>
-                    <th scope="col" class="px-6 py-3">MAC-wifi</th>
+                    <th scope="col" class="px-6 py-3">MAC-ethernet / Wifi</th>
                     <th scope="col" class="px-6 py-3">Tipo</th>
                     <th scope="col" class="px-6 py-3">Descripcion</th>
                     <th scope="col" class="px-6 py-3">Estado</th>
@@ -32,17 +31,9 @@
                     <td class="px-6 py-4 font-semibold">
                         {{ device.model }}
                     </td>
-                    <td v-if="device.mac_ethernet === null" class="px-6 py-4">
-                        No dispone.
-                    </td>
-                    <td v-else class="px-6 py-4 font-semibold">
-                        {{ device.mac_ethernet }}
-                    </td>
-                    <td v-if="device.mac_wifi === null" class="px-6 py-4">
-                        No dispone.
-                    </td>
-                    <td v-else class="px-6 py-4 font-semibold">
-                        {{ device.mac_wifi }}
+                    <td class="px-6 py-4">
+                        <p>{{ device.mac_ethernet === null ? 'No dispone.' : device.mac_ethernet }}</p> <p>{{ device.mac_wifi ===
+                            null ? 'No dispone.' : device.mac_wifi }}</p>
                     </td>
                     <td class="px-6 py-4 font-semibold">
                         {{ device.name }}
@@ -749,7 +740,7 @@ export default {
 
         },
         openModalQr(id) {
-            this.imgSource = "storage/devices_qr/device_" + id + ".png";
+            this.imgSource = "/devices_qr/device_" + id + ".png";
             this.ModalQR = true;
         },
         typeDevice() {

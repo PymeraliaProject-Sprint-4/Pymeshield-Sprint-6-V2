@@ -152,7 +152,7 @@ Route::middleware(['auth', 'check_access_admin', 'log.report'])->group(function 
     Route::post('report', [ReportController::class, 'store'])->name('report.store')->middleware('auth', 'check_access_admin');
     Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
     Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_client');
-    Route::post('/report/{id}', [ReportController::class, 'eliminar'])->name('report.eliminar');
+    Route::post('/report/{id}/delete', [ReportController::class, 'eliminar'])->name('report.eliminar');
     Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar');
 });
 //Question ROUTES

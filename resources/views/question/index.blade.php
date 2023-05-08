@@ -19,9 +19,6 @@
             <thead>
                 <tr class="bg-orange-400 text-white">
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('id') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3 uppercase">
                         {{ __('question.name') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
@@ -35,9 +32,6 @@
             <tbody>
                 @foreach ($questions as $question)
                     <tr class="bg-orange-50 hover:bg-orange-100 text-center">
-                        <th scope="row" class="px-6 py-3 uppercase">
-                            {{ $question->id }}
-                        </th>
                         <td scope="row" class="px-6 py-4">
                             {{ $question->name }}
                         </td>

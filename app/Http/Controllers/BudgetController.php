@@ -103,7 +103,7 @@ class BudgetController extends Controller
     {
         if(auth()->user()->type == "client") //si un client intenta accedir aquesta petició no rep res
         {
-        
+
         }else{
             $data = DB::table('tasks')
                 ->join('users', 'users.id', '=', 'tasks.user_id')
@@ -118,7 +118,7 @@ class BudgetController extends Controller
     public function listClientBudgets()
     {
 
-        $idclient = Auth::user()->id;
+        $idclient = auth()->user()->id;
         $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
@@ -150,7 +150,7 @@ class BudgetController extends Controller
 
             if(!$pagination) $pagination = 999;
 
-        
+
             $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
@@ -161,7 +161,7 @@ class BudgetController extends Controller
             ->where('tasks.user_id', '=', auth()->user()->id)
             ->orderBy('tasks.id')
             ->paginate($pagination);
-            
+
             return response()->json($data);
     }
 
@@ -179,11 +179,11 @@ class BudgetController extends Controller
             ->where('tasks.user_id', '=', auth()->user()->id)
             ->orderBy('tasks.id')
             ->get();
-            
+
             return response()->json($data);
         }
         else{
-            
+
             $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
@@ -193,11 +193,11 @@ class BudgetController extends Controller
             ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as danger', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
             ->orderBy('tasks.id')
             ->get();
-            
+
             return response()->json($data);
         }
 
-        
+
     }
 
     public function showBudgets()
@@ -338,7 +338,7 @@ class BudgetController extends Controller
             $task->save();
         }
 
-        return response();
+        return response()->json(['message' => 'Task updated successfully']);
     }
     public function updateSingleTask(Request $request, $id)
     {
@@ -352,6 +352,6 @@ class BudgetController extends Controller
         $task->final_date = $final_date; // actualizar la fecha de finalización de la tarea
         $task->save(); // guardar los cambios en la base de datos
 
-        return response();
+        return response()->json(['message' => 'Task updated successfully']);
     }
 }

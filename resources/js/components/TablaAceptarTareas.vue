@@ -142,7 +142,7 @@ export default {
                     page,
                     buscador: this.buscador
                 }
-            }).then(res => { //utilizamos axios y el método get 
+            }).then(res => { //utilizamos axios y el método get
                 this.tasques = res.data.data, //guardamos en la variable tasques lo que recuperamos por data, en este caso usamos tasks.data ya que viene de la paginación, si no quisieramos paginar usariamos tan solo res.data
                     this.taskdata = res.data
             });

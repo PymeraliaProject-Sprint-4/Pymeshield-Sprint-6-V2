@@ -15,7 +15,14 @@ class LogActivity
     public function login(Login $event)
     {
         $ip = request()->getClientIp(true);
-        $user = $event->user->only('id', 'email');
+        $user = $event->user;
+
+        // Que el usuario no sea null para no dar error
+        if ($user) {
+            $user = $user->only('id', 'email');
+        } else {
+            $user = ['email' => 'invalid email', 'id' => 'N/A'];
+        }
 
         // Obtener la fecha y hora actual
         $currentDateTime = Carbon::now()->toDateTimeString();
@@ -52,13 +59,20 @@ class LogActivity
         $message = "El dia {$currentDateTime} El usuario {$user['email']} con ID {$user['id']} se ha registrado sesión desde la IP {$ip}";
 
         $this->info($message);
-
     }
 
     public function failed(Failed $event)
     {
         $ip = request()->getClientIp(true);
-        $user = $event->user->only('id', 'email');
+        $user = $event->user;
+
+        // Que el usuario no sea null
+        if ($user) {
+            $user = $user->only('id', 'email');
+        } else {
+            $user = ['email' => 'invalid email', 'id' => 'N/A'];
+        }
+
         // Obtener la fecha y hora actual
         $currentDateTime = Carbon::now()->toDateTimeString();
 
@@ -67,6 +81,7 @@ class LogActivity
 
         $this->info($message);
     }
+
 
     public function passwordReset(PasswordReset $event)
     {
@@ -87,4 +102,3 @@ class LogActivity
         Redis::rpush('logs', $message);
     }
 }
-

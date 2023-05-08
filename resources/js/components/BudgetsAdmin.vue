@@ -18,7 +18,7 @@
                         <p class="text-sm text-gray-900">{{ result.name }}</p>
                     </td>
                     <td class="px-2 py-2 text-center">
-                        <p class="text-sm text-gray-900">{{ result.lastname }}</p>
+                        <p class="text-sm text-gray-900">{{ result.last_name }}</p>
                     </td>
                     <td class="px-2 py-2 text-center">
                         <p class="text-sm text-gray-900">{{ result.company_name }}</p>
@@ -41,7 +41,7 @@
             </tbody>
         </table>
     </div>
-    
+
 </template>
 <script>
 import { format } from 'date-fns';

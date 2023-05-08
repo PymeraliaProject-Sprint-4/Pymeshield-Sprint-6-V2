@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('questionnaires', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->nullable(false);
+            $table->string('name')->nullable(false);
             $table->string('autor', 50)->nullable(true);
             $table->date('date');
             $table->date('hidden')->nullable();

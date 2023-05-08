@@ -1,14 +1,8 @@
 <template>
     <div class="modificarReport">
-    <div class="flex items-center pt-4 justify-between m-5">
-      <a @click="open = true">
-        <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-3 ml-2 rounded"
-                data-modal-target="modificar{{ id }},{{ name }},{{ status }}"
-                data-modal-toggle="modificar{{ id }},{{ name }},{{ status }}">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 ml-2 rounded" @click="open = true">
             <i class="fa-regular fa-pen-to-square "></i>
-        </button>
-      </a>
-    </div>
+      </button>
     </div>
     <TransitionRoot as="template" :show="open">
         <Dialog as="div" class="relative z-10" @close="open = false">
@@ -109,7 +103,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
+import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import axios from 'axios'
 

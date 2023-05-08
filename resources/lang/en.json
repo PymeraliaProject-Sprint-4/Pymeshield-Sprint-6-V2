@@ -345,6 +345,7 @@
     "end_date" : "Finish Date",
     "select_user" : "Select an User",
     "no.logs.result" : "No record found",
-    "start.date.major.than.final.date" : "The end date cannot be less than the start date."
+    "start.date.major.than.final.date" : "The end date cannot be less than the start date.",
+    "passwords.user": "User not found"
 
 }

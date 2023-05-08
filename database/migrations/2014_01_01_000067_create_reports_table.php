@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->nullable(false);
+            $table->string('name')->nullable(false);
             $table->enum('status', ['done', 'pending'])->nullable()->default(null);
             $table->foreignId('questionnaire_id')->references('id')->on('questionnaires');
             $table->foreignId('user_id')->references('id')->on('users');

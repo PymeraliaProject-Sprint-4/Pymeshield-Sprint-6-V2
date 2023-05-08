@@ -6,7 +6,7 @@
 
         <form action="/logs" method="get" id="logsSearchForm" class="flex flex-wrap items-center">
             @csrf
-            <div class="mb-4 w-full md:w-auto">
+            <div class="mb-4 w-full">
                 <select name="search" id="searchSelect" class="w-full px-4 py-2 bg-white border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md ">
                     <option value="">{{__('select_user')}}</option>
                     @foreach ($users as $user)

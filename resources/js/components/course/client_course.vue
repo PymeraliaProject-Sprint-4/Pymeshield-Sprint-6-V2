@@ -9,7 +9,10 @@
                 class="ml-10 px-4 py-2 border rounded-lg w-100 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
         <div v-if="courses.length" class=" ml-10 mr-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div v-for="(course) in filteredCourses" :key="course.id" class="rounded-lg shadow-lg overflow-hidden hover:bg-gray-200 cursor-pointer" @click="viewCourseRescources(course.id)">                <div class="bg-gradient-to-br from-orange-400 to-orange-300 text-center py-3">
+            <div v-for="(course) in filteredCourses" :key="course.id"
+                class="rounded-lg shadow-lg overflow-hidden hover:bg-gray-200 cursor-pointer"
+                @click="viewCourseRescources(course.id)">
+                <div class="bg-gradient-to-br from-orange-400 to-orange-300 text-center py-3">
                     <h3 class="text-2xl font-bold text-white">{{ course.name }}</h3>
                 </div>
                 <div class="p-6">
@@ -18,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="flex justify-center my-4">
+    <div v-if="pageCount > 1" class="flex justify-center my-4">
         <span v-if="pageCount <= maxPagesToShow">
             <button v-for="(page, index) in pageCount" :key="index" :class="{ 'bg-gray-400': currentPage === index }"
                 @click="currentPage = index" class="border-2 px-4 py-2">
@@ -31,13 +34,6 @@
                 @click="currentPage = firstPageIndex + index" class="border-2 px-4 py-2">
                 {{ firstPageIndex + index + 1 }}
             </button>
-            <span v-if="firstPageIndex + maxPagesToShow < pageCount">
-                ...
-                <button :class="{ 'bg-gray-400': currentPage === pageCount - 1 }" @click="currentPage = pageCount - 1"
-                    class="border-2 px-4 py-2">
-                    {{ pageCount }}
-                </button>
-            </span>
         </span>
     </div>
 </template>
@@ -83,23 +79,32 @@ export default {
         },
         filteredCourses() {
             if (!this.searchTerm) {
-                const start = this.currentPage * this.perPage
-                const end = start + this.perPage
-                return this.courses.slice(start, end)
+                const start = this.currentPage * this.perPage;
+                const end = start + this.perPage;
+                return this.courses.slice(start, end);
             } else {
-                const start = this.currentPage * this.perPage
-                const end = start + this.perPage
                 const searchTermLower = this.searchTerm.toLowerCase();
-                return this.courses.filter(course => {
+                const filtered = this.courses.filter(course => {
                     return course.name.toLowerCase().includes(searchTermLower);
                 });
+                const pageCount = Math.ceil(filtered.length / this.perPage);
+                this.maxPagesToShow = pageCount < this.maxPagesToShow ? pageCount : this.maxPagesToShow;
+                const start = this.currentPage * this.perPage;
+                const end = start + this.perPage;
+                return filtered.slice(start, end);
             }
         }
+
+
+
     },
     watch: {
         searchTerm: function () {
-            this.$forceUpdate();
+        if (!this.searchTerm) {
+            this.maxPagesToShow = 5;
         }
+        this.$forceUpdate();
+    }
     },
     methods: {
         viewCourseRescources(id) {

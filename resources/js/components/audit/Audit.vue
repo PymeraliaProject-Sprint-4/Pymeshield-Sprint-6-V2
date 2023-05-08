@@ -1,6 +1,6 @@
 <template>
     <div class="flex py-12 px-4 sm:px-6 lg:px-8 justify-center">
-        <div class="overflow-hidden shadow-lg rounded-lg lg:w-1/2">
+        <div class="shadow-lg rounded-lg min-w-full md:min-w-0 lg:w-1/2">
             <!-- datos de la encuesta -->
             <div class="px-4 py-5 sm:px-6 bg-orange-400 text-white">
                 <h3 class="text-base font-semibold leading-6">{{ $t('survey.name') }} {{ survey.name }}</h3>
@@ -54,9 +54,7 @@
 
                 <!-- paginación -->
                 <div class="p-3 text-gray-700 uppercase bg-orange-100 dark:text-gray-400">
-                    <div class="row">
-                        <div class="col-12">
-                            <nav role="navigation" aria-label="Pagination Navigation" class="flex justify-between">
+                            <nav role="navigation" aria-label="Pagination Navigation" class="flex justify-between space-x-1">
                                 <button
                                     class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                                     :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }"
@@ -73,8 +71,6 @@
                                     <PaperAirplaneIcon class="h-5 w-5 mr-1" aria-hidden="true" /> {{ $t('survey.send') }}
                                 </button>
                             </nav>
-                        </div>
-                    </div>
                 </div>
                 <!-- mostrar mensaje error/success -->
                 <div class="p-4 text-green-800 bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert"
