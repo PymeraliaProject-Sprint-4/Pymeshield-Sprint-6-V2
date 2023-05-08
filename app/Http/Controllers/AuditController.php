@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Report;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,10 @@ class AuditController extends Controller
 
     public function index()
     {
-        /* Página con los cuestionarios por responder, luego habría que filtrar
-        por usuario/empresa cuando los grupos estén unificados */
+        /* Página con los cuestionarios por responder */
+        $userId = Auth::id();
         $audits = Report::where('status', 'pending')
+            ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->with('questionnaire')
             ->Paginate(10);
