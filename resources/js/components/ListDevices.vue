@@ -615,17 +615,18 @@
     </TransitionRoot>
 </template>
 
-<script setup>
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
-import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon } from '@heroicons/vue/24/outline';
-</script>
 
 <script>
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import { PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon } from '@heroicons/vue/24/outline';
 import axios from 'axios';
 import { ref } from "vue";
 import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
+    components: {
+        Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, PlusCircleIcon, ArchiveBoxArrowDownIcon, ShieldCheckIcon, PencilSquareIcon, PhotoIcon, QrCodeIcon, TailwindPagination
+    },
     data() {
         return {
             //Referencies per als diferents modalss
@@ -653,9 +654,9 @@ export default {
             borrar: { id: "" }
         };
     },
-    beforeMount() {
-        this.typeDevice();
+    mounted() {
         this.getDevices();
+        this.typeDevice();
         this.listCompanies();
     },
     computed: {
