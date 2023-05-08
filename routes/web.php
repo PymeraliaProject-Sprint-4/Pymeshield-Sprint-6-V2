@@ -278,7 +278,7 @@ Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::
 
 /** ------ EQUIP 4 ------ */
 
-Route::get('acceptacio-tasques', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth', 'check_access_client'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
+Route::get('acceptacio-tasques/{id}', [TaskController::class, 'acceptacioTasques'])->name('acceptacio-tasques')->middleware('auth', 'check_access_client'); //con name() le asignas un nombre para llamarlo en los diferentes archivos
 
 Route::get('modificar_presupuesto', function () {
     return view('Presupuestos/modificar_presupuesto/index');

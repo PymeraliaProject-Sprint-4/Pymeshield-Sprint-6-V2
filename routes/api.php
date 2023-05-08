@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     /** ----- EQUIP 4 ------ */
     //Controlador de la vista página Aceptación Tareas
     Route::get('/llistat-tasques', [TaskController::class, 'showTasks'])->name('llistat-tasques');
-    Route::get('/datos-tasques', [TaskController::class, 'datosTasques'])->name('datos-tasques'); //endpoint donde llegan les tasques del usuario
+    Route::get('/datos-tasques/{id}', [TaskController::class, 'datosTasques'])->name('datos-tasques'); //endpoint donde llegan les tasques del usuario
     Route::post('/crear-tareas', [TaskController::class, 'createTasks'])->name('crear-tareas');
 
     //Controladores de las vistas Kanban y Gantt
