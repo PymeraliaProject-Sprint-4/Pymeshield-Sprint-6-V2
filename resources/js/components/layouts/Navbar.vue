@@ -174,7 +174,7 @@ export default {
             navigation: [
                 { name: this.$t('navbar.home'), href: '/home', current: false, icon: HomeIcon },
                 { name: this.$t('navbar.questionnaires'), href: '/audit', current: false, icon: QueueListIcon },
-                { name: this.$t('navbar.reports'), href: '/report', current: false, icon: DocumentDuplicateIcon },
+                { name: this.$t('navbar.reports'), href: '/report/client', current: false, icon: DocumentDuplicateIcon },
                 { name: this.$t('formation'), href: '/course/client', current: false, icon: AcademicCapIcon },
                 { name: this.$t('budgets'), href: '/show_budgets_client', current: false, icon: CurrencyEuroIcon },
                 { name: this.$t('kanban'), href: '/kanban', current: false, icon: ViewColumnsIcon },

@@ -248,8 +248,8 @@ import {
     ClipboardIcon,
     ViewColumnsIcon,
     LifebuoyIcon,
-DocumentMagnifyingGlassIcon,
-FingerPrintIcon,
+    DocumentDuplicateIcon,
+    FingerPrintIcon,
 } from '@heroicons/vue/24/outline'
 import {
     AcademicCapIcon, CurrencyEuroIcon, QrCodeIcon, BriefcaseIcon, UserIcon,
@@ -274,6 +274,7 @@ export default {
                 { name: this.$t('home'), href: '/admin', current: false, icon: HomeIcon, },
                 { name: this.$t('surveys'), href: '/questionnaire', current: false, icon: QueueListIcon },
                 { name: this.$t('navbar.questions'), href: '/question', current: false, icon: QuestionMarkCircleIcon },
+                { name: this.$t('navbar.reports'), href: '/report', current: false, icon: DocumentDuplicateIcon },
                 { name: this.$t('Courses'), href: '/course', current: false, icon: AcademicCapIcon },
                 { name: this.$t('QualifyCourse'), href: '/CursosCalificar', current: false, icon: ClipboardIcon },
                 { name: this.$t('Emblems'), href: '/emblems', current: false, icon: StarIcon },

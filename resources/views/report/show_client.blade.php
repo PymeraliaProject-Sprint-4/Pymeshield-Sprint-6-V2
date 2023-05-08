@@ -8,7 +8,7 @@
     <h1 class="p-3 text-center font-medium">{{ __('report.titlereport') }} {{ $idreport }}</h1>
     <div class="flex justify-end">
 
-        <a href="{{ route('report.pdf', [$idreport]) }}" class="botonPersonalizado"
+        <a href="{{ route('report.pdf.client', [$idreport]) }}" class="botonPersonalizado"
             onclick="return disableButton(this)">{{ __('table.pdf') }}</a>
 
     </div>
