@@ -14,12 +14,12 @@
                 <tr>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
                     <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
-                    <th scope="col" class="px-6 py-3">MAC-ethernet / Wifi</th>
-                    <th scope="col" class="px-6 py-3">Tipo</th>
-                    <th scope="col" class="px-6 py-3">Descripcion</th>
-                    <th scope="col" class="px-6 py-3">Estado</th>
-                    <th scope="col" class="px-6 py-3">Empresa</th>
-                    <th scope="col" class="px-6 py-3">Funciones</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('inventory.mac.ethernet') }} / {{ $t('inventory.mac.wifi') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('inventory.type') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('inventory.description') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('inventory.state') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('company') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ $t('functions') }}</th>
                 </tr>
             </thead>
             <tbody>
