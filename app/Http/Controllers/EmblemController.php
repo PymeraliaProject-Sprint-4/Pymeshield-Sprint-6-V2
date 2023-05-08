@@ -37,18 +37,9 @@ class EmblemController extends Controller
         ]);
     }
 
-
-    public function create (){
-
-        $courses = Course::all();
-        return view('emblems.emblemescrear', compact('courses'));
-
-    }
-
     public function store(Request $request)
 {
     $emblem = new Emblem;
-   // dd($request->file('image'));
 
     $emblem->name = $request->name;
     $emblem->description = $request->description;
@@ -73,25 +64,36 @@ class EmblemController extends Controller
     return redirect()->route('emblems.index');
 }
 
-    public function edit (Emblem $emblem){
-
-        $courses = Course::all();
-        return view('emblems.emblemesedit', compact('emblem', 'courses'));
-
-    }
-
-    public function update(Request $request, Emblem $emblem)
+    public function update(Request $request)
 {
-
-    // Actualiza los campos de texto
+    
+    $id = $request->id;
+    $emblem= Emblem::find($id);
     $emblem->name = $request->name;
-    $emblem->description = $request->descripcion;
+    $emblem->description = $request->description;
     $emblem->course_id = $request->course_id;
+    
 
-    // Guarda los cambios en la base de datos
-    $emblem->save();
+    $em = $request->file('image');
+    if(!empty($em)){
 
-    return redirect()->route('emblems.index');
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        if($request->file('image')){
+            $image = $request->file('image');
+            $path = 'img/imatgesemblemes/';
+            $filename = time() . '.' . $image->getClientOriginalName();
+            $guardar = $request->file('image')->move($path, $filename);
+
+            $emblem->image = $path . $filename;
+        }
+        $emblem->save();
+
+        return redirect()->route('emblems.index');
+    }   
+
 }
 
     public function restaurar()
@@ -105,9 +107,11 @@ class EmblemController extends Controller
     public function restaurarMostrar()
     {
         $emblems = Emblem::whereNotNull('hidden')->orderBy('id', 'desc')->paginate(10);
-
+        $courses = Course::all();
+        
         return response()->json([
             'emblems' => $emblems,
+            'courses' => $courses,
         ]);
         
     }
@@ -120,17 +124,6 @@ class EmblemController extends Controller
         $emblem->save();
 
         return back();
-    }
-
-    public function DadesActivitats() //Acció per agarrar les dades de la BD
-    {
-        $activity = Activity::get()->map(function ($activity) {
-            return [
-                'id' => $activity->id,
-                'name' => $activity->name,
-            ];
-        });
-        return response()->json($activity);
     }
 
     public function eliminar($emblem)

@@ -14,7 +14,7 @@
     <div class="w-4"></div> <!-- Espacio entre los botones -->
 
     <button @click="redirectToDeletedEmblems()"
-      class="mr-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+      class="ml-5 text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded mt-5 flex items-center text-center ">
       <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
       {{ $t('deleted.emblem') }}
     </button>
@@ -141,29 +141,30 @@
                         @csrf
                       </div>
                       <div>
-                        <label for="name"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                          $t('emblem-name') }}</label>
                         <input type="text" v-model="name" id="name" name="name" required
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                       </div>
                       <div>
-                        <label for="description"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                          $t('emblem-description') }}</label>
                         <input type="text" v-model="description" id="description" name="description" required
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                       </div>
                       <div>
-                        <label for="image"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Emblema:</label>
+                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                          $t('Emblems') }}</label>
                         <input type="file" v-on:change="setImage" id="image" name="image" required
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                       </div>
-                      <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre
-                        Curso:</label>
+                      <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                        $t('emblem-name-course') }}</label>
                       <select v-model="course_id" id="course_id" name="course_id" required
                         class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                         <option value="">Selecciona un Curso</option>
-                        <option v-for="(emblem, key) in emblems" :key="id">{{ emblem.course.id }}</option>
+                        <option v-for="(emblem, key) in emblems" :key="emblem.course.id" :value="emblem.course.id">{{
+                          emblem.course.name }}</option>
                       </select>
                     </div>
                   </div>
@@ -206,7 +207,7 @@
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
             <DialogPanel
               class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <form action="" id="course-edit" method="POST" v-on:submit.prevent="updateCourse()">
+              <form method="POST" v-on:submit.prevent="emblemEdit()" enctype="multipart/form-data">
 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div class="flex items-center mx-1 my-1">
@@ -224,32 +225,42 @@
                         @csrf
                       </div>
                       <div>
-                        <label for="name_edit" class="font-medium text-gray-900 mb-2">
+                        <input maxlength="50" v-model="id" type="hidden" name="id" id="id">
+                      </div>
+                      <div>
+                        <label for="name" class="font-medium text-gray-900 mb-2">
                           {{ $t('Name') }} {{ $t('Of') }} {{ $t('Emblem') }} </label>
-                        <input maxlength="50" v-model="name_edit" type="text" name="name_edit" id="name_edit"
+                        <input maxlength="50" v-model="name" type="text" name="name" id="name"
                           class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4">
                       </div>
                       <div>
-                        <label for="description_edit" class="font-medium text-gray-900 mb-2">
+                        <label for="description" class="font-medium text-gray-900 mb-2">
                           {{ $t('Description') }} {{ $t('Of') }} {{ $t('Emblem') }} </label>
-                        <textarea maxlength="254" v-model="description_edit" type="text" name="description_edit"
-                          id="description_edit"
+                        <textarea maxlength="254" v-model="description" type="text" name="description" id="description"
                           class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4" />
                       </div>
                       <div>
-                        <label for="course_id_edit" class="font-medium text-gray-900 mb-2">
-                          {{ $t('Name') }} {{ $t('Of') }} {{ $t('Course') }} </label>
-                        <textarea maxlength="254" v-model="course_id_edit" type="text" name="course_id_edit"
-                          id="course_id_edit"
-                          class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4" />
+                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                          $t('Emblem') }}</label>
+                        <input type="file" v-on:change="image" id="image" name="image" required
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                      </div>
+                      <div>
+                        <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
+                          $t('emblem-name-course') }}</label>
+                        <select v-model="course_id" id="course_id" name="course_id" required
+                          class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                          <option value="">Selecciona un Curso</option>
+                          <option v-for="(emblem, key) in emblems" :key="emblem.course.id" :value="emblem.course.id">{{
+                            emblem.course.name }}</option>
+                        </select>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button type="submit" v-bind:disabled="sending" @click="open = false" class="bg-orange-400 hover:bg-orange-600 font-medium py-2 px-2 mr-2  transition-all duration-300 ease-in-out
-                                    transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center
-                                     w-full justify-center rounded-md text-sm shadow-sm sm:ml-3 sm:w-auto">
+                  <button type="submit"
+                    class="bg-orange-400 hover:bg-orange-600 font-medium py-2 px-2 mr-2  transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center w-full justify-center rounded-md text-sm shadow-sm sm:ml-3 sm:w-auto">
                     <i class="far fa-save mr-2"></i> {{ $t('Save') }}
                   </button>
                   <button type="button" class="bg-gray-300 hover:bg-gray-500 text-black  font-medium py-1 px-2  transition-all duration-300 ease-in-out
@@ -285,12 +296,8 @@ export default {
       id: '',
       name: '',
       description: '',
-      image: null,
+      image: '',
       course_id: '',
-      name_edit: '',
-      description_edit: '',
-      image_edit: null,
-      course_id_edit: '',
       searchTerm: '',
       pagination: {},
       total: 0,
@@ -367,34 +374,41 @@ export default {
 
     modalEdit(emblem) {
       this.modal_edit = true;
-      this.selectedEmblem = emblem.id;
       this.id = emblem.id;
-      this.name_edit = emblem.name;
-      this.description_edit = emblem.description;
-      this.image_edit = emblem.image;
-      this.course_id_edit = emblem.course_id;
+      this.name = emblem.name;
+      this.description = emblem.description;
+      this.image = emblem.image;
+      this.course_id = emblem.course_id;
 
     },
 
-     updateCourse() {
+    emblemEdit() {
 
-         this.sending = true;
-         this.name_edit = emblem.name;
-         console.log(this.name_edit);
-         this.description_edit = emblem.description;
-         this.image_edit = emblem.image;
-         this.course_id_edit = emblem.course_id;
-         axios.put('emblems/' + this.selectedEmblem + '/edit', {})
-           .then(response => {
-             this.sending = false;
-             this.emblems = response.data.emblems;
-           })
-           .catch(error => {
-             console.log(error.response)
-             this.sending = false;
-           })
+      const id = document.getElementById('id').value;
+      const name = document.getElementById('name').value;
+      const description = document.getElementById('description').value;
+      const image = document.getElementById('image').files[0];
+      const course_id = document.getElementById('course_id').value;
+      console.log(name);
 
-     },
+      const data = new FormData();
+      data.append('id', id);
+      data.append('name', name);
+      data.append('description', description);
+      data.append('image', image);
+      data.append('course_id', course_id);
+
+
+      axios.post('emblems/edit', data)
+        .then(response => {
+          this.modal_edit = false;
+          this.getEmblems();
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+
+    },
 
     deleteEmblem(emblem) {
       this.selectedEmblem = emblem.id
