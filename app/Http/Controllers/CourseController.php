@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\CourseUser;
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -36,16 +37,16 @@ class CourseController extends Controller
     }
 
     public function getImage($id)
-{
-    $course = Course::findOrFail($id);
-    $imagePath = 'img/imatgescursos/' . $course->image;
-    $imageUrl = asset($imagePath);
+    {
+        $course = Course::findOrFail($id);
+        $imagePath = 'img/imatgescursos/' . $course->image;
+        $imageUrl = asset($imagePath);
 
-    return response()->json(['url' => $imageUrl]);
-}
+        return response()->json(['url' => $imageUrl]);
+    }
 
-    
-    
+
+
     public function index_data_categories()
     {
         $postsperpage = 7;
@@ -58,6 +59,11 @@ class CourseController extends Controller
     public function allCourses()
     {
         return Course::whereNull('hidden')
+            ->get();
+    }
+
+    public function allCategories(){
+        return Category::whereNull('hidden')
             ->get();
     }
 
@@ -148,6 +154,24 @@ class CourseController extends Controller
         $category->hidden = $currentTime->toDateTimeString();
         $category->created_at = now();
         $category->save();
+
+        return response()->json(['message' => 'Categoría creada'], 200);
+    }
+
+    public function createActivity(Request $request)
+    {
+        // Guardar la nueva categoría en la base de datos
+        $currentTime = Carbon::now();
+
+        $activity = new Activity;
+        $activity->name = $request->name;
+        $activity->description = $request->description;
+        $activity->start_date = $request->start_date;
+        $activity->final_date = $request->end_date;
+        $activity->category_id = $request->selectedCategory; // agregando la relación con el curso seleccionado
+        $activity->hidden = $currentTime->toDateTimeString();
+        $activity->created_at = now();
+        $activity->save();
 
         return response()->json(['message' => 'Categoría creada'], 200);
     }
@@ -248,12 +272,12 @@ class CourseController extends Controller
     public function update($id, Request $request)
     {
         $course = Course::findOrFail($id);
-    
+
         $this->validate($request, [
             'name_edit' => 'required|max:50',
             'description_edit' => 'required|max:255',
         ]);
-    
+
         // Handle user assignments
         $userIds = $request->input('selectedUsers');
         if (!is_array($userIds)) {
@@ -267,12 +291,12 @@ class CourseController extends Controller
             // Algunos valores de user_id son inválidos, manejar el error aquí
         }
         $course->users()->sync($validUserIds); // Sync selected users
-        
-    
+
+
         // Update name and description
         $course->name = $request->input('name_edit');
         $course->description = $request->input('description_edit');
-    
+
         // Handle image upload
         if ($request->hasFile('image_edit')) {
             // Delete old image, if it exists
@@ -280,24 +304,24 @@ class CourseController extends Controller
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-        
+
             // Upload new image
             $image = $request->file('image_edit');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $path = $image->storeAs('public/img/imatgescursos/', $filename);
             $course->image = str_replace('public/', '/storage/', $path);
         }
-        
-    
+
+
         $course->save();
-    
+
         // Get updated course list and return as JSON
         $courses = Course::orderBy('updated_at', 'desc')
             ->with('users')
             ->get();
         return response()->json(['courses' => $courses]);
     }
-    
+
 
 
 
@@ -368,7 +392,7 @@ class CourseController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de la imagen
             'users' => 'required|json',
         ]);
-        
+
         $validated['users'] = json_decode($validated['users'], true);
 
         // Guardar la imagen
@@ -380,7 +404,7 @@ class CourseController extends Controller
         $course->description = $validated['description'];
         $course->image = str_replace('public/', '/storage/', $path);
         $course->save();
-        
+
         // Guardar los usuarios del curso
         if (isset($validated['users'])) {
             foreach ($validated['users'] as $userId) {
@@ -390,7 +414,7 @@ class CourseController extends Controller
                 $courseUser->save();
             }
         }
-        
+
 
         // Obtener todos los cursos para actualizar la tabla
         $courses =  Course::whereNull('hidden')
