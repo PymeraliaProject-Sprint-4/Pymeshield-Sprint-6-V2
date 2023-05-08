@@ -115,6 +115,9 @@ app.component('categorias_curso', CategoriasCurso);
 const deliveries = defineAsyncComponent(() => import('./components/qualify_course/Deliveries.vue'));
 app.component('deliveries', deliveries);
 
+const emblem = defineAsyncComponent(() => import('./components/emblem.vue'));
+app.component('emblem', emblem);
+
 
 // EQUIP 4
 

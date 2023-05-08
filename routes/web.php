@@ -251,14 +251,13 @@ Route::post('/upload-image', [CourseController::class, 'uploadImage']);
 Route::post('/save-image', [CourseController::class, 'saveImage']);
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
-Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
+Route::get('emblems/show', [EmblemController::class, 'mostrar'])->name('emblems.show')->middleware('auth', 'check_access_admin');
 Route::post('emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
-Route::get('emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit')->middleware('auth', 'check_access_admin');
-Route::post('emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
+Route::post('emblems/edit', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar')->middleware('auth', 'check_access_admin');
+Route::get('emblems/restaurar/mostrar', [EmblemController::class, 'restaurarMostrar'])->name('emblems.restaurar.mostrar')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth', 'check_access_admin');
-Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
-
+Route::get('emblems/{emblem}/eliminar', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
 // por revisar
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 
