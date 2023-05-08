@@ -41,14 +41,17 @@ class LogCourseMiddleware
         }
 
 // Si la ruta es course.update y la respuesta es exitosa (código 200)
-        if ($routeName == 'course.update' && $response->isSuccessful()) {
-            $responseData = json_decode($response->getContent(), true); // Convertir la respuesta JSON en un arreglo asociativo
-            $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
+if ($routeName == 'course.update' && $response->isSuccessful()) {
+    $responseData = json_decode($response->getContent(), true); // Convertir la respuesta JSON en un arreglo asociativo
+    if (!empty($responseData) && array_key_exists('id', $responseData)) {
+        $courseId = $responseData['id']; // Obtener el ID del curso desde el arreglo de respuesta
+        // Almacenar en Redis la información del evento
+        Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+    } else {
+        // Manejar el caso en el que la respuesta no tiene un ID válido
+    }
+}
 
-            // Almacenar en Redis la información del evento
-            Redis::rpush('logs','El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha actualizado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
-
-        }
 
 // Si la ruta es course.update_hidden y la respuesta es exitosa (código 200)
         if ($routeName == 'course.update_hidden' && $response->isSuccessful()) {
@@ -81,7 +84,16 @@ class LogCourseMiddleware
 
 
         // Resto del código del middleware...
-
+        if ($routeName == 'course.store' && $response->isSuccessful()) {
+            $responseData = json_decode($response->getContent(), true);
+            if (!empty($responseData) && array_key_exists('id', $responseData)) {
+                $courseId = $responseData['id'];
+                Redis::rpush('logs', 'El dia'  .' '.  now() . ' El usuario ' . $request->user()->email . ' con ID ' . $request->user()->id . ', desde la IP ' . $request->ip() . ' ha creado el curso con ID ' . $courseId . ' el dia ' . now()->toDateTimeString());
+            }
+        }
+        
+        
+        
         return $response;
     }
 }

@@ -208,7 +208,16 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::put('resource/{type}/{id}/edit', [ResourceController::class, 'updateResourceURL_FILE'])->name('resourceUrl.update'); //Editar recurs tipus URL o FILE
 
 
-    Route::post('course', [CourseController::class, 'store'])->name('course.store');
+
+
+
+    Route::post('course', [CourseController::class, 'store2'])->name('course.store2');
+    Route::post('/course', [CourseController::class, 'store2']);
+    Route::post('/course/{id}', [\App\Http\Controllers\CourseController::class, 'update']);
+    Route::get('/course/{id}/image', 'CourseController@getImage');
+    Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
+    Route::get('/course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
+    
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
 
     Route::post('CreateResourceText', [ResourceController::class, 'createRescourceText'])->name('addResourceText');
@@ -238,6 +247,8 @@ Route::get('/course/client', [CourseController::class, 'index_client'])->name('c
 Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
+Route::post('/upload-image', [CourseController::class, 'uploadImage']); 
+Route::post('/save-image', [CourseController::class, 'saveImage']);
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
 Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
@@ -260,6 +271,7 @@ Route::get('CursosCalificar/{id}/activities-Datos', [DeliveryController::class, 
 Route::get('CursosCalificar/{id}/activities/{activityId}', [DeliveryController::class, 'show'])->name('ActivityDeliveries')->middleware('auth', 'check_access_admin'); //Vista alumnes amb la nota i feedback sobre la activitat triada
 Route::get('CursosCalificar/{id}/activities-Datos/{activityId}', [DeliveryController::class, 'indexDatos'])->name('ActivityDeliveries.datos')->middleware('auth', 'check_access_admin'); //Dades JSON sobre els alumnes nota i feedback sobre la activitat triada
 Route::post('activity/{activityId}/user/{userId}/qualify', [DeliveryController::class, 'qualify'])->name('deliveries.qualify')->middleware('auth', 'check_access_admin'); //Acció per qualificar i posar comentari a un alumne
+
 //FIN EQUIP 3
 
 /** ------ EQUIP 4 ------ */

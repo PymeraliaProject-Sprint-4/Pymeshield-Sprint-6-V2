@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -34,6 +35,17 @@ class CourseController extends Controller
             ->get();
     }
 
+    public function getImage($id)
+{
+    $course = Course::findOrFail($id);
+    $imagePath = 'img/imatgescursos/' . $course->image;
+    $imageUrl = asset($imagePath);
+
+    return response()->json(['url' => $imageUrl]);
+}
+
+    
+    
     public function index_data_categories()
     {
         $postsperpage = 7;
@@ -196,42 +208,99 @@ class CourseController extends Controller
         ]);
     }
 
+    // public function update($id, Request $request)
+    // {
+    //     $course = Course::find($id);
+    //     $course->name = strip_tags($request->name_edit);
+    //     $course->description = strip_tags($request->description_edit);
+    //     $course->save();
+    //     $courseId = $course->id;
+
+    //     $userIds = $request->selectedUsers;
+
+    //     // Crear registros en la tabla course_user para cada usuario del curso
+    //     foreach ($userIds as $userId) {
+    //         if (isset($userId)) {
+    //             $courseUser = new CourseUser;
+    //             $courseUser->course_id = $course->id;
+    //             $courseUser->user_id = $userId;
+    //             $courseUser->save();
+    //         }
+    //     }
+
+    //     $course->users()->sync($userIds);
+
+    //     // Obtener todos los cursos para actualizar la tabla
+    //     $courses =  Course::whereNull('hidden')
+    //         ->orderBy('updated_at', 'desc')
+    //         ->with(['users' => function ($query) {
+    //             $query->select('user_id');
+    //         }])
+    //         ->get();
+
+    //     // Devolver los cursos actualizados en formato JSON
+    //     return response()->json([
+    //         'id' => $courseId,
+    //         'courses' => $courses,
+    //     ]);
+    // }
+
     public function update($id, Request $request)
     {
-        $course = Course::find($id);
-        $course->name = strip_tags($request->name_edit);
-        $course->description = strip_tags($request->description_edit);
-        $course->save();
-        $courseId = $course->id;
-
-        $userIds = $request->selectedUsers;
-
-        // Crear registros en la tabla course_user para cada usuario del curso
-        foreach ($userIds as $userId) {
-            if (isset($userId)) {
-                $courseUser = new CourseUser;
-                $courseUser->course_id = $course->id;
-                $courseUser->user_id = $userId;
-                $courseUser->save();
-            }
-        }
-
-        $course->users()->sync($userIds);
-
-        // Obtener todos los cursos para actualizar la tabla
-        $courses =  Course::whereNull('hidden')
-            ->orderBy('updated_at', 'desc')
-            ->with(['users' => function ($query) {
-                $query->select('user_id');
-            }])
-            ->get();
-
-        // Devolver los cursos actualizados en formato JSON
-        return response()->json([
-            'id' => $courseId,
-            'courses' => $courses,
+        $course = Course::findOrFail($id);
+    
+        $this->validate($request, [
+            'name_edit' => 'required|max:50',
+            'description_edit' => 'required|max:255',
         ]);
+    
+        // Handle user assignments
+        $userIds = $request->input('selectedUsers');
+        if (!is_array($userIds)) {
+            // Convertir a un array de enteros si es necesario
+            $userIds = explode(',', $userIds);
+            $userIds = array_map('intval', $userIds);
+        }
+        // Verificar que los valores de user_id son válidos
+        $validUserIds = User::whereIn('id', $userIds)->pluck('id');
+        if (count($validUserIds) !== count($userIds)) {
+            // Algunos valores de user_id son inválidos, manejar el error aquí
+        }
+        $course->users()->sync($validUserIds); // Sync selected users
+        
+    
+        // Update name and description
+        $course->name = $request->input('name_edit');
+        $course->description = $request->input('description_edit');
+    
+        // Handle image upload
+        if ($request->hasFile('image_edit')) {
+            // Delete old image, if it exists
+            $oldImagePath = public_path('img/imatgescursos/') . $course->image;
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        
+            // Upload new image
+            $image = $request->file('image_edit');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/img/imatgescursos/', $filename);
+            $course->image = str_replace('public/', '/storage/', $path);
+        }
+        
+    
+        $course->save();
+    
+        // Get updated course list and return as JSON
+        $courses = Course::orderBy('updated_at', 'desc')
+            ->with('users')
+            ->get();
+        return response()->json(['courses' => $courses]);
     }
+    
+
+
+
 
     public function update_hidden($id, Request $request)
     {
@@ -253,7 +322,7 @@ class CourseController extends Controller
             }
         }
 
-        $course->users()->sync($userIds);
+        $course->users()->sync(array_map('intval', $userIds));
 
         // Obtener todos los cursos para actualizar la tabla
         $courses =  Course::whereNotNull('hidden')
@@ -289,5 +358,52 @@ class CourseController extends Controller
 
             return response()->json($data);
         }
+    }
+
+    public function store2(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de la imagen
+            'users' => 'required|json',
+        ]);
+        
+        $validated['users'] = json_decode($validated['users'], true);
+
+        // Guardar la imagen
+        $imageName = time() . '.' . $request->image->extension();
+        $path = $request->file('image')->storeAs('img/imatgescursos/', $imageName, 'public');
+        // Crear el nuevo curso en la base de datos
+        $course = new Course();
+        $course->name = $validated['name'];
+        $course->description = $validated['description'];
+        $course->image = str_replace('public/', '/storage/', $path);
+        $course->save();
+        
+        // Guardar los usuarios del curso
+        if (isset($validated['users'])) {
+            foreach ($validated['users'] as $userId) {
+                $courseUser = new CourseUser();
+                $courseUser->course_id = $course->id;
+                $courseUser->user_id = $userId;
+                $courseUser->save();
+            }
+        }
+        
+
+        // Obtener todos los cursos para actualizar la tabla
+        $courses =  Course::whereNull('hidden')
+            ->orderBy('updated_at', 'desc')
+            ->with(['users' => function ($query) {
+                $query->select('user_id');
+            }])
+            ->get();
+
+        // Devolver los cursos actualizados en formato JSON
+        return response()->json([
+            'id' => $course->id,
+            'courses' => $courses,
+        ]);
     }
 }

@@ -51,6 +51,9 @@
                                     {{ $t('Description') }}
                                 </th>
                                 <th scope="col" class="text-xs text-white uppercase p-4">
+                                    {{ $t('Image') }}
+                                </th>
+                                <th scope="col" class="text-xs text-white uppercase p-4">
                                     {{ $t('Options') }}
 
                                 </th>
@@ -64,6 +67,9 @@
                                 </td>
                                 <td class="break-all px-6 py-4 font-medium text-gray-900">
                                     {{ course.description }}
+                                </td>
+                                <td class="break-all px-6 py-4 font-medium text-gray-900">
+                                    <img :src="course.image" :alt="course.title" class="img-flud" width="60">
                                 </td>
                                 <td>
                                     <div class="inline-flex">
@@ -161,6 +167,17 @@
                                                     class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4" />
                                             </div>
                                             <div>
+                                                <label for="image_edit" class="font-medium text-gray-900 mb-2">
+                                                    {{ $t('Image') }} {{ $t('Of') }} {{ $t('Course') }}
+                                                </label>
+                                                <label for="image"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                                <input type="file" name="image" @change="onImageChange"
+                                                    class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4"
+                                                    required />
+                                            </div>
+
+                                            <div>
                                                 <label for="user" class="font-medium text-gray-900 mb-2">
                                                     {{ $t('assignable.users') }}
                                                 </label>
@@ -168,8 +185,8 @@
                                                     <div class="user" v-for="(user, index) in users" :key="index">
                                                         <label>
 
-                                                            <input class="mr-1" type="checkbox" :value="user.id"
-                                                                v-model="selectedUsers">
+                                                            <input class="mr-1" type="checkbox" :value="user.id" v-model="selectedUsers">
+
                                                             {{ user.name }}
                                                         </label>
                                                     </div>
@@ -239,18 +256,28 @@
                                             <div>
                                                 <label for="name_edit" class="font-medium text-gray-900 mb-2">
                                                     {{ $t('Name') }} {{ $t('Of') }} {{ $t('Course') }} </label>
-                                                <input maxlength="50" v-model="name_edit" type="text" name="name_edit"
-                                                    id="name_edit"
-                                                    class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4">
+                                                    <input maxlength="50" v-model="name_edit" type="text" name="name_edit" id="name_edit"
+                                                    class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4"
+                                                    required>
                                             </div>
                                             <div>
                                                 <label for="description_edit" class="font-medium text-gray-900 mb-2">
                                                     {{ $t('Description') }} {{ $t('Of') }} {{ $t('Course') }} </label>
-                                                <textarea maxlength="254" v-model="description_edit" type="text"
-                                                    name="description_edit" id="description_edit"
-                                                    class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4" />
-                                            </div>
 
+                                                <textarea maxlength="254" v-model="description_edit" type="text" name="description_edit"
+                                                    id="description_edit"
+                                                    class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4"
+                                                    required></textarea>
+                                                
+                                            </div>
+                                            <div>
+                                                <label for="image_edit" class="font-medium text-gray-900 mb-2">
+                                                    {{ $t('Image') }} {{ $t('Of') }} {{ $t('Course') }}
+                                                </label>
+                                                <input type="file" ref="image_edit" name="image_edit" v-on:change="onFileSelected" class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4">
+                                                   
+                                                
+                                            </div>
                                             <div>
                                                 <label for="user" class="font-medium text-gray-900 mb-2">
                                                     {{ $t('assignable.users') }}
@@ -320,8 +347,8 @@ export default {
             selectedUsers: [],
             selected_users: [],
             selectedCourse: '',
-            user_ids: []
-
+            user_ids: [],
+            image: null,
         }
     },
     async created() {
@@ -366,11 +393,14 @@ export default {
         saveCourse() {
             if ((this.name && this.name.length <= 50) && (this.description && this.description.length <= 255)) {
                 this.sending = true;
-                axios.post('/course', {
-                    name: this.name,
-                    description: this.description,
-                    selectedUsers: this.selectedUsers
-                })
+
+                const formData = new FormData();
+    formData.append('name', this.name);
+    formData.append('description', this.description);
+    formData.append('image', this.image);
+    formData.append('users', JSON.stringify(Array.isArray(this.selectedUsers) ? this.selectedUsers : []));
+
+                axios.post('/course', formData)
                     .then(async response => {
                         this.sending = false;
                         this.name = '';
@@ -381,24 +411,33 @@ export default {
                         this.selectedUsers = [];
                     })
                     .catch(error => {
-                        console.log(response.data)
                         console.log(error.response)
                         this.sending = false;
                     })
+
             } else {
                 alert(this.$t('ErrorMsg.3'));
                 document.querySelector('#name').classList.add('border', 'border-red-500');
                 document.querySelector('#description').classList.add('border', 'border-red-500');
             }
         },
-
+        onImageChange(event) {
+            this.image = event.target.files[0];
+        },
+        onFileSelected(event) {
+    this.image_edit = event.target.files[0];
+  },
         selectCourse(course) {
+            console.log(course)
+            alert("scopedSlots")
             this.user_ids = course.users
             this.modal_edit = true;
             this.selectedCourse = course;
             this.id = course.id;
             this.name_edit = course.name;
             this.description_edit = course.description;
+            this.image_edit = course.image;
+            this.image = this.image;
             this.selectedUsers = [];
             for (let i = 0; i < this.user_ids.length; i++) {
                 let element = this.user_ids[i].user_id;
@@ -407,33 +446,37 @@ export default {
 
         },
         updateCourse() {
+  if ((this.name_edit && this.name_edit.length <= 50) && (this.description_edit && this.description_edit.length <= 255)) {
+    this.sending = true;
+    
+    const formData = new FormData();
+    formData.append('name_edit', this.name_edit);
+    formData.append('description_edit', this.description_edit);
+    formData.append('image_edit', this.image_edit);
+    formData.append('selectedUsers', JSON.stringify(Array.isArray(this.selectedUsers) ? this.selectedUsers : []));
 
-            if ((this.name_edit && this.name_edit.length <= 50) && (this.description_edit && this.description_edit.length <= 255)) {              // Codificación de los valores de los campos de texto
-                this.sending = true;
-                axios.put('/course/' + this.id, {
-                    name_edit: this.name_edit,
-                    description_edit: this.description_edit,
-                    selectedUsers: this.selectedUsers
-                })
-                    .then(response => {
-                        this.sending = false;
-                        this.id = '';
-                        this.name_edit = '';
-                        this.description_edit = '';
-                        this.courses = response.data.courses;
-                        this.modal_crear = false;
-                        this.modal_edit = false;
-                    })
-                    .catch(error => {
-                        console.log(error.response)
-                        this.sending = false;
-                    })
-            } else {
-                alert(this.$t('ErrorMsg.3'));
-                document.querySelector('#name_edit').classList.add('border', 'border-red-500');
-                document.querySelector('#description_edit').classList.add('border', 'border-red-500');
-            }
-        }
+    axios.post('/course/' + this.id, formData)
+      .then(response => {
+        this.sending = false;
+        this.id = '';
+        this.name_edit = '';
+        this.description_edit = '';
+        this.image_edit = '';
+        this.courses = response.data.courses;
+        this.modal_crear = false;
+        this.modal_edit = false;
+      })
+      .catch(error => {
+        console.log(error.response);
+        this.sending = false;
+      })
+  } else {
+    alert(this.$t('ErrorMsg.3'));
+    document.querySelector('#name_edit').classList.add('border', 'border-red-500');
+    document.querySelector('#description_edit').classList.add('border', 'border-red-500');
+  }
+}
+
         ,
         deleteCourse(course) {
             this.selectedCourse = course.id
@@ -461,8 +504,6 @@ export default {
         },
     },
 }
-
-
 </script>
 
 
