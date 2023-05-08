@@ -26,7 +26,7 @@ class TaskController extends Controller
      *
      * @return void
      */
-    public function acceptacioTasques()
+    public function acceptacioTasques($id)
     {
         return view('Tareas.aceptar_tareas.acceptar-tasques');
     }
@@ -71,7 +71,7 @@ class TaskController extends Controller
      * param  mixed $request parametre que passem per a poder canviar de págines
      * @return void
      */
-    public function datosTasques(Request $request)
+    public function datosTasques(Request $request, $id)
     {
         $filtro = $request->buscador;
         // $filtro = $request->buscador; //variable que filtra
