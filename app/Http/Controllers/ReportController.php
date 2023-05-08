@@ -22,10 +22,23 @@ class ReportController extends Controller
 
             $questionnaire = Questionnaire::all();
             $users = User::all();
-    
+
             return view('report.index', compact('reports', 'questionnaire', 'users'));
         }
-    //acció
+
+        public function indexClient()
+        {
+            //pagina principal de informes mostra llistat informes (solo sin completar)
+            $reports = Report::whereNull('hidden')
+                ->orderBy('status', 'asc')
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
+
+                $questionnaire = Questionnaire::all();
+                $users = User::all();
+
+                return view('report.index_user', compact('reports', 'questionnaire', 'users'));
+            }
     public function show($id)
     {
         //pagina que mostra els detalls de informes
@@ -42,6 +55,23 @@ class ReportController extends Controller
             ->where('reports.id', '=', $id)
             ->get();
         return view('report.show', compact('report'));
+    }
+    public function showClient($id)
+    {
+        //pagina que mostra els detalls de informes
+        $report = DB::table('reports')
+            ->select('answers.id', 'answers.name as answers', 'answers.recommendation as recommendation', 'questions.name as questions', 'type_measures.name as type_measures', 'risks.name as risks', 'probabilities.name as probabilities', 'interventions.name as interventions', 'impacts.name as impacts')
+            ->join('answer_report', 'answer_report.report_id', '=', 'reports.id')
+            ->join('answers', 'answer_report.answer_id', '=', 'answers.id')
+            ->join('impacts', 'impacts.id', '=', 'answers.impact_id')
+            ->join('interventions', 'interventions.id', '=', 'answers.intervention_id')
+            ->join('probabilities', 'probabilities.id', '=', 'answers.probability_id')
+            ->join('questions', 'questions.id', '=', 'answers.question_id')
+            ->join('risks', 'risks.id', '=', 'answers.risk_id')
+            ->join('type_measures', 'type_measures.id', '=', 'answers.type_measure_id')
+            ->where('reports.id', '=', $id)
+            ->get();
+        return view('report.show_client', compact('report'));
     }
     public function pdf($id)
     {
