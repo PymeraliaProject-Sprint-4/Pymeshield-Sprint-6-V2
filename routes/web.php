@@ -148,12 +148,15 @@ Route::get('admin', function () {
 // grup2
 /* Grup de rutes per a CRUD Informe */
 Route::middleware(['auth', 'check_access_admin', 'log.report'])->group(function () {
-    Route::get('report', [ReportController::class, 'index'])->name('report.index')->middleware('auth', 'check_access_client');
+    Route::get('report', [ReportController::class, 'index'])->name('report.index')->middleware('auth', 'check_access_admin');
+    Route::get('report/client', [ReportController::class, 'indexClient'])->name('report.user.index')->middleware('auth', 'check_access_client');
     Route::post('report', [ReportController::class, 'store'])->name('report.store')->middleware('auth', 'check_access_admin');
-    Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_client');
-    Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_client');
-    Route::post('/report/{id}/delete', [ReportController::class, 'eliminar'])->name('report.eliminar');
-    Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar');
+    Route::get('report/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf')->middleware('auth', 'check_access_admin');
+    Route::get('report/client/{id}/pdf', [ReportController::class, 'pdf'])->name('report.pdf.client')->middleware('auth', 'check_access_client');
+    Route::get('report/{report}', [ReportController::class, 'show'])->name('report.show')->middleware('auth', 'check_access_admin');
+    Route::get('report/client/{report}', [ReportController::class, 'showClient'])->name('report.show.client')->middleware('auth', 'check_access_client');
+    Route::post('/report/{id}/delete', [ReportController::class, 'eliminar'])->name('report.eliminar')->middleware('auth', 'check_access_admin');
+    Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar')->middleware('auth', 'check_access_admin');
 });
 //Question ROUTES
 Route::middleware(['auth', 'check_access_admin', 'log.question'])->group(function () {
@@ -217,7 +220,7 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('/course/{id}/image', 'CourseController@getImage');
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('/course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
-    
+
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
 
     Route::post('CreateResourceText', [ResourceController::class, 'createRescourceText'])->name('addResourceText');
@@ -247,18 +250,17 @@ Route::get('/course/client', [CourseController::class, 'index_client'])->name('c
 Route::get('course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources', [ResourceController::class, 'index'])->name('course.clientRescources')->middleware('auth', 'check_access_client');
 Route::get('/course/{id}/client/rescources-datos', [ResourceController::class, 'RescourceDatos'])->name('course.clientRescourcesDatos')->middleware('auth', 'check_access_client');
-Route::post('/upload-image', [CourseController::class, 'uploadImage']); 
+Route::post('/upload-image', [CourseController::class, 'uploadImage']);
 Route::post('/save-image', [CourseController::class, 'saveImage']);
 
 Route::get('emblems', [EmblemController::class, 'index'])->name('emblems.index')->middleware('auth', 'check_access_admin');
-Route::get('emblems/create', [EmblemController::class, 'create'])->name('emblems.create')->middleware('auth', 'check_access_admin');
+Route::get('emblems/show', [EmblemController::class, 'mostrar'])->name('emblems.show')->middleware('auth', 'check_access_admin');
 Route::post('emblems/store', [EmblemController::class, 'store'])->name('emblems.store')->middleware('auth', 'check_access_admin');
-Route::get('emblems/{emblem}/edit', [EmblemController::class, 'edit'])->name('emblems.edit')->middleware('auth', 'check_access_admin');
-Route::post('emblems/{emblem}', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
+Route::post('emblems/edit', [EmblemController::class, 'update'])->name('emblems.update')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar', [EmblemController::class, 'restaurar'])->name('emblems.restaurar')->middleware('auth', 'check_access_admin');
+Route::get('emblems/restaurar/mostrar', [EmblemController::class, 'restaurarMostrar'])->name('emblems.restaurar.mostrar')->middleware('auth', 'check_access_admin');
 Route::get('emblems/restaurar/{emblem}', [EmblemController::class, 'restaurarhide'])->name('restaurar.hide')->middleware('auth', 'check_access_admin');
-Route::get('emblems/eliminar/{emblem}', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
-
+Route::get('emblems/{emblem}/eliminar', [EmblemController::class, 'eliminar'])->name('emblems.eliminar')->middleware('auth', 'check_access_admin');
 // por revisar
 Route::get('updateHiddenDate/{id}', [CourseController::class, 'updateHiddenDate'])->name('updateHiddenDate')->middleware('auth', 'check_access_admin');
 

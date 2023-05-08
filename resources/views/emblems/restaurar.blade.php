@@ -2,24 +2,32 @@
 
 @section('content')
     <!-- TAULA DE EMBLEMES -->
+
+    <div class="max-w-screen-lg mx-auto px-4">
+        <h1 class="ml-7 mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
+            class="text-transparent bg-clip-text bg-gradient-to-r to-orange-500 from-orange-300">{{ __('Admin') }}</span>
+        </h1>
+        <p class="ml-7 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">{{ __('phrase.1.emblem') }}
+        </div>
+        </p><br>
                     <div id="margin_table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full shadow-lg rounded-lg">
                             <thead class="text-xs text-gray-700 uppercase bg-white-100">
                                 <tr class="bg-orange-400 text-white">
                                     <th class="text-xs text-white uppercase p-4">
-                                        Nombre
+                                        {{ __('table.name') }}
                                     </th>
                                     <th class="text-xs text-white uppercase p-4">
-                                        Descripcion
+                                        {{__('emblem-description')}}
                                     </th>
                                     <th class="text-xs text-white uppercase p-4">
-                                        Emblema
+                                        {{__('emblem')}}
                                     </th>
                                     <th class="text-xs text-white uppercase p-4">
-                                        Nombre Curso
+                                        {{__('emblem-name-course')}}
                                     </th>
                                     <th class="text-xs text-white uppercase p-4">
-                                        Accio
+                                        {{__('actions')}}
                                     </th>
                                 </tr>
                             </thead>
@@ -55,4 +63,5 @@
                         </table>
                         {{ $emblems->links('pagination::tailwind', ['max_links' => 5]) }}
                     </div>
+                </div>
 @stop
