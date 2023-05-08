@@ -653,7 +653,7 @@ export default {
             borrar: { id: "" }
         };
     },
-    mounted() {
+    beforeMount() {
         this.typeDevice();
         this.getDevices();
         this.listCompanies();
@@ -702,6 +702,7 @@ export default {
                 })
         },
         getDevices(page = 1) {
+            this.devicesData = [];
             axios.get("/devices/list?page=" + page)
                 .then(response => {
                     this.devices = response.data;
