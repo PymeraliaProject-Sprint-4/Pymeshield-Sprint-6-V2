@@ -102,18 +102,9 @@
     </div>
 </template>
 
-<script setup>
-import RadioGroupComponent from '../components/Radio.vue'
-</script>
-
 <script>
+import RadioGroupComponent from '../components/Radio.vue'
 import { ref } from 'vue'
-import {
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
-} from '@headlessui/vue'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -121,7 +112,8 @@ import { TailwindPagination } from 'laravel-vue-pagination';
 
 export default {
     components: {
-        'laravel-pagination': TailwindPagination,
+        RadioGroupComponent,
+        TailwindPagination,
     },
     beforeMount() {
         this.getTasks()

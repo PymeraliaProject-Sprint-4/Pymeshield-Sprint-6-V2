@@ -1,8 +1,8 @@
 <template>
   <div class="px-4">
     <div class="mx-auto w-36">
-      
-      <RadioGroup v-model="this.selected">
+
+      <RadioGroup v-model="selected">
         <RadioGroupLabel class="sr-only">Selecciona</RadioGroupLabel>
         <div class="flex flex-row gap-3">
           <!-- FIRST -->
@@ -11,7 +11,7 @@
             v-slot="{ active, checked }"
             v-for="option in options"
             :key="option.value"
-            @click="$emit('selectedValue', this.selected)"
+            @click="$emit('selectedValue', option.value)"
             :value="option.value">
             <div
               :class="[
@@ -29,7 +29,7 @@
                       :class="checked ? '' : 'text-gray-900'"
                       class="font-medium cursor-pointer"
                     >
-                    
+
                     <div v-if="option.value === 'Me lo gestiono yo'" role="button" aria-pressed="false" :aria-label="option.value">
                       <UserIcon class="h-6 w-6 text-black"/></div>
                     <div v-else-if="option.value === 'No aceptada'" role="button" aria-pressed="false" :aria-label="option.value">
@@ -48,55 +48,36 @@
 </template>
 
 
-<script>
-import { ref, watch } from 'vue'
+<script setup>
+import { onMounted, ref } from 'vue';
+import { UserIcon, XMarkIcon } from '@heroicons/vue/20/solid';
 import {
-  RadioGroup,
-  RadioGroupLabel,
-  RadioGroupOption,
-} from '@headlessui/vue'
-
-//import { User } from "@heroicons/vue/24/outline"
-import { UserIcon, XMarkIcon } from '@heroicons/vue/20/solid'
-
-const options = [
-  { 
-    value: 'Me aconseja Pymeralia',
-    html: '<img src="../storage/logo/image-removebg-preview(1).png" height="50" width="50" alt="">'
-   },
-  { 
-    value: 'Me lo gestiono yo',
-    html: '<UserIcon class="h-6 w-6 text-black"/>'
- },
-  { 
-    value: 'No aceptada',
-    html: '<i class="fa fa-close text-4xl"></i>'
- },
-]
-
-export default {
-  name: 'Radio',
-  data() {
-    return {
-      default: this.default,
-      selected: ref('')
-    }
-  },
-  component: {
     RadioGroup,
     RadioGroupLabel,
     RadioGroupOption,
-    UserIcon,
-    XMarkIcon
+  } from '@headlessui/vue';
+
+const options = [
+  {
+    value: 'Me aconseja Pymeralia',
+    html: '<img src="../storage/logo/image-removebg-preview(1).png" height="50" width="50" alt="">'
   },
-  props: {
-    default: {
-      type: String,
-      default: ''
-    }
+  {
+    value: 'Me lo gestiono yo',
+    html: `<UserIcon class="h-6 w-6 text-black"/>`
   },
-  created() {
-    this.selected = ref(this.default)
+  {
+    value: 'No aceptada',
+    html: '<i class="fa fa-close text-4xl"></i>'
   },
-}
+];
+
+const selected = ref('');
+
+const props = defineProps({
+    default: String
+})
+onMounted(() => {
+    selected.value = props.default;
+})
 </script>
