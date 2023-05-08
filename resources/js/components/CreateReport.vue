@@ -51,7 +51,7 @@
                                                         <option :value="null" disabled>{{ $t('survey.choose.questionnaire')
                                                         }}
                                                         </option>
-                                                        <option v-for="questionnaire in questionnaire"
+                                                        <option v-for="questionnaire in questionnaires"
                                                             :value="questionnaire.id">
                                                             {{ questionnaire.name }}</option>
                                                     </select>
@@ -121,7 +121,7 @@ import axios from 'axios'
 
 // datos para rellenar el modal
 const props = defineProps({
-    questionnaire: Object,
+    questionnaires: Object,
     users: Object,
 })
 

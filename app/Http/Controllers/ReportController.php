@@ -21,10 +21,10 @@ class ReportController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
-            $questionnaire = Questionnaire::all();
+            $questionnaires = Questionnaire::all();
             $users = User::all();
 
-            return view('report.index', compact('reports', 'questionnaire', 'users'));
+            return view('report.index', compact('reports', 'questionnaires', 'users'));
         }
 
         public function indexClient()
