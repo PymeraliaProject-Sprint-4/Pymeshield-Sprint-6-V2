@@ -199,6 +199,8 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('course/categories', [CourseController::class, 'coursecategories'])->name('course.categories');
     Route::get('categories/index_data', [CourseController::class, 'index_data_categories'])->name('course.index_data_categories');
     Route::get('allCourses', [CourseController::class, 'allCourses'])->name('allCourses');
+    Route::get('allCategories', [CourseController::class, 'allCategories'])->name('allCategories');
+
     Route::put('category/{category}', [CourseController::class, 'updateCategory'])->name('category.update');
     Route::get('category/{id}/delete', [CourseController::class, 'CategoryDelete'])->name('category.delete');
     Route::get('rescources/admin', [ResourceController::class, 'index_admin'])->name('rescources.admin');
@@ -222,6 +224,8 @@ Route::middleware(['auth', 'check_access_admin', 'log.course'])->group(function 
     Route::get('/course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 
     Route::post('CreateCategory', [CourseController::class, 'createCategory'])->name('course.addCategory');
+    Route::post('CreateActivity', [CourseController::class, 'createActivity'])->name('add_Activity');
+
 
     Route::post('CreateResourceText', [ResourceController::class, 'createRescourceText'])->name('addResourceText');
     Route::post('CreateResourceURL', [ResourceController::class, 'createRescourceURL'])->name('addResourceURL');
@@ -359,4 +363,4 @@ Route::get('imagenes/{id}', [ImageDeviceController::class, 'mostrar'])->name('im
 
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index')->middleware('auth', 'check_access_admin');
 
-Route::get('phpinfo', fn() => phpinfo())->middleware('auth', 'check_access_admin');
+Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');
