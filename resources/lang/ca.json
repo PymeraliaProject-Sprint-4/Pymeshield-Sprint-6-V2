@@ -324,7 +324,7 @@
     "validation.required.recommendation_false": "Els camps de recomanació negativa son obligatoris",
     "edituser": "Editar Usuari",
     "validation.required.autor": "El camp autor és obligatiori",
-    "Deleted.Company": "Eliminar Empreses",
+    "Deleted.Company": "Empreses inactives",
     "Visible.Company": "Empreses visibles",
     "edit-company": "Editar Empresa",
     "kanban.task": "Tasca",
