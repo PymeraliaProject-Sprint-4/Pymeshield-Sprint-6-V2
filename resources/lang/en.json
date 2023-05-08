@@ -321,7 +321,7 @@
     "validation.required.recommendation_false": "The negative answers is required",
     "validation.required.autor": "The author field is required",
     "edituser": "Edit User",
-    "Deleted.Company": "Deleted Companies",
+    "Deleted.Company": "Inactive companies",
     "Visible.Company": "Visible Companies",
     "edit-company": "Edit Company",
     "kanban.task": "Task",

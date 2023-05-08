@@ -327,7 +327,7 @@
     "validation.required.recommendation_false": "Los campos de recomendacion negativa són obligatorios",
     "edituser": "Editar Usuario",
     "validation.required.autor": "El campo autor es obligatorio",
-    "Deleted.Company": "Eliminar Empresas",
+    "Deleted.Company": "Empresas inactivas",
     "Visible.Company": "Empresas visibles",
     "edit-company": "Editar Empresa",
     "kanban.task": "Tarea",

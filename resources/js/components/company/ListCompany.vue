@@ -1,20 +1,20 @@
 <template>
-   <div class="flex justify-between items-center ml-10 mt-5">
-  <h1 class="mr-5 text-2xl font-semibold" > {{ $t('list-companies') }}</h1>
-  <div class="flex items-center mr-10">
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
-            @click="ModalCrear = true">
-      <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
-      <span class="ml-2">{{ $t('create-company') }}</span>
-    </button>
-    <div class="w-4"></div>
-    <button @click="redirectToDeletedCompany()" id=""
-            class="text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
-      <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
-      {{ $t('Deleted.Company') }}
-    </button>
-  </div>
-</div>
+    <div class="flex justify-between items-center ml-10 mt-5">
+        <h1 class="mr-5 text-2xl font-semibold"> {{ $t('list-companies') }}</h1>
+        <div class="flex items-center mr-10">
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
+                @click="ModalCrear = true">
+                <PlusIcon class="h-6 w-6 text-white-400" aria-hidden="true" />
+                <span class="ml-2">{{ $t('create-company') }}</span>
+            </button>
+            <div class="w-4"></div>
+            <button @click="redirectToDeletedCompany()" id=""
+                class="text-white bg-orange-500 hover:bg-orange-700 font-bold focus:ring-4 focus:outline-none py-2 px-4 rounded flex items-center text-center">
+                <EyeSlashIcon class="h-6 w-6 text-white-400 font-bold" />
+                {{ $t('Deleted.Company') }}
+            </button>
+        </div>
+    </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
             <div class="p-6 text-gray-900">
@@ -151,13 +151,9 @@
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
                                                     <span v-if="!crear.nameCrear"
-                                                        class="absolute right-10 top-50 text-red-500">*</span>
+                                                        class="absolute right-10 mt-3 text-red-500">*</span>
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="mt-2">
                                                 <div>
                                                     <label
@@ -167,12 +163,12 @@
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
                                                     <span v-if="!crear.emailCrear"
-                                                        class="absolute right-10 top-50 text-red-500">*</span>
+                                                        class="absolute right-10 mt-3 text-red-500">*</span>
                                                 </div>
                                             </div>
                                             <div class="mt-2">
                                                 <div class="flex w-full space-x-8">
-                                                    <div class="w-full">
+                                                    <div class="w-full relative">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
                                                                 $t('phone') }}</label>
@@ -180,8 +176,9 @@
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
                                                         <span v-if="!crear.phoneCrear"
-                                                            class="absolute left-50 top-50 text-red-500">*</span>
+                                                            class="absolute right-0 mt-3 mr-3 text-red-500">*</span>
                                                     </div>
+
                                                     <div class="w-full">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
@@ -190,9 +187,8 @@
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
                                                         <span v-if="!crear.cifCrear"
-                                                            class="absolute right-10 top-50 text-red-500">*</span>
+                                                            class="absolute right-10 mt-3 text-red-500">*</span>
                                                     </div>
-
                                                 </div>
                                             </div>
 
@@ -260,7 +256,7 @@
                                                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                         required>
                                                     <span v-if="!editar.nameEditar"
-                                                        class="absolute right-0 top-0 text-red-500">*</span>
+                                                        class="absolute right-0 mr-3 mt-3 top-0 text-red-500">*</span>
                                                 </div>
                                             </div>
 
@@ -274,7 +270,7 @@
                                                             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                             required>
                                                         <span v-if="!editar.emailEditar"
-                                                            class="absolute right-0 top-0 text-red-500">*</span>
+                                                            class="absolute right-0 mr-3 mt-3 top-0 text-red-500">*</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,7 +287,7 @@
                                                                 class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                                 required>
                                                             <span v-if="!editar.phoneEditar"
-                                                                class="absolute right-0 top-0 text-red-500">*</span>
+                                                                class="absolute right-0 mr-3 mt-3 top-0 text-red-500">*</span>
                                                         </div>
                                                     </div>
                                                     <div class="w-full">
@@ -303,7 +299,7 @@
                                                                 class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-orange-400 focus:border-orange-400"
                                                                 required>
                                                             <span v-if="!editar.cifEditar"
-                                                                class="absolute right-0 top-0 text-red-500">*</span>
+                                                                class="absolute right-0 mr-3 mt-3 top-0 text-red-500">*</span>
                                                         </div>
                                                     </div>
                                                 </div>

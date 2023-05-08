@@ -1,6 +1,9 @@
 <template>
-    <br>
-
+    <br> <button
+        class="ml-10 mb-10 mr-20 mt-10 px-3 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-400 focus:outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+        @click="goBack()">
+        {{ $t('Back') }}
+    </button>
     <table id="tableQualify">
         <thead>
             <tr class="bg-orange-400 text-white">
@@ -64,11 +67,7 @@
             </ul>
         </nav>
     </div>
-    <button
-        class="ml-10 mb-10 mr-20 mt-10 px-3 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-400 focus:outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-        @click="goBack()">
-        {{ $t('Back') }}
-    </button>
+
 
     <TransitionRoot as="template" :show="modal_calificar">
         <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_calificar = false">
@@ -123,12 +122,6 @@
                                         @click="submitGrade">
                                         <i class="fas fa-sync-alt mr-2"></i>{{ $t('Update') }}
                                     </button>
-                                    <button type="button"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-4 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 flex items-center"
-                                        @click="nextUser">
-                                        <i class="fas fa-arrow-right mr-2"></i>{{$t('pagination.next')}}
-                                    </button>
-
                                 </div>
 
                             </div>
@@ -242,17 +235,6 @@ export default {
                 console.log(error.response.data.message);
             });
         },
-        nextUser() {
-            // Si hay más usuarios, pasa al siguiente
-            if (this.currentUserIndex < this.user.length - 1) {
-                this.currentUserIndex++;
-            } else {  // Si has llegado al final de la lista, vuelve al primero
-                this.currentUserIndex = 0;
-            }
-            // Actualiza la información del usuario actual
-            this.currentUser = this.user[this.currentUserIndex];
-        }
-
     }
 }
 </script>
