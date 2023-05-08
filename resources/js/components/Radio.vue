@@ -47,7 +47,8 @@
   </div>
 </template>
 
-<script setup>
+
+<script>
 import { ref, watch } from 'vue'
 import {
   RadioGroup,
@@ -72,9 +73,7 @@ const options = [
     html: '<i class="fa fa-close text-4xl"></i>'
  },
 ]
-</script>
 
-<script>
 export default {
   name: 'Radio',
   data() {

@@ -85,22 +85,21 @@
     <!-- Botón Enviar -->
 </template>
 
-<script setup>
-import RadioGroupComponent from '../components/Radio.vue'
-</script>
-
 <script>
 /** AQUI PODEMOS IMPORTAR MÁS COMPONENTES DENTRO DEL COMPONENTE */
 import { TailwindPagination } from 'laravel-vue-pagination';
 //Importar libreria axios (AJAX de VUE) hace peticiones HTTP GET a una URL específica (datos-tasques)
 
 import { HalfCircleSpinner } from 'epic-spinners'
+import RadioGroupComponent from '../components/Radio.vue'
+
 
 //export contiene las propiedades y métodos que definen el comportamiento del componente, y default indica que es el export por defecto de este modulo
 export default {
     components: {
         'laravel-pagination': TailwindPagination,
         HalfCircleSpinner,
+        RadioGroupComponent
     },
     beforeMount() {
         this.getTasksIdAccepted()
