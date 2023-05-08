@@ -137,7 +137,8 @@ export default {
         /** Método que recoge datos de una url */
         //le pasamos el parámetro page para que pueda ir cambiando de páginas en la URL
         getTasksAccepted(page = 1) {
-            this.$axios.get('datos-tasques', {
+            let id = window.location.pathname.split("/").pop()
+            this.$axios.get('datos-tasques/' + id, {
                 params: {
                     page,
                     buscador: this.buscador
@@ -148,7 +149,8 @@ export default {
             });
         },
         getTasksIdAccepted() {
-            this.$axios.get('datos-tasques').then(res => {
+            let id = window.location.pathname.split("/").pop()
+            this.$axios.get('datos-tasques/' + id).then(res => {
                 console.log('OK', res)
                 res.data.data.map((value) => {
                     console.log(value.id)

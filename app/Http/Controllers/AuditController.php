@@ -55,7 +55,7 @@ class AuditController extends Controller
         $survey->save();
 
         return response()->json([
-            'redirect' => route('report.index')
+            'redirect' => route('acceptacio-tasques', [$id])
         ]);
     }
 }
