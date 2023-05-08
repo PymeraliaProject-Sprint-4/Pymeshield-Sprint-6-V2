@@ -334,10 +334,7 @@ Route::get('restore/{id}', [RestoreController::class, 'getIdDevice'])->name('res
 
 
 //Mostrar Dispositivos
-Route::get('devices', function () {
-    return view('listdevices');
-})->middleware('auth', 'check_access_admin');
-
+Route::get('devices', [DevicesController::class, 'index'])->name('index.devices')->middleware('auth', 'check_access_admin');
 Route::get('devices/list', [DevicesController::class, 'devices'])->middleware('auth', 'check_access_admin');
 Route::get('devices/type_devices', [DevicesController::class, 'type_devices'])->middleware('auth', 'check_access_admin');
 Route::post('devices/create', [DevicesController::class, 'create'])->middleware('auth', 'check_access_admin');
