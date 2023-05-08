@@ -10,9 +10,6 @@
                 {{__('questionnaire.create')}}
             </x-button-link>
         </div>
-        <div>
-            <create-report :questionnaire='{{ json_encode($questionnaire) }}' :users='{{ json_encode($users) }}' />
-        </div>
 
         <div class="flex items-center justify-end">
             <x-button-link href="{{route('questionnaire.hidden')}}">
