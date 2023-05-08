@@ -268,15 +268,15 @@
                                                     id="description_edit"
                                                     class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4"
                                                     required></textarea>
-                                                
+
                                             </div>
                                             <div>
                                                 <label for="image_edit" class="font-medium text-gray-900 mb-2">
                                                     {{ $t('Image') }} {{ $t('Of') }} {{ $t('Course') }}
                                                 </label>
                                                 <input type="file" ref="image_edit" name="image_edit" v-on:change="onFileSelected" class="bg-gray-100 border-gray-300 focus:ring-orange-400 focus:border-orange-400 rounded-md w-full py-2 px-3 mb-4">
-                                                   
-                                                
+
+
                                             </div>
                                             <div>
                                                 <label for="user" class="font-medium text-gray-900 mb-2">
@@ -429,7 +429,6 @@ export default {
   },
         selectCourse(course) {
             console.log(course)
-            alert("scopedSlots")
             this.user_ids = course.users
             this.modal_edit = true;
             this.selectedCourse = course;
@@ -448,7 +447,7 @@ export default {
         updateCourse() {
   if ((this.name_edit && this.name_edit.length <= 50) && (this.description_edit && this.description_edit.length <= 255)) {
     this.sending = true;
-    
+
     const formData = new FormData();
     formData.append('name_edit', this.name_edit);
     formData.append('description_edit', this.description_edit);
