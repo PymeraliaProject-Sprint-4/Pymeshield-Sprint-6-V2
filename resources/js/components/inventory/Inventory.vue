@@ -25,8 +25,8 @@
         <table class="table-auto w-full shadow-lg rounded-lg">
             <thead class="bg-orange-500 text-white">
                 <tr class="bg-orange-400 text-white">
-                    <th class="px-6 py-3 uppercase">{{ $t('inventory.brand') }}</th>
-                    <th class="px-6 py-3 uppercase">{{ $t('inventory.model') }}</th>
+                    <th class="px-6 py-3 uppercase">{{ $t('brand') }}</th>
+                    <th class="px-6 py-3 uppercase">{{ $t('Model') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('inventory.mac.ethernet') }} / {{ $t('inventory.mac.wifi') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('inventory.type') }}</th>
                     <th class="px-6 py-3 uppercase">{{ $t('inventory.description') }}</th>
