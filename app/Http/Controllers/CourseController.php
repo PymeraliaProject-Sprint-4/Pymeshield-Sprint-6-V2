@@ -62,7 +62,8 @@ class CourseController extends Controller
             ->get();
     }
 
-    public function allCategories(){
+    public function allCategories()
+    {
         return Category::whereNull('hidden')
             ->get();
     }
@@ -102,9 +103,18 @@ class CourseController extends Controller
 
     public function client_data()
     {
-        return Course::whereNull('hidden')->orderBy('updated_at', 'desc')->get();
+        $user = auth()->user();
+    
+        if ($user->type === 'admin' || $user->type === 'worker'){
+            //Si el usuario es administrador pordra ver todos los cursos del aplicativo
+            return Course::whereNull('hidden')->orderBy('updated_at', 'desc')->get();
+        } else {
+            // Si no es admin, podra ver solo los cursos que tiene asignados
+            $courseIds = DB::table('course_user')->where('user_id', $user->id)->pluck('course_id');
+            return Course::whereIn('id', $courseIds)->whereNull('hidden')->orderBy('updated_at', 'desc')->get();
+        }
     }
-
+    
     public function store(Request $request)
     {
         // Guardar el nuevo curso en la base de datos
