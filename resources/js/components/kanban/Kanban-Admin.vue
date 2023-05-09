@@ -60,7 +60,7 @@ export default {
         };
     },
     mounted() {
-        axios.get("/tasks").then((response) => {
+        axios.get("/tasks-admin").then((response) => {
             this.loadTasks(response.data);
         });
     },

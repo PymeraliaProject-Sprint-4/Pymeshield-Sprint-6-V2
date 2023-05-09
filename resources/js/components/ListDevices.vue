@@ -12,8 +12,8 @@
         <table class="mt-2 table-auto w-full text-base text-gray-800 dark:text-gray-400 text-center">
             <thead class="bg-orange-500 text-white">
                 <tr>
-                    <th scope="col" class="w-28 px-6 py-3">{{ $t('brand') }}</th>
-                    <th scope="col" class="w-28 px-6 py-3">{{ $t('model') }}</th>
+                    <th scope="col" class="w-28 px-6 py-3">{{ $t('inventory.brand') }}</th>
+                    <th scope="col" class="w-28 px-6 py-3">{{ $t('inventory.model') }}</th>
                     <th scope="col" class="px-6 py-3">{{ $t('inventory.mac.ethernet') }} / {{ $t('inventory.mac.wifi') }}
                     </th>
                     <th scope="col" class="px-6 py-3">{{ $t('inventory.type') }}</th>
