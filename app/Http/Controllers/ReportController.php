@@ -57,7 +57,7 @@ class ReportController extends Controller
             ->join('type_measures', 'type_measures.id', '=', 'answers.type_measure_id')
             ->where('reports.id', '=', $id)
             ->get();
-        return view('report.show', compact('report'));
+        return view('report.show', compact('report', 'id'));
     }
     public function showClient($id)
     {
@@ -76,7 +76,7 @@ class ReportController extends Controller
             ->where('reports.id', '=', $id)
             ->where('user_id', $userId)
             ->get();
-        return view('report.show_client', compact('report'));
+        return view('report.show_client', compact('report', 'id'));
     }
     public function pdf($id)
     {
