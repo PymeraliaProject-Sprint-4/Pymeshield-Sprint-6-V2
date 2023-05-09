@@ -357,6 +357,6 @@
     "no.logs.result" : "No record found",
     "start.date.major.than.final.date" : "The end date cannot be less than the start date.",
     "passwords.user": "User not found",
-    "emblems.back" : "Show emblems"
-
+    "emblems.back" : "Show emblems",
+    "emblem.no-emblem": "Complete courses to get emblems"
 }

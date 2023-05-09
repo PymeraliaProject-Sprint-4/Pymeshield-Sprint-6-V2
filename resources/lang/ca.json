@@ -361,5 +361,6 @@
     "start.date.major.than.final.date" : "La data de fi no pot ser menor que la data inici.",
     "Rescources.Tittles": "Recursos i categories del curs",
     "passwords.user": "Usuari no trobat",
-    "emblems.back" : "Mostrar emblemes"
+    "emblems.back" : "Mostrar emblemes",
+    "emblem.no-emblem": "Completi cursos per a obtindre emblemes"
 }
