@@ -262,6 +262,21 @@ class TaskController extends Controller
         
     }
 
+    public function tasksKanbanAdmin()
+    {
+        $tasks = Task::join('answers', 'tasks.answer_id', '=', 'answers.id')
+            ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
+            ->get(['tasks.*', 'answers.recommendation']);
+    
+        foreach ($tasks as $task) {
+            $task->start_date = (new DateTime($task->start_date))->format('Y-m-d H:i');
+            $task->final_date = (new DateTime($task->final_date))->format('Y-m-d H:i');
+        }
+        
+        return response()->json($tasks);
+    }
+    
+
     public function tasksGantt()
     {
         $user_id = Auth::user()->id;
