@@ -184,7 +184,7 @@ export default {
             }).then(() => {
                 setTimeout(() => {
                     this.loading = false;
-                    location.href = 'http://localhost/llista_pressupostos'
+                    location.href = '/show_budgets_client'
                 }, 2000);
             })
         }
