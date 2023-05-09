@@ -276,7 +276,18 @@ class UserController extends Controller
             ->select('users.*', 'companies.name AS company_name')
             ->where('users.id', '=', $user->id)
             ->first();
-        return $userInfo;
+
+        $userEmblem = DB::table('users')
+            ->join('course_user', 'users.id', '=', 'course_user.user_id')
+            ->join('emblems', 'emblems.course_id', '=', 'course_user.course_id')
+            ->select('users.*', 'course_user.course_id', 'emblems.id AS emblem_id', 'emblems.name AS emblem_name', 'emblems.image')
+            ->where('users.id', '=', $user->id)
+            ->get();
+
+        return[
+            'userEmblem' => $userEmblem,
+            'userInfo' => $userInfo
+        ];
     }
 
     public function editarUsuario()

@@ -1,8 +1,8 @@
 <footer class="bg-black text-center lg:text-center mt-auto p-6">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div class="flex flex-col">
-            <a class="text-gray-100" href="#"><img src="{{ asset('img/logo_pymeshield_black.png') }}" alt="Logo" class="inline-block mr-1 w-12">© pymeshield by Pymeralia</a>
-            <a class="text-gray-100 mt-8" href="#" role="button">
+            <a class="text-gray-100" href="/"><img src="{{ asset('img/logo_pymeshield_black.png') }}" alt="Logo" class="inline-block mr-1 w-12">© pymeshield by Pymeralia</a>
+            <a class="text-gray-100 mt-8" href="https://github.com/PymeraliaProject-Sprint-4/PymeraliaProject-Kivy/releases/tag/Pymeapp" role="button" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                 <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path fill="currentColor"
