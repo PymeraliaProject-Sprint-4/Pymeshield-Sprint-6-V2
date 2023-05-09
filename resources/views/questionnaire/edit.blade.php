@@ -8,7 +8,7 @@
         <div class="pb-3 sm:rounded-lg">
             <x-button-link
                 href="{{ $questionnaire->hidden != null ? route('questionnaire.hidden') : route('questionnaire.index') }}">
-                <i class="fa-solid fa-arrow-left">Volver</i>
+                <i class="fa-solid fa-arrow-left">{{__('kanban.alert.back')}}</i>
             </x-button-link>
         </div>
 
@@ -39,7 +39,7 @@
                     <x-input-label for="cost_per_hour" :value="__('questionnaire.autor')" />
 
                     <x-text-input id="autor" class="block mt-1" type="text" name="autor"
-                        value="{{ $questionnaire->autor }}" autofocus />
+                        value="{{ $questionnaire->autor }}" disabled/>
 
                     <x-input-error :messages="$errors->get('autor')" class="mt-2" />
                 </div>

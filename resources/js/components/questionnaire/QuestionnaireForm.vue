@@ -20,24 +20,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center">
-                    <div class="w-10/12">
-                        <div>
-                            <label class="block font-medium text-label text-gray-700" for="questionnaire_autor">{{
-                                $t('questionnaire.autor') }}</label>
-                        </div>
-                        <select id="questionnaire_autor" name="questionnaire_autor" v-model="questionnaire_autor"
-                            class="my-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6">
-                            <option value="" selected>{{ $t('messages.option') }}</option>
-                            <option v-for="questionnaire in questionnaires" :value="questionnaire.autor"
-                                :key="questionnaire.id">{{ questionnaire.autor }}
-                            </option>
-                        </select>
-                        <div v-for="(error, field) in errors" :key="field" class="text-red-500">
-                            {{ error[0] }}
-                        </div>
-                    </div>
-                </div>
                 <div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-lg">
                         <button
@@ -65,7 +47,6 @@ export default {
         return {
             errors: '',
             questionnaire_name: '',
-            questionnaire_autor: '',
             questionnaire_date: '',
             sending: false,
         }
@@ -76,7 +57,6 @@ export default {
 
             axios.post('/questionnaire', {
                 questionnaire_name: this.questionnaire_name,
-                questionnaire_autor: this.questionnaire_autor,
                 questionnaire_date: this.questionnaire_date,
 
             })
