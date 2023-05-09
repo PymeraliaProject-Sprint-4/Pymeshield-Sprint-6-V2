@@ -51,10 +51,8 @@ class QuestionnaireController extends Controller
 
         $validator = Validator::make($request->all(), [
             'questionnaire_name' => ['required', 'string'],
-            'questionnaire_autor' => ['required', 'string']
         ], [
             'questionnaire_name.required' => __('validation.required.name'),
-            'questionnaire_autor.required' => __('validation.required.autor')
         ]);
 
         if ($validator->fails()) {
@@ -62,7 +60,7 @@ class QuestionnaireController extends Controller
         }
 
         $questionnaire->name = $request->questionnaire_name;
-        $questionnaire->autor = $request->questionnaire_autor;
+        $questionnaire->autor = Auth::user()->name;
         $questionnaire->date = date('Y-m-d');
 
         $questionnaire->save();
@@ -89,14 +87,12 @@ class QuestionnaireController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'autor' => 'required',
             'date' => ['required', 'date_format:Y-m-d']
         ]);
 
         $questionnaire = Questionnaire::find($id);
 
         $questionnaire->name = $request->name;
-        $questionnaire->autor = $request->autor;
         $questionnaire->date = $request->date;
         $questionnaire->update();
 
