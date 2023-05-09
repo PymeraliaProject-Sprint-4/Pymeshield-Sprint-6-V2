@@ -147,6 +147,7 @@ class BudgetController extends Controller
     public function showAcceptModify(Request $request)
     {
             $pagination = $request->id;
+            $id_budget = $request->budget;
 
             if(!$pagination) $pagination = 999;
 
@@ -158,7 +159,7 @@ class BudgetController extends Controller
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
             ->select('tasks.id AS id', 'answers.name', 'answers.recommendation', 'impacts.name as peligro', 'tasks.manages', 'tasks.price', 'tasks.price_customer')
-            ->where('tasks.user_id', '=', auth()->user()->id)
+            ->where('tasks.budget_id', '=', $id_budget)
             ->orderBy('tasks.id')
             ->paginate($pagination);
 
@@ -229,6 +230,8 @@ class BudgetController extends Controller
     public function search(Request $request)
     {
         $buscado = $request->buscado;
+        $id_budget = $request->budget;
+
         $data = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
@@ -239,7 +242,7 @@ class BudgetController extends Controller
             ->where('tasks.budget_id', '=', '1')
             ->where('answers.name', 'like', '%' . $buscado . '%')
             ->orWhere('answers.recommendation', 'like', '%' . $buscado . '%')
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.budget_id', '=', $id_budget)
             ->get();
         if ($data == null) {
             return null;
@@ -248,8 +251,10 @@ class BudgetController extends Controller
         }
         // return Task::all();
     }
-    public function getTotal()
+    public function getTotal(Request $request)
     {
+        $id_budget = $request->budget;
+
         $dataPyme = DB::table('tasks')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->join('questionnaires', 'questionnaires.id', '=', 'tasks.questionnaire_id')
@@ -257,10 +262,10 @@ class BudgetController extends Controller
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
             ->select(DB::raw('ROUND(SUM(tasks.price), 2) as total'))
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.budget_id', '=', $id_budget)
             ->where('tasks.manages', '=', 'Me aconseja Pymeralia')
             ->groupBy('tasks.budget_id')
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.budget_id', '=', $id_budget)
             ->get();
 
         $dataYo = DB::table('tasks')
@@ -270,13 +275,11 @@ class BudgetController extends Controller
             ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
             ->join('impacts', 'impacts.id', '=', 'tasks.impact_id')
             ->select(DB::raw('ROUND(SUM(tasks.price_customer), 2) as total'))
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.budget_id', '=', $id_budget)
             ->where('tasks.manages', '=', 'Me lo gestiono yo')
             ->groupBy('tasks.budget_id')
-            ->where('tasks.budget_id', '=', '1')
+            ->where('tasks.budget_id', '=', $id_budget)
             ->get();
-
-        // $total = json_decode($data);
 
         if ($dataPyme == '[]') {
             $dataPyme = 0;
@@ -294,9 +297,8 @@ class BudgetController extends Controller
 
         $total = $totalPyme + $totalYo;
 
-        Budget::where('budgets.id', '=', '1')->update(['price' => $total,]);
+        Budget::where('budgets.id', '=', $id_budget)->update(['price' => $total,]);
         return $total;
-        // return Task::all();
     }
     public function updateAccepted(Request $request, Task $idTask)
     {
