@@ -360,5 +360,6 @@
     "no.logs.result" : "No s'ha trobat cap resgitre",
     "start.date.major.than.final.date" : "La data de fi no pot ser menor que la data inici.",
     "Rescources.Tittles": "Recursos i categories del curs",
-    "passwords.user": "Usuari no trobat"
+    "passwords.user": "Usuari no trobat",
+    "emblems.back" : "Mostrar emblemes"
 }
