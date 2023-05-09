@@ -60,6 +60,33 @@
             </div>
         </div>
     </div>
+
+    <div class="p-5">
+        <h1 class="p-3 text-center font-medium">{{ $t('Emblems') }}</h1>
+        <table class="table-auto w-full shadow-lg rounded-lg p-4 overflow-hidden">
+            <thead class0="rounded-t-lg">
+                <tr class="bg-orange-400 text-white table-emblem">
+                    <th class="px-6 py-3 uppercase">{{ $t('description') }}</th>
+                    <th class="px-6 py-3 uppercase">{{ $t('Emblems') }}</th>
+                </tr>
+            </thead>
+            <tbody v-if="emblems != 0">
+                <tr v-for="emblem in emblems" :key="emblem.id" class="bg-orange-50 hover:bg-orange-100 text-center">
+                    <td class="px-2 py-2 text-center">
+                        <p class="text-sm text-gray-900">{{ emblem.emblem_name }}</p>
+                    </td>
+                    <td class="px-2 py-2 text-center flex align-middle justify-center">
+                        <img class="h-12" :src=emblem.image />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody v-else class="p-2.5 font-medium items-center">
+                <div class="m-2">
+                    {{ $t('emblem.no-emblem') }}
+                </div>
+            </tbody>
+        </table>
+    </div><!-- tabla emblemas -->
 </template>
 
 <script>
@@ -69,11 +96,13 @@ export default {
     data() {
         return {
             user: {},
+            emblems: {},
         };
     },
     mounted() {
         axios.get('/user-info').then(response => {
-            this.user = response.data;
+            this.user = response.data.userInfo;
+            this.emblems = response.data.userEmblem;
         });
     },
 };
@@ -109,6 +138,10 @@ export default {
     max-width: 200px;
     height: auto;
     border-radius: 50%;
+}
+
+.table-emblem {
+    background-color: rgb(251 146 60) !important;
 }
 
 td {
