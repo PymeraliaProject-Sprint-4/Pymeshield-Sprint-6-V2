@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User; // Agrega esta línea
 use App\Models\Company;
+use App\Models\Device;
 use Carbon\Carbon;
 use Password;
 use Str;
@@ -452,14 +453,6 @@ class UserController extends Controller
     public function assignedCoursesUser()
     {
 
-        // SELECT courses.name, courses.image, categories.name as categoryName, activities.name as activityName, activities.final_date, courses.id
-        // FROM courses
-        // INNER JOIN course_user ON courses.id = course_user.course_id
-        // INNER JOIN categories ON courses.id = categories.course_id
-        // INNER JOIN activities ON categories.id = activities.category_id
-        // WHERE courses.hidden IS NOT NULL
-        // AND course_user.user_id = 1;
-
         $user_id = Auth::id();
 
         $activities = Course::where('user_id', $user_id)
@@ -485,22 +478,16 @@ class UserController extends Controller
     public function graphicUserData()
     {
 
-        //SELECT COUNT(*) AS num_devices FROM devices WHERE user_id = 1 AND devices.hidden IS NULL;
-
-        //SELECT COUNT(*) AS num_courses FROM course_user WHERE user_id = 1;
-
-        //SELECT COUNT(*) AS num_tasks FROM tasks WHERE user_id = 1 AND tasks.hidden IS NULL AND tasks.state != 'Done';
-
         $user_id = Auth::id();
+        $company_id = Auth::user()->company_id;
 
-        $countDevices = DeviceUser::where('user_id', $user_id)
+        $countDevices = Device::where('company_id', $company_id)
             ->select(DB::raw("COUNT(*) as num_devices"))
-            //->whereNull('devices.hidden')
+            ->Where('state', '!=', 'Deshabilitado')
             ->get();
 
         $countCourses = CourseUser::where('user_id', $user_id)
             ->select(DB::raw("COUNT(*) as num_courses"))
-            // ->whereNull('devices.hidden')
             ->get();
 
         $countTasks = Task::where('user_id', $user_id)

@@ -18,6 +18,7 @@ class RestoreController extends Controller
         $dispositiu = Device::find($id);
         $dateNow = null;
         $dispositiu->hidden = $dateNow;
+        $dispositiu->state = 'Operativo';
         $dispositiu->save();
         return redirect()->back();
     }
