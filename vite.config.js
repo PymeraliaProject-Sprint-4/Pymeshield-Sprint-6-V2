@@ -33,6 +33,6 @@ export default defineConfig({
             },
         }),
         // Laravel >= 9
-        i18n(),
+        i18n('resources/lang'),,
     ],
 });

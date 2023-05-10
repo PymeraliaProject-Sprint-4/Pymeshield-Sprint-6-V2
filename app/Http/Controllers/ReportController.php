@@ -84,7 +84,7 @@ class ReportController extends Controller
         $report = Report::with(['answers', 'answers.impact', 'answers.intervention', 'answers.probability', 'answers.question', 'answers.risk', 'answers.typeMeasure'])
             ->findOrFail($id);
         // crea carpeta fonts si no existe
-        if (!File::exists(('fonts'))) {
+        if (!File::exists(storage_path('fonts'))) {
             File::makeDirectory(storage_path('fonts'));
         }
         $today = Carbon::now()->format('d/m/Y');
