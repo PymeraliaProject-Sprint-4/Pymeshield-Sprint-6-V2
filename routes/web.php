@@ -216,10 +216,10 @@ Route::middleware(['log.course'])->group(function () {
 
 
 
-    Route::post('course', [CourseController::class, 'store2'])->name('course.store2');
-    Route::post('/course', [CourseController::class, 'store2']);
-    Route::post('/course/{id}', [\App\Http\Controllers\CourseController::class, 'update']);
-    Route::get('/course/{id}/image', 'CourseController@getImage');
+    Route::post('course', [CourseController::class, 'store2'])->name('course.store2')->middleware('auth', 'check_access_client');
+    Route::post('/course', [CourseController::class, 'store2'])->middleware('auth', 'check_access_client');
+    Route::post('/course/{id}', [\App\Http\Controllers\CourseController::class, 'update'])->middleware('auth', 'check_access_client');
+    Route::get('/courses/{id}', 'CourseController@getImage')->middleware('auth', 'check_access_client');
     Route::get('/course/client', [CourseController::class, 'index_client'])->name('course.client')->middleware('auth', 'check_access_client');
     Route::get('/course/client_data', [CourseController::class, 'client_data'])->name('course.client_data')->middleware('auth', 'check_access_client');
 
