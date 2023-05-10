@@ -89,6 +89,7 @@ class DevicesController extends Controller
         $device = Device::find($request->id);
         $dateNow = Carbon::now();
         $device->hidden = $dateNow;
+        $device->state = 'Deshabilitado';
         $device->save();
     }
 

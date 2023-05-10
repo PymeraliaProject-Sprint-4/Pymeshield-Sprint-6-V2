@@ -101,19 +101,15 @@ class BudgetController extends Controller
 
     public function listAllBudgets()
     {
-        if(auth()->user()->type == "client") //si un client intenta accedir aquesta petició no rep res
-        {
-
-        }else{
-            $data = DB::table('tasks')
-                ->join('users', 'users.id', '=', 'tasks.user_id')
-                ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
-                ->join('companies', 'companies.id', '=', 'users.company_id')
-                ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
-                ->orderBy('budgets.created_at', 'desc')
-                ->groupBy('budgets.id')->get();
-                return response()->json($data); //Retornar json vara vue
-        }
+        $data = DB::table('tasks')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
+            ->join('companies', 'companies.id', '=', 'users.company_id')
+            ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
+            ->orderBy('budgets.created_at', 'desc')
+            ->groupBy('users.id', 'budgets.id', 'companies.id')
+            ->get();
+            return response()->json($data); //Retornar json vara vue
     }
 
     public function listClientBudgets()
