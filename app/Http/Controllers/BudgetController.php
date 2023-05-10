@@ -110,7 +110,8 @@ class BudgetController extends Controller
                 ->join('budgets', 'budgets.id', '=', 'tasks.budget_id')
                 ->join('companies', 'companies.id', '=', 'users.company_id')
                 ->select("users.name", "users.last_name", "companies.name as company_name", "budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
-                ->orderBy('budgets.updated_at', 'desc')->get();
+                ->orderBy('budgets.created_at', 'desc')
+                ->groupBy('budgets.id')->get();
                 return response()->json($data); //Retornar json vara vue
         }
     }
@@ -125,7 +126,8 @@ class BudgetController extends Controller
             ->join('companies', 'companies.id', '=', 'users.company_id')
             ->select("budgets.created_at", "budgets.updated_at", "budgets.status", "budgets.id")
             ->where('users.id', '=', $idclient)
-            ->orderBy('budgets.updated_at', 'desc')->get();
+            ->orderBy('budgets.created_at', 'desc')
+            ->groupBy('budgets.id')->get();
             return response()->json($data); //Retornar json vara vue
 
     }

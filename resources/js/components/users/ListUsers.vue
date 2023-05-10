@@ -594,7 +594,9 @@ export default {
                     this.selectedCompany = '';
                     this.selectedType = '';
                     this.ModalCrear = false;
+                    this.getUsers();
                 })
+                
                 .catch(error => {
                     console.log(error.response)
                 })
