@@ -16,7 +16,7 @@
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'text')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name}} - {{
+                            {{ resource.resource_name }} - {{
                                 resource.resource_description ?? '' }}
                         </li>
                     </ul>
@@ -28,7 +28,7 @@
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'url')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name}} - {{
+                            {{ resource.resource_name }} - {{
                                 resource.resource_location ?? '' }}
                         </li>
                     </ul>
@@ -39,7 +39,7 @@
                     <ul>
                         <li v-for="resource in category.resources.filter(r => r.resource_type === 'file')"
                             :key="resource.resource_name">
-                            {{ resource.resource_name}} - {{
+                            {{ resource.resource_name }} - {{
                                 resource.resource_location ?? '' }}
                         </li>
                     </ul>
@@ -48,6 +48,18 @@
             </ul>
         </div>
 
+        <div class="flex-1 flex-col ml-2">
+            <div class="bg-orange-200 rounded-lg p-5 m-2">
+                <div class="flex justify-between">
+                    <h2 class="font-bold text-lg m-2">Actividades</h2>
+                </div>
+                <li class="bg-orange-400 rounded-lg p-5 m-2">
+                    <p class="font-bold">{{ $t('activities') }}</p>
+                    <input type="file"/>
+                    <imput type="button" class="w-100" value="subir"/>
+                </li>
+            </div>
+        </div>
     </div>
 </template>
   
