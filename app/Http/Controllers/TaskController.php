@@ -178,12 +178,12 @@ class TaskController extends Controller
         foreach ($data as $id => $value) {
             echo $id . $value;
             $task = new Task();
-            $task->user_id = 1;
-            $task->questionnaire_id = 1;
+            $task->user_id = Auth::id();
+            $task->questionnaire_id = 1; // TODO: Passar això dinàmicament 
             $task->answer_id = $id;
             $task->budget_id = $budget->id;
             $task->manages = $value;
-            $task->impact_id = 1;
+            $task->impact_id = 1; // TODO: Passar això dinàmicament 
             $task->save();
         }
     }
