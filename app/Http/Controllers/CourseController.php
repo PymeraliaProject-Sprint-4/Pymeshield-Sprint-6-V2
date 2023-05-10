@@ -39,16 +39,16 @@ class CourseController extends Controller
     }
 
     public function getImage($id)
-{
-    $course = Course::findOrFail($id);
-    $imagePath = public_path($course->image);
-    $contentType = mime_content_type($imagePath);
-    
-    return response(file_get_contents($imagePath))
-        ->header('Content-Type', $contentType);
-}
+    {
+        $course = Course::findOrFail($id);
+        $imagePath = public_path($course->image);
+        $contentType = mime_content_type($imagePath);
 
-    
+        return response(file_get_contents($imagePath))
+            ->header('Content-Type', $contentType);
+    }
+
+
 
 
 
@@ -109,8 +109,8 @@ class CourseController extends Controller
     public function client_data()
     {
         $user = auth()->user();
-    
-        if ($user->type === 'admin' || $user->type === 'worker'){
+
+        if ($user->type === 'admin' || $user->type === 'worker') {
             //Si el usuario es administrador pordra ver todos los cursos del aplicativo
             return Course::whereNull('hidden')->orderBy('updated_at', 'desc')->get();
         } else {
@@ -119,7 +119,7 @@ class CourseController extends Controller
             return Course::whereIn('id', $courseIds)->whereNull('hidden')->orderBy('updated_at', 'desc')->get();
         }
     }
-    
+
     public function store(Request $request)
     {
         // Guardar el nuevo curso en la base de datos
@@ -293,11 +293,20 @@ class CourseController extends Controller
 
         $course->save();
 
-        // Get updated course list and return as JSON
-        $courses = Course::orderBy('updated_at', 'desc')
-            ->with('users')
+        $courses =  Course::whereNull('hidden')
+            ->orderBy('updated_at', 'desc')
+            ->with(['users' => function ($query) {
+                $query->select('user_id');
+            }])
             ->get();
-        return response()->json(['courses' => $courses]);
+
+
+
+        // Devolver los cursos actualizados en formato JSON
+        return response()->json([
+            'id' => $id,
+            'courses' => $courses,
+        ]);
     }
 
 
@@ -373,17 +382,17 @@ class CourseController extends Controller
 
         $validated['users'] = json_decode($validated['users'], true);
 
-        if($request->file('image')){
+        if ($request->file('image')) {
             $imageName = $request->file('image');
             $path  = 'img/imatgescursos/';
             //Per a evitar que pete si no detecta la carpeta
             $filename = time() . '.' . $imageName->getClientOriginalName();
-                if (!file_exists(public_path($path))){
-                    mkdir(public_path($path), 0755, true);
-                    }
-                $guardar = $request->file('image')->move($path, $filename);
-                $validated['image'] = $path . $filename;
+            if (!file_exists(public_path($path))) {
+                mkdir(public_path($path), 0755, true);
             }
+            $guardar = $request->file('image')->move($path, $filename);
+            $validated['image'] = $path . $filename;
+        }
         // Crea el nou curso e la base de dades
         $course = new Course();
         $course->name = $validated['name'];
