@@ -535,7 +535,7 @@ export default {
             baja: { id: "", removed_reason: "" },
             pagination: {},
             page: 1,
-            perPage: 2, // cantidad de elementos por página
+            perPage: 10, // cantidad de elementos por página
             currentPage: 1 // página actual
         };
     },

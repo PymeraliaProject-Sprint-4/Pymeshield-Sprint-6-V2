@@ -230,7 +230,7 @@
                                                                             <option v-for="company in companies" :key="company.id" :value="company.id">{{ company.name }}</option>
                                                                         </select>
                                                                         <span v-if="!selectedCompany" class="absolute right-0 top-8 mt-2 mr-2 text-red-500">*</span>
-                                                                    </div>                                                                    
+                                                                    </div>
                                                                 </div>
                                                                 <div class="w-full">
                                                                     <div class="relative">
@@ -512,7 +512,7 @@ export default {
             ModalCrear: false,
             pagination: {},
             page: 1,
-            perPage: 1, // cantidad de elementos por página
+            perPage: 10, // cantidad de elementos por página
             currentPage: 1, // página actual
             selectedType: '',
             selectedCompany: '',
@@ -596,7 +596,7 @@ export default {
                     this.ModalCrear = false;
                     this.getUsers();
                 })
-                
+
                 .catch(error => {
                     console.log(error.response)
                 })

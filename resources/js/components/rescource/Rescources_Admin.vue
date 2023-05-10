@@ -668,8 +668,7 @@ export default {
             pagination: {},
             page: 1,
             perPage: 7, // cantidad de elementos por página
-            currentPage: 1 // página actual
-
+            currentPage: 1, // página actual
         }
     },
     mounted() {
@@ -737,6 +736,7 @@ export default {
                     this.modal_crear_recurs_text = false;
                     this.selectedCategory = '';
                     console.log("Merequetengue");
+                    this.loadRescources()
                 })
                 .catch(error => {
 

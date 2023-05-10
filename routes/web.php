@@ -66,7 +66,7 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Crud Usuari
-Route::middleware(['log.user'])->group(function () {
+Route::middleware(['log.user', 'auth', 'check_access_client'])->group(function () {
     Route::get('userList', [UserController::class, 'userList'])->name('userList');
     Route::get('userListhidden', [UserController::class, 'userListhidden'])->name('userListhidden');
 
@@ -84,7 +84,7 @@ Route::middleware(['log.user'])->group(function () {
 });
 
 //Crud empresas
-Route::middleware(['log.company'])->group(function () {
+Route::middleware(['log.user', 'auth', 'check_access_client'])->group(function () {
     Route::get('listadoEmpresas/listCompanies', [CompanyController::class, 'listCompanies'])->name('company.listCompanies');
     Route::get('listadoEmpresas/listcompanyshidden', [CompanyController::class, 'listcompanieshiddenDatos'])->name('company.listcompanyshidden');
 
@@ -94,7 +94,7 @@ Route::middleware(['log.company'])->group(function () {
     Route::get('llistatEmpreses', [CompanyController::class, 'index'])->name('company.llistatEmpreses');
     Route::get('listcompanyhidden', [CompanyController::class, 'indexhidden'])->name('company.listcompanyhidden');
     Route::get('company/{id}/unHide', [CompanyController::class, 'unHideCompany'])->name('company.unHide');
-    Route::get('company/listAllCompanies', [CompanyController::class, 'listAllCompanies'])->middleware('auth');
+    Route::get('company/listAllCompanies', [CompanyController::class, 'listAllCompanies']);
 });
 
 //Rutes per al perfil Personal i editarPerfil
@@ -159,7 +159,7 @@ Route::middleware(['log.report'])->group(function () {
     Route::post('/report/{id}', [ReportController::class, 'modificar'])->name('report.modificar')->middleware('auth', 'check_access_admin');
 });
 //Question ROUTES
-Route::middleware(['log.question'])->group(function () {
+Route::middleware(['log.question', 'auth', 'check_access_client'])->group(function () {
     Route::get('question', [QuestionController::class, 'index'])->name('question.index');
     Route::post('question', [QuestionController::class, 'store'])->name('question.store');
     Route::get('question/create', [QuestionController::class, 'create'])->name('question.create');
@@ -171,7 +171,7 @@ Route::middleware(['log.question'])->group(function () {
 });
 
 //Questionnaire ROUTES
-Route::middleware(['log.questionnaire'])->group(function () {
+Route::middleware(['log.questionnaire' , 'auth', 'check_access_client'])->group(function () {
     Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.index');
     Route::get('questionnaire/create', [QuestionnaireController::class, 'create'])->name('questionnaire.create');
     Route::post('questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
@@ -194,7 +194,7 @@ Route::post('audit/save/{id}', [AuditController::class, 'store'])->name('audit.s
 
 //EQUIP3 ----------------------------------/////////////////
 //Part Admin Crear visualitzar
-Route::middleware(['log.course'])->group(function () {
+Route::middleware(['log.course', 'auth', 'check_access_client'])->group(function () {
     Route::get('course', [CourseController::class, 'index'])->name('course.index');
     Route::get('course/categories', [CourseController::class, 'coursecategories'])->name('course.categories');
     Route::get('categories/index_data', [CourseController::class, 'index_data_categories'])->name('course.index_data_categories');

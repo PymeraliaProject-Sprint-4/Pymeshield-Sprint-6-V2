@@ -28,3 +28,4 @@ lang/php_*.json
 /public/devices_qr/*
 /storage/fonts/*
 /resources/lang/php_*.json
+/imatgescursos/*
