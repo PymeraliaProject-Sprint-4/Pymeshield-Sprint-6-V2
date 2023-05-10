@@ -15,6 +15,7 @@ use App\Models\User; // Agrega esta línea
 use App\Models\Company;
 use Carbon\Carbon;
 use Password;
+use Str;
 
 class UserController extends Controller
 {
@@ -112,7 +113,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->nick_name = $request->nick_name;
         $user->email = $request->email;
-        $user->password = bcrypt('password');
+        $user->password = Hash::make(Str::random(14));
         $user->phone = $request->phone;
         $user->company_id = $request->selectedCompany;
         $user->type = $request->selectedType;
