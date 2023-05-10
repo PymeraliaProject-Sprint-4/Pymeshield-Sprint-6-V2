@@ -39,13 +39,16 @@ class CourseController extends Controller
     }
 
     public function getImage($id)
-    {
-        $course = Course::findOrFail($id);
-        $imagePath = 'img/imatgescursos/' . $course->image;
-        $imageUrl = asset($imagePath);
+{
+    $course = Course::findOrFail($id);
+    $imagePath = public_path($course->image);
+    $contentType = mime_content_type($imagePath);
+    
+    return response(file_get_contents($imagePath))
+        ->header('Content-Type', $contentType);
+}
 
-        return response()->json(['url' => $imageUrl]);
-    }
+    
 
 
 
@@ -379,13 +382,13 @@ class CourseController extends Controller
                     mkdir(public_path($path), 0755, true);
                     }
                 $guardar = $request->file('image')->move($path, $filename);
-                $validated->image = $path . $filename;
-        }
+                $validated['image'] = $path . $filename;
+            }
         // Crea el nou curso e la base de dades
         $course = new Course();
         $course->name = $validated['name'];
         $course->description = $validated['description'];
-        $course->image = str_replace('public/', '/storage/', $path);
+        $course->image = $path . $filename;
         $course->save();
 
         // Guardar los usuarios del curso
