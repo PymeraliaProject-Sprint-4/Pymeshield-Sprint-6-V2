@@ -461,6 +461,7 @@ export default {
         this.name_edit = '';
         this.description_edit = '';
         this.image_edit = '';
+        this.selectedUsers = [];
         this.courses = response.data.courses;
         this.modal_crear = false;
         this.modal_edit = false;
