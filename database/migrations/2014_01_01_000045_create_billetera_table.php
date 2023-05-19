@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('emblems', function (Blueprint $table) {
+        Schema::create('billetera', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            $table->string('description');
-            $table->longText('image');
-            $table->foreignId('course_id')->references('id')->on('courses');
-            $table->date('hidden')->nullable()->default(null);
+            $table->string('public_key', 255);
+            $table->string('private_key', 255);
+            $table->string('direccion', 255);
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emblems');
+        Schema::dropIfExists('billetera');
     }
 };

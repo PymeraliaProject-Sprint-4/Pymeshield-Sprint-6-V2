@@ -6,21 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Rating extends Model
+class Robots extends Model
 {
     use HasFactory;
-
-    protected $table = 'ratings';
-
+    protected $table = 'robots';
     protected $fillable = [
-        'rating',
-        'feedback',
-        'course_id',
-        'hidden'
+        'tiempo_eligido',
+        'user_id'
     ];
 
-    public function course(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(User::class);
     }
+
 }

@@ -18,17 +18,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('last_name');
             $table->string('email')->unique();
+            $table->string('nick_name');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone',);
-            $table->string('nick_name');
-            $table->string('profile_image')->nullable();
-            $table->enum('type',['admin','worker','client']);
-            $table->date('hidden')->nullable();
-            $table->string('removed_reason')->nullable();
+            $table->enum('type',['admin','client']);
+            $table->string('direccion_billetera_binance')->nullable();
+            $table->string('payment_password')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreignId('company_id')->constrained()->nullable()->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
