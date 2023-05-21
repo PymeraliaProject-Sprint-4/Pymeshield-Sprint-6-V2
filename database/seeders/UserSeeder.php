@@ -24,13 +24,11 @@ class UserSeeder extends Seeder
             'nick_name' => 'ivan_11',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'type' => 'client',
+            'type' => 'admin',
             'direccion_billetera_binance' => 'TA37pprqdYm2o4QQCxJZQgcEdWMa51ehiN',
             'payment_password' => '',
             'remember_token' => Str::random(10),
         ]);
-
         $admin->assignRole('admin');
-
     }
 }

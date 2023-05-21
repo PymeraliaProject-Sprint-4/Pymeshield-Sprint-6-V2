@@ -14,9 +14,6 @@
         <div>
             <h6>{{__("about-pymeralia")}}</h6>
             <ul>
-                <li><a href="{{ route('index.privacy') }}">{{__("privacy-policy")}}</a></li>
-                <li><a href="{{ route('index.cookies') }}">{{__("cookies-policy")}}</a></li>
-                <li><a href="{{ route('index.terms') }}">{{__("terms-conditions")}}</a></li>
             </ul>
         </div>
         <div>

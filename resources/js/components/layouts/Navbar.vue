@@ -2,7 +2,7 @@
     <header class="hidden md:block">
         <div class="flex justify-between items-center p-3">
             <div class="font-semibold text-xl ml-2"><a href="/home"><img class="inline-block mr-2 w-16"
-                        src="/img/logo_pymeshield.png" alt="Logo">PymeShield</a>
+                        src="/img/LogoMagicalMoriak.png" alt="Logo">Magical Moriak</a>
             </div>
             <div class="ml-4 flex justify-end items-center md:ml-6">
 
@@ -63,7 +63,7 @@
         </div>
     </header>
     <div>
-        <Disclosure as="nav" class="bg-orange-500 md:bg-orange-400" v-slot="{ open }">
+        <Disclosure as="nav" class="bg-teal-500 md:bg-teal-400" v-slot="{ open }">
             <div class="mx-start px-4 lg:px-8">
                 <div class="flex items-center md:justify-between py-3 md:py-0">
                     <div class="flex items-center">
@@ -87,7 +87,7 @@
                             <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
                             <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
                         </DisclosureButton>
-                        <div class="font-semibold text-xl ml-2"><a href="/home">PymeShield</a></div>
+                        <div class="font-semibold text-xl ml-2"><a href="/home">Magical Moriak</a></div>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@
 
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { AcademicCapIcon, Bars3Icon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, QueueListIcon, LifebuoyIcon } from '@heroicons/vue/24/outline'
+import { AcademicCapIcon, Bars3Icon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, QueueListIcon, LifebuoyIcon, CurrencyDollarIcon, ChartPieIcon } from '@heroicons/vue/24/outline'
 import VueAvatar from "@webzlodimir/vue-avatar";
 import "@webzlodimir/vue-avatar/dist/style.css";
 
@@ -175,14 +175,9 @@ export default {
         return {
             user: window.authUser,
             navigation: [
-                { name: this.$t('navbar.home'), href: '/home', current: false, icon: HomeIcon },
-                { name: this.$t('navbar.questionnaires'), href: '/audit', current: false, icon: QueueListIcon },
-                { name: this.$t('navbar.reports'), href: '/report/client', current: false, icon: DocumentDuplicateIcon },
-                { name: this.$t('formation'), href: '/course/client', current: false, icon: AcademicCapIcon },
-                { name: this.$t('budgets'), href: '/show_budgets_client', current: false, icon: CurrencyEuroIcon },
-                { name: this.$t('kanban'), href: '/kanban', current: false, icon: ViewColumnsIcon },
-                { name: this.$t('navbar.gantt'), href: '/gantt', current: false, icon: CalendarDaysIcon },
-                { name: this.$t('inventory'), href: '/inventario', current: false, icon: QrCodeIcon },
+                { name: this.$t('Inicio'), href: '/home', current: false, icon: HomeIcon },
+                { name: this.$t('Comercio'), href: '/audit', current: false, icon: CurrencyDollarIcon },
+                { name: this.$t('Mi Pedido'), href: '/report/client', current: false, icon: ChartPieIcon },
             ],
         };
     },
@@ -190,14 +185,13 @@ export default {
         userNavigation() {
             if (this.user.type === 'admin') {
                 return [
-                    { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
+                    { name: this.$t('Es mio'), href: '/Es_Mio', icon: IdentificationIcon },
                     { name: this.$t('help'), href: '/manuals/manual_usuari.pdf', target: '_blank', icon: LifebuoyIcon },
-                    { name: this.$t('admin-mode'), href: '/admin', icon: WrenchScrewdriverIcon },
                     { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style: "background-color: #EF4444;" },
                 ];
             } else {
                 return [
-                    { name: this.$t('profile'), href: '/Personal_Profile', icon: IdentificationIcon },
+                    { name: this.$t('Es mio'), href: '/Personal_Profile', icon: IdentificationIcon },
                     { name: this.$t('help'), href: '/manuals/manual_usuari.pdf', target: '_blank', icon: LifebuoyIcon },
                     { name: this.$t('sign-out'), href: '/logout', icon: ArrowLeftOnRectangleIcon, class: 'btn btn-danger bg-red-500 hover:bg-red-600', style: "background-color: #EF4444;" },
                 ];

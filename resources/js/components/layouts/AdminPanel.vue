@@ -12,7 +12,7 @@
                     enter-from="-translate-x-full" enter-to="translate-x-0"
                     leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0"
                     leave-to="-translate-x-full">
-                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-orange-500 pt-5 pb-4">
+                    <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-teal-500 pt-5 pb-4">
                         <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0"
                             enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100"
                             leave-to="opacity-0">
@@ -26,15 +26,15 @@
                             </div>
                         </TransitionChild>
                         <div class="flex flex-shrink-0 items-center px-4">
-                            <ShieldExclamationIcon class="h-6 w-6 text-black mr-3" aria-hidden="true" />PymeShield
+                            <ShieldExclamationIcon class="h-6 w-6 text-black mr-3" aria-hidden="true" />Magical Moriak
                         </div>
-                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-orange-700 overflow-y-auto custom-scrollbar"
+                        <nav class="mt-5 h-full flex-shrink-0 divide-y divide-teal-700 overflow-y-auto custom-scrollbar"
                             aria-label="Sidebar">
                             <div class="space-y-1 px-2">
                                 <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
-                                    :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                    :class="[item.current ? 'bg-teal-700 text-white' : 'text-teal-100 hover:text-white hover:bg-teal-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
                                     :aria-current="item.current ? 'page' : undefined">
-                                    <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200"
+                                    <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-teal-200"
                                         aria-hidden="true" />
                                     {{ item.name }}
                                 </a>
@@ -43,9 +43,9 @@
                                 <div class="mt-6 pt-6">
                                     <div class="space-y-1 px-2">
                                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
+                                            :class="[item.current ? 'bg-teal-700 text-white' : 'text-teal-100 hover:text-white hover:bg-teal-400', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']"
                                             :aria-current="item.current ? 'page' : undefined">
-                                            <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200"
+                                            <component :is="item.icon" class="mr-4 h-6 w-6 text-teal-200"
                                                 aria-hidden="true" />
                                             {{ item.name }}
                                         </a>
@@ -65,27 +65,27 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex flex-grow flex-col overflow-y-auto bg-orange-500 pt-5 pb-4">
+        <div class="flex flex-grow flex-col overflow-y-auto bg-teal-500 pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">
-                <a href="/admin"><img class="inline-block mr-3 w-12" src="/img/logo_pymeshield.png"
-                        alt="Logo">PymeShield</a>
+                <a href="/admin"><img class="inline-block mr-3 w-12" src="img/LogoMagicalMoriak.png"
+                        alt="Logo">Magical Moriak</a>
             </div>
-            <nav class="mt-5 flex flex-1 flex-col divide-y divide-orange-800 overflow-y-auto custom-scrollbar"
+            <nav class="mt-5 flex flex-1 flex-col divide-y divide-teal-800 overflow-y-auto custom-scrollbar"
                 aria-label="Sidebar">
                 <div class="space-y-1 px-2">
                     <a v-for="item in filteredNavigation" :key="item.name" :href="item.href"
-                        :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
+                        :class="[item.current ? 'bg-teal-700 text-white' : 'text-teal-100 hover:text-white hover:bg-teal-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
                         :aria-current="item.current ? 'page' : undefined">
-                        <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200" aria-hidden="true" />
+                        <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-teal-200" aria-hidden="true" />
                         {{ item.name }}
                     </a>
                 </div>
                 <div v-if="can('dashadmin.config')" class="mt-6 pt-6">
                     <div class="space-y-1 px-2">
                         <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href"
-                            :class="[item.current ? 'bg-orange-700 text-white' : 'text-orange-100 hover:text-white hover:bg-orange-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
+                            :class="[item.current ? 'bg-teal-700 text-white' : 'text-teal-100 hover:text-white hover:bg-teal-400', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']"
                             :aria-current="item.current ? 'page' : undefined">
-                            <component :is="item.icon" class="mr-4 h-6 w-6 text-orange-200" aria-hidden="true" />
+                            <component :is="item.icon" class="mr-4 h-6 w-6 text-teal-200" aria-hidden="true" />
                             {{ item.name }}
                         </a>
                     </div>
@@ -97,7 +97,7 @@
     <div class="flex flex-1 flex-col lg:pl-64">
         <div class="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:border-none">
             <button type="button"
-                class="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 lg:hidden"
+                class="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500 lg:hidden"
                 @click="sidebarOpen = true">
                 <span class="sr-only">{{ $t('open-sidebar') }}</span>
                 <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
@@ -151,7 +151,7 @@
                     <Menu as="div" class="relative ml-3">
                         <div>
                             <MenuButton
-                                class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
+                                class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
                                 <vue-avatar v-if="!user.profile_image" :size="40" :username="user.name + user.last_name" />
                                 <vue-avatar v-else :size="40" :img-src="'/img/profile_images/' + user.profile_image" />
                                 <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"

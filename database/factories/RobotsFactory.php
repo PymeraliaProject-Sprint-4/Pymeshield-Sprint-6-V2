@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ResourceFile>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory
  */
 class RobotsFactory extends Factory
 {
