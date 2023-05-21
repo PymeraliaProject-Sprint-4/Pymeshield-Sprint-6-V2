@@ -53,7 +53,7 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 //Rutes per al perfil Personal i editarPerfil
 Route::get('Es_Mio', [UserController::class, 'show_user'])->name('Es_Mio')->middleware('auth');
-Route::get('user-info', [UserController::class, 'userInfo'])->name('userInfo')->middleware('auth');
+Route::get('User-info', [UserController::class, 'userInfo'])->name('userInfo')->middleware('auth');
 Route::post('Perfil_Personal/Editar_Perfil', [UserController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 Route::post('change-password', [UserController::class, 'changePassword'])->name('changePassword');
 Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');

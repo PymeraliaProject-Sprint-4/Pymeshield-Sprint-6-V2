@@ -22,7 +22,7 @@ class UserController extends Controller
     //User
     public function show_user()
     {
-        return view('perfilPersonal.perfil_personal');
+        return view('Mio.Es_Mio');
     }
     public function show_user_admin()
     {
@@ -38,17 +38,26 @@ class UserController extends Controller
         return view('contacte.contacte');
     }
     public function userInfo()
-    {
-        $user = Auth::user();
-        $userInfo = DB::table('users')
-            ->join('companies', 'users.company_id', '=', 'companies.id')
-            ->select('users.*', 'companies.name AS company_name')
-            ->where('users.id', '=', $user->id)
-            ->first();
-        return[
-            'userInfo' => $userInfo
-        ];
-    }
+{
+    $user = Auth::user();
+    $userInfo = DB::table('users')
+        ->join('billetera', 'users.id', '=', 'billetera.user_id')
+        ->where('users.id', $user->id)
+        ->select(
+            'users.id',
+            'users.name',
+            'users.last_name',
+            'users.nick_name',
+            'users.direccion_billetera_binance',
+            'users.payment_password',
+            'billetera.public_key',
+            'billetera.private_key',
+            'billetera.direccion'
+        )
+        ->first();
+
+    return response()->json($userInfo);
+}
 
     public function editarUsuario()
     {
