@@ -219,10 +219,10 @@
                                         <input type="text" id="actualPassword" name="actualPassword"
                                             class="border-gray-300 rounded-md w-full px-3 mb-5">
                                     </div>
-                                    <div v-else>
+                                    <div v-else class="mt-5">
                                         {{ $t('Tu direccion de billetera actual es:') }}
                                         <input v-model="user.direccion_billetera_binance" type="text"
-                                            class="border-gray-300 rounded-md w-full px-3 mb-5" disabled>
+                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3" disabled>
                                     </div>
                                 </div>
                                 <div class="flex justify-end">

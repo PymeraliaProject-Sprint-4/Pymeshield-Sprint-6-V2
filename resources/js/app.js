@@ -15,6 +15,9 @@ app.component('navbar', navbar);
 const perfilPersonal = defineAsyncComponent(() => import('./components/profile/PerfilPersonal.vue'));
 app.component('PerfilPersonal', perfilPersonal);
 
+const comercio = defineAsyncComponent(() => import('./components/comercio/comercio.vue'));
+app.component('comercio', comercio);
+
 const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
 app.component('contacte', contacte);
 

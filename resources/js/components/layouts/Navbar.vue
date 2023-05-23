@@ -162,7 +162,7 @@
 
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { AcademicCapIcon, Bars3Icon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, QueueListIcon, LifebuoyIcon, CurrencyDollarIcon, ChartPieIcon } from '@heroicons/vue/24/outline'
+import { CubeTransparentIcon, AcademicCapIcon, Bars3Icon, CalendarDaysIcon, CurrencyEuroIcon, ViewColumnsIcon, DocumentDuplicateIcon, HomeIcon, QrCodeIcon, XMarkIcon, LanguageIcon, IdentificationIcon, WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon, QueueListIcon, LifebuoyIcon, CurrencyDollarIcon, ChartPieIcon } from '@heroicons/vue/24/outline'
 import VueAvatar from "@webzlodimir/vue-avatar";
 import "@webzlodimir/vue-avatar/dist/style.css";
 
@@ -176,8 +176,10 @@ export default {
             user: window.authUser,
             navigation: [
                 { name: this.$t('Inicio'), href: '/home', current: false, icon: HomeIcon },
-                { name: this.$t('Comercio'), href: '/audit', current: false, icon: CurrencyDollarIcon },
+                { name: this.$t('Comercio'), href: '/comercio', current: false, icon: CurrencyDollarIcon },
                 { name: this.$t('Mi Pedido'), href: '/report/client', current: false, icon: ChartPieIcon },
+                { name: this.$t('Robot'), href: '/report/client', current: false, icon: CubeTransparentIcon },
+
             ],
         };
     },

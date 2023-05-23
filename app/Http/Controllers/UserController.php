@@ -24,6 +24,10 @@ class UserController extends Controller
     {
         return view('Mio.Es_Mio');
     }
+
+    public function view_comercio(){
+        return view('comercio.show');
+    }
     public function show_user_admin()
     {
         return view('perfilPersonal.perfil_personal_admin');
