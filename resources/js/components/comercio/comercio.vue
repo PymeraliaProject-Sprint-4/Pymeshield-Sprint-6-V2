@@ -33,14 +33,15 @@
                         :class="{ 'border-red-500': errorField === 'robot' }" @input="clearError('robot')" />
                     <div v-if="error && errorField === 'robot'" class="text-red-500 mt-1">{{ error }}</div>
                 </div>
-                <button type="submit"
-                    class="font-bold bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Enviar</button>
+                <button type="submit" class="font-bold bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                    Enviar
+                </button>
                 <div v-if="error && errorField === 'submit'" class="text-red-500 mt-2">{{ error }}</div>
             </form>
         </div>
     </div>
 </template>
-
+  
 <script>
 import axios from 'axios';
 import TronWeb from 'tronweb';
@@ -126,6 +127,12 @@ export default {
                 return;
             }
 
+            if (parseInt(this.amount) > this.accountBalance) {
+                this.error = 'Saldo insuficiente';
+                this.errorField = 'amount';
+                return;
+            }
+
             // Aquí puedes implementar la lógica para enviar el formulario
 
             // Si todo está bien, puedes limpiar el mensaje de error
@@ -141,3 +148,4 @@ export default {
     },
 };
 </script>
+  
