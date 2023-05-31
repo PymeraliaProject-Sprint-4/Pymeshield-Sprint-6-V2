@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    <robot></robot>
+    <finalizados></finalizados>
  
 @stop

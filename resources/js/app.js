@@ -24,7 +24,8 @@ app.component('robot', robot);
 const pedidos = defineAsyncComponent(() => import('./components/pedidos/pedidos.vue'));
 app.component('pedidos', pedidos);
 
-
+const finalizados = defineAsyncComponent(() => import('./components/pedidos/pedidosFinalizados.vue'));
+app.component('finalizados', finalizados);
 
 const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
 app.component('contacte', contacte);

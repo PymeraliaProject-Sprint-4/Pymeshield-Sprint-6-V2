@@ -17,6 +17,7 @@ class PedidosFactory extends Factory
             'start_time' => $startTime,
             'end_time' => $endTime,
             'status' => $this->faker->randomElement(['Corriente', 'Terminado']),
+            'amount' => fake()->amount(),
             'robot_id' => function () {
                 return Robots::inRandomOrder()->first()->id;
             },

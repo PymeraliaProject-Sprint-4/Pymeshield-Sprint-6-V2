@@ -54,9 +54,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Robot guardado exitosamente']);
     }
 
-    public function mis_pedidos(){
-        return view('Pedidos.show');
-    }
+
 
     public function contacte()
     {

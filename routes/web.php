@@ -5,6 +5,7 @@ use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TradingController;
+use App\Http\Controllers\PedidosController;
 
 
 
@@ -60,7 +61,11 @@ Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->m
 
 Route::get('comercio', [UserController::class, 'view_comercio'])->name('comercio')->middleware('auth');
 Route::get('Robot', [UserController::class, 'robots'])->name('robots')->middleware('auth');
-Route::get('Mis_pedidos', [UserController::class, 'mis_pedidos'])->name('pedidos')->middleware('auth');
+Route::get('Mis_pedidos', [PedidosController::class, 'mis_pedidos'])->name('pedidos')->middleware('auth');
+Route::get('Pedidos_finalizados', [PedidosController::class, 'pedidosFinalizados'])->name('pedidosFinalizados')->middleware('auth');
+Route::get('allPedidos', [PedidosController::class, 'allPedidos'])->name('allPedidos')->middleware('auth');
+
+
 Route::post('save-robot', [UserController::class, 'saveRobot'])->name('saveRobot');
 
 

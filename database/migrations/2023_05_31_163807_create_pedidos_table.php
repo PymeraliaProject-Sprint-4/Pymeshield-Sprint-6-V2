@@ -18,6 +18,7 @@ class CreatePedidosTable extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->enum('status', ['Corriente', 'Terminado']);
+            $table->double('Amount');
             $table->foreign('robot_id')->references('id')->on('robots');
             $table->timestamps();
         });
