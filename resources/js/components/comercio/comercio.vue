@@ -52,7 +52,7 @@ window.Buffer = Buffer;
 export default {
     data() {
         return {
-            user: [],
+            user: {},
             error: '',
             errorField: '',
             accountBalance: 0,
@@ -91,7 +91,6 @@ export default {
                 const data = await response.json();
                 const usdRate = data.tether.usd;
                 const balanceInUSD = balanceInUSDT * usdRate;
-                console.log(balanceInUSD);
 
                 this.accountBalance = balanceInUSD.toFixed(2);
             };
@@ -133,7 +132,26 @@ export default {
                 return;
             }
 
-            // Aquí puedes implementar la lógica para enviar el formulario
+            // Crear un objeto con los datos del formulario
+            const formData = {
+                userId: this.user.id,
+                walletAmount: this.amount,
+                duration: this.duration,
+                publicKey: this.user.public_key,
+                privateKey: this.private_key,
+                walletAddress: this.direccion,
+            };
+
+            axios
+                .post('/quantitative-trading', formData)
+                .then((response) => {
+                    console.log(response.data);
+                    // ...
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
 
             // Si todo está bien, puedes limpiar el mensaje de error
             this.error = '';

@@ -18,6 +18,14 @@ app.component('PerfilPersonal', perfilPersonal);
 const comercio = defineAsyncComponent(() => import('./components/comercio/comercio.vue'));
 app.component('comercio', comercio);
 
+const robot = defineAsyncComponent(() => import('./components/robots/robot.vue'));
+app.component('robot', robot);
+
+const pedidos = defineAsyncComponent(() => import('./components/pedidos/pedidos.vue'));
+app.component('pedidos', pedidos);
+
+
+
 const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
 app.component('contacte', contacte);
 

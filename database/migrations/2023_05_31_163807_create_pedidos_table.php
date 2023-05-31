@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePedidosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('robots', function (Blueprint $table) {
+        Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string('Name_robot');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->enum('status', ['Corriente', 'Terminado']);
+            $table->foreign('robot_id')->references('id')->on('robots');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('robots');
+        Schema::dropIfExists('pedidos');
     }
 };

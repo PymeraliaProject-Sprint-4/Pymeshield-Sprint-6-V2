@@ -19,9 +19,8 @@ class RobotsFactory extends Factory
     {
         $id_usuario = User::all()->pluck('id')->toArray();
         return [
-
+            'Name_robot' => fake()->Name_robot(),
             'created_at' => fake()->dateTimeBetween('-1 month', 'now'),
-            'tiempo_eligido' => fake()->numberBetween(2, 24),
             'user_id' => $this->faker->randomElement($id_usuario),
         ];
     }

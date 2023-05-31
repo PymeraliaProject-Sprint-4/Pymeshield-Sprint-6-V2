@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; 
+use App\Models\User;
+use App\Models\robots;
 
 
 class UserController extends Controller
@@ -25,16 +26,36 @@ class UserController extends Controller
         return view('Mio.Es_Mio');
     }
 
-    public function view_comercio(){
+    public function view_comercio()
+    {
         return view('comercio.show');
     }
-    public function show_user_admin()
+
+    public function robots()
     {
-        return view('perfilPersonal.perfil_personal_admin');
+        return view('robots.show');
     }
-    public function show_user_worker()
+
+    public function saveRobot(Request $request)
     {
-        return view('perfilPersonal.perfil_personal_worker');
+        // Obtener el nombre del robot del formulario
+        $robotName = $request->input('robotName');
+
+        // Obtener el ID del usuario autenticado
+        $userId = auth()->id();
+
+        // Crear un nuevo registro de robot en la base de datos
+        $robot = new Robots;
+        $robot->Name_robot = $robotName;
+        $robot->user_id = $userId;
+        $robot->save();
+
+        // Respuesta exitosa
+        return response()->json(['message' => 'Robot guardado exitosamente']);
+    }
+
+    public function mis_pedidos(){
+        return view('Pedidos.show');
     }
 
     public function contacte()
@@ -42,26 +63,26 @@ class UserController extends Controller
         return view('contacte.contacte');
     }
     public function userInfo()
-{
-    $user = Auth::user();
-    $userInfo = DB::table('users')
-        ->join('billetera', 'users.id', '=', 'billetera.user_id')
-        ->where('users.id', $user->id)
-        ->select(
-            'users.id',
-            'users.name',
-            'users.last_name',
-            'users.nick_name',
-            'users.direccion_billetera_binance',
-            'users.payment_password',
-            'billetera.public_key',
-            'billetera.private_key',
-            'billetera.direccion'
-        )
-        ->first();
+    {
+        $user = Auth::user();
+        $userInfo = DB::table('users')
+            ->join('billetera', 'users.id', '=', 'billetera.user_id')
+            ->where('users.id', $user->id)
+            ->select(
+                'users.id',
+                'users.name',
+                'users.last_name',
+                'users.nick_name',
+                'users.direccion_billetera_binance',
+                'users.payment_password',
+                'billetera.public_key',
+                'billetera.private_key',
+                'billetera.direccion'
+            )
+            ->first();
 
-    return response()->json($userInfo);
-}
+        return response()->json($userInfo);
+    }
 
     public function editarUsuario()
     {
@@ -154,5 +175,4 @@ class UserController extends Controller
      *
      * @return response Json
      */
-
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TradingController;
 
 
 
@@ -58,8 +59,13 @@ Route::post('change-password', [UserController::class, 'changePassword'])->name(
 Route::get('contacte', [UserController::class, 'contacte'])->name('contacte')->middleware('auth');
 
 Route::get('comercio', [UserController::class, 'view_comercio'])->name('comercio')->middleware('auth');
+Route::get('Robot', [UserController::class, 'robots'])->name('robots')->middleware('auth');
+Route::get('Mis_pedidos', [UserController::class, 'mis_pedidos'])->name('pedidos')->middleware('auth');
+Route::post('save-robot', [UserController::class, 'saveRobot'])->name('saveRobot');
 
 
+
+Route::post('/quantitative-trading', [TradingController::class, 'processQuantitativeTrading'])->name('quantitative-trading');
 
 
 Route::get('phpinfo', fn () => phpinfo())->middleware('auth', 'check_access_admin');

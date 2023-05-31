@@ -11,7 +11,7 @@ class Robots extends Model
     use HasFactory;
     protected $table = 'robots';
     protected $fillable = [
-        'tiempo_eligido',
+        'Name_robot',
         'user_id'
     ];
 

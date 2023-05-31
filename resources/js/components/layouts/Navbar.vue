@@ -177,8 +177,8 @@ export default {
             navigation: [
                 { name: this.$t('Inicio'), href: '/home', current: false, icon: HomeIcon },
                 { name: this.$t('Comercio'), href: '/comercio', current: false, icon: CurrencyDollarIcon },
-                { name: this.$t('Mi Pedido'), href: '/report/client', current: false, icon: ChartPieIcon },
-                { name: this.$t('Robot'), href: '/report/client', current: false, icon: CubeTransparentIcon },
+                { name: this.$t('Mis Pedidos'), href: '/Mis_pedidos', current: false, icon: ChartPieIcon },
+                { name: this.$t('Robot'), href: '/Robot', current: false, icon: CubeTransparentIcon },
 
             ],
         };
