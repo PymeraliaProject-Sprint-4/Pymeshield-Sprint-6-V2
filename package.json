@@ -18,10 +18,12 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.4.0",
         "@headlessui/vue": "^1.7.13",
-        "@heroicons/vue": "^2.0.17",
+        "@heroicons/vue": "^2.0.18",
         "@infectoone/vue-ganttastic": "^2.1.4",
+        "@vue-hero-icons/outline": "^1.7.2",
         "@vueup/vue-quill": "^1.1.1",
         "@webzlodimir/vue-avatar": "^0.0.8",
+        "bcrypt": "^5.1.0",
         "buffer": "^6.0.3",
         "chart.js": "^4.2.1",
         "date-fns": "^2.29.3",

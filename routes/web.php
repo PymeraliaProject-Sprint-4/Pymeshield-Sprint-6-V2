@@ -64,9 +64,19 @@ Route::get('Robot', [UserController::class, 'robots'])->name('robots')->middlewa
 Route::get('Mis_pedidos', [PedidosController::class, 'mis_pedidos'])->name('pedidos')->middleware('auth');
 Route::get('Pedidos_finalizados', [PedidosController::class, 'pedidosFinalizados'])->name('pedidosFinalizados')->middleware('auth');
 Route::get('allPedidos', [PedidosController::class, 'allPedidos'])->name('allPedidos')->middleware('auth');
+Route::get('allPedidosTerminados', [PedidosController::class, 'allPedidosFinished'])->name('allPedidosTerminados')->middleware('auth');
+
+Route::get('allRobots', [UserController::class, 'allRobots'])->name('allrobots')->middleware('auth');
+Route::get('statusPedido', [PedidosController::class, 'statusPedido'])->name('statusPedido')->middleware('auth');
+Route::post('saveWallet', [UserController::class, 'saveWallet'])->name('saveWallet');
+Route::post('deleteWallet', [UserController::class, 'deleteWallet'])->name('deleteWallet');
+Route::post('createPaymentPassword', [UserController::class, 'PaymentPassword'])->name('PaymentPassword');
+
+
 
 
 Route::post('save-robot', [UserController::class, 'saveRobot'])->name('saveRobot');
+Route::post('crear-pedido', [PedidosController::class, 'newPedido'])->name('newPedido');
 
 
 

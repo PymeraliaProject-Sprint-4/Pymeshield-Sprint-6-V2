@@ -1,5 +1,13 @@
 <template>
-    <div class="flex flex-col items-center mt-10">
+    <div class="flex justify-center mt-4">
+        <button @click="redirectToFinishedPedidos()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+           Terminó
+        </button>
+    </div>
+    <div class="flex flex-col items-center mt-5">
+        <div v-if="pedidos.length === 0" class="text-white text-lg font-bold mb-4">
+            No tienes ningún pedido actualmente
+        </div>
         <div v-for="pedido in pedidos" :key="pedido.id"
             class="w-full max-w-xl p-6 bg-gradient-to-r from-gray-800 to-gray-600 rounded-lg shadow-lg mb-4">
             <div class="text-white flex items-center justify-between">
@@ -29,6 +37,7 @@
                 {{ Math.floor(calculatePercentage(pedido.start_time, pedido.end_time)) }}%
             </p>
         </div>
+
     </div>
 </template>
   
@@ -78,11 +87,38 @@ export default {
                     console.error(error);
                 });
         },
+
+        fetchStatusPedido() {
+            // Realiza la petición Axios para actualizar el estado de los pedidos
+            axios.get('/statusPedido')
+                .then(response => {
+                    console.log(response.data.message);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+
+        FinishedPedidos() {
+            // Define la ruta personalizada a la que deseas redireccionar
+            // Puedes cambiar "/ruta-personalizada" por la ruta que desees
+            this.rutaPersonalizada = '/ruta-personalizada';
+        },
+
+        redirectToFinishedPedidos() {
+            window.location.href = "/Pedidos_finalizados";
+        },
+
     },
     created() {
         // Llama al método para obtener los pedidos al cargar la página
         this.fetchPedidos();
+
+        // Llama al método para actualizar el estado de los pedidos al cargar la página
+        this.fetchStatusPedido();
     },
+
+    
 };
 </script>
   
@@ -91,4 +127,3 @@ export default {
     margin-bottom: 1rem;
 }
 </style>
-  

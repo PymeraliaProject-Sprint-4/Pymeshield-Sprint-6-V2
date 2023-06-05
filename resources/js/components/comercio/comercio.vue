@@ -6,12 +6,16 @@
                 <div class="mb-6">
                     <label for="amount" class="font-bold text-white">Cantidad:</label>
                     <div class="flex items-center">
-                        <input v-model="amount" type="number" id="amount" name="amount"
+                        <input v-model="amount" type="number" step="any" id="amount" name="amount"
                             class="border rounded-md px-2 py-1 mr-2" :class="{ 'border-red-500': errorField === 'amount' }"
                             @input="clearError('amount')" />
                         <button type="button" @click="setMaximumAmount"
                             class="font-bold bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800">
                             MAX
+                        </button>
+                        <button type="button" @click="setHalfAmount"
+                            class="ml-2 font-bold bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800">
+                            1/2
                         </button>
                     </div>
                     <div v-if="error && errorField === 'amount'" class="text-red-500 mt-1">{{ error }}</div>
@@ -29,8 +33,12 @@
                 </div>
                 <div class="mb-6">
                     <label for="robot" class="font-bold text-white">Robot:</label>
-                    <input v-model="robot" type="text" id="robot" name="robot" class="ml-3 border rounded-md px-2 py-1"
-                        :class="{ 'border-red-500': errorField === 'robot' }" @input="clearError('robot')" />
+                    <select v-model="robot" id="robot" name="robot" class="mt-3 ml-1 border rounded-md px-2 py-1 w-full"
+                        :class="{ 'border-red-500': errorField === 'robot' }" @input="clearError('robot')">
+                        <option value="" disabled selected>Selecciona un robot</option>
+                        <option v-for="robotItem in robots" :value="robotItem.Name_robot" :key="robotItem.id">{{
+                            robotItem.Name_robot }}</option>
+                    </select>
                     <div v-if="error && errorField === 'robot'" class="text-red-500 mt-1">{{ error }}</div>
                 </div>
                 <button type="submit" class="font-bold bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
@@ -41,7 +49,7 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import axios from 'axios';
 import TronWeb from 'tronweb';
@@ -53,6 +61,7 @@ export default {
     data() {
         return {
             user: {},
+            robots: {},
             error: '',
             errorField: '',
             accountBalance: 0,
@@ -68,6 +77,10 @@ export default {
             this.private_key = this.user.private_key;
             this.direccion = this.user.direccion;
             this.initialize();
+        });
+
+        axios.get('/allRobots').then((response) => {
+            this.robots = response.data;
         });
     },
     methods: {
@@ -98,8 +111,25 @@ export default {
             obtenerSaldo();
         },
         setMaximumAmount() {
-            this.amount = parseInt(this.accountBalance);
+            this.amount = parseFloat(this.accountBalance).toFixed(4);
             this.clearError('amount');
+        },
+        setHalfAmount() {
+            this.amount = (parseFloat(this.accountBalance) / 2).toFixed(4);
+            this.clearError('amount');
+        },
+
+        calculateEndTime() {
+            const startTime = new Date();
+            const duration = parseInt(this.duration);
+            const endTime = new Date(startTime.getTime() + duration * 60 * 60 * 1000);
+            return endTime.toISOString();
+        },
+
+        getRobotId() {
+            // Obtener el ID del robot seleccionado en función de su nombre
+            const selectedRobot = this.robots.find((robot) => robot.Name_robot === this.robot);
+            return selectedRobot ? selectedRobot.id : null;
         },
         submitForm() {
             if (!this.amount || this.amount === '') {
@@ -108,7 +138,7 @@ export default {
                 return;
             }
 
-            if (parseInt(this.amount) < 10) {
+            if (parseFloat(this.amount) < 10) {
                 this.error = 'La cantidad debe ser de mínimo 10 o superior';
                 this.errorField = 'amount';
                 return;
@@ -126,11 +156,30 @@ export default {
                 return;
             }
 
-            if (parseInt(this.amount) > this.accountBalance) {
+            if (parseFloat(this.amount) > parseFloat(this.accountBalance)) {
                 this.error = 'Saldo insuficiente';
                 this.errorField = 'amount';
                 return;
             }
+
+            const formData2 = {
+                start_time: new Date().toISOString(),
+                end_time: this.calculateEndTime(),
+                status: 'Corriente',
+                amount: parseFloat(this.amount),
+                robot_id: this.getRobotId(),
+            };
+
+
+            axios
+                .post('/crear-pedido', formData2)
+                .then((response) => {
+                    console.log(response.data);
+                    // Manejar la respuesta del servidor, si es necesario
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
 
             // Crear un objeto con los datos del formulario
             const formData = {
@@ -152,13 +201,17 @@ export default {
                     console.error(error);
                 });
 
-
             // Si todo está bien, puedes limpiar el mensaje de error
             this.error = '';
             this.errorField = '';
+
+            // Restablecer los campos del formulario
+            this.amount = '';
+            this.duration = '';
+            this.robot = '';
         },
         clearError(field) {
-            if (field === this.errorField) {
+            if (this.errorField === field) {
                 this.error = '';
                 this.errorField = '';
             }
@@ -166,4 +219,3 @@ export default {
     },
 };
 </script>
-  

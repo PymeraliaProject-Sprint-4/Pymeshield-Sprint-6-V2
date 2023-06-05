@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div class="flex flex-col items-center h-screen bg-gray-100">
         <div class="flex items-center mt-8">
             <div class="w-16 h-16 flex items-center justify-center rounded-full bg-blue-500 text-white text-2xl">
                 {{ userInitial }}
@@ -7,7 +7,8 @@
             <h1 class="text-2xl ml-4">Hola, {{ user.nick_name }}</h1>
         </div>
         <div class="flex justify-center mt-8 space-x-4">
-            <button class="flex items-center justify-center bg-blue-500 text-white rounded-lg p-4">
+            <button @click="openModalRetirarDinero()"
+                class="flex items-center justify-center bg-blue-500 text-white rounded-lg p-4">
                 <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5v2.4l-10 5-10-5V17zm10-10l10-5v2.4L12 14 2 4.4V2l10 5z" />
@@ -23,9 +24,9 @@
             </button>
         </div>
         <div class="relative mt-8">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-75 rounded-lg w-80 h-20">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-75 rounded-lg" id="saldoDIV">
             </div>
-            <p class="ml-5 mb-2 text-white text-2xl font-bold text-center relative z-10 py-8">Saldo de la cuenta: {{
+            <p class="ml-5 mb-2 text-white text-2xl font-bold relative z-5 py-8">Saldo de la cuenta: {{
                 accountBalance }}
             </p>
         </div>
@@ -74,39 +75,45 @@
                         class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full md:w-1/2 lg:w-1/3">
                         <form>
                             <div class="p-4">
+
                                 <div class="mb-4">
-                                    <label for="image" class="block text-gray-700 font-bold mb-2"><i
-                                            class="fas fa-edit mr-2"></i> {{
-                                                $t('change-password')
-                                            }}</label>
-                                    {{ $t('password') }}
-                                    <i :class="actualPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
-                                        @click="togglePasswordVisibility('actualPassword')"></i>
+                                    <label class="block text-gray-700 font-bold mb-2">
+                                        <i class="fas fa-edit mr-2"></i>{{ $t('Contraseña') }}
+                                    </label>
 
-                                    <input type="password" id="actualPassword" name="actualPassword"
-                                        class="border-gray-300 rounded-md w-full px-3 mb-5">
-                                    {{ $t('new-password') }}
-                                    <i :class="newPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
-                                        @click="togglePasswordVisibility('newPassword')"></i>
-
-                                    <input type="password" id="newPassword" name="newPassword"
+                                    {{ $t('Contraseña actual') }}
+                                    <i :class="showActualPassword ? 'far fa-eye' : 'far fa-eye-slash'"
+                                        @click="togglePasswordVisibility('ActualPassword')">
+                                    </i>
+                                    <input :type="showActualPassword ? 'text' : 'password'" v-model="actualPassword"
+                                        id="actualPassword" name="actualnewPassword"
                                         class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
-                                    {{ $t('confirm-new-password') }}
-                                    <i :class="confirmNewPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
-                                        @click="togglePasswordVisibility('confirmNewPassword')"></i>
 
-                                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                                        class="border-gray-300 rounded-md w-full py-2 px-3"
-                                        :class="{ 'border-red-500': error !== '' }">
+                                    {{ $t('Nueva contraseña') }}
+                                    <i :class="showNewPassword ? 'far fa-eye' : 'far fa-eye-slash'"
+                                        @click="togglePasswordVisibility('NewPassword')">
+                                    </i>
+                                    <input :type="showNewPassword ? 'text' : 'password'" v-model="newPassword"
+                                        id="newPassword" name="newPassword"
+                                        class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
+
+                                    {{ $t('Confirme la nueva contraseña') }}
+                                    <i :class="showConfirmNewPassword ? 'far fa-eye' : 'far fa-eye-slash'"
+                                        @click="togglePasswordVisibility('confirmNewPassword')">
+                                    </i>
+                                    <input :type="showConfirmNewPassword ? 'text' : 'password'" v-model="confirmNewPassword"
+                                        id="confirmNewPassword" name="confirmNewPassword"
+                                        class="border-gray-300 rounded-md w-full py-2 px-3" :class="{ '': error !== '' }">
+
                                     <div v-if="error" class="text-red-500 mt-2">
                                         {{ error }}
                                     </div>
                                 </div>
-                                <div class="flex justify-end">
 
+                                <div class="flex justify-end">
                                     <button
                                         class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                        @click="changePassword()">
+                                        @click.prevent="changePassword()">
                                         <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                     </button>
                                     <button type="button"
@@ -141,30 +148,29 @@
                         class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full md:w-1/2 lg:w-1/3">
                         <form>
                             <div class="p-4">
-                                <div class="mb-4">
-                                    <label for="image" class="block text-gray-700 font-bold mb-2"><i
-                                            class="fas fa-edit mr-2"></i> {{
-                                                $t('Contraseña de pago')
-                                            }}</label>
+                                <div v-if="user.payment_password">
+                                    {{ $t('Ya tienes una contraseña de pago establecida') }}
+
+                                </div>
+                                <div v-else class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2"><i class="fas fa-edit mr-2"></i> {{
+                                        $t('Contraseña de pago')
+                                    }}</label>
                                     {{ $t('password') }}
                                     <i :class="actualPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
                                         @click="togglePasswordVisibility('actualPassword')"></i>
 
-                                    <input type="password" id="actualPassword" name="actualPassword"
-                                        class="border-gray-300 rounded-md w-full px-3 mb-5">
-                                    {{ $t('new-password') }}
-                                    <i :class="newPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
-                                        @click="togglePasswordVisibility('newPassword')"></i>
 
-                                    <input type="password" id="newPassword" name="newPassword"
+                                    <input type="password" v-model="newPaymentPassword" id="newPassword" name="newPassword"
                                         class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
                                     {{ $t('confirm-new-password') }}
                                     <i :class="confirmNewPasswordVisible ? 'far fa-eye' : 'far fa-eye-slash'"
                                         @click="togglePasswordVisibility('confirmNewPassword')"></i>
 
-                                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                                        class="border-gray-300 rounded-md w-full py-2 px-3"
-                                        :class="{ 'border-red-500': error !== '' }">
+                                    <input type="password" v-model="confirmPaymentNewPassword" id="confirmNewPassword"
+                                        name="confirmNewPassword" class="border-gray-300 rounded-md w-full py-2 px-3"
+                                        :class="{ '': error !== '' }">
+
                                     <div v-if="error" class="text-red-500 mt-2">
                                         {{ error }}
                                     </div>
@@ -172,12 +178,12 @@
                                 <div class="flex justify-end">
 
                                     <button
-                                        class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                        @click="changePassword()">
+                                        class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center mt-10"
+                                        @click.prevent="changePaymentPassword()">
                                         <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                     </button>
                                     <button type="button"
-                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center mt-10"
                                         @click="closeModalPaymentPassword()">
                                         <i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
                                     </button>
@@ -190,7 +196,7 @@
         </Dialog>
     </TransitionRoot>
     <!--<> Fin del modal <>-->
-    <!--<> Modal para cambiar la direccion de la cartera<>-->
+    <!-- Modal para cambiar la direccion de la cartera -->
     <TransitionRoot as="template" :show="modal_direccion_billetera">
         <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_direccion_billetera = false">
             <div class="flex items-center justify-center min-h-screen px-4">
@@ -209,27 +215,40 @@
                         <form>
                             <div class="p-4">
                                 <div class="mb-4">
-                                    <label for="image" class="block text-gray-700 font-bold mb-2"><i
-                                            class="fas fa-edit mr-2"></i> {{
-                                                $t('Direccion de la billetera')
-                                            }}</label>
+                                    <label for="image" class="block text-gray-700 font-bold mb-2">
+                                        <i class="fas fa-edit mr-2"></i>
+                                        {{ $t('Direccion de la billetera') }}
+                                    </label>
                                     <div v-if="!user.direccion_billetera_binance">
-                                        {{ $t('Introduce la direccion de tu billetera') }}
+                                        {{ $t('Introduce la direccion de tu billetera de binance') }}
 
-                                        <input type="text" id="actualPassword" name="actualPassword"
-                                            class="border-gray-300 rounded-md w-full px-3 mb-5">
+                                        <input type="text" v-model="newWalletAddress" id="actualPassword"
+                                            name="actualPassword" class="border-gray-300 rounded-md w-full px-3 mb-5">
                                     </div>
-                                    <div v-else class="mt-5">
-                                        {{ $t('Tu direccion de billetera actual es:') }}
-                                        <input v-model="user.direccion_billetera_binance" type="text"
-                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3" disabled>
+                                    <div v-else class="mt-5 relative">
+                                        {{ $t('Tu dirección de billetera de Binance actual es:') }}
+                                        <div class="relative flex items-center">
+                                            <input v-model="user.direccion_billetera_binance" type="text"
+                                                class="border-gray-300 rounded-md w-full px-3 mb-2" disabled>
+                                            <button @click.prevent="copyToClipboard"
+                                                class="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center px-2 text-gray-500 hover:text-gray-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-3"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2V5zm4 2H5V7h2v2zm0 2H5v2h2v-2zm0 2H5v2h2v-2zm2-4h4v10H9V7zm0 2V5h4v2h-4z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
+                                    <p v-if="showCopyMessage" class="text-sm text-gray-500 mt-2">
+                                        {{ $t('Copiado correctamente') }}
+                                    </p>
                                 </div>
                                 <div class="flex justify-end">
-
                                     <button
                                         class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                        @click="changePassword()">
+                                        @click="saveWallet()">
                                         <i class="far fa-save mr-2"></i>{{ $t('save') }}
                                     </button>
                                     <button type="button"
@@ -239,8 +258,82 @@
                                     </button>
                                     <button type="button"
                                         class="bg-red-500 hover:bg-red-700 text-white font-medium py-1 px-3 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
-                                        @click="deleteImage()">
+                                        @click="deleteWallet()">
                                         <i class="fas fa-trash-alt mr-2"></i>{{ $t('delete') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </TransitionChild>
+            </div>
+        </Dialog>
+    </TransitionRoot>
+    <!--<> Fin del modal <>-->
+    <!--<> Modal para hacer retiros<>-->
+    <TransitionRoot as="template" :show="modal_retirar_dinero">
+        <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_retirar_dinero = false">
+            <div class="flex items-center justify-center min-h-screen px-4">
+                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                    <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </TransitionChild>
+
+                <TransitionChild as="template" enter="ease-out duration-300"
+                    enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                    leave-from="opacity-100 translate-y-0 sm:scale-100"
+                    leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                    <div
+                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full md:w-1/2 lg:w-1/3">
+                        <form>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label for="image" class="block text-gray-700 font-bold mb-2"><i
+                                            class="fas fa-edit mr-2"></i> {{
+                                                $t('Retirar dinero')
+                                            }}</label>
+                                    <div class="mt-5">
+                                        {{ $t('Tu saldo actual es:') }}
+                                        <input v-model="accountBalance" type="number"
+                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3" disabled>
+                                    </div>
+                                    <div class="mt-5">
+                                        {{ $t('Monto a retirar:') }}
+                                        <input v-model="MontoRetirar" type="number"
+                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3"
+                                            :class="{ 'border-red-500': errorField === 'Monto' }"
+                                            @input="clearError('Monto')" />
+                                    </div>
+                                    <div v-if="error && errorField === 'Monto'" class="text-red-500 mt-1">{{ error }}</div>
+                                    <div class="mt-5">
+                                        {{ $t('Direccion del monedero:') }}
+                                        <input v-model="user.direccion_billetera_binance" type="text"
+                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3"
+                                            :class="{ 'border-red-500': errorField === 'Wallet' }"
+                                            @input="clearError('Wallet')" disabled>
+                                    </div>
+                                    <div v-if="error && errorField === 'Wallet'" class="text-red-500 mt-1">{{ error }}</div>
+                                    <div class="mt-5">
+                                        {{ $t('Contraseña de pago:') }}
+                                        <input v-model="payment_password" type="password"
+                                            class="border-gray-300 rounded-md w-full px-3 mb-5 mt-3"
+                                            :class="{ 'border-red-500': errorField === 'PaymentPassword' }"
+                                            @input="clearError('PaymentPassword')">
+                                    </div>
+                                    <div v-if="error && errorField === 'PaymentPassword'" class="text-red-500 mt-1">{{ error
+                                    }}</div>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button
+                                        class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
+                                        @click.prevent="retireMoney()">
+                                        <i class="far fa-save mr-2"></i>{{ $t('Retirar') }}
+                                    </button>
+                                    <button type="button"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                        @click="closeModalRetirarDinero()">
+                                        <i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
                                     </button>
                                 </div>
                             </div>
@@ -272,16 +365,27 @@ export default {
             modal_new_password: false,
             modal_retirar_dinero: false,
             error: '',
+            errorField: '',
             accountBalance: 0,
             userInitial: '',
-            private_key: ''
+            private_key: '',
+            newWalletAddress: '',
+            actualPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+            newPaymentPassword: '',
+            confirmPaymentNewPassword: '',
+            showActualPassword: false,
+            showNewPassword: false,
+            showConfirmNewPassword: false,
+            showCopyMessage: '',
+            MontoRetirar: ''
         };
     },
     mounted() {
         axios.get('/User-info').then(response => {
             this.user = response.data;
             this.private_key = this.user.private_key;
-            console.log(this.private_key);
             this.direccion = this.user.direccion;
             this.getUserInitial();
             this.initialize(); // Llama a la función de inicialización después de asignar this.private_key
@@ -317,63 +421,168 @@ export default {
                 const balanceInUSD = balanceInUSDT * usdRate;
                 console.log(balanceInUSD)
 
-                this.accountBalance = balanceInUSD.toFixed(2);
+                this.accountBalance = balanceInUSD.toFixed(4);
             }
 
             obtenerSaldo();
         },
 
         changePassword() {
-            preventDefault();
-            const currentPassword = document.getElementById('actualPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
-
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-            if (newPassword !== confirmNewPassword) {
-                this.error = this.$t('passwordsDiferents');
-                return;
-            } else if (!passwordRegex.test(newPassword)) {
-                this.error = this.$t('rejexPassword');
+            // Realizar validaciones
+            if (this.actualPassword === '') {
+                this.error = 'Ingrese la contraseña actual';
                 return;
             }
 
-            axios.post('/change-password', {
-                current_password: currentPassword,
-                new_password: newPassword,
-                confirm_password: confirmNewPassword
+            if (this.actualPassword != this.user.password) {
+                this.error = 'La contraseña actual es incorrecta'
+            }
+
+            if (this.newPassword === '') {
+                this.error = 'Ingrese la nueva contraseña';
+                return;
+            }
+            if (this.confirmNewPassword === '') {
+                this.error = 'Confirme la nueva contraseña';
+                return;
+            }
+            if (this.newPassword !== this.confirmNewPassword) {
+                this.error = 'Las contraseñas no coinciden';
+                return;
+            }
+
+            // Realizar petición POST a la ruta /changePassword
+            axios.post('/changePassword', {
+                actualPassword: this.actualPassword,
+                newPassword: this.newPassword
             })
                 .then(response => {
-                    alert(this.$t('updatePasswordMsg'));
-                    this.closeModalPassword();
+                    // Procesar la respuesta de éxito aquí
                 })
                 .catch(error => {
-                    console.log(error);
-                    alert('No se ha podido cambiar la contraseña. Inténtelo de nuevo más tarde.');
+                    // Procesar el error aquí
                 });
         },
 
         togglePasswordVisibility(inputId) {
-            const input = document.getElementById(inputId);
-            if (input.type === "password") {
-                input.type = "text";
-                if (inputId === 'actualPassword') {
-                    this.actualPasswordVisible = true;
-                } else if (inputId === 'newPassword') {
-                    this.newPasswordVisible = true;
-                } else {
-                    this.confirmNewPasswordVisible = true;
-                }
-            } else {
-                input.type = "password";
-                if (inputId === 'actualPassword') {
-                    this.actualPasswordVisible = false;
-                } else if (inputId === 'newPassword') {
-                    this.newPasswordVisible = false;
-                } else {
-                    this.confirmNewPasswordVisible = false;
-                }
+            if (inputId === 'ActualPassword') {
+                this.showActualPassword = !this.showActualPassword;
+            } else if (inputId === 'NewPassword') {
+                this.showNewPassword = !this.showNewPassword;
+            } else if (inputId === 'confirmNewPassword') {
+                this.showConfirmNewPassword = !this.showConfirmNewPassword;
+            }
+        },
+
+
+        saveWallet() {
+            axios
+                .post('/saveWallet', { walletAddress: this.newWalletAddress })
+                .then(response => {
+                    this.user.direccion_billetera_binance = this.newWalletAddress;
+                    alert('¡La dirección de la billetera se guardó correctamente!');
+                    this.closeModalDireccionBilletera();
+                })
+                .catch(error => {
+                    alert('Ha ocurrido un error al guardar la dirección de la billetera. Por favor, inténtalo de nuevo más tarde.');
+                    // Aquí puedes manejar el error de acuerdo a tus necesidades
+                });
+        },
+
+        deleteWallet() {
+            if (confirm("¿Estás seguro que deseas eliminar tu dirección de billetera de Binance?")) {
+                axios.post('/deleteWallet')
+                    .then(response => {
+                        alert("¡La dirección de la billetera se eliminó correctamente!");
+                        this.user.direccion_billetera_binance = '';
+                        this.closeModalDireccionBilletera();
+                    })
+                    .catch(error => {
+                        alert("Ha ocurrido un error al eliminar la dirección de la billetera. Por favor, inténtalo de nuevo más tarde.");
+                        // Aquí puedes manejar el error de acuerdo a tus necesidades
+                    });
+            }
+        },
+
+        changePaymentPassword() {
+            // Validar si la contraseña y su confirmación coinciden
+            if (this.newPaymentPassword !== this.confirmPaymentNewPassword) {
+                this.error = 'Las contraseñas no coinciden.';
+                return;
+            }
+
+            this.error = '';
+            // Realizar la petición Axios a la ruta correspondiente
+            axios.post('/createPaymentPassword', { password: this.newPaymentPassword })
+                .then(response => {
+                    alert('¡La contraseña de pago se guardó correctamente!');
+                    this.user.payment_password = this.newPaymentPassword
+                    this.closeModalPaymentPassword();
+                })
+                .catch(error => {
+                    alert('Ha ocurrido un error al guardar la contraseña de pago. Por favor, inténtalo de nuevo más tarde.');
+                    // Aquí puedes manejar el error de acuerdo a tus necesidades
+                });
+        },
+
+        copyToClipboard() {
+            const input = document.createElement('input');
+            input.value = this.user.direccion_billetera_binance;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            this.showCopyMessage = true;
+
+            // Ocultar el mensaje de copia después de 2 segundos
+            setTimeout(() => {
+                this.showCopyMessage = false;
+            }, 2000);
+        },
+
+        retireMoney() {
+            if (!this.MontoRetirar || this.MontoRetirar === '') {
+                this.error = 'Por favor, introduzca la cantidad que deseas retirar';
+                this.errorField = 'Monto';
+                return;
+            }
+            if (parseFloat(this.MontoRetirar) < 10) {
+                this.error = 'La cantidad debe ser de mínimo 10 o superior';
+                this.errorField = 'Monto';
+                return;
+            }
+
+            if (!this.user.direccion_billetera_binance || this.user.direccion_billetera_binance === '') {
+                this.error = 'Necesitas la direccion de tu monedero de binance';
+                this.errorField = 'Wallet';
+                return;
+            }
+
+            if (!this.payment_password || this.payment_password === '') {
+                this.error = 'Introduce tu contraseña de pago';
+                this.errorField = 'PaymentPassword';
+                return;
+            }
+
+            if(this.payment_password != this.user.payment_password){
+                this.error = 'Tu contraseña de pago es incorrecta';
+                this.errorField = 'PaymentPassword';
+                return;
+            }
+
+            if (parseFloat(this.MontoRetirar) > parseFloat(this.accountBalance)) {
+                this.error = 'Saldo insuficiente';
+                this.errorField = 'Monto';
+                return;
+            }
+
+
+
+        },
+        clearError(field) {
+            if (this.errorField === field) {
+                this.error = '';
+                this.errorField = '';
             }
         },
 
@@ -408,11 +617,27 @@ export default {
         closeModal() {
             this.modal_image = false;
         },
+
+        openModalRetirarDinero() {
+            this.modal_retirar_dinero = true;
+        },
+
+        closeModalRetirarDinero() {
+            this.modal_retirar_dinero = false;
+        }
     }
 };
 </script>
 
 <script setup>
-//Script setup es per a que funcionigue el modal de headles
+//Script setup es per a que funcionigue el modal de headless
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
+
 </script>
+
+<style scoped>
+#saldoDIV {
+    height: 100px;
+    width: 400px;
+}
+</style>

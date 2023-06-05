@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\robots;
+use App\Models\Robot;
 
 
 class UserController extends Controller
@@ -45,7 +45,7 @@ class UserController extends Controller
         $userId = auth()->id();
 
         // Crear un nuevo registro de robot en la base de datos
-        $robot = new Robots;
+        $robot = new Robot;
         $robot->Name_robot = $robotName;
         $robot->user_id = $userId;
         $robot->save();
@@ -54,6 +54,17 @@ class UserController extends Controller
         return response()->json(['message' => 'Robot guardado exitosamente']);
     }
 
+    public function allRobots()
+    {
+        $user = Auth::user();
+
+        $robots = DB::table('robots')
+            ->where('user_id', $user->id)
+            ->select('id', 'Name_robot')
+            ->get();
+
+        return response()->json($robots);
+    }
 
 
     public function contacte()
@@ -82,17 +93,65 @@ class UserController extends Controller
         return response()->json($userInfo);
     }
 
-    public function editarUsuario()
+    public function saveWallet(Request $request)
     {
-        $authenticatedUser = Auth::user();
-        $authenticatedUser = DB::table('users')
-            ->join('companies', 'users.company_id', '=', 'companies.id')
-            ->select('users.*', 'companies.name AS company_name')
-            ->where('users.id', '=', $authenticatedUser->id)
-            ->first();
-        return view('perfilPersonal.EditarPerfil', compact('authenticatedUser'));
+        // Validar la solicitud y asegurarse de que se proporcionó una dirección de billetera
+        $request->validate([
+            'walletAddress' => 'required'
+        ]);
+
+        // Obtener el usuario autenticado (puedes ajustar esto según tu lógica de autenticación)
+        $userId = auth()->user()->id;
+
+        // Actualizar la dirección de la billetera en la tabla de usuarios
+        DB::table('users')->where('id', $userId)->update([
+            'direccion_billetera_binance' => $request->walletAddress
+        ]);
+
+        // Puedes agregar cualquier lógica adicional aquí después de guardar la dirección de la billetera
+
+        // Devolver una respuesta de éxito (puedes ajustar esto según tus necesidades)
+        return response()->json(['message' => 'La dirección de la billetera se guardó correctamente']);
     }
 
+
+    public function deleteWallet()
+    {
+        // Obtener el usuario autenticado (puedes ajustar esto según tu lógica de autenticación)
+        $user = auth()->user();
+
+        // Actualizar el campo "direccion_billetera_binance" a NULL utilizando una consulta directa en la base de datos
+        DB::table('users')->where('id', $user->id)->update(['direccion_billetera_binance' => null]);
+
+        // Puedes agregar cualquier lógica adicional aquí después de eliminar la dirección de la billetera
+
+        // Devolver una respuesta de éxito (puedes ajustar esto según tus necesidades)
+        return response()->json(['message' => 'La dirección de la billetera se eliminó correctamente']);
+    }
+
+    public function PaymentPassword(Request $request)
+    {
+        // Validar la solicitud y asegurarse de que se proporcionó una contraseña de pago
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        // Obtener el usuario autenticado (puedes ajustar esto según tu lógica de autenticación)
+        $user = auth()->user();
+
+        // Encriptar la contraseña de pago
+        $encryptedPassword = Hash::make($request->password);
+
+        // Actualizar la contraseña encriptada en la base de datos
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['payment_password' => $encryptedPassword]);
+
+        // Puedes agregar cualquier lógica adicional aquí después de actualizar la contraseña de pago
+
+        // Devolver una respuesta de éxito (puedes ajustar esto según tus necesidades)
+        return response()->json(['message' => 'La contraseña de pago se guardó correctamente']);
+    }
     public function updateProfile(Request $request)
     {
         $authenticatedUser = Auth::user();
