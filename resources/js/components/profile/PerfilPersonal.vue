@@ -4,7 +4,9 @@
             <div class="w-16 h-16 flex items-center justify-center rounded-full bg-blue-500 text-white text-2xl">
                 {{ userInitial }}
             </div>
-            <h1 class="text-2xl ml-4">Hola, {{ user.nick_name }}</h1>
+            <h1 class="text-2xl ml-4">Hola, {{ user.nick_name }} <i @click="openModalWalletTron()"
+                    class="fas fa-eye eye-icon cursor-pointer transition-colors duration-300 hover:text-red-500 animate-wiggle"></i>
+            </h1>
         </div>
         <div class="flex justify-center mt-8 space-x-4">
             <button @click="openModalRetirarDinero()"
@@ -15,7 +17,8 @@
                 </svg>
                 Retirar dinero
             </button>
-            <button class="flex items-center justify-center bg-blue-500 text-white rounded-lg p-4">
+            <button @click="openModalTransfers()"
+                class="flex items-center justify-center bg-blue-500 text-white rounded-lg p-4">
                 <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="M12 3a9 9 0 1 0 9 9c0-1.9-.6-3.6-1.6-5L8 15.6V17h2.6L17 8.6c-1.4-1-3.1-1.6-5-1.6zm9 9a9 9 0 0 1-9 9c-1.9 0-3.6-.6-5-1.6L15.6 16H17v2.6l-7.4 7.4c1.4-.9 2.9-1.6 4.8-1.6a9 9 0 0 1 9-9z" />
@@ -57,6 +60,113 @@
             </button>
         </div>
     </div>
+    <!--<> Modal para ver la direccion tron del usuario<>-->
+    <TransitionRoot as="template" :show="modal_wallet_tron">
+        <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_wallet_tron = false">
+            <div class="flex items-center justify-center min-h-screen px-4">
+                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                    <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </TransitionChild>
+
+                <TransitionChild as="template" enter="ease-out duration-300"
+                    enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                    leave-from="opacity-100 translate-y-0 sm:scale-100"
+                    leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                    <div
+                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full md:w-1/2 lg:w-1/3">
+                        <form>
+                            <div class="p-4">
+                                <div>
+                                    {{ $t('Tu dirección de billetera de MagicalMoriak és:') }}
+
+                                    <input type="text" v-model="user.direccion"
+                                        class="border-gray-300 rounded-md w-full px-3 mt-3" disabled>
+                                    <button @click.prevent="copyToClipboardTron"
+                                        class="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center px-2 text-gray-500 hover:text-gray-700">
+                                        <i class="fa-solid fa-copy mb-6 mr-7"></i>
+                                    </button>
+                                </div>
+                                <p v-if="showCopyMessageTron" class="text-sm text-gray-500 mt-2">
+                                    {{ $t('Copiado correctamente!') }}
+                                </p>
+                                <div class="flex justify-end">
+                                    <button type="button"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center mt-6"
+                                        @click="closeModalWalletTron()">
+                                        <i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </TransitionChild>
+            </div>
+        </Dialog>
+    </TransitionRoot>
+    <!--<> Fin del modal <>-->
+    <!--<> Modal para hacer transferencias de billetera tron a billetera tron<>-->
+    <TransitionRoot as="template" :show="modal_transfers">
+        <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_transfers = false">
+            <div class="flex items-center justify-center min-h-screen px-4">
+                <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+                    leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                    <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </TransitionChild>
+
+                <TransitionChild as="template" enter="ease-out duration-300"
+                    enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                    leave-from="opacity-100 translate-y-0 sm:scale-100"
+                    leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                    <div
+                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full md:w-1/2 lg:w-1/3">
+                        <form>
+                            <div class="p-4">
+
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2">
+                                        <i class="fas fa-edit mr-2"></i>{{ $t('Transferencia') }}
+                                    </label>
+
+                                    {{ $t('Indica la cantidad que deseas transferir') }}
+                                    <input type="number" v-model="quantityToTransfer"
+                                        class="border-gray-300 focus:border-blue-500 rounded-md w-full py-2 px-3 mb-5"
+                                        :placeholder="'Tu saldo: ' + accountBalance">
+
+
+
+                                    {{ $t('Indica el usuario al que le deseas transferir ') }}
+
+                                    <input :type="showNewPassword ? 'text' : 'password'" v-model="newPassword"
+                                        id="newPassword" name="newPassword"
+                                        class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
+                                    <div v-if="error" class="text-red-500 mt-2">
+                                        {{ error }}
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <button
+                                        class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
+                                        @click.prevent="changePassword()">
+                                        <i class="far fa-save mr-2"></i>{{ $t('Enviar') }}
+                                    </button>
+                                    <button type="button"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-medium py-1 px-1 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-2 ml-4 flex items-center"
+                                        @click="closeModalTransfers()">
+                                        <i class="fas fa-times mr-2"></i>{{ $t('cancel') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </TransitionChild>
+            </div>
+        </Dialog>
+    </TransitionRoot>
+    <!--<> Fin del modal <>-->
     <!--<> Modal para cambiar la contraseña del usuario<>-->
     <TransitionRoot as="template" :show="modal_new_password">
         <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_new_password = false">
@@ -130,6 +240,7 @@
         </Dialog>
     </TransitionRoot>
     <!--<> Fin del modal <>-->
+
     <!--<> Modal para cambiar la contraseña de pago<>-->
     <TransitionRoot as="template" :show="modal_payment_password">
         <Dialog as="div" class="fixed z-50 inset-0 overflow-y-auto" @close="modal_payment_password = false">
@@ -232,12 +343,7 @@
                                                 class="border-gray-300 rounded-md w-full px-3 mb-2" disabled>
                                             <button @click.prevent="copyToClipboard"
                                                 class="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center px-2 text-gray-500 hover:text-gray-700">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-3"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2V5zm4 2H5V7h2v2zm0 2H5v2h2v-2zm0 2H5v2h2v-2zm2-4h4v10H9V7zm0 2V5h4v2h-4z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
+                                                <i class="fa-solid fa-copy mb-2 mr-2"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -360,6 +466,8 @@ export default {
         return {
             user: [],
             showModal: false,
+            modal_wallet_tron: false,
+            modal_transfers: false,
             modal_direccion_billetera: false,
             modal_payment_password: false,
             modal_new_password: false,
@@ -379,6 +487,7 @@ export default {
             showNewPassword: false,
             showConfirmNewPassword: false,
             showCopyMessage: '',
+            showCopyMessageTron: '',
             MontoRetirar: ''
         };
     },
@@ -539,6 +648,20 @@ export default {
                 this.showCopyMessage = false;
             }, 2000);
         },
+        copyToClipboardTron() {
+            const input = document.createElement('input');
+            input.value = this.user.direccion;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            this.showCopyMessageTron = true;
+
+            // Ocultar el mensaje de copia después de 2 segundos
+            setTimeout(() => {
+                this.showCopyMessageTron = false;
+            }, 2000);
+        },
 
         retireMoney() {
             if (!this.MontoRetirar || this.MontoRetirar === '') {
@@ -564,7 +687,7 @@ export default {
                 return;
             }
 
-            if(this.payment_password != this.user.payment_password){
+            if (this.payment_password != this.user.payment_password) {
                 this.error = 'Tu contraseña de pago es incorrecta';
                 this.errorField = 'PaymentPassword';
                 return;
@@ -586,8 +709,20 @@ export default {
             }
         },
 
-        openModal() {
-            this.modal_image = true;
+        openModalWalletTron() {
+            this.modal_wallet_tron = true;
+        },
+
+        closeModalWalletTron() {
+            this.modal_wallet_tron = false;
+        },
+
+        openModalTransfers() {
+            this.modal_transfers = true;
+        },
+
+        closeModalTransfers() {
+            this.modal_transfers = false;
         },
 
         openModalPassword() {

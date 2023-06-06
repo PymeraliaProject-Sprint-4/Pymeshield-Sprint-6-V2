@@ -5,7 +5,7 @@
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8 bg-white p-6 rounded drop-shadow-md">
             <div>
-                <img class="mx-auto h-20 w-auto" src="{{ asset('img/LogoMagicalMoriak.png') }}" alt="pymeshield">
+                <img class="mx-auto h-20 w-auto" src="{{ asset('img/LogoMagicalMoriak.png') }}" alt="MagicalMoriak">
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Magical Moriak</h2>
                 <p class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
                     {{ __('home') }}
