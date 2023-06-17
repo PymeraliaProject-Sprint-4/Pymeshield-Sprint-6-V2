@@ -71,6 +71,8 @@ Route::get('statusPedido', [PedidosController::class, 'statusPedido'])->name('st
 Route::post('saveWallet', [UserController::class, 'saveWallet'])->name('saveWallet');
 Route::post('deleteWallet', [UserController::class, 'deleteWallet'])->name('deleteWallet');
 Route::post('createPaymentPassword', [UserController::class, 'PaymentPassword'])->name('PaymentPassword');
+Route::get('TransferUsers', [UserController::class, 'TransferUsers'])->name('TransferUsers')->middleware('auth');
+
 
 
 

@@ -26,6 +26,19 @@ class UserController extends Controller
         return view('Mio.Es_Mio');
     }
 
+    public function TransferUsers()
+    {
+        $loggedInUserId = Auth::id();
+
+        $users = DB::table('users')
+            ->join('billetera', 'users.id', '=', 'billetera.user_id')
+            ->where('users.id', '!=', $loggedInUserId)
+            ->select('users.*', 'billetera.id as billetera_id', 'billetera.public_key', 'billetera.private_key', 'billetera.direccion')
+            ->get();
+
+        return $users;
+    }
+
     public function view_comercio()
     {
         return view('comercio.show');

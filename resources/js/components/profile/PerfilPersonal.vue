@@ -133,15 +133,20 @@
                                     {{ $t('Indica la cantidad que deseas transferir') }}
                                     <input type="number" v-model="quantityToTransfer"
                                         class="border-gray-300 focus:border-blue-500 rounded-md w-full py-2 px-3 mb-5"
+                                        :class="{ 'border-red-500': errorField === 'quantityToTranfer' }"
+                                        @input="clearError('quantityToTranfer')"
                                         :placeholder="'Tu saldo: ' + accountBalance">
-
-
 
                                     {{ $t('Indica el usuario al que le deseas transferir ') }}
 
-                                    <input :type="showNewPassword ? 'text' : 'password'" v-model="newPassword"
-                                        id="newPassword" name="newPassword"
-                                        class="border-gray-300 rounded-md w-full py-2 px-3 mb-5">
+                                    <select v-model="selectedUser" class="mt-3 ml-1 border rounded-md px-2 py-1 w-full"
+                                        :class="{ 'border-red-500': errorField === 'selectedUser' }"
+                                        @input="clearError('selectedUser')">
+                                        <option value="" disabled selected>Selecciona un usuario</option>
+                                        <option v-for="userTransfer in usersTransfer" :value="userTransfer"
+                                            :key="userTransfer.id">{{
+                                                userTransfer.nick_name }}</option>
+                                    </select>
                                     <div v-if="error" class="text-red-500 mt-2">
                                         {{ error }}
                                     </div>
@@ -150,7 +155,7 @@
                                 <div class="flex justify-end">
                                     <button
                                         class="bg-teal-400 hover:bg-teal-600 font-medium py-1 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ml-auto flex items-center"
-                                        @click.prevent="changePassword()">
+                                        @click.prevent="TransferMoney()">
                                         <i class="far fa-save mr-2"></i>{{ $t('Enviar') }}
                                     </button>
                                     <button type="button"
@@ -458,6 +463,7 @@
 import axios from 'axios';
 import TronWeb from 'tronweb';
 import { Buffer } from 'buffer';
+import BigNumber from 'bignumber.js';
 
 window.Buffer = Buffer;
 
@@ -465,6 +471,7 @@ export default {
     data() {
         return {
             user: [],
+            usersTransfer: [],
             showModal: false,
             modal_wallet_tron: false,
             modal_transfers: false,
@@ -472,6 +479,8 @@ export default {
             modal_payment_password: false,
             modal_new_password: false,
             modal_retirar_dinero: false,
+            selectedUser: {},
+            quantityToTransfer: '',
             error: '',
             errorField: '',
             accountBalance: 0,
@@ -498,6 +507,11 @@ export default {
             this.direccion = this.user.direccion;
             this.getUserInitial();
             this.initialize(); // Llama a la función de inicialización después de asignar this.private_key
+        });
+
+        axios.get('/TransferUsers').then(response => {
+            this.usersTransfer = response.data;
+
         });
     },
     methods: {
@@ -663,6 +677,61 @@ export default {
             }, 2000);
         },
 
+        async TransferMoney() {
+            if (this.quantityToTransfer <= 0 || this.quantityToTransfer > this.accountBalance) {
+                this.error = "Cantidad inválida";
+                this.errorField = 'quantityToTransfer';
+                return;
+            }
+
+            if (!this.selectedUser) {
+                this.error = "Tienes que seleccionar un usuario";
+                this.errorField = 'selectedUser';
+                return;
+            }
+
+            const HttpProvider = TronWeb.providers.HttpProvider;
+            const fullNode = new HttpProvider("https://api.trongrid.io");
+            const solidityNode = new HttpProvider("https://api.trongrid.io");
+            const eventServer = new HttpProvider("https://api.trongrid.io");
+            const privateKey = this.user.private_key;
+            const tronWeb = new TronWeb(fullNode, solidityNode, eventServer, privateKey);
+
+            const fromAddress = this.user.direccion;
+            const toAddress = this.selectedUser.direccion;
+            const amountToTransfer = parseFloat(this.quantityToTransfer) * 1000000;
+
+            try {
+                const tradeobj = await tronWeb.transactionBuilder.sendTrx(
+                    tronWeb.address.toHex(toAddress),
+                    amountToTransfer,
+                    tronWeb.address.toHex(fromAddress)
+                );
+                const signedTxn = await tronWeb.trx.sign(
+                    tradeobj,
+                    privateKey
+                );
+                const receipt = await tronWeb.trx.sendRawTransaction(signedTxn);
+
+                if (receipt.result || receipt.result === true) {
+                    console.log('Transferencia exitosa:', receipt);
+                    this.accountBalance -= parseFloat(this.quantityToTransfer);
+                    this.quantityToTransfer = '';
+                    this.selectedUser = null;
+                    this.error = '';
+                    this.errorField = '';
+                } else {
+                    console.error('Error en la transferencia:', receipt);
+                    this.error = 'Error al realizar la transferencia';
+                }
+            } catch (error) {
+                console.error('Error en la transferencia:', error);
+                this.error = 'Error al realizar la transferencia';
+            }
+        },
+
+
+
         retireMoney() {
             if (!this.MontoRetirar || this.MontoRetirar === '') {
                 this.error = 'Por favor, introduzca la cantidad que deseas retirar';
@@ -719,6 +788,7 @@ export default {
 
         openModalTransfers() {
             this.modal_transfers = true;
+
         },
 
         closeModalTransfers() {

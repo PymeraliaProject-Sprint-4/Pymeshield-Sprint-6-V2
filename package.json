@@ -24,6 +24,7 @@
         "@vueup/vue-quill": "^1.1.1",
         "@webzlodimir/vue-avatar": "^0.0.8",
         "bcrypt": "^5.1.0",
+        "bignumber": "^1.1.0",
         "buffer": "^6.0.3",
         "chart.js": "^4.2.1",
         "date-fns": "^2.29.3",
