@@ -34,6 +34,7 @@
         "laravel-vue-i18n": "^2.4.2",
         "laravel-vue-pagination": "^4.1.0",
         "ml-random-forest": "^2.1.0",
+        "moment-timezone": "^0.5.43",
         "sweetalert2": "^11.4.8",
         "swiper": "^9.3.0",
         "talib": "^1.1.5",

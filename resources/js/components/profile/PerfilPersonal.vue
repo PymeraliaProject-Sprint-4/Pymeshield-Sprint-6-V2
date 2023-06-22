@@ -678,59 +678,57 @@ export default {
         },
 
         async TransferMoney() {
-            if (this.quantityToTransfer <= 0 || this.quantityToTransfer > this.accountBalance) {
-                this.error = "Cantidad inválida";
-                this.errorField = 'quantityToTransfer';
-                return;
-            }
-
-            if (!this.selectedUser) {
-                this.error = "Tienes que seleccionar un usuario";
-                this.errorField = 'selectedUser';
-                return;
-            }
-
-            const HttpProvider = TronWeb.providers.HttpProvider;
-            const fullNode = new HttpProvider("https://api.trongrid.io");
-            const solidityNode = new HttpProvider("https://api.trongrid.io");
-            const eventServer = new HttpProvider("https://api.trongrid.io");
-            const privateKey = this.user.private_key;
-            const tronWeb = new TronWeb(fullNode, solidityNode, eventServer, privateKey);
-
-            const fromAddress = this.user.direccion;
-            const toAddress = this.selectedUser.direccion;
-            const amountToTransfer = parseFloat(this.quantityToTransfer) * 1000000;
-
             try {
-                const tradeobj = await tronWeb.transactionBuilder.sendTrx(
-                    tronWeb.address.toHex(toAddress),
-                    amountToTransfer,
-                    tronWeb.address.toHex(fromAddress)
-                );
-                const signedTxn = await tronWeb.trx.sign(
-                    tradeobj,
-                    privateKey
-                );
-                const receipt = await tronWeb.trx.sendRawTransaction(signedTxn);
+                if (this.quantityToTransfer <= 0 || this.quantityToTransfer > this.accountBalance) {
+                    this.error = "Cantidad inválida";
+                    this.errorField = 'quantityToTransfer';
+                    return;
+                }
 
-                if (receipt.result || receipt.result === true) {
-                    console.log('Transferencia exitosa:', receipt);
-                    this.accountBalance -= parseFloat(this.quantityToTransfer);
+                if (!this.selectedUser) {
+                    this.error = "Tienes que seleccionar un usuario";
+                    this.errorField = 'selectedUser';
+                    return;
+                }
+
+                const fromAddress = this.user.direccion;
+                const toAddress = this.selectedUser.direccion;
+                const amountToTransfer = parseFloat(this.quantityToTransfer);
+
+                const tronWeb = new TronWeb({
+                    fullNode: 'https://api.trongrid.io',
+                    solidityNode: 'https://api.trongrid.io',
+                    eventServer: 'https://api.trongrid.io',
+                    privateKey: this.user.private_key
+                });
+
+                const contractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"; // Dirección del contrato TRC20
+
+                // Configurar contrato TRC20 en TronWeb
+                const contract = await tronWeb.contract().at(contractAddress);
+
+                const trx = await contract.transfer(toAddress, amountToTransfer * 1e6).send({
+                    feeLimit: 1e9, // Ajustar el límite de comisión según sea necesario
+                    shouldPollResponse: true,
+                    callValue: 0,
+                    from: fromAddress
+                });
+
+                if (trx && trx.result) {
+                    console.log('Transferencia exitosa:', trx);
+                    this.accountBalance -= amountToTransfer;
                     this.quantityToTransfer = '';
                     this.selectedUser = null;
                     this.error = '';
                     this.errorField = '';
                 } else {
-                    console.error('Error en la transferencia:', receipt);
-                    this.error = 'Error al realizar la transferencia';
+                    throw new Error('Error en la transferencia:', trx);
                 }
             } catch (error) {
                 console.error('Error en la transferencia:', error);
                 this.error = 'Error al realizar la transferencia';
             }
         },
-
-
 
         retireMoney() {
             if (!this.MontoRetirar || this.MontoRetirar === '') {

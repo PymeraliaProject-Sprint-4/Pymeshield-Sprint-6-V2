@@ -27,6 +27,9 @@ app.component('pedidos', pedidos);
 const finalizados = defineAsyncComponent(() => import('./components/pedidos/pedidosFinalizados.vue'));
 app.component('finalizados', finalizados);
 
+const Order = defineAsyncComponent(() => import('./components/pedidos/currentPedido.vue'));
+app.component('Order', Order);
+
 const contacte = defineAsyncComponent(() => import('./components/contacte/Contacte.vue'));
 app.component('contacte', contacte);
 

@@ -1,6 +1,6 @@
 <?php 
 use App\Models\Pedidos;
-use App\Models\Robots;
+use App\Models\Robot;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +19,7 @@ class PedidosFactory extends Factory
             'status' => $this->faker->randomElement(['Corriente', 'Terminado']),
             'amount' => fake()->amount(),
             'robot_id' => function () {
-                return Robots::inRandomOrder()->first()->id;
+                return Robot::inRandomOrder()->first()->id;
             },
         ];
     }

@@ -54,6 +54,8 @@
 import axios from 'axios';
 import TronWeb from 'tronweb';
 import { Buffer } from 'buffer';
+import moment from 'moment-timezone';
+
 
 window.Buffer = Buffer;
 
@@ -69,6 +71,7 @@ export default {
             amount: '',
             duration: '',
             robot: '',
+
         };
     },
     mounted() {
@@ -105,7 +108,7 @@ export default {
                 const usdRate = data.tether.usd;
                 const balanceInUSD = balanceInUSDT * usdRate;
 
-                this.accountBalance = balanceInUSD.toFixed(2);
+                this.accountBalance = balanceInUSD.toFixed(4);
             };
 
             obtenerSaldo();
@@ -120,11 +123,19 @@ export default {
         },
 
         calculateEndTime() {
-            const startTime = new Date();
+            const startTime = moment().tz('Europe/Madrid');
             const duration = parseInt(this.duration);
-            const endTime = new Date(startTime.getTime() + duration * 60 * 60 * 1000);
-            return endTime.toISOString();
+            const endTime = startTime.clone().add(duration, 'hours');
+
+            const formattedStartTime = startTime.format('YYYY-MM-DD HH:mm:ss');
+            const formattedEndTime = endTime.format('YYYY-MM-DD HH:mm:ss');
+
+            return {
+                start_time: formattedStartTime,
+                end_time: formattedEndTime,
+            };
         },
+
 
         getRobotId() {
             // Obtener el ID del robot seleccionado en función de su nombre
@@ -138,11 +149,11 @@ export default {
                 return;
             }
 
-            if (parseFloat(this.amount) < 10) {
-                this.error = 'La cantidad debe ser de mínimo 10 o superior';
-                this.errorField = 'amount';
-                return;
-            }
+            // if (parseFloat(this.amount) < 10) {
+            //     this.error = 'La cantidad debe ser de mínimo 10 o superior';
+            //     this.errorField = 'amount';
+            //     return;
+            // }
 
             if (!this.duration || this.duration === '') {
                 this.error = 'Por favor, introduzca la duración';
@@ -162,14 +173,16 @@ export default {
                 return;
             }
 
+            const { start_time, end_time } = this.calculateEndTime();
+
             const formData2 = {
-                start_time: new Date().toISOString(),
-                end_time: this.calculateEndTime(),
-                status: 'Corriente',
+                start_time: start_time,
+                end_time: end_time,
                 amount: parseFloat(this.amount),
                 robot_id: this.getRobotId(),
             };
 
+            console.log(formData2);
 
             axios
                 .post('/crear-pedido', formData2)
@@ -178,7 +191,7 @@ export default {
                     // Manejar la respuesta del servidor, si es necesario
                 })
                 .catch((error) => {
-                    console.error(error);
+                    console.error(error, "merequetengue");
                 });
 
             // Crear un objeto con los datos del formulario

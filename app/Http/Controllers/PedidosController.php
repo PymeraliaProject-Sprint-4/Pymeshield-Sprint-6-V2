@@ -7,6 +7,9 @@ use App\Models\Pedido;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
+
 
 
 
@@ -24,27 +27,35 @@ class PedidosController extends Controller
 
     public function newPedido(Request $request)
     {
-        $startTime = $request->start_time;
-        $endTime = $request->end_time;
-        $status = $request->status;
-        $amount = $request->amount;
-        $robotId = $request->robot_id;
+        try {
+            $startTime = $request->start_time;
+            $endTime = $request->end_time;
+            $amount = $request->amount;
+            $robotId = $request->robot_id;
 
-        // Insertar los datos en la tabla pedidos
-        DB::table('pedidos')->insert([
-            'start_time' => $startTime,
-            'end_time' => $endTime,
-            'status' => $status,
-            'amount' => $amount,
-            'robot_id' => $robotId,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            // Insertar los datos en la tabla pedidos
+            DB::table('pedidos')->insert([
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+                'status' => "Corriente",
+                'created_at' => now(),
+                'updated_at' => now(),
+                'amount' => $amount,
+                'robot_id' => $robotId
+            ]);
 
-        // Resto de la lógica de la función, si es necesario
+            // Resto de la lógica de la función, si es necesario
 
-        return response()->json(['message' => 'Pedido creado exitosamente']);
+            return response()->json(['message' => 'Pedido creado exitosamente']);
+        } catch (\Exception $e) {
+            // Manejo de la excepción y registro del error
+            Log::error('Error al insertar el pedido: ' . $e->getMessage());
+
+            // Devolver una respuesta de error
+            return response()->json(['message' => 'Error al crear el pedido'], 500);
+        }
     }
+
 
 
     public function allPedidos()
@@ -96,5 +107,9 @@ class PedidosController extends Controller
         }
 
         return response()->json(['message' => 'Status de pedidos actualizado.']);
+    }
+
+    public function pedidoActual(){
+        return view ('Pedidos.pedidoActual');
     }
 }
